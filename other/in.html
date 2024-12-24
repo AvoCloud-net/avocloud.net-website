@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ollama API Beispiel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            line-height: 1.6;
+            padding: 0 15px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #output, #modelList, #downloadOutput {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            background-color: #f4f4f4;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 100px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Ollama API Beispiel</h1>
+    
+    <h2>Verfügbare Modelle</h2>
+    <div id="modelList">Modelle werden geladen...</div>
+    
+    <h2>Modell herunterladen</h2>
+    <label for="modelDownload">Modell-Name:</label>
+    <input type="text" id="modelDownload" placeholder="z.B. llama3">
+    <button id="downloadModel">Modell herunterladen</button>
+    <div id="downloadOutput"></div>
+
+    <h2>Modell generieren</h2>
+    <label for="model">Wählen Sie ein Modell:</label>
+    <select id="model"></select>
+    <br><br>
+    <label for="prompt">Geben Sie Ihren Prompt ein:</label>
+    <textarea id="prompt" placeholder="Was ist die Farbe des Himmels zu verschiedenen Tageszeiten?"></textarea>
+    <br>
+    <button id="generate">Generieren</button>
+
+    <h2>Antwort:</h2>
+    <div id="output"></div>
+
+    <script>
+       const generateButton = document.getElementById('generate');
+const promptTextarea = document.getElementById('prompt');
+const modelSelect = document.getElementById('model');
+const responseDiv = document.getElementById('output');
+const modelListDiv = document.getElementById('modelList');
+const downloadModelButton = document.getElementById('downloadModel');
+const modelDownloadInput = document.getElementById('modelDownload');
+const downloadOutputDiv = document.getElementById('downloadOutput');
+
+// Modelle laden
+async function loadAvailableModels() {
+    try {
+        const response = await fetch('http://212.132.70.166/api/tags', {
+            mode: 'cors',
+            headers: {
+                'Origin': window.location.origin
+            }
+        });
+        
+        const data = await response.json();
+        
+        // Liste der verfügbaren Modelle aktualisieren
+        modelListDiv.innerHTML = data.models.length > 0 
+            ? data.models.map(model => `${model.name} (${model.size})`).join('<br>') 
+            : 'Keine Modelle gefunden';
+        
+        // Dropdown für Modellauswahl aktualisieren
+        modelSelect.innerHTML = data.models.map(model => 
+            `<option value="${model.name}">${model.name}</option>`
+        ).join('');
+    } catch (error) {
+        modelListDiv.textContent = 'Fehler beim Laden der Modelle: ' + error.message;
+        console.error('Detaillierter Fehler:', error);
+    }
+}
+
+// Modell herunterladen
+downloadModelButton.addEventListener('click', async () => {
+    const modelName = modelDownloadInput.value.trim();
+    if (!modelName) {
+        downloadOutputDiv.textContent = 'Bitte geben Sie einen Modellnamen ein.';
+        return;
+    }
+
+    downloadModelButton.disabled = true;
+    downloadOutputDiv.textContent = 'Lade Modell herunter...';
+    downloadOutputDiv.classList.add('loading');
+
+    try {
+        const response = await fetch('http://212.132.70.166/api/pull', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Origin': window.location.origin
+            },
+            body: JSON.stringify({
+                name: modelName,
+                stream: true
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Netzwerkantwort war nicht ok: ' + response.statusText);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let result = '';
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value, { stream: true });
+            try {
+                const lines = chunk.split('\n').filter(line => line.trim() !== '');
+                lines.forEach(line => {
+                    try {
+                        const parsed = JSON.parse(line);
+                        if (parsed.status) {
+                            result += parsed.status + '\n';
+                            downloadOutputDiv.textContent = result;
+                        }
+                    } catch (parseError) {
+                        console.warn('Fehler beim Parsen:', parseError);
+                    }
+                });
+            } catch (parseError) {
+                console.warn('Fehler beim Verarbeiten des Chunks:', parseError);
+            }
+        }
+
+        // Nach erfolgreichem Download Modelle neu laden
+        await loadAvailableModels();
+        downloadOutputDiv.textContent += '\nModell erfolgreich heruntergeladen!';
+    } catch (error) {
+        downloadOutputDiv.textContent = 'Fehler: ' + error.message;
+    } finally {
+        downloadModelButton.disabled = false;
+        downloadOutputDiv.classList.remove('loading');
+    }
+});
+
+// Generieren-Funktion
+generateButton.addEventListener('click', async () => {
+    const prompt = promptTextarea.value.trim();
+    if (!prompt) {
+        alert('Bitte geben Sie einen Prompt ein.');
+        return;
+    }
+
+    generateButton.disabled = true;
+    generateButton.textContent = 'Generiere...';
+    responseDiv.textContent = 'Lade...';
+    responseDiv.classList.add('loading');
+
+    try {
+        const selectedModel = modelSelect.value;
+        const response = await fetch('http://212.132.70.166/api/generate', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Origin': window.location.origin
+            },
+            body: JSON.stringify({
+                model: selectedModel,
+                prompt: prompt,
+                stream: true
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Netzwerkantwort war nicht ok: ' + response.statusText);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let result = '';
+        responseDiv.textContent = '';
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value, { stream: true });
+            try {
+                const lines = chunk.split('\n').filter(line => line.trim() !== '');
+                lines.forEach(line => {
+                    try {
+                        const parsed = JSON.parse(line);
+                        if (parsed.response) {
+                            result += parsed.response;
+                            responseDiv.textContent = result;
+                        }
+                    } catch (parseError) {
+                        console.warn('Fehler beim Parsen:', parseError);
+                    }
+                });
+            } catch (parseError) {
+                console.warn('Fehler beim Verarbeiten des Chunks:', parseError);
+            }
+        }
+
+        responseDiv.classList.remove('loading');
+    } catch (error) {
+        responseDiv.textContent = 'Fehler: ' + error.message;
+        responseDiv.classList.remove('loading');
+    } finally {
+        generateButton.disabled = false;
+        generateButton.textContent = 'Generieren';
+    }
+});
+
+// Optional: Enter-Taste zum Generieren
+promptTextarea.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        generateButton.click();
+    }
+});
+
+// Beim Laden der Seite Modelle laden
+loadAvailableModels();
+    </script>
+</body>
+</html>
