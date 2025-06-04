@@ -7,6 +7,10 @@
   --text-secondary: #888888;
   --border-color: #222222;
   --font-family: "Quicksand", sans-serif;
+
+  --accent-color-1: #9333ea;
+  --accent-color-2: #ec4899;
+  --accent-color-3: #eab308;
 }
 
 * {
@@ -24,7 +28,7 @@ body {
 
 #gradientbar {
   height: 14px;
-  background: linear-gradient(90deg, #9333ea, #ec4899, #eab308);
+  background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2), var(--accent-color-3));
   width: 100%;
   position: fixed;
   top: 0;
@@ -175,7 +179,7 @@ h1 {
   content: '';
   width: 96px;
   height: 2px;
-  background: linear-gradient(90deg, #9333ea, #ec4899);
+  background: linear-gradient(90deg, #9333ea, var(--accent-color-2));
   display: block;
 }
 
@@ -191,6 +195,7 @@ h1 {
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 24px;
+  backdrop-filter: blur(2px);
   transition: transform 0.2s ease-in-out;
 }
 
@@ -261,3 +266,14 @@ main {
   object-fit: cover;
 }
 
+.links {
+  font-size: 25px;
+}
+
+.links-symbol {
+  color: #888888
+}
+
+.links-symbol:hover {
+  color: #9333ea;
+}
