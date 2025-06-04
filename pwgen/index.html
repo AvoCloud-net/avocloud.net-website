@@ -193,8 +193,12 @@
                         <i class="fa-solid fa-key"></i> Password Generator
                     </h3>
 
-                    <label>Length: <input type="number" id="length" value="15" min="5" max="50" required
-                            oninput="validateLength()"></label>
+                    <label>
+                        Length:
+                        <input type="number" id="length" value="15" min="5" max="50" required
+                            onkeydown="return isNumberKey(event)" oninput="validateLength()" inputmode="numeric"
+                            pattern="[0-9]*">
+                    </label>
 
 
                     <label><input type="checkbox" id="uppercase" checked> Capital letters</label>
@@ -217,25 +221,26 @@
             <footer style="margin-top: 15vh"></footer>
         </main>
         <script>
+            function isNumberKey(event) {
+                const allowedKeys = [
+                    'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'
+                ];
+                if (allowedKeys.includes(event.key)) return true;
+
+                return /^\d$/.test(event.key);
+            }
+
             function validateLength() {
                 const lengthInput = document.getElementById("length");
-                let value = lengthInput.value;
-
-                if (!/^\d*$/.test(value)) {
-                    value = value.replace(/\D/g, '');
-                    lengthInput.value = value;
-                }
+                const value = lengthInput.value;
 
                 if (value === "") {
                     lengthInput.style.borderColor = "";
                     return;
                 }
 
-                let num = parseInt(value);
-
-                if (num < 5) {
-                    lengthInput.style.borderColor = "red";
-                } else if (num > 50) {
+                const num = parseInt(value);
+                if (num < 5 || num > 50) {
                     lengthInput.style.borderColor = "red";
                 } else {
                     lengthInput.style.borderColor = "";
