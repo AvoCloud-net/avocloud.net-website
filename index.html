@@ -57,13 +57,6 @@
         </div>
 
         <div class="project-card">
-          <div class="project-profile">
-            <!--<img
-                src="./assets/images/Red_Wolf2467.png"
-                alt="Profile Picture"
-                class="project-profile-picture"
-              />-->
-          </div>
           <h3 class="project-title">
             <i class="fa-solid fa-people-group"></i> Who are we?
           </h3>
@@ -74,16 +67,14 @@
             <br>
             We'll try to plan and implement ideas that are suggested or that we come up with on the spot. We'll make
             them freely usable for everyone on GitHub.
+            <br>
+            <br>
+            Recently, around <span id="netstats" style="white-space: pre-wrap; font-family: monospace;" title="Live stats">Loading stats...</span> of network traffic have been processed via our servers.
           </p>
           <div class="project-date">Avocloud.net</div>
         </div>
+
       </section>
-
-      <br />
-      <br />
-      <br />
-
-
 
       <section style="margin-top: 15vh" id="staff">
         <div class="section-header">
@@ -159,11 +150,7 @@
         </div>
       </section>
 
-      <br />
-      <br />
-      <br />
-
-      <section id="projects">
+      <section style="margin-top: 15vh" id="projects">
         <div class="section-header">
           <div class="section-title">PROJECTS</div>
           <h2>Our Projects</h2>
@@ -201,8 +188,9 @@
               <span class="tag">Opensource</span>
               <span class="tag"><a href="https://avocloud.net/pwgen/" style="color: var(--text-color)"
                   target="_blank"><i class="fa-solid fa-link"></i> Website</a></span>
-              <span class="tag"><a href="https://github.com/AvoCloud-net/avocloud.net-website/blob/main/pwgen/index.html" style="color: var(--text-color)"
-                  target="_blank"><i class="fa-brands fa-github"></i> Github</a></span>
+              <span class="tag"><a
+                  href="https://github.com/AvoCloud-net/avocloud.net-website/blob/main/pwgen/index.html"
+                  style="color: var(--text-color)" target="_blank"><i class="fa-brands fa-github"></i> Github</a></span>
             </div>
             <div class="project-date">Red_Wolf2467</div>
           </div>
@@ -359,5 +347,39 @@
   </div>
 </body>
 <script src="./assets/js/main.js"></script>
+
+<script>
+    fetch("https://proxy.avocloud.net/net-stats/")
+        .then(res => res.json())
+        .then(data => {
+            const iface = data.interfaces.find(i => i.name === "ens6");
+            if (!iface) {
+                document.getElementById("netstats").innerText = "⚠️ Interface not found";
+                return;
+            }
+
+            const rx = iface.traffic.total.rx;
+            const tx = iface.traffic.total.tx;
+            const totalBytes = rx + tx;
+
+            let displayValue, unit;
+            if (totalBytes >= 1024 * 1024 * 1024) {
+                displayValue = (totalBytes / (1024 * 1024 * 1024)).toFixed(2);
+                unit = "GiB";
+            } else {
+                displayValue = (totalBytes / (1024 * 1024)).toFixed(2);
+                unit = "MiB";
+            }
+
+            document.getElementById("netstats").innerText =
+                `${displayValue} ${unit}`;
+        })
+        .catch(err => {
+            document.getElementById("netstats").innerText =
+                "❌ Unable to load stats.";
+            console.error(err);
+        });
+</script>
+
 
 </html>

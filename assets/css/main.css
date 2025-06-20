@@ -191,11 +191,10 @@ h1 {
 }
 
 .project-card {
-  background: rgba(17, 17, 17, 0.6);
+  background: rgba(17, 17, 17, 0.7);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 24px;
-  backdrop-filter: blur(2px);
   transition: transform 0.2s ease-in-out;
 }
 
