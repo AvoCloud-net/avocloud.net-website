@@ -2,41 +2,50 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Avocloud.net</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
-    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon" />
-    <meta name="description" content="Send us an email to solve support requests quickly and easily." />
-    <meta name="keywords" content="Avocloud, software, discord bot, development, company, email, e-mail, support" />
-    <meta name="author" content="Avocloud.net" />
-    <meta name="robots" content="index, follow" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:title" content="Avocloud.net" />
-    <meta property="og:description" content="Send us an email to solve support requests quickly and easily." />
-    <meta property="og:image" content="/assets/images/logo.png" />
-    <meta property="og:url" content="https://avocloud.net/mail/" />
-    <meta property="og:type" content="website" />
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-    <meta http-equiv="refresh" content="3;url=mailto:support@avocloud.net" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to Support Mail – Avocloud.net</title>
+    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
+    <meta name="description" content="Send us an email to solve support requests quickly and easily.">
+    <meta name="author" content="Avocloud.net">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:title" content="Avocloud.net Support">
+    <meta property="og:description" content="Send us an email to solve support requests quickly and easily.">
+    <meta property="og:image" content="/assets/images/logo.png">
+    <meta property="og:url" content="https://avocloud.net/mail/">
+    <meta property="og:type" content="website">
+    <meta http-equiv="refresh" content="3;url=mailto:support@avocloud.net">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="../assets/js/theme.js"></script>
 </head>
 
 <body>
     <div id="gradientbar"></div>
-    <div id="particles-js"></div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+    </button>
 
-    <div class="container">
-        <section class="hero">
-            <div class="hero-content">
-                <h1>
-                    You will be redirected to
-                    <span class="highlight-purple" onclick="copyToClipboard()">mail</span>...
-                </h1>
+    <div class="redirect-container">
+        <div class="card text-center" style="max-width: 400px; width: 100%; padding: 2.5rem 2rem;">
+            <div class="flex justify-center mb-4">
+                <svg class="lucide" viewBox="0 0 24 24" style="width:2.5rem;height:2.5rem;color:#9333ea;animation:spin 1.2s linear infinite;">
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                </svg>
             </div>
-        </section>
+            <h1 class="text-xl font-bold mb-2">Opening <span class="highlight-purple">Mail</span></h1>
+            <p class="text-muted text-sm mb-6">Your mail client will open automatically in a moment...</p>
+            <a href="mailto:support@avocloud.net" class="accent-link text-sm">
+                Click here if nothing happens ↗
+            </a>
+        </div>
     </div>
+
+    <style>
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+    <script src="../assets/js/main.js"></script>
 </body>
-<script src="../assets/js/main.js"></script>
 
 </html>

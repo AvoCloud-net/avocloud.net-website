@@ -2,457 +2,555 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Avocloud.net</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
-  <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon" />
-  <meta name="description" content="Avocloud.net is a software and discord bot development company." />
-  <meta name="keywords" content="Avocloud, software, discord bot, development, company" />
-  <meta name="author" content="Avocloud.net" />
-  <meta name="robots" content="index, follow" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta property="og:title" content="Avocloud.net" />
-  <meta property="og:description" content="Avocloud.net is a software and discord bot development company." />
-  <meta property="og:image" content="/assets/images/logo.png" />
-  <meta property="og:url" content="https://avocloud.net" />
-  <meta property="og:type" content="website" />
-  <link rel="stylesheet" href="../assets/css/main.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Notices & Regulations – Avocloud.net</title>
+    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
+    <meta name="description" content="Legal notices and regulations for Avocloud.net services.">
+    <meta name="author" content="Avocloud.net">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Legal Notices & Regulations – Avocloud.net">
+    <meta property="og:description" content="Legal notices and regulations for Avocloud.net services.">
+    <meta property="og:image" content="/assets/images/logo.png">
+    <meta property="og:url" content="https://avocloud.net/regulations/">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="../assets/js/theme.js"></script>
 </head>
 
 <body>
-  <div id="gradientbar"></div>
-  <div id="particles-js"></div>
+    <div id="gradientbar"></div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+    </button>
 
-  <div class="container">
+    <!-- Hero -->
     <section class="hero">
-      <div class="hero-content">
-        <h1>
-          <span class="highlight-purple" onclick="copyToClipboard()">Legal notices and regulations</span>
-        </h1>
-        <p class="subtitle">
-          Here you will find information<br>
-          such as <span class="highlight-yellow">ToS, Privacy Policy and more</span>.
-        </p>
-      </div>
-      <div class="scroll-indicator">
-        <i class="fas fa-chevron-down"></i>
-      </div>
+        <div class="hero-content">
+            <h1><span class="highlight-purple">Legal notices</span> &amp; regulations</h1>
+            <p class="hero-subtitle">
+                Here you will find our <span class="highlight-yellow">ToS, Privacy Policy</span> and more.
+            </p>
+            <div class="flex gap-3 justify-center mt-6">
+                <a href="/" class="hero-btn">
+                    <svg class="lucide" viewBox="0 0 24 24">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                    Back to home
+                </a>
+            </div>
+        </div>
     </section>
 
-    <main>
-      <section style="margin-top: 15vh" id="privacy">
-        <div class="section-header">
-          <div class="section-title">DATA PROTECTION REGULATIONS</div>
+    <!-- Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <main>
 
-        </div>
+            <!-- Quick Navigation -->
+            <section class="py-16" id="toc">
+                <div class="section-label">CONTENTS</div>
+                <div class="card">
+                    <header>
+                        <h2 class="text-xl font-semibold flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <line x1="8" y1="6" x2="21" y2="6"/>
+                                <line x1="8" y1="12" x2="21" y2="12"/>
+                                <line x1="8" y1="18" x2="21" y2="18"/>
+                                <line x1="3" y1="6" x2="3.01" y2="6"/>
+                                <line x1="3" y1="12" x2="3.01" y2="12"/>
+                                <line x1="3" y1="18" x2="3.01" y2="18"/>
+                            </svg>
+                            Quick Navigation
+                        </h2>
+                    </header>
+                    <section>
+                        <ul class="content-list">
+                            <li><a href="#privacy" class="accent-link">Data Protection Regulations</a></li>
+                            <li><a href="#tos" class="accent-link">Terms of Service</a></li>
+                            <li><a href="#sds" class="accent-link">Service Description Summary</a></li>
+                            <li><a href="#drr" class="accent-link">Discord Related Rules</a></li>
+                            <li><a href="#contact" class="accent-link">Contact Information</a></li>
+                        </ul>
+                    </section>
+                </div>
+            </section>
 
-        <div class="project-card">
-          <div class="project-profile">
-            <!-- <img src="./assets/images/user-lock.png" alt="Privacy" class="project-profile-picture" /> -->
-          </div>
-          <h2 class="project-title"><i class="fa-solid fa-shield-halved"></i> Our privacy policy</h2>
-          <h4>
-            Last update: 05.03.2025
-          </h4>
-          <p class="project-description">
-            In the points and sub-points below you will find all the necessary information regarding privacy. It
-            explains how we handle the data, what we store and more.
-            <br>
-            Users may contact us by <a style="color: var(--text-color)" href="https://avocloud.net/mail/">e-mail</a> to
-            request a copy of the information we have on file or to have it deleted.
-          </p>
-          <h3 style="color: var(--text-color);" id="privacy-data"><i class="fa-solid fa-database"></i> Data Security
-          </h3>
-          <p class="project-description">
-            All data is stored on our own servers, accessible only to members of our administration team. Our use of
-            self-developed or open source programs ensures transparency and accountability.
-            <br>
-            Just to let you know, we don't use any kind of tracking in our systems. Some pages, like the hosting
-            dashboard or our Baxi dashboard, use cookies to save the login session so you don't have to log in again and
-            again.
-          </p>
-          <h3 style="color: var(--text-color);" id="privacy-baxi"><i class="fa-solid fa-robot"></i> Baxi</h3>
-          <p class="project-description">
-            In order to provide the services of Baxi, some information is required for processing. The amount of
-            information required depends on the activated system on the respective guild.
-            <br>
-            Purely hypothetically, if all Baxi systems are activated, the following data will be processed:
-          </p>
-          <ul class="project-list">
-            <li>User ID and name</li>
-            <li>Guild ID and name</li>
-            <li>Message ID and content</li>
-            <li>Attached files</li>
-          </ul>
-          <p class="project-description">
-            Please note that we only store the data that we need to provide certain services. Here is a list of the data
-            we store:
-          </p>
-          <ul class="project-list">
-            <li>Attached files - Only images that are sent in a channel in which global chat is activated are saved.
-              This is necessary to be able to display the sent images permanently in the global chat. This is possible
-              because we upload the images to our servers with a randomly generated link.</li>
-            <li>Chat filter logs - If the chat filter deletes a message, this is entered in our database. This entry
-              includes the name of the user, the message content, the server name and all IDs (messageID, userID,
-              guildID). This is necessary to be able to retrieve the data on our website.</li>
-          </ul>
-          <p class="project-description">
-            Baxi works 100% independently, without passing on data to third parties. We are aware that we have access to
-            a lot of information. As privacy is important to us, all Baxi systems work 100% on our own servers without
-            external help and have been developed in-house and are also publicly available on github.
-          </p>
-          <br>
-          <hr><br>
-          <h3 style="color: var(--text-color);" id="privacy-skyfire"><i class="fa-solid fa-server"></i> SkyFire</h3>
-          <p class="project-description">
-            Furthermore, we try to safeguard your privacy with our Skyfire hosting services. However, in order to ensure
-            compliance with our hosting policies, we reserve the right to conduct random audits of our customers'
-            servers. Please refer to the Terms of Service for more information. We conduct random audits of our servers
-            to verify compliance with our internal policies and applicable laws.
-            <br>
-            When we monitor the status of our servers, the relevant information is displayed in the activity logs.
-            Please refer to the dashboard in the server view for further details. The activity logs allow you to view
-            the identity of individuals who have accessed your server and the date and time of each access. In the event
-            of a violation, the server will be subject to suspension, and you will receive notification via email. In
-            accordance with the nature of the violation, the server may be deleted or temporarily suspended until the
-            situation has been resolved.
-            <br><br>
-            The following team members have been granted access to the customer server:
-          </p>
-          <ul class="project-list">
-            <li>Red_wolf2467 - <a style="color: var(--text-color)"
-                href="mailto:redwolf2467@avocloud.net">redwolf2467@avocloud.net</a></li>
-            </li>
-            <li>Onako2 - <a style="color: var(--text-color)"
-              href="mailto:onako2@avocloud.net">onako2@avocloud.net</a></li>
-          </ul>
-          <br>
-          <hr><br>
-          <h3 style="color: var(--text-color);" id="privacy-mc"><i class="fa-solid fa-gamepad"></i> Minecraft</h3>
-          <p class="project-description">
-            We run several different Minecraft servers. All of them are operated via Paper. All standard information is
-            stored on our servers, just like any other.
-            <br>
-            We use custom anti-cheat software on our servers called “IAC” (illegal anticheat), which is developed by
-            onako2.
-          </p>
-          <br>
-          <hr><br>
-          <h3 style="color: var(--text-color);" id="privacy-plugin-avofilter"><i class="fa-solid fa-puzzle-piece"></i>
-            AvoFilter - Plugin</h3>
-          <p class="project-description">
-            Our Minecraft plugin “AvoFilter” sends every message that is sent on your server to our self-developed
-            backend server <a style="color: var(--text-color)" href="https://github.com/rwolf2467/SafeText">SafeText</a>
-           , which is also available on GitHub as an opensource project.
-            NO data or requests are stored. The backend server keeps the necessary data in working memory until the
-            request has been completed and then deletes it again.
-            <br>
-            You can enter your own SafeText server data if you don't want to use the standard server.
-          </p>
-          <br>
-          <hr><br>
-          <h3 style="color: var(--text-color);" id="privacy-plugin-avofilter"><i class="fa-solid fa-shield"></i>
-            SafeText Server</h3>
-          <p class="project-description">
-            The SafeText server provided by us is a program developed by us to access a global user blacklist or to check text for bad words. Here are some brief points regarding data protection:
-            <ul class="project-list">
-              <li>We do not store any information about the content sent, such as messages, ... . All information will be deleted after the request has been processed.</li>
-              <li>The communication between API client is secured with https & HSTS.</li>
-              <li>The code of the program can be found on <a href="https://github.com/AvoCloud-net/SafeText" style="color: var(--text-color);">github</a> to provide more transparency.</li>
-            </ul>
-          </p>
-          <br>
-          <hr><br>
-          <p class="project-description">
-            Finally, we would like to say that we try to develop as much as possible ourselves, and only use open source
-            software where possible.
-            <br>
-            We at avocloud.net <span style="color: var(--text-color);">do not give away, sell or share any of the data
-              we process or collect.</span>
-          </p>
-          <div class="tags">
+            <!-- Privacy Policy -->
+            <section class="pb-16" id="privacy">
+                <div class="section-label">DATA PROTECTION REGULATIONS</div>
+                <div class="card">
+                    <header>
+                        <h2 class="text-xl font-semibold flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            Our Privacy Policy
+                        </h2>
+                        <p class="text-muted text-sm">Last update: 21.08.2025</p>
+                    </header>
+                    <section>
+                    <p class="text-muted mb-4">
+                        In the points and sub-points below you will find all the necessary information regarding
+                        privacy. It explains how we handle the data, what we store and more.<br><br>
+                        Users may contact us by <a href="https://avocloud.net/mail/" class="accent-link">e-mail</a>
+                        to request a copy of the information we have on file or to have it deleted.
+                    </p>
 
-          </div>
-          <div class="project-date">Avocloud.net</div>
-        </div>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM3.7 8.5h16.6M3.7 15.5h16.6M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+                        Data Security
+                    </h3>
+                    <p class="text-muted mb-4">
+                        All data is stored on our own servers, accessible only to members of our administration team.
+                        Our use of self-developed or open source programs ensures transparency and accountability.<br><br>
+                        We don't use any kind of tracking in our systems. Some pages, like the hosting dashboard or
+                        our Baxi dashboard, use cookies to save the login session.
+                    </p>
 
-      </section>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Your Rights
+                    </h3>
+                    <p class="text-muted mb-2">Under applicable privacy laws, you have certain rights:</p>
+                    <ul class="content-list mb-4">
+                        <li><strong>Right to Access:</strong> You may request a copy of the personal data we hold about you.</li>
+                        <li><strong>Right to Rectification:</strong> You may ask us to correct inaccurate or incomplete data.</li>
+                        <li><strong>Right to Erasure:</strong> You may request deletion of your personal data, subject to certain exceptions.</li>
+                        <li><strong>Right to Restriction:</strong> You may ask us to stop processing all or some of your personal data.</li>
+                        <li><strong>Right to Data Portability:</strong> You may request a copy of your data in a machine-readable format.</li>
+                    </ul>
+                    <p class="text-muted mb-4">
+                        To exercise any of these rights, contact us at
+                        <a href="mailto:support@avocloud.net" class="accent-link">support@avocloud.net</a>.
+                        We will respond to all legitimate requests within 30 days.
+                    </p>
 
-      <br />
-      <br />
-      <br />
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Baxi
+                    </h3>
+                    <p class="text-muted mb-2">
+                        Baxi is designed with privacy as a fundamental principle. We only process and store the
+                        minimal information required to provide specific services enabled on each guild.
+                    </p>
+                    <p class="text-muted mb-2">The following data may be processed:</p>
+                    <ul class="content-list mb-2">
+                        <li>User IDs</li>
+                        <li>Guild IDs</li>
+                        <li>Message IDs and content (in specific contexts)</li>
+                        <li>Attached files (in specific contexts)</li>
+                    </ul>
+                    <p class="text-muted mb-2">What we store and why:</p>
+                    <ul class="content-list mb-4">
+                        <li><strong>Chat Filter Logs:</strong> If the chat filter deletes a message, a log entry is created (username, content, guild name, IDs). Accessible to moderators via an access link. <strong>All processing is performed exclusively on our own servers. No data ever leaves the Avocloud network.</strong></li>
+                        <li><strong>Global Chat Data:</strong> For messages in global chat channels, we store the Message ID, Guild ID, and Author ID. Attached images are uploaded to our servers with a random link.</li>
+                        <li><strong>Web Dashboard Logs:</strong> Actions taken via the dashboard are logged and visible to the guild owner for transparency.</li>
+                    </ul>
+                    <p class="text-muted mb-4">
+                        Baxi operates 100% independently on our own infrastructure. We do not share or sell any
+                        data with third parties.
+                    </p>
 
-      <section id="tos">
-        <div class="section-header">
-          <div class="section-title">TERMS OF SERVICE</div>
-        </div>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                        SkyFire
+                    </h3>
+                    <p class="text-muted mb-2">
+                        We try to safeguard your privacy with our SkyFire hosting services. However, to ensure
+                        compliance with our hosting policies, we reserve the right to conduct random audits of
+                        customer servers.
+                    </p>
+                    <p class="text-muted mb-2">The following team members have access to customer servers:</p>
+                    <ul class="content-list mb-4">
+                        <li>Red_wolf2467 – <a href="mailto:redwolf2467@avocloud.net" class="accent-link">redwolf2467@avocloud.net</a></li>
+                    </ul>
 
-        <div class="project-card">
-          <div class="project-profile">
-            <!-- <img src="./assets/images/user-lock.png" alt="Privacy" class="project-profile-picture" /> -->
-          </div>
-          <h2 class="project-title"><i class="fa-solid fa-file-contract"></i> ToS </h2>
-          <h4>
-            Last update: 11.12.2024
-          </h4>
-          <p class="project-description">
-            Here, you will find the rules you must follow when using our systems.
-          </p>
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-earth-americas"></i> General</h3>
-          <p class="project-description">
-            In case of violation, we reserve the right to exclude you from our systems and services without prior
-            notice.
-          </p>
-          <ul class="project-list">
-            <li>Please note that our systems may not be used for any illegal or harmful purposes. This includes:
-              <ul class="project-list-2">
-                <li>Any projects or activities that violate the laws of the operator (Austria) or the user.</li>
-                <li>Any activities that cause harm to us, the operator, other individuals, users, companies, or third
-                  parties.</li>
-              </ul>
-            </li>
-            <li>Please do not exploit any errors or bugs in the system; report them to us immediately.</li>
-            <li>As a user, you are responsible for the data you share, whether intentional or unintentional.</li>
-            <li>Exploiting grey areas or loopholes is strictly prohibited. </li>
-            <li>Circumventing bans or other penalties, such as time-outs, is strictly prohibited.</li>
-          </ul>
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-robot"></i> Baxi</h3>
-          <p class="project-description">
-            Baxi is our Discord bot. There are specific rules that both users and server operators must follow.
-          </p>
-          <ul class="project-list">
-            <li>Baxis systems may not be used for purposes that violate the general rules mentioned above or applicable
-              laws.</li>
-            <li>You are not allowed to pretend to be Baxi, create a copy bot or pretend to be the developer of the bot.
-            </li>
-            <li>Please be advised that we cannot accept liability for any damage caused by bugs or similar issues with
-              Baxi. Nevertheless, we will try to identify the issue and implement a solution.</li>
-          </ul>
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-server"></i> SkyFire</h3>
-          <p class="project-description">
-            SkyFire is our hosting service, which provides complimentary servers for MicroServers such as Java servers,
-            uptime monitoring servers, and more. Failure to comply with the aforementioned terms may result in the
-            suspension or deletion of your server and/or your account.
-          </p>
-          <ul class="project-list">
-            <li>It is strictly prohibited to host illegal programs that violate the law, cause harm to other individuals
-              or businesses, or contain malicious software.
-              <br>
-              Please be advised that any violation of this rule will result in the immediate deletion of your server and
-              the suspension of your account.
-            </li>
-            <li>It is not permitted to sell our servers. Please be advised that you are not permitted to earn money
-              through our services.</li>
-            <li>It is not permitted to exploit any bugs in the server software. Please report any bugs or other problems
-              to us immediately.</li>
-          </ul>
-          <div class="tags">
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                        Minecraft
+                    </h3>
+                    <p class="text-muted mb-4">
+                        We run several Minecraft servers, all operated via Paper. All standard information is
+                        stored on our servers. We use custom anti-cheat software called "IAC" (illegal anticheat).
+                    </p>
 
-          </div>
-          <div class="project-date">Avocloud.net</div>
-        </div>
-      </section>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        AvoFilter – Plugin
+                    </h3>
+                    <p class="text-muted mb-4">
+                        Our Minecraft plugin "AvoFilter" sends every message to our self-developed
+                        <a href="https://github.com/rwolf2467/SafeText" class="accent-link" target="_blank">SafeText</a>
+                        backend. No data or requests are stored. The backend keeps data in working memory only
+                        until the request is complete, then deletes it.
+                    </p>
 
-      <br />
-      <br />
-      <br />
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        SafeText Server
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>We do not store any information about the content sent. All data is deleted after the request is processed.</li>
+                        <li>Communication between API client is secured with HTTPS & HSTS.</li>
+                        <li>The code is available on <a href="https://github.com/AvoCloud-net/SafeText" class="accent-link" target="_blank">GitHub</a> for transparency.</li>
+                    </ul>
 
-      <section id="sds">
-        <div class="section-header">
-          <div class="section-title">SERVICE DESCRIPTION SUMMARY</div>
-        </div>
+                    <p class="text-muted">
+                        We try to develop as much as possible ourselves, and only use open source software where
+                        possible. We at avocloud.net <strong>do not give away, sell or share any of the data we
+                        process or collect.</strong>
+                    </p>
+                    </section>
+                </div>
+            </section>
 
-        <div class="project-card">
-          <div class="project-profile">
-            <!-- <img src="./assets/images/user-lock.png" alt="Privacy" class="project-profile-picture" /> -->
-          </div>
-          <h2 class="project-title"><i class="fa-solid fa-file-contract"></i> SDS </h2>
-          <h4>
-            Last update: 11.12.2024
-          </h4>
-          <p class="project-description">
-            This section provides additional details about the services we deem most important.
-          </p>
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-earth-americas"></i> General</h3>
-          <p class="project-description">
-            Here, you will find general information that applies to all of our services.
-          </p>
-          <ul class="project-list">
-            <li>It should be noted that the availability of our services is not guaranteed on a continuous basis.
-              Periods of unavailability may occur due to the occurrence of errors, the necessity for maintenance, or
-              other unforeseen circumstances.</li>
-          </ul>
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-robot"></i> Baxi</h3>
-          <ul class="project-list">
-            <li>We reserve the right to exclude users or entire Discord servers from Baxi's systems if they violate the
-              rules or do not adhere to the guidelines.</li>
-            <li>The decision to cease work on the Baxi or to take the bot offline can be made at any time.</li>
-          </ul>
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-server"></i> SkyFire</h3>
-          <ul class="project-list">
-            <li>We also reserve the right to discontinue our SkyFire service and shut down all associated servers. This
-              may occur for a variety of reasons. If we decide to discontinue this project, we will notify you in
-              advance and provide sufficient time to back up your data.</li>
-          </ul>
-          <div class="tags">
+            <!-- Terms of Service -->
+            <section class="pb-16" id="tos">
+                <div class="section-label">TERMS OF SERVICE</div>
+                <div class="card">
+                    <header>
+                        <h2 class="text-xl font-semibold flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                            Terms of Service
+                        </h2>
+                        <p class="text-muted text-sm">Last update: 21.08.2025</p>
+                    </header>
+                    <section>
+                    <p class="text-muted mb-4">
+                        By accessing and using our services, you agree to comply with these Terms of Service. These
+                        terms are designed to protect both our users and our infrastructure.
+                    </p>
 
-          </div>
-          <div class="project-date">Avocloud.net</div>
-        </div>
-      </section>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        General Rules
+                    </h3>
+                    <p class="text-muted mb-2">Violation of these terms may result in immediate suspension or permanent termination.</p>
+                    <ul class="content-list mb-4">
+                        <li><strong>Lawful Use:</strong> You may not use our services for any illegal purposes or activities that violate Austrian law or applicable local laws.</li>
+                        <li><strong>Bug Reporting:</strong> If you discover any vulnerability, bug, or security issue, you must report it immediately. Exploiting such issues is strictly forbidden and may result in legal action.</li>
+                        <li><strong>User Responsibility:</strong> You are solely responsible for your use of our services and any content you share or generate.</li>
+                        <li><strong>Loopholes & Grey Areas:</strong> Attempting to exploit ambiguities in these terms or our systems is prohibited.</li>
+                        <li><strong>Circumvention:</strong> Evading bans, suspensions, or other disciplinary measures is not allowed.</li>
+                        <li><strong>Service Integrity:</strong> Any actions that disrupt, overload, or harm our services (e.g., DDoS attacks, spamming, brute-force) are forbidden.</li>
+                        <li><strong>Age Requirement:</strong> You must be at least 13 years old to use our services.</li>
+                    </ul>
 
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        Intellectual Property
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>Our name, logo, and all related names, logos, product and service names are trademarks of Avocloud.</li>
+                        <li>You may not use these marks without our prior written permission.</li>
+                        <li>Open source components are governed by their respective licenses.</li>
+                    </ul>
 
-      <br />
-      <br />
-      <br />
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Baxi (Discord Bot)
+                    </h3>
+                    <p class="text-muted mb-2">Additional terms apply when using the Baxi Discord bot.</p>
+                    <ul class="content-list mb-4">
+                        <li><strong>Compliance:</strong> You may not use Baxi's features for any purpose that violates Discord's Terms of Service or Community Guidelines.</li>
+                        <li><strong>Impersonation:</strong> Impersonating Baxi, its developers, or claiming ownership of the bot is prohibited.</li>
+                        <li><strong>Liability:</strong> We are not liable for any damages arising from the use of Baxi.</li>
+                        <li><strong>Moderation:</strong> Server administrators are responsible for configuring and monitoring Baxi's moderation tools in accordance with their server's rules.</li>
+                        <li><strong>API Usage:</strong> You may not misuse the bot's commands or attempt to disrupt its functionality.</li>
+                    </ul>
 
-      <section id="drr">
-        <div class="section-header">
-          <div class="section-title">DISCORD RELATED RULES</div>
-        </div>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                        SkyFire Hosting
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li><strong>Illegal Content:</strong> Hosting, distributing, or promoting illegal content is strictly prohibited and will result in immediate termination.</li>
+                        <li><strong>Monetization:</strong> You may not resell or monetize access to SkyFire servers in any way.</li>
+                        <li><strong>Resource Usage:</strong> Our services are intended for development, testing, and small-scale projects. Excessive resource consumption may lead to throttling or termination.</li>
+                        <li><strong>Bug Exploitation:</strong> Do not exploit bugs in the hosting platform. Report any issues to us promptly.</li>
+                        <li><strong>Security:</strong> You are responsible for maintaining the security of your server and any content hosted on it.</li>
+                    </ul>
 
-        <div class="project-card">
-          <div class="project-profile">
-            <!-- <img src="./assets/images/user-lock.png" alt="Privacy" class="project-profile-picture" /> -->
-          </div>
-          <h2 class="project-title"><i class="fa-solid fa-section"></i> DRR </h2>
-          <h4>
-            Last update: 15.12.2024
-          </h4>
-          <p class="project-description">
-            Please be advised that the following rules must be adhered to on our <a href="https://avocloud.net/discord/"
-              style="color: var(--text-color)">Discord</a> server. Failure to comply may result in a temporary or
-            permanent suspension of your access.
-            <br>
-            <span style="color: var(--text-color);">These rules also apply to our global chat, which is operated by our
-              Discord bot Baxi!</span>
-          </p>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        Enforcement
+                    </h3>
+                    <p class="text-muted mb-2">We reserve the right to investigate and take appropriate action against any user who violates these terms. Actions may include:</p>
+                    <ul class="content-list mb-4">
+                        <li>Issuing warnings</li>
+                        <li>Suspending access to services</li>
+                        <li>Permanently banning users or servers</li>
+                        <li>Reporting illegal activities to law enforcement</li>
+                    </ul>
+                    <p class="text-muted">
+                        These terms may be updated periodically. Continued use of our services constitutes
+                        acceptance of the updated terms.
+                    </p>
+                    </section>
+                </div>
+            </section>
 
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-hand-peace"></i> Peaceful Interaction</h3>
-          <ul class="project-list">
-            <li>Treat all members with respect and kindness.</li>
-            <li>No harassment, discrimination, or hate speech of any kind.</li>
-            <li>Avoid personal attacks or inflammatory comments.</li>
-          </ul>
+            <!-- Service Description Summary -->
+            <section class="pb-16" id="sds">
+                <div class="section-label">SERVICE DESCRIPTION SUMMARY</div>
+                <div class="card">
+                    <header>
+                        <h2 class="text-xl font-semibold flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            Service Description Summary (SDS)
+                        </h2>
+                        <p class="text-muted text-sm">Last update: 21.08.2025</p>
+                    </header>
+                    <section>
+                    <p class="text-muted mb-4">
+                        This section provides additional details about the services we deem most important.
+                    </p>
 
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-inbox"></i> No Spamming</h3>
-          <ul class="project-list">
-            <li>Spamming messages, images, or links is prohibited.</li>
-            <li>Please refrain from excessively repeating the same message in a short time.</li>
-            <li>Avoid mass tagging others without reason.</li>
-          </ul>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                        General
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>The availability of our services is not guaranteed on a continuous basis. Periods of unavailability may occur due to errors, maintenance, or other unforeseen circumstances.</li>
+                    </ul>
 
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-face-kiss-wink-heart"></i> NSFW and Offensive
-            Content</h3>
-          <ul class="project-list">
-            <li>Explicit or NSFW content is strictly prohibited.</li>
-            <li>No sharing of inappropriate or offensive material in any form (e.g., images, links, or messages).</li>
-            <li>Respect everyone's boundaries and preferences.</li>
-          </ul>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        Service Level Expectations
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>We aim for 99% uptime for all services but cannot guarantee uninterrupted access.</li>
+                        <li>Scheduled maintenance will be announced at least 24 hours in advance when possible.</li>
+                        <li>Emergency maintenance may occur without prior notice to address critical issues.</li>
+                        <li>Support response times vary based on complexity and team availability.</li>
+                    </ul>
 
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-hand-holding-dollar"></i> No Self-Promotion or
-            Advertising</h3>
-          <ul class="project-list">
-            <li>Do not promote the channels, servers, services or products of yourself or others without permission from
-              the server team.</li>
-            <li>The passing on of referral links or the advertising of other servers is not permitted.</li>
-          </ul>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Baxi
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>We reserve the right to exclude users or entire Discord servers from Baxi's systems if they violate the rules or do not adhere to the guidelines.</li>
+                        <li>The decision to cease work on Baxi or to take the bot offline can be made at any time.</li>
+                    </ul>
 
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-fingerprint"></i> Respect Privacy</h3>
-          <ul class="project-list">
-            <li>Do not share anyone's personal information without their consent.</li>
-            <li>Respect others' privacy and do not engage in doxxing or any harmful behavior.</li>
-          </ul>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                        SkyFire
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>We reserve the right to discontinue our SkyFire service and shut down all associated servers. If we decide to discontinue this project, we will notify you in advance and provide sufficient time to back up your data.</li>
+                    </ul>
+                    </section>
+                </div>
+            </section>
 
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-message"></i> Follow Channel-Specific Guidelines
-          </h3>
-          <ul class="project-list">
-            <li>Each channel has a specific topic, so please keep messages relevant to the channel's purpose.</li>
-            <li>If you're unsure about where to post, ask a mod for guidance.</li>
-          </ul>
+            <!-- Discord Related Rules -->
+            <section class="pb-16" id="drr">
+                <div class="section-label">DISCORD RELATED RULES</div>
+                <div class="card">
+                    <header>
+                        <h2 class="text-xl font-semibold flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            Discord Related Rules (DRR)
+                        </h2>
+                        <p class="text-muted text-sm">Last update: 15.12.2024</p>
+                    </header>
+                    <section>
+                    <p class="text-muted mb-4">
+                        The following rules must be adhered to on our
+                        <a href="https://avocloud.net/discord/" class="accent-link" target="_blank">Discord</a> server.
+                        Failure to comply may result in a temporary or permanent suspension. These rules also apply
+                        to our global chat operated by Baxi.
+                    </p>
 
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-id-badge"></i> Listen to Staff</h3>
-          <ul class="project-list">
-            <li>Respect the decisions and instructions of the server moderators and admins.</li>
-            <li>If you have concerns about a decision, address it politely and privately with the staff.</li>
-          </ul>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                        Peaceful Interaction
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>Treat all members with respect and kindness.</li>
+                        <li>No harassment, discrimination, or hate speech of any kind.</li>
+                        <li>Avoid personal attacks or inflammatory comments.</li>
+                    </ul>
 
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-hat-cowboy"></i> No Cheating or Exploiting</h3>
-          <ul class="project-list">
-            <li>Do not use cheats, hacks, or exploits that disrupt the server’s activities or environment.</li>
-            <li>Engaging in unfair practices or cheating is grounds for a ban.</li>
-          </ul>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        No Spamming
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>Spamming messages, images, or links is prohibited.</li>
+                        <li>Please refrain from excessively repeating the same message in a short time.</li>
+                        <li>Avoid mass tagging others without reason.</li>
+                    </ul>
 
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-language"></i> German or English only</h3>
-          <ul class="project-list">
-            <li>Please use only English or German on our entire server, whether in talks or in text channels.</li>
-            <li>Let's keep the community fun and welcoming for everyone!</li>
-          </ul>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                        NSFW and Offensive Content
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>Explicit or NSFW content is strictly prohibited.</li>
+                        <li>No sharing of inappropriate or offensive material in any form.</li>
+                        <li>Respect everyone's boundaries and preferences.</li>
+                    </ul>
 
-          <h3 style="color: var(--text-color);"><i class="fa-solid fa-face-angry"></i> No Trolling or Disruption</h3>
-          <ul class="project-list">
-            <li>Avoid trolling, disrupting conversations, or creating unnecessary chaos.</li>
-            <li>Let's keep the community fun and welcoming for everyone!</li>
-          </ul>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        No Self-Promotion or Advertising
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>Do not promote channels, servers, services or products without permission from the server team.</li>
+                        <li>Passing on referral links or advertising other servers is not permitted.</li>
+                    </ul>
 
-          <div class="tags">
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Respect Privacy
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>Do not share anyone's personal information without their consent.</li>
+                        <li>Respect others' privacy and do not engage in doxxing or any harmful behavior.</li>
+                    </ul>
 
-          </div>
-          <div class="project-date">Avocloud.net</div>
-        </div>
-      </section>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Follow Channel-Specific Guidelines
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>Each channel has a specific topic, so please keep messages relevant to the channel's purpose.</li>
+                        <li>If you're unsure about where to post, ask a mod for guidance.</li>
+                    </ul>
 
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        Listen to Staff
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>Respect the decisions and instructions of server moderators and admins.</li>
+                        <li>If you have concerns about a decision, address it politely and privately with the staff.</li>
+                    </ul>
 
-      <section style="margin-top: 15vh">
-        <div class="section-header">
-          <div class="section-title">CONTACT</div>
-          <h2>Our Contact</h2>
-        </div>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                        No Cheating or Exploiting
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>Do not use cheats, hacks, or exploits that disrupt the server's activities.</li>
+                        <li>Engaging in unfair practices or cheating is grounds for a ban.</li>
+                    </ul>
 
-        <div class="projects-grid">
-          <div class="project-card">
-            <h3 class="project-title">
-              <i class="fa-brands fa-discord"></i> Discord
-            </h3>
-            <p class="project-description">
-              Join our Discord server:
-              <a href="https://avocloud.net/discord/" style="color: var(--text-color)" target="_blank">https://avocloud.net/discord</a>
-            </p>
-            <div class="tags"></div>
-            <div class="project-date">Avocloud.net</div>
-          </div>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        German or English only
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>Please use only English or German on our entire server, whether in voice or text channels.</li>
+                        <li>Let's keep the community fun and welcoming for everyone!</li>
+                    </ul>
 
-          <div class="project-card">
-            <h3 class="project-title">
-              <i class="fa-solid fa-envelope"></i> Support
-            </h3>
-            <p class="project-description">
-              Send us a mail! <br />
-              <a href="mailto:support@avocloud.net" style="color: var(--text-color)">support@avocloud.net</a>
-            </p>
-            <div class="tags"></div>
-            <div class="project-date">Avocloud.net</div>
-          </div>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        No Trolling or Disruption
+                    </h3>
+                    <ul class="content-list mb-4">
+                        <li>Avoid trolling, disrupting conversations, or creating unnecessary chaos.</li>
+                        <li>Let's keep the community fun and welcoming for everyone!</li>
+                    </ul>
 
-          <div class="project-card">
-            <h3 class="project-title">
-              <i class="fa-solid fa-address-book"></i> Impressum
-            </h3>
-            <p class="project-description">
-              <br />
-              <a href="https://avocloud.net/impressum.html" style="color: var(--text-color)">Visit Impressum</a>
-            </p>
-            <div class="tags"></div>
-            <div class="project-date">Avocloud.net</div>
-          </div>
-        </div>
-      </section>
-      <footer style="margin-top: 15vh"></footer>
-    </main>
-  </div>
+                    <h3 class="section-h3">
+                        <svg class="lucide" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        Enforcement and Appeals
+                    </h3>
+                    <p class="text-muted mb-2">Our moderation team follows these guidelines:</p>
+                    <ul class="content-list mb-2">
+                        <li>Minor infractions typically result in a warning.</li>
+                        <li>Repeated or severe violations may lead to temporary or permanent restrictions.</li>
+                        <li>You may appeal moderation decisions by contacting <a href="mailto:support@avocloud.net" class="accent-link">support@avocloud.net</a> with relevant details.</li>
+                        <li>Appeals will be reviewed by a team member not involved in the original decision.</li>
+                    </ul>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Contact -->
+            <section class="pb-16" id="contact">
+                <div class="section-label">CONTACT</div>
+                <h2 class="text-2xl font-bold mb-8">Get In Touch</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <div class="card">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                                Discord Community
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Join our community for support and updates:</p>
+                            <a href="https://avocloud.net/discord/" target="_blank"
+                               class="text-sm accent-link mt-1 block">avocloud.net/discord ↗</a>
+                        </section>
+                    </div>
+
+                    <div class="card">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                                Support
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">For support of any kind:</p>
+                            <a href="mailto:support@avocloud.net"
+                               class="text-sm accent-link mt-1 block">support@avocloud.net ↗</a>
+                        </section>
+                    </div>
+
+                    <div class="card">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                </svg>
+                                Legal & Impressum
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">For legal inquiries:</p>
+                            <a href="/impressum.html" class="text-sm accent-link mt-1 block">Visit Impressum ↗</a>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="site-footer">
+            <p>Avocloud.net &mdash; An open-source software development group</p>
+        </footer>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
 </body>
-<script src="../assets/js/main.js"></script>
 
 </html>

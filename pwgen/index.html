@@ -1,367 +1,243 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Passwort Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator – Avocloud.net</title>
+    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
+    <meta name="description" content="Generate strong and secure passwords with Avocloud.net's free password generator – fast, customizable, and easy to use.">
+    <meta name="keywords" content="password generator, secure password, strong password, Avocloud, avocloud.net, create password, random password">
+    <meta name="author" content="Avocloud.net">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Powerful Password Generator – Avocloud.net">
+    <meta property="og:description" content="Create strong and secure passwords quickly and easily with Avocloud.net – perfect for Discord, accounts, and more.">
+    <meta property="og:image" content="/assets/images/logo.png">
+    <meta property="og:url" content="https://avocloud.net/pwgen/">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
     <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon" />
-    <meta name="description"
-        content="Generate strong and secure passwords with Avocloud.net’s free password generator – fast, customizable, and easy to use." />
-    <meta name="keywords"
-        content="password generator, secure password, strong password, Avocloud, avocloud.net, create password, random password" />
-    <meta name="author" content="Avocloud.net" />
-    <meta name="robots" content="index, follow" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <meta property="og:title" content="Powerful Password Generator – Avocloud.net" />
-    <meta property="og:description"
-        content="Create strong and secure passwords quickly and easily with Avocloud.net – perfect for Discord, accounts, and more." />
-    <meta property="og:image" content="../assets/images/logo.png" />
-    <meta property="og:url" content="https://avocloud.net/pwgen/" />
-    <meta property="og:type" content="website" />
-
-    <style>
-        input[type=number],
-        input[type=checkbox] {
-            margin-bottom: 10px;
-            accent-color: var(--accent-color-1);
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            outline: none;
-            background: #1a1a1a;
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            transition: border 0.3s ease;
-        }
-
-        input[type=number]:focus {
-            border: 1px solid var(--accent-color-1);
-        }
-
-        button {
-            background: var(--accent-color-1);
-            color: white;
-            border: none;
-            padding: 0.7rem 1.4rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 12px rgba(147, 51, 234, 0.25);
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        button:hover {
-            background: var(--accent-color-2);
-            transform: scale(1.05);
-        }
-
-        .output-container {
-            position: relative;
-            margin-top: 1.5rem;
-        }
-
-        .output {
-            font-size: 1.3rem;
-            word-break: break-word;
-            padding: 1.2rem 2.5rem 1.2rem 1.2rem;
-            border-radius: 10px;
-            min-height: 2.5rem;
-            white-space: pre-wrap;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(2px);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 0 10px rgba(147, 51, 234, 0.2);
-            transition: box-shadow 0.3s ease;
-        }
-
-        .output:hover {
-            box-shadow: 0 0 15px rgba(147, 51, 234, 0.4);
-        }
-
-        .copy-icon {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: none;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .copy-icon:hover {
-            color: var(--accent-color-1);
-            transform: scale(1.2);
-        }
-
-        .strength {
-            margin-top: 0.5rem;
-            font-weight: bold;
-            transition: color 0.4s ease;
-        }
-
-        .very-strong {
-            color: #22c55e;
-            font-weight: bold;
-            text-shadow: 0 0 6px rgba(34, 197, 94, 0.5), 0 0 12px rgba(34, 197, 94, 0.3);
-            animation: pulseGlow 2s infinite;
-        }
-
-        @keyframes pulseGlow {
-            0% {
-                text-shadow: 0 0 6px rgba(34, 197, 94, 0.5), 0 0 12px rgba(34, 197, 94, 0.3);
-            }
-
-            50% {
-                text-shadow: 0 0 12px rgba(34, 197, 94, 0.8), 0 0 24px rgba(34, 197, 94, 0.6);
-            }
-
-            100% {
-                text-shadow: 0 0 6px rgba(34, 197, 94, 0.5), 0 0 12px rgba(34, 197, 94, 0.3);
-            }
-        }
-
-
-        .strong {
-            color: #22c55e;
-        }
-
-        .medium {
-            color: #f59e0b;
-        }
-
-        .weak {
-            color: #ef4444;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.4rem;
-            font-weight: 500;
-        }
-
-        #copy-feedback {
-            margin-top: 0.5rem;
-            color: #28a745;
-            font-weight: bold;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        #copy-feedback.visible {
-            opacity: 1;
-        }
-    </style>
-
+    <script src="../assets/js/theme.js"></script>
 </head>
 
 <body>
     <div id="gradientbar"></div>
-    <div id="particles-js"></div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+    </button>
 
-    <div class="container">
-        <section class="hero">
-            <div class="hero-content">
-                <h1>
-                    Generate your
-                    <span class="highlight-purple" onclick="copyToClipboard()">secure password</span>
-                </h1>
-                <p class="subtitle">
-                    <span style="color: white">Avocloud.net</span> lets you generate strong, customizable<br />
-                    <span class="highlight-yellow">passwords in seconds</span> – fast, easy & safe!
-                </p>
-                <br>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>
+                Generate your
+                <span class="highlight-purple">secure password</span>
+            </h1>
+            <p class="hero-subtitle">
+                Avocloud.net lets you generate strong, customizable<br>
+                <span class="highlight-yellow">passwords in seconds</span> – fast, easy &amp; safe!
+            </p>
+            <div class="flex gap-3 justify-center mt-6">
+                <a href="/" class="hero-btn">
+                    <svg class="lucide" viewBox="0 0 24 24">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                    Back to home
+                </a>
             </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg class="lucide" viewBox="0 0 24 24" style="width:1.5em;height:1.5em;">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </div>
+    </section>
 
-            <div class="scroll-indicator">
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </section>
+    <!-- Content -->
+    <div class="max-w-2xl mx-auto px-4 sm:px-6">
+        <main id="about">
 
-        <main>
-            <section style="margin-top: 15vh" id="about">
-                <div class="section-header">
-                    <div class="section-title">GENERATOR</div>
-                </div>
+            <section class="py-16">
+                <div class="section-label">GENERATOR</div>
+                <div class="card">
+                    <header class="mb-6">
+                        <h2 class="text-xl font-semibold flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            Password Generator
+                        </h2>
+                    </header>
 
-                <div class="project-card">
-                    <h3 class="project-title">
-                        <i class="fa-solid fa-key"></i> Password Generator
-                    </h3>
-
-                    <label>
-                        Length:
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium mb-1" for="length">Length (5–50)</label>
                         <input type="number" id="length" value="15" min="5" max="50" required
-                            onkeydown="return isNumberKey(event)" oninput="validateLength()" inputmode="numeric"
+                            class="input w-28"
+                            onkeydown="return isNumberKey(event)"
+                            oninput="validateLength()"
+                            inputmode="numeric"
                             pattern="[0-9]*">
-                    </label>
-
-
-                    <label><input type="checkbox" id="uppercase" checked> Capital letters</label>
-                    <label><input type="checkbox" id="numbers" checked> Numbers</label>
-                    <label><input type="checkbox" id="symbols"> Special characters</label>
-
-                    <br>
-                    <button onclick="generatePassword()">Generate</button>
-
-                    <div class="output-container">
-                        <div id="password" class="output">Your password will appear here...</div>
-                        <div id="copy-icon" class="copy-icon" onclick="copyToClipboardPW()" title="Kopieren"><i
-                                class="fa-solid fa-copy"></i></div>
                     </div>
-                    <div id="strength" class="strength"></div>
-                    <div id="copy-feedback"><i class="fa-solid fa-check"></i> Copied!</div>
-                    <div class="project-date">Avocloud.net</div>
+
+                    <div class="flex flex-col gap-2 mb-6">
+                        <label class="flex items-center gap-2 cursor-pointer text-sm">
+                            <input type="checkbox" id="uppercase" checked class="checkbox">
+                            Capital letters
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer text-sm">
+                            <input type="checkbox" id="numbers" checked class="checkbox">
+                            Numbers
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer text-sm">
+                            <input type="checkbox" id="symbols" class="checkbox">
+                            Special characters
+                        </label>
+                    </div>
+
+                    <button onclick="generatePassword()"
+                        class="flex items-center gap-2 px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg cursor-pointer transition-all font-medium text-sm">
+                        <svg class="lucide" viewBox="0 0 24 24">
+                            <path d="M21 2H3v16h5v4l4-4h5l4-4V2z"/>
+                            <line x1="9" y1="9" x2="9" y2="9" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="12" y1="9" x2="12" y2="9" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="15" y1="9" x2="15" y2="9" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        Generate
+                    </button>
+
+                    <!-- Password output -->
+                    <div style="position: relative;" class="mt-6">
+                        <div id="password" class="pw-output text-muted">Your password will appear here...</div>
+                        <button id="copy-icon" class="pw-copy-btn" onclick="copyToClipboardPW()" title="Copy to clipboard">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div id="strength" class="mt-2 text-sm"></div>
+                    <div id="copy-feedback" class="mt-2 text-sm font-semibold flex items-center gap-1"
+                        style="color:#22c55e;opacity:0;transition:opacity 0.3s ease;">
+                        <svg class="lucide" viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Copied!
+                    </div>
+
+                    <p class="text-muted text-xs mt-6">Avocloud.net &mdash; No passwords are stored or transmitted.</p>
                 </div>
             </section>
-            <footer style="margin-top: 15vh"></footer>
+
         </main>
-        <script>
-            function isNumberKey(event) {
-                const allowedKeys = [
-                    'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'
-                ];
-                if (allowedKeys.includes(event.key)) return true;
 
-                return /^\d$/.test(event.key);
+        <footer class="site-footer">
+            <p>Avocloud.net &mdash; An open-source software development group</p>
+        </footer>
+    </div>
+
+    <script>
+        function isNumberKey(event) {
+            const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+            if (allowedKeys.includes(event.key)) return true;
+            return /^\d$/.test(event.key);
+        }
+
+        function validateLength() {
+            const lengthInput = document.getElementById("length");
+            const value = lengthInput.value;
+            if (value === "") { lengthInput.style.borderColor = ""; return; }
+            const num = parseInt(value);
+            if (num < 5 || num > 50) {
+                lengthInput.style.borderColor = "red";
+            } else {
+                lengthInput.style.borderColor = "";
+            }
+        }
+
+        let currentPassword = "";
+
+        function generatePassword() {
+            let lengthInput = document.getElementById("length");
+            let length = parseInt(lengthInput.value);
+
+            if (length < 5) { length = 5; lengthInput.value = length; lengthInput.style.borderColor = ""; }
+            else if (length > 50) { length = 50; lengthInput.value = length; lengthInput.style.borderColor = ""; }
+
+            const useUppercase = document.getElementById("uppercase").checked;
+            const useNumbers = document.getElementById("numbers").checked;
+            const useSymbols = document.getElementById("symbols").checked;
+
+            let charset = "abcdefghijklmnopqrstuvwxyz";
+            if (useUppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (useNumbers) charset += "0123456789";
+            if (useSymbols) charset += "!@#$%&*()+=[]{}|;:?";
+
+            let rawPassword = "";
+            for (let i = 0; i < length; i++) {
+                const randIndex = Math.floor(Math.random() * charset.length);
+                rawPassword += charset[randIndex];
             }
 
-            function validateLength() {
-                const lengthInput = document.getElementById("length");
-                const value = lengthInput.value;
+            let formatted = rawPassword;
+            if (length > 5) { formatted = rawPassword.match(/.{1,5}/g).join("-"); }
 
-                if (value === "") {
-                    lengthInput.style.borderColor = "";
-                    return;
-                }
+            currentPassword = formatted;
+            typeOut(formatted, "password", 25);
 
-                const num = parseInt(value);
-                if (num < 5 || num > 50) {
-                    lengthInput.style.borderColor = "red";
-                } else {
-                    lengthInput.style.borderColor = "";
-                }
+            const strengthEl = document.getElementById("strength");
+            strengthEl.textContent = getStrength(formatted);
+            document.getElementById("copy-feedback").style.opacity = "0";
+            document.getElementById("copy-icon").style.display = "flex";
+        }
+
+        function typeOut(text, elementId, speed) {
+            speed = speed || 50;
+            const el = document.getElementById(elementId);
+            el.textContent = "";
+            el.style.color = "";
+            let i = 0;
+            function type() {
+                if (i < text.length) { el.textContent += text[i]; i++; setTimeout(type, speed); }
             }
+            type();
+        }
 
+        function getStrength(pw) {
+            let score = 0;
+            if (/[a-z]/.test(pw)) score++;
+            if (/[A-Z]/.test(pw)) score++;
+            if (/\d/.test(pw)) score++;
+            if (/[\W_]/.test(pw)) score++;
+            if (pw.length >= 12) score++;
+            if (pw.length >= 16) score++;
+            if (pw.length <= 10) score--;
 
+            let strengthText = "";
+            let className = "";
 
-            let currentPassword = "";
+            if (score <= 3) { strengthText = "Weak"; className = "strength-weak"; }
+            else if (score === 4) { strengthText = "Average"; className = "strength-medium"; }
+            else if (score === 5) { strengthText = "Strong"; className = "strength-strong"; }
+            else { strengthText = "Very Strong"; className = "strength-very-strong"; }
 
-            function generatePassword() {
-                let lengthInput = document.getElementById("length");
-                let length = parseInt(lengthInput.value);
+            const strengthEl = document.getElementById("strength");
+            strengthEl.className = className;
+            return "Strength: " + strengthText;
+        }
 
-                if (length < 5) {
-                    length = 5;
-                    lengthInput.value = length;
-                    lengthInput.style.borderColor = "";
-                } else if (length > 50) {
-                    length = 50;
-                    lengthInput.value = length;
-                    lengthInput.style.borderColor = "";
-                }
-
-                const useUppercase = document.getElementById("uppercase").checked;
-                const useNumbers = document.getElementById("numbers").checked;
-                const useSymbols = document.getElementById("symbols").checked;
-
-                let charset = "abcdefghijklmnopqrstuvwxyz";
-                if (useUppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                if (useNumbers) charset += "0123456789";
-                if (useSymbols) charset += "!@#$%&*()+=[]{}|;:?";
-
-                let rawPassword = "";
-                for (let i = 0; i < length; i++) {
-                    const randIndex = Math.floor(Math.random() * charset.length);
-                    rawPassword += charset[randIndex];
-                }
-
-                let formatted = rawPassword;
-                if (length > 5) {
-                    formatted = rawPassword.match(/.{1,5}/g).join("-");
-                }
-
-                currentPassword = formatted;
-                typeOut(formatted, "password", 25);
-
-                document.getElementById("strength").textContent = getStrength(formatted);
-                document.getElementById("copy-feedback").classList.remove("visible");
-                document.getElementById("copy-icon").style.display = "block";
-            }
-
-
-            function typeOut(text, elementId, speed = 50) {
-                const el = document.getElementById(elementId);
-                el.textContent = "";
-                let i = 0;
-
-                function type() {
-                    if (i < text.length) {
-                        el.textContent += text[i];
-                        i++;
-                        setTimeout(type, speed);
-                    }
-                }
-
-                type();
-            }
-
-            function getStrength(pw) {
-                let score = 0;
-                if (/[a-z]/.test(pw)) score++;
-                if (/[A-Z]/.test(pw)) score++;
-                if (/\d/.test(pw)) score++;
-                if (/[\W_]/.test(pw)) score++;
-                if (pw.length >= 12) score++;
-                if (pw.length >= 16) score++;
-                if (pw.length <= 10) score--;
-
-                let strengthText = "";
-                let className = "";
-
-                if (score <= 3) {
-                    strengthText = "Weak";
-                    className = "weak";
-                } else if (score === 4) {
-                    strengthText = "Avrage";
-                    className = "medium";
-                } else if (score === 5) {
-                    strengthText = "Strong";
-                    className = "strong";
-                } else {
-                    strengthText = "Very Strong";
-                    className = "very-strong";
-                }
-
-                const strengthEl = document.getElementById("strength");
-                strengthEl.className = "strength " + className;
-                return "Strength: " + strengthText;
-            }
-
-
-            function copyToClipboardPW() {
-                if (!currentPassword) return;
-
-                navigator.clipboard.writeText(currentPassword).then(() => {
-                    const feedback = document.getElementById("copy-feedback");
-                    const feedback_btn = document.getElementById("copy-icon");
-
-                    feedback.classList.add("visible");
-                    feedback_btn.classList.add("very-strong");
-
-                    setTimeout(() => {
-                        feedback.classList.remove("visible");
-                        feedback_btn.classList.remove("very-strong");
-                    }, 3000);
-                });
-            }
-
-        </script>
-        <script src="../assets/js/main.js"></script>
+        function copyToClipboardPW() {
+            if (!currentPassword) return;
+            navigator.clipboard.writeText(currentPassword).then(function () {
+                const feedback = document.getElementById("copy-feedback");
+                feedback.style.opacity = "1";
+                setTimeout(function () { feedback.style.opacity = "0"; }, 3000);
+            });
+        }
+    </script>
+    <script src="../assets/js/main.js"></script>
 </body>
 
 </html>
