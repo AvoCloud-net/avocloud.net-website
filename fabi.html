@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabian Murauer – Red_Wolf2467</title>
+    <base href="https://avocloud.net/">
+    <link rel="shortcut icon" href="./assets/images/Red_Wolf2467.png" type="image/x-icon">
+    <meta name="description" content="Fabian Murauer (Red_Wolf2467) – Python & Java developer, founder of Avocloud.net.">
+    <meta name="color-scheme" content="light dark">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <script src="./assets/js/theme.js"></script>
+</head>
+
+<body>
+    <div id="gradientbar"></div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+    </button>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content w-full" style="text-align:center">
+
+            <!-- Profile images -->
+            <div class="flex justify-center gap-6 mb-8 flex-wrap">
+                <img src="./assets/images/fabian2.jpg" alt="Fabian Murauer"
+                     class="w-32 h-32 rounded-full object-cover"
+                     style="box-shadow: 0 0 0 3px rgba(147,51,234,0.45);">
+                <img src="./assets/images/Red_Wolf2467.png" alt="Red_Wolf2467"
+                     class="w-32 h-32 rounded-full object-cover"
+                     style="box-shadow: 0 0 0 3px rgba(147,51,234,0.45);">
+            </div>
+
+            <h1>Fabian <span class="highlight-purple">Murauer</span></h1>
+            <p class="hero-subtitle">
+                Python &amp; Java Developer · Server Management<br>
+                <span class="highlight-yellow">Founder of Avocloud.net</span> and <span class="highlight-yellow">student at HTL Traun</span>
+            </p>
+
+            <!-- Social links -->
+            <div class="flex flex-wrap gap-3 justify-center mt-4">
+                <a href="https://github.com/rwolf2467" target="_blank" class="hero-btn">
+                    <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:currentColor;stroke:none;flex-shrink:0">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    rwolf2467
+                </a>
+                <a href="https://github.com/AvoCloud-net" target="_blank" class="hero-btn">
+                    <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:currentColor;stroke:none;flex-shrink:0">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    AvoCloud-net
+                </a>
+                <a href="https://avocloud.net" target="_blank" class="hero-btn">
+                    <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                    avocloud.net
+                </a>
+                <a href="https://www.instagram.com/red_wolf2467/" target="_blank" class="hero-btn">
+                    <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                    @red_wolf2467
+                </a>
+                <a href="https://www.instagram.com/hey.fabian.media/" target="_blank" class="hero-btn">
+                    <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                    @hey.fabian.media
+                </a>
+            </div>
+
+        </div>
+        <button class="scroll-indicator" onclick="window.scrollTo({top:window.innerHeight,behavior:'smooth'})">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 style="width:28px;height:28px;stroke-linecap:round;stroke-linejoin:round">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </button>
+    </section>
+
+    <!-- Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <main>
+
+            <!-- About -->
+            <section class="py-24" id="about">
+                <div class="section-label">ABOUT ME</div>
+                <div class="card">
+                    <header>
+                        <h2 class="text-xl font-semibold flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            Hi, I'm Fabian.
+                        </h2>
+                    </header>
+                    <section>
+                        <p class="text-muted">
+                            I'm a software developer from Wels, Austria with several years of programming experience.
+                            I specialize in Python and Java development and have a passion for creating innovative
+                            solutions and working on diverse projects.
+                        </p>
+
+                        <h3 class="section-h3 mt-6">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            </svg>
+                            Professional Background
+                        </h3>
+                        <p class="text-muted mt-2">
+                            As the founder of Avocloud.net, I lead a small team that transforms creative ideas into
+                            reality. What started as a hobby has evolved into a collaborative platform where we
+                            experiment with software development, Discord bot creation, and various tech projects.
+                            My role covers full-stack development, server administration, network technology,
+                            and project leadership.
+                        </p>
+
+                        <h3 class="section-h3 mt-6">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <polyline points="4 17 10 11 4 5"/>
+                                <line x1="12" y1="19" x2="20" y2="19"/>
+                            </svg>
+                            Tech Philosophy
+                        </h3>
+                        <p class="text-muted mt-2">
+                            I'm a passionate Linux user — my main PC runs Linux exclusively (sorry Microsoft!).
+                            I believe in self-hosting and maintaining control over my digital environment. From my
+                            own private cloud infrastructure to self-hosted password managers and even my own VPN —
+                            I prefer running everything on my own servers rather than relying on third-party providers.
+                        </p>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Skills -->
+            <section class="pb-24" id="skills">
+                <div class="section-label">SKILLS</div>
+                <h2 class="text-2xl font-bold mb-8">My Skills</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- Programming -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <polyline points="16 18 22 12 16 6"/>
+                                    <polyline points="8 6 2 12 8 18"/>
+                                </svg>
+                                Programming
+                            </h3>
+                        </header>
+                        <section>
+                            <div class="flex flex-col gap-3 py-2">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Python</span>
+                                        <span class="text-muted text-sm">Advanced</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>HTML / CSS</span>
+                                        <span class="text-muted text-sm">Advanced</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Java</span>
+                                        <span class="text-muted text-sm">Beginner</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 30%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>JavaScript</span>
+                                        <span class="text-muted text-sm">Basic</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>PHP</span>
+                                        <span class="text-muted text-sm">Basic</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Server & Infrastructure -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                                    <line x1="6" y1="6" x2="6.01" y2="6"/>
+                                    <line x1="6" y1="18" x2="6.01" y2="18"/>
+                                </svg>
+                                Server &amp; Infrastructure
+                            </h3>
+                        </header>
+                        <section>
+                            <div class="flex flex-col gap-3 py-2">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Linux Server</span>
+                                        <span class="text-muted text-sm">Intermediate</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Docker</span>
+                                        <span class="text-muted text-sm">Intermediate</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Network Security</span>
+                                        <span class="text-muted text-sm">Intermediate</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Nginx</span>
+                                        <span class="text-muted text-sm">Intermediate</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 65%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Tools & Technologies -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                                </svg>
+                                Tools &amp; Technologies
+                            </h3>
+                        </header>
+                        <section>
+                            <div class="flex flex-col gap-3 py-2">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>Git &amp; GitHub</span>
+                                        <span class="text-muted text-sm">Advanced</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>AI Prompting</span>
+                                        <span class="text-muted text-sm">Advanced</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span>REST APIs</span>
+                                        <span class="text-muted text-sm">Advanced</span>
+                                    </div>
+                                    <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
+                                        <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Projects — bento zigzag -->
+            <section class="pb-24" id="projects">
+                <div class="section-label">PROJECTS</div>
+                <h2 class="text-2xl font-bold mb-8">My Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                    <!-- Row 1: Baxi (featured 2col) + PWGEN -->
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                                Baxi
+                            </h3>
+                            <p class="text-muted text-sm">A verified Discord bot featuring intelligent chat filtering, a global spammer database, and advanced moderation tools. Built with Python and actively maintained.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Discord</span>
+                                <span class="badge badge-secondary">Moderation</span>
+                                <span class="badge badge-secondary">Security</span>
+                                <span class="badge badge-secondary">Python</span>
+                                <span class="badge badge-secondary">Open Source</span>
+                                <a href="https://baxi.avocloud.net/" target="_blank" class="badge badge-outline">Dashboard ↗</a>
+                                <a href="https://avocloud.net/baxi/" target="_blank" class="badge badge-outline">Invite ↗</a>
+                                <a href="https://github.com/AvoCloud-net/Baxi" target="_blank" class="badge badge-outline">GitHub ↗</a>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+                                </svg>
+                                PWGEN
+                            </h3>
+                            <p class="text-muted text-sm">A secure, privacy-focused password generator. No tracking, no external requests.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Security</span>
+                                <span class="badge badge-secondary">Open Source</span>
+                                <a href="https://avocloud.net/pwgen/" target="_blank" class="badge badge-outline">Website ↗</a>
+                                <a href="https://github.com/AvoCloud-net/avocloud.net-website" target="_blank" class="badge badge-outline">GitHub ↗</a>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <!-- Row 2: SafeText + SkyFire (featured 2col) — zigzag -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                SafeText
+                            </h3>
+                            <p class="text-muted text-sm">An API server scanning text for offensive language. Powers Baxi and AvoFilter.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Python</span>
+                                <span class="badge badge-secondary">API</span>
+                                <span class="badge badge-secondary">Open Source</span>
+                                <a href="https://github.com/AvoCloud-net/SafeText" target="_blank" class="badge badge-outline">GitHub ↗</a>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                                    <line x1="6" y1="6" x2="6.01" y2="6"/>
+                                    <line x1="6" y1="18" x2="6.01" y2="18"/>
+                                </svg>
+                                SkyFire
+                            </h3>
+                            <p class="text-muted text-sm">A micro-server hosting service for running websites, projects, and status monitoring 24/7. Designed for speed, reliability, and ease of use.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Server</span>
+                                <span class="badge badge-secondary">24/7</span>
+                                <span class="badge badge-secondary">Gaming</span>
+                                <span class="badge badge-secondary">Free or paid</span>
+                                <a href="https://avocloud.net/skyfire/" target="_blank" class="badge badge-outline">Website ↗</a>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <!-- Row 3: QrGate (featured 2col) + EduGrade -->
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <path d="M3 9h18M9 21V9"/>
+                                </svg>
+                                QrGate
+                            </h3>
+                            <p class="text-muted text-sm">A full-featured event ticketing system with integrated shop, PayPal payment, automated email delivery, and QR code check-in.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Python</span>
+                                <span class="badge badge-secondary">Events</span>
+                                <span class="badge badge-secondary">Ticketing</span>
+                                <span class="badge badge-secondary">Open Source</span>
+                                <a href="https://github.com/rwolf2467/qr_gate" target="_blank" class="badge badge-outline">GitHub ↗</a>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                                </svg>
+                                EduGrade
+                            </h3>
+                            <p class="text-muted text-sm">Secure grade management for educators — AES-256-GCM encrypted with built-in analytics.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Python</span>
+                                <span class="badge badge-secondary">Education</span>
+                                <span class="badge badge-secondary">Encrypted</span>
+                                <span class="badge badge-secondary">Open Source</span>
+                                <a href="https://github.com/rwolf2467/EduGrade" target="_blank" class="badge badge-outline">GitHub ↗</a>
+                                <a href="https://hub.docker.com/r/redwolf2467/edugrade" target="_blank" class="badge badge-outline">Docker ↗</a>
+                            </div>
+                        </footer>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="site-footer">
+            <p>Fabian Murauer (Red_Wolf2467) &mdash; <a href="https://avocloud.net">Avocloud.net</a></p>
+        </footer>
+    </div>
+
+    <script src="./assets/js/main.js"></script>
+</body>
+
+</html>
