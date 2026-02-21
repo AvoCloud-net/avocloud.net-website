@@ -20,6 +20,7 @@
     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
         <svg id="theme-icon" viewBox="0 0 24 24"></svg>
     </button>
+    <button class="lang-toggle" id="lang-btn" onclick="toggleLang()" title="Auf Deutsch wechseln">DE</button>
 
     <!-- Hero -->
     <section class="hero">
@@ -36,8 +37,8 @@
             </div>
 
             <h1>Fabian <span class="highlight-purple">Murauer</span></h1>
-            <p class="hero-subtitle">
-                Python &amp; Java Developer · Server Management<br>
+            <p class="hero-subtitle" data-i18n-html="hero.subtitle">
+                Passionate Software Developer · Network &amp; Systems Engineering<br>
                 <span class="highlight-yellow">Founder of Avocloud.net</span> and <span class="highlight-yellow">student at HTL Traun</span>
             </p>
 
@@ -81,6 +82,23 @@
                 </a>
             </div>
 
+            <!-- Currently building -->
+            <div class="flex flex-wrap gap-2 justify-center mt-5 items-center">
+                <span class="text-muted text-sm" data-i18n="hero.building">Currently building:</span>
+                <span class="badge badge-secondary flex items-center gap-1.5">
+                    <span class="animate-pulse" style="width:7px;height:7px;background:#a855f7;border-radius:50%;display:inline-block;flex-shrink:0"></span>
+                    Baxi
+                </span>
+                <span class="badge badge-secondary flex items-center gap-1.5">
+                    <span class="animate-pulse" style="width:7px;height:7px;background:#a855f7;border-radius:50%;display:inline-block;flex-shrink:0"></span>
+                    EduGrade
+                </span>
+                <span class="badge badge-secondary flex items-center gap-1.5">
+                    <span class="animate-pulse" style="width:7px;height:7px;background:#a855f7;border-radius:50%;display:inline-block;flex-shrink:0"></span>
+                    QrGate
+                </span>
+            </div>
+
         </div>
         <button class="scroll-indicator" onclick="window.scrollTo({top:window.innerHeight,behavior:'smooth'})">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -96,7 +114,7 @@
 
             <!-- About -->
             <section class="py-24" id="about">
-                <div class="section-label">ABOUT ME</div>
+                <div class="section-label" data-i18n="about.label">ABOUT ME</div>
                 <div class="card">
                     <header>
                         <h2 class="text-xl font-semibold flex items-center gap-2">
@@ -104,14 +122,15 @@
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                                 <circle cx="12" cy="7" r="4"/>
                             </svg>
-                            Hi, I'm Fabian.
+                            <span data-i18n="about.heading">Hi, I'm Fabian.</span>
                         </h2>
                     </header>
                     <section>
-                        <p class="text-muted">
-                            I'm a software developer from Wels, Austria with several years of programming experience.
-                            I specialize in Python and Java development and have a passion for creating innovative
-                            solutions and working on diverse projects.
+                        <p class="text-muted" data-i18n="about.intro">
+                            I'm a software developer from Wels, Austria with around five years of experience —
+                            what started as tinkering around quickly grew into a real passion. I love building
+                            things that actually get used and working on the kind of diverse projects that keep
+                            things interesting.
                         </p>
 
                         <h3 class="section-h3 mt-6">
@@ -119,9 +138,9 @@
                                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
                                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                             </svg>
-                            Professional Background
+                            <span data-i18n="about.pro.heading">Professional Background</span>
                         </h3>
-                        <p class="text-muted mt-2">
+                        <p class="text-muted mt-2" data-i18n="about.pro.body">
                             As the founder of Avocloud.net, I lead a small team that transforms creative ideas into
                             reality. What started as a hobby has evolved into a collaborative platform where we
                             experiment with software development, Discord bot creation, and various tech projects.
@@ -134,13 +153,25 @@
                                 <polyline points="4 17 10 11 4 5"/>
                                 <line x1="12" y1="19" x2="20" y2="19"/>
                             </svg>
-                            Tech Philosophy
+                            <span data-i18n="about.tech.heading">Tech Philosophy</span>
                         </h3>
-                        <p class="text-muted mt-2">
+                        <p class="text-muted mt-2" data-i18n="about.tech.body">
                             I'm a passionate Linux user — my main PC runs Linux exclusively (sorry Microsoft!).
                             I believe in self-hosting and maintaining control over my digital environment. From my
                             own private cloud infrastructure to self-hosted password managers and even my own VPN —
                             I prefer running everything on my own servers rather than relying on third-party providers.
+                        </p>
+
+                        <h3 class="section-h3 mt-6">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                            </svg>
+                            <span data-i18n="about.edu.heading">Education</span>
+                        </h3>
+                        <p class="text-muted mt-2" data-i18n-html="about.edu.body">
+                            Currently attending <strong>HTL Traun</strong>, where my curriculum covers
+                            Medientechnik, network engineering, IT security, and database systems.
                         </p>
                     </section>
                 </div>
@@ -148,8 +179,8 @@
 
             <!-- Skills -->
             <section class="pb-24" id="skills">
-                <div class="section-label">SKILLS</div>
-                <h2 class="text-2xl font-bold mb-8">My Skills</h2>
+                <div class="section-label" data-i18n="skills.label">SKILLS</div>
+                <h2 class="text-2xl font-bold mb-8" data-i18n="skills.heading">My Skills</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                     <!-- Programming -->
@@ -160,7 +191,7 @@
                                     <polyline points="16 18 22 12 16 6"/>
                                     <polyline points="8 6 2 12 8 18"/>
                                 </svg>
-                                Programming
+                                <span data-i18n="skills.prog.title">Programming</span>
                             </h3>
                         </header>
                         <section>
@@ -168,7 +199,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>Python</span>
-                                        <span class="text-muted text-sm">Advanced</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.advanced">Advanced</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 95%"></div>
@@ -177,7 +208,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>HTML / CSS</span>
-                                        <span class="text-muted text-sm">Advanced</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.advanced">Advanced</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 85%"></div>
@@ -186,7 +217,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>Java</span>
-                                        <span class="text-muted text-sm">Beginner</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.beginner">Beginner</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 30%"></div>
@@ -195,7 +226,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>JavaScript</span>
-                                        <span class="text-muted text-sm">Basic</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.basic">Basic</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 45%"></div>
@@ -204,7 +235,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>PHP</span>
-                                        <span class="text-muted text-sm">Basic</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.basic">Basic</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 45%"></div>
@@ -224,7 +255,7 @@
                                     <line x1="6" y1="6" x2="6.01" y2="6"/>
                                     <line x1="6" y1="18" x2="6.01" y2="18"/>
                                 </svg>
-                                Server &amp; Infrastructure
+                                <span data-i18n="skills.infra.title">Server &amp; Infrastructure</span>
                             </h3>
                         </header>
                         <section>
@@ -232,7 +263,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>Linux Server</span>
-                                        <span class="text-muted text-sm">Intermediate</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.intermediate">Intermediate</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 80%"></div>
@@ -241,7 +272,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>Docker</span>
-                                        <span class="text-muted text-sm">Intermediate</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.intermediate">Intermediate</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 60%"></div>
@@ -250,7 +281,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>Network Security</span>
-                                        <span class="text-muted text-sm">Intermediate</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.intermediate">Intermediate</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 60%"></div>
@@ -259,7 +290,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>Nginx</span>
-                                        <span class="text-muted text-sm">Intermediate</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.intermediate">Intermediate</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 65%"></div>
@@ -276,7 +307,7 @@
                                 <svg class="lucide" viewBox="0 0 24 24">
                                     <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
                                 </svg>
-                                Tools &amp; Technologies
+                                <span data-i18n="skills.tools.title">Tools &amp; Technologies</span>
                             </h3>
                         </header>
                         <section>
@@ -284,7 +315,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>Git &amp; GitHub</span>
-                                        <span class="text-muted text-sm">Advanced</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.advanced">Advanced</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 80%"></div>
@@ -293,7 +324,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>AI Prompting</span>
-                                        <span class="text-muted text-sm">Advanced</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.advanced">Advanced</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 80%"></div>
@@ -302,7 +333,7 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span>REST APIs</span>
-                                        <span class="text-muted text-sm">Advanced</span>
+                                        <span class="text-muted text-sm" data-i18n="skill.advanced">Advanced</span>
                                     </div>
                                     <div class="bg-purple-600/20 relative h-2 w-full overflow-hidden rounded-full">
                                         <div class="bg-purple-600 h-full w-full flex-1 transition-all" style="width: 80%"></div>
@@ -317,8 +348,8 @@
 
             <!-- Projects — bento zigzag -->
             <section class="pb-24" id="projects">
-                <div class="section-label">PROJECTS</div>
-                <h2 class="text-2xl font-bold mb-8">My Projects</h2>
+                <div class="section-label" data-i18n="projects.label">PROJECTS</div>
+                <h2 class="text-2xl font-bold mb-8" data-i18n="projects.heading">My Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
                     <!-- Row 1: Baxi (featured 2col) + PWGEN -->
@@ -330,7 +361,7 @@
                                 </svg>
                                 Baxi
                             </h3>
-                            <p class="text-muted text-sm">A verified Discord bot featuring intelligent chat filtering, a global spammer database, and advanced moderation tools. Built with Python and actively maintained.</p>
+                            <p class="text-muted text-sm" data-i18n="baxi.desc">A verified Discord bot featuring intelligent chat filtering, a global spammer database, and advanced moderation tools. Built with Python and actively maintained.</p>
                         </header>
                         <footer>
                             <div class="flex flex-wrap gap-2">
@@ -354,7 +385,7 @@
                                 </svg>
                                 PWGEN
                             </h3>
-                            <p class="text-muted text-sm">A secure, privacy-focused password generator. No tracking, no external requests.</p>
+                            <p class="text-muted text-sm" data-i18n="pwgen.desc">A secure, privacy-focused password generator. No tracking, no external requests.</p>
                         </header>
                         <footer>
                             <div class="flex flex-wrap gap-2">
@@ -375,7 +406,7 @@
                                 </svg>
                                 SafeText
                             </h3>
-                            <p class="text-muted text-sm">An API server scanning text for offensive language. Powers Baxi and AvoFilter.</p>
+                            <p class="text-muted text-sm" data-i18n="safetext.desc">An API server scanning text for offensive language. Powers Baxi and AvoFilter.</p>
                         </header>
                         <footer>
                             <div class="flex flex-wrap gap-2">
@@ -398,7 +429,7 @@
                                 </svg>
                                 SkyFire
                             </h3>
-                            <p class="text-muted text-sm">A micro-server hosting service for running websites, projects, and status monitoring 24/7. Designed for speed, reliability, and ease of use.</p>
+                            <p class="text-muted text-sm" data-i18n="skyfire.desc">A micro-server hosting service for running websites, projects, and status monitoring 24/7. Designed for speed, reliability, and ease of use.</p>
                         </header>
                         <footer>
                             <div class="flex flex-wrap gap-2">
@@ -421,7 +452,7 @@
                                 </svg>
                                 QrGate
                             </h3>
-                            <p class="text-muted text-sm">A full-featured event ticketing system with integrated shop, PayPal payment, automated email delivery, and QR code check-in.</p>
+                            <p class="text-muted text-sm" data-i18n="qrgate.desc">A full-featured event ticketing system with integrated shop, PayPal payment, automated email delivery, and QR code check-in.</p>
                         </header>
                         <footer>
                             <div class="flex flex-wrap gap-2">
@@ -443,7 +474,7 @@
                                 </svg>
                                 EduGrade
                             </h3>
-                            <p class="text-muted text-sm">Secure grade management for educators — AES-256-GCM encrypted with built-in analytics.</p>
+                            <p class="text-muted text-sm" data-i18n="edugrade.desc">Secure grade management for educators — AES-256-GCM encrypted with built-in analytics.</p>
                         </header>
                         <footer>
                             <div class="flex flex-wrap gap-2">
@@ -460,6 +491,229 @@
                 </div>
             </section>
 
+            <!-- Community & Activities -->
+            <section class="pb-24" id="community">
+                <div class="section-label" data-i18n="community.label">COMMUNITY</div>
+                <h2 class="text-2xl font-bold mb-8" data-i18n="community.heading">Beyond the Code</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                    <!-- Helenenbühne — featured 2col -->
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/>
+                                    <path d="m6.2 5.3 3.1 3.9"/>
+                                    <path d="m12.4 3.4 3.1 3.8"/>
+                                    <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>
+                                </svg>
+                                Helenenbühne Sattledt
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="helene.subtitle">Local theater group — I handle the full technical side, from stage to code.</p>
+                        </header>
+                        <section>
+                            <ul class="content-list mt-1">
+                                <li data-i18n="helene.li1">Event technology: sound, video &amp; lighting</li>
+                                <li data-i18n="helene.li2">Website development &amp; maintenance</li>
+                                <li data-i18n="helene.li3">Built and operate QrGate — their custom ticketing &amp; shop system</li>
+                                <li data-i18n="helene.li4">Email server management</li>
+                            </ul>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Event Tech</span>
+                                <span class="badge badge-secondary">Theater</span>
+                                <span class="badge badge-secondary">Sound &amp; Light</span>
+                                <a href="https://github.com/rwolf2467/qr_gate" target="_blank" class="badge badge-outline">QrGate ↗</a>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <!-- RK -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                                RK – Rotes Kreuz
+                            </h3>
+                        </header>
+                        <section>
+                            <h4 class="section-h3 mt-1">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                                <span data-i18n="rk.jrk.heading">JRK – Youth Red Cross</span>
+                            </h4>
+                            <p class="text-muted mt-2" data-i18n="rk.jrk.body">Volunteer at the Austrian Youth Red Cross — I help prepare and run youth sessions and look after the kids alongside other volunteers.</p>
+
+                            <h4 class="section-h3 mt-4">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                                </svg>
+                                <span data-i18n="rk.sani.heading">Paramedic Training</span>
+                            </h4>
+                            <p class="text-muted mt-2" data-i18n="rk.sani.body">I am currently completing my paramedic (Sanitäter) training with the Red Cross. The theoretical exam is scheduled for late May 2026 — after that, many practical hours still lie ahead before completion.</p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary" data-i18n="badge.firstaid">First Aid</span>
+                                <span class="badge badge-secondary" data-i18n="badge.youthwork">Youth Work</span>
+                                <span class="badge badge-secondary" data-i18n="badge.sani">Paramedic (in training)</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <!-- Gemeindezeitung -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
+                                    <path d="M18 14h-8"/>
+                                    <path d="M15 18h-5"/>
+                                    <path d="M10 6h8v4h-8V6Z"/>
+                                </svg>
+                                Kontakte – Sattledt
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted" data-i18n-html="gz.desc">Design the children's page for <em>Kontakte</em>, the local community and parish magazine in Sattledt.</p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Design</span>
+                                <span class="badge badge-secondary">Print</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- My Setup -->
+            <section class="pb-24" id="setup">
+                <div class="section-label" data-i18n="setup.label">SETUP</div>
+                <h2 class="text-2xl font-bold mb-8" data-i18n="setup.heading">My Setup</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                    <!-- Main laptop — featured 2col -->
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/>
+                                </svg>
+                                ASUS ROG Zephyrus G16 (2024)
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="laptop.subtitle">My daily driver for development, design, and everything else.</p>
+                        </header>
+                        <section>
+                            <div class="flex flex-wrap gap-2 py-1">
+                                <span class="badge badge-secondary">Fedora 43 Workstation</span>
+                                <span class="badge badge-secondary">Intel Core Ultra 9 185H</span>
+                                <span class="badge badge-secondary">RTX 4060 Mobile</span>
+                                <span class="badge badge-secondary">32 GB RAM</span>
+                                <span class="badge badge-secondary">2560×1600 · 240 Hz</span>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Raspberry Pi -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                                    <line x1="6" y1="6" x2="6.01" y2="6"/>
+                                    <line x1="6" y1="18" x2="6.01" y2="18"/>
+                                </svg>
+                                Raspberry Pi 4B
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="pi.subtitle">Home server — private cloud storage &amp; sync.</p>
+                        </header>
+                        <section>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Armbian</span>
+                                <span class="badge badge-secondary">4 GB RAM</span>
+                                <span class="badge badge-secondary">1.83 TB SSD</span>
+                                <span class="badge badge-secondary">Nextcloud</span>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- ASUS TUF — 2col -->
+                    <div class="card card-hover md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                                    <line x1="6" y1="6" x2="6.01" y2="6"/>
+                                    <line x1="6" y1="18" x2="6.01" y2="18"/>
+                                </svg>
+                                ASUS TUF Gaming A17 (2019)
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="tuf.subtitle">Repurposed as a home AI &amp; services server.</p>
+                        </header>
+                        <section>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Fedora 43 Server</span>
+                                <span class="badge badge-secondary">AMD Ryzen 5 4600H</span>
+                                <span class="badge badge-secondary">GTX 1650 Ti Mobile</span>
+                                <span class="badge badge-secondary">24 GB RAM</span>
+                                <span class="badge badge-secondary">Ollama</span>
+                                <span class="badge badge-secondary">OpenWebUI</span>
+                                <span class="badge badge-secondary">UptimeKuma</span>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Strato VPS -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                                </svg>
+                                Strato VPS
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="vps.subtitle">External cloud servers for production services.</p>
+                        </header>
+                        <section>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Ubuntu Linux</span>
+                                <span class="badge badge-secondary">Fedora Linux</span>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Contact -->
+            <section class="pb-24" id="contact">
+                <div class="section-label" data-i18n="contact.label">CONTACT</div>
+                <h2 class="text-2xl font-bold mb-8" data-i18n="contact.heading">Get in Touch</h2>
+                <div class="card">
+                    <section>
+                        <p class="text-muted mb-6" data-i18n="contact.body">Have a project idea, a question, or just want to say hi? Feel free to reach out.</p>
+                        <a href="mailto:fabian.murauer@avocloud.net" class="hero-btn inline-flex">
+                            <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            fabian.murauer@avocloud.net
+                        </a>
+                    </section>
+                </div>
+            </section>
+
         </main>
 
         <footer class="site-footer">
@@ -468,6 +722,149 @@
     </div>
 
     <script src="./assets/js/main.js"></script>
+    <script>
+    const _i18nData = {
+      en: {
+        'hero.subtitle': 'Passionate Software Developer · Network &amp; Systems Engineering<br><span class="highlight-yellow">Founder of Avocloud.net</span> and <span class="highlight-yellow">student at HTL Traun</span>',
+        'hero.building': 'Currently building:',
+        'about.label': 'ABOUT ME',
+        'about.heading': "Hi, I'm Fabian.",
+        'about.intro': "I'm a software developer from Wels, Austria with around five years of experience — what started as tinkering around quickly grew into a real passion. I love building things that actually get used and working on the kind of diverse projects that keep things interesting.",
+        'about.pro.heading': 'Professional Background',
+        'about.pro.body': 'As the founder of Avocloud.net, I lead a small team that transforms creative ideas into reality. What started as a hobby has evolved into a collaborative platform where we experiment with software development, Discord bot creation, and various tech projects. My role covers full-stack development, server administration, network technology, and project leadership.',
+        'about.tech.heading': 'Tech Philosophy',
+        'about.tech.body': "I'm a passionate Linux user — my main PC runs Linux exclusively (sorry Microsoft!). I believe in self-hosting and maintaining control over my digital environment. From my own private cloud infrastructure to self-hosted password managers and even my own VPN — I prefer running everything on my own servers rather than relying on third-party providers.",
+        'about.edu.heading': 'Education',
+        'about.edu.body': 'Currently attending <strong>HTL Traun</strong>, where my curriculum covers Medientechnik, network engineering, IT security, and database systems.',
+        'skills.label': 'SKILLS',
+        'skills.heading': 'My Skills',
+        'skills.prog.title': 'Programming',
+        'skills.infra.title': 'Server & Infrastructure',
+        'skills.tools.title': 'Tools & Technologies',
+        'skill.advanced': 'Advanced',
+        'skill.intermediate': 'Intermediate',
+        'skill.basic': 'Basic',
+        'skill.beginner': 'Beginner',
+        'projects.label': 'PROJECTS',
+        'projects.heading': 'My Projects',
+        'baxi.desc': 'A verified Discord bot featuring intelligent chat filtering, a global spammer database, and advanced moderation tools. Built with Python and actively maintained.',
+        'pwgen.desc': 'A secure, privacy-focused password generator. No tracking, no external requests.',
+        'safetext.desc': 'An API server scanning text for offensive language. Powers Baxi and AvoFilter.',
+        'skyfire.desc': 'A micro-server hosting service for running websites, projects, and status monitoring 24/7. Designed for speed, reliability, and ease of use.',
+        'qrgate.desc': 'A full-featured event ticketing system with integrated shop, PayPal payment, automated email delivery, and QR code check-in.',
+        'edugrade.desc': 'Secure grade management for educators — AES-256-GCM encrypted with built-in analytics.',
+        'community.label': 'COMMUNITY',
+        'community.heading': 'Beyond the Code',
+        'helene.subtitle': 'Local theater group — I handle the full technical side, from stage to code.',
+        'helene.li1': 'Event technology: sound, video & lighting',
+        'helene.li2': 'Website development & maintenance',
+        'helene.li3': 'Built and operate QrGate — their custom ticketing & shop system',
+        'helene.li4': 'Email server management',
+        'rk.jrk.heading': 'JRK – Youth Red Cross',
+        'rk.jrk.body': 'Volunteer at the Austrian Youth Red Cross — I help prepare and run youth sessions and look after the kids alongside other volunteers.',
+        'rk.sani.heading': 'Paramedic Training',
+        'rk.sani.body': 'I am currently completing my paramedic (Sanitäter) training with the Red Cross. The theoretical exam is scheduled for late May 2026 — after that, many practical hours still lie ahead before completion.',
+        'gz.desc': 'Design the children\'s page for <em>Kontakte</em>, the local community and parish magazine in Sattledt.',
+        'badge.firstaid': 'First Aid',
+        'badge.youthwork': 'Youth Work',
+        'badge.sani': 'Paramedic (in training)',
+        'setup.label': 'SETUP',
+        'setup.heading': 'My Setup',
+        'laptop.subtitle': 'My daily driver for development, design, and everything else.',
+        'pi.subtitle': 'Home server — private cloud storage & sync.',
+        'tuf.subtitle': 'Repurposed as a home AI & services server.',
+        'vps.subtitle': 'External cloud servers for production services.',
+        'contact.label': 'CONTACT',
+        'contact.heading': 'Get in Touch',
+        'contact.body': 'Have a project idea, a question, or just want to say hi? Feel free to reach out.',
+      },
+      de: {
+        'hero.subtitle': 'Leidenschaftlicher Softwareentwickler · Netzwerktechnik &amp; Systemtechnik<br><span class="highlight-yellow">Gründer von Avocloud.net</span> und <span class="highlight-yellow">Schüler der HTL Traun</span>',
+        'hero.building': 'Aktuell in Entwicklung:',
+        'about.label': 'ÜBER MICH',
+        'about.heading': 'Hallo, ich bin Fabian.',
+        'about.intro': 'Ich bin Softwareentwickler aus Wels, Österreich, mit rund fünf Jahren Erfahrung — was als Herumtüfteln begann, ist schnell zu einer echten Leidenschaft geworden. Ich liebe es, Dinge zu bauen, die tatsächlich genutzt werden, und an abwechslungsreichen Projekten zu arbeiten, die es spannend halten.',
+        'about.pro.heading': 'Beruflicher Hintergrund',
+        'about.pro.body': 'Als Gründer von Avocloud.net leite ich ein kleines Team, das kreative Ideen in die Realität umsetzt. Was als Hobby begann, hat sich zu einer kollaborativen Plattform entwickelt, auf der wir mit Softwareentwicklung, Discord-Bot-Erstellung und verschiedenen Tech-Projekten experimentieren. Meine Rolle umfasst Full-Stack-Entwicklung, Serveradministration, Netzwerktechnologie und Projektleitung.',
+        'about.tech.heading': 'Technik-Philosophie',
+        'about.tech.body': 'Ich bin ein leidenschaftlicher Linux-Nutzer — mein Haupt-PC läuft ausschließlich auf Linux (sorry Microsoft!). Ich setze auf Self-Hosting und möchte die Kontrolle über meine digitale Umgebung behalten. Von meiner eigenen privaten Cloud-Infrastruktur über selbst gehostete Passwortmanager bis hin zu meinem eigenen VPN — ich betreibe lieber alles auf meinen eigenen Servern, anstatt auf Drittanbieter angewiesen zu sein.',
+        'about.edu.heading': 'Ausbildung',
+        'about.edu.body': 'Aktuell besuche ich die <strong>HTL Traun</strong>, wo mein Lehrplan Medientechnik, Netzwerktechnik, IT-Sicherheit und Datenbanksysteme umfasst.',
+        'skills.label': 'FÄHIGKEITEN',
+        'skills.heading': 'Meine Fähigkeiten',
+        'skills.prog.title': 'Programmierung',
+        'skills.infra.title': 'Server & Infrastruktur',
+        'skills.tools.title': 'Tools & Technologien',
+        'skill.advanced': 'Fortgeschritten',
+        'skill.intermediate': 'Mittelstufe',
+        'skill.basic': 'Grundkenntnisse',
+        'skill.beginner': 'Anfänger',
+        'projects.label': 'PROJEKTE',
+        'projects.heading': 'Meine Projekte',
+        'baxi.desc': 'Ein verifizierter Discord-Bot mit intelligentem Chat-Filter, einer globalen Spammer-Datenbank und fortschrittlichen Moderationstools. In Python entwickelt und aktiv gewartet.',
+        'pwgen.desc': 'Ein sicherer, datenschutzorientierter Passwortgenerator. Kein Tracking, keine externen Anfragen.',
+        'safetext.desc': 'Ein API-Server zur Erkennung anstößiger Sprache. Betreibt Baxi und AvoFilter.',
+        'skyfire.desc': 'Ein Micro-Server-Hosting-Dienst zum Betreiben von Websites, Projekten und Status-Monitoring rund um die Uhr. Konzipiert für Geschwindigkeit, Zuverlässigkeit und Benutzerfreundlichkeit.',
+        'qrgate.desc': 'Ein vollständiges Event-Ticketing-System mit integriertem Shop, PayPal-Zahlung, automatisiertem E-Mail-Versand und QR-Code-Check-in.',
+        'edugrade.desc': 'Sichere Notenführung für Lehrkräfte — AES-256-GCM-verschlüsselt mit integrierter Analyse.',
+        'community.label': 'COMMUNITY',
+        'community.heading': 'Abseits des Codes',
+        'helene.subtitle': 'Lokale Theatergruppe — ich übernehme die gesamte technische Seite, von der Bühne bis zum Code.',
+        'helene.li1': 'Veranstaltungstechnik: Ton, Video & Licht',
+        'helene.li2': 'Websiteentwicklung & -pflege',
+        'helene.li3': 'QrGate entwickelt und betrieben — das hauseigene Ticketing- & Shop-System',
+        'helene.li4': 'E-Mail-Server-Verwaltung',
+        'rk.jrk.heading': 'JRK – Jugendrotkreuz',
+        'rk.jrk.body': 'Freiwilliger beim Österreichischen Jugendrotkreuz — ich helfe bei der Vorbereitung und Durchführung von Jugendstunden und betreue die Kinder gemeinsam mit anderen Freiwilligen.',
+        'rk.sani.heading': 'Sanitäterausbildung',
+        'rk.sani.body': 'Derzeit absolviere ich meine Sanitäterausbildung beim Roten Kreuz. Die theoretische Prüfung findet Ende Mai 2026 statt — danach folgen noch viele Praxisstunden bis zum Abschluss.',
+        'gz.desc': 'Ich gestalte die Kinderseite für <em>Kontakte</em>, das Gemeinde- und Pfarrblatt in Sattledt.',
+        'badge.firstaid': 'Erste Hilfe',
+        'badge.youthwork': 'Jugendarbeit',
+        'badge.sani': 'Sanitäter i.A.',
+        'setup.label': 'SETUP',
+        'setup.heading': 'Mein Setup',
+        'laptop.subtitle': 'Mein tägliches Arbeitsgerät für Entwicklung, Design und alles andere.',
+        'pi.subtitle': 'Heimserver — private Cloud-Speicherung & Synchronisation.',
+        'tuf.subtitle': 'Umfunktioniert als Heim-KI- & Diensteserver.',
+        'vps.subtitle': 'Externe Cloud-Server für Produktionsdienste.',
+        'contact.label': 'KONTAKT',
+        'contact.heading': 'Kontakt aufnehmen',
+        'contact.body': 'Du hast eine Projektidee, eine Frage oder möchtest einfach Hallo sagen? Meld dich gerne.',
+      }
+    };
+
+    function applyLang(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (_i18nData[lang] && _i18nData[lang][key] !== undefined) {
+          el.textContent = _i18nData[lang][key];
+        }
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n-html');
+        if (_i18nData[lang] && _i18nData[lang][key] !== undefined) {
+          el.innerHTML = _i18nData[lang][key];
+        }
+      });
+      var btn = document.getElementById('lang-btn');
+      if (btn) {
+        btn.textContent = lang === 'en' ? 'DE' : 'EN';
+        btn.title = lang === 'en' ? 'Auf Deutsch wechseln' : 'Switch to English';
+      }
+      document.documentElement.lang = lang === 'en' ? 'en' : 'de';
+      localStorage.setItem('avo-lang', lang);
+    }
+
+    function toggleLang() {
+      var current = localStorage.getItem('avo-lang') || 'en';
+      applyLang(current === 'en' ? 'de' : 'en');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      applyLang(localStorage.getItem('avo-lang') || 'en');
+    });
+    </script>
 </body>
 
 </html>

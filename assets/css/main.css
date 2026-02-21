@@ -27,6 +27,39 @@ body {
     padding-top: 4px;
 }
 
+/* ===== LANG TOGGLE ===== */
+.lang-toggle {
+    position: fixed;
+    top: 12px;
+    right: 58px;
+    z-index: 999;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 17px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    font-family: "Quicksand", sans-serif;
+}
+
+html:not(.dark) .lang-toggle {
+    border-color: rgba(0, 0, 0, 0.15);
+    color: rgba(0, 0, 0, 0.55);
+}
+
+.lang-toggle:hover {
+    background: rgba(147, 51, 234, 0.2);
+    border-color: rgba(147, 51, 234, 0.5);
+    color: #9333ea;
+}
+
 /* ===== THEME TOGGLE ===== */
 .theme-toggle {
     position: fixed;

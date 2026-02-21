@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avocloud – Redirect Page Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0c0c10;
+    --surface:   #13131a;
+    --surface2:  #1a1a24;
+    --surface3:  #22222e;
+    --border:    #2c2c3e;
+    --accent:    #9333ea;
+    --accent2:   #c084fc;
+    --text:      #e2e2f0;
+    --muted:     #6b6b8a;
+    --success:   #4ade80;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Outfit', sans-serif;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    flex-shrink: 0;
+    z-index: 10;
+  }
+  .logo {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent), #c084fc);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  header h1 { font-size: 17px; font-weight: 700; letter-spacing: -.3px; }
+  header h1 span { color: var(--accent2); }
+  .badge {
+    margin-left: auto;
+    background: rgba(147,51,234,.15);
+    color: var(--accent2);
+    border: 1px solid rgba(147,51,234,.3);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-family: var(--mono);
+    font-weight: 500;
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .workspace {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ─── LEFT PANEL ─── */
+  .panel {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* Scrollbar */
+  .panel::-webkit-scrollbar { width: 5px; }
+  .panel::-webkit-scrollbar-track { background: transparent; }
+  .panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .section {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 16px;
+    cursor: pointer;
+    user-select: none;
+    background: var(--surface3);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    transition: color .15s;
+  }
+  .section-header:hover { color: var(--text); }
+  .section-header .arrow {
+    margin-left: auto;
+    transition: transform .2s;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .section-header.open .arrow { transform: rotate(180deg); }
+  .section-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .section-body.collapsed { display: none; }
+
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    margin-bottom: 6px;
+    font-family: var(--mono);
+  }
+  input[type=text], input[type=url], input[type=number], textarea, select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(147,51,234,.15);
+  }
+  select option { background: var(--surface2); }
+  textarea { resize: vertical; min-height: 64px; line-height: 1.5; }
+
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+  /* Color input */
+  .color-row { display: flex; align-items: center; gap: 8px; }
+  input[type=color] {
+    width: 38px; height: 38px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    cursor: pointer;
+    padding: 3px;
+    flex-shrink: 0;
+  }
+  .color-hex { flex: 1; font-family: var(--mono) !important; }
+
+  /* Preset dots */
+  .color-presets { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+  .preset-dot {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform .15s, border-color .15s;
+  }
+  .preset-dot:hover { transform: scale(1.2); }
+  .preset-dot.active { border-color: white; }
+
+  /* Icon selector */
+  .icon-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .icon-opt {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 10px;
+    color: var(--muted);
+    background: var(--bg);
+    transition: all .15s;
+    padding: 4px;
+  }
+  .icon-opt svg { width: 18px; height: 18px; }
+  .icon-opt:hover { border-color: var(--accent); color: var(--accent2); }
+  .icon-opt.active { border-color: var(--accent); background: rgba(147,51,234,.12); color: var(--accent2); }
+
+  /* Toggle switch */
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; }
+  .toggle-row label { margin: 0; text-transform: none; font-size: 12px; letter-spacing: 0; color: var(--text); }
+  .toggle {
+    position: relative;
+    width: 36px; height: 20px;
+    flex-shrink: 0;
+  }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute; inset: 0;
+    background: var(--border);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 14px; height: 14px;
+    left: 3px; top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform .2s;
+  }
+  .toggle input:checked + .toggle-slider { background: var(--accent); }
+  .toggle input:checked + .toggle-slider::before { transform: translateX(16px); }
+
+  /* Action buttons */
+  .actions {
+    padding: 14px 22px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+    background: var(--surface);
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), #c084fc);
+    color: white;
+    flex: 1;
+  }
+  .btn-primary:hover { opacity: .85; transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--accent); }
+  .btn svg { width: 15px; height: 15px; }
+
+  /* ─── RIGHT: PREVIEW + CODE ─── */
+  .right-panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Browser chrome */
+  .browser-chrome {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .browser-dots { display: flex; gap: 5px; }
+  .browser-dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .d1 { background: #ff5f57; }
+  .d2 { background: #febc2e; }
+  .d3 { background: #28c840; }
+  .browser-url {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .browser-url span { color: var(--text); }
+
+  /* Preview iframe */
+  .preview-wrap {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+  }
+  #previewFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* Code panel */
+  .code-panel {
+    height: 200px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: var(--surface3);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .code-header-left { display: flex; align-items: center; gap: 8px; }
+  .code-header-left span { font-size: 11px; font-family: var(--mono); color: var(--muted); }
+  .code-actions { display: flex; gap: 8px; }
+  .code-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .code-btn:hover { color: var(--text); border-color: var(--accent); }
+  .code-btn.copied { color: var(--success); border-color: var(--success); }
+  .code-btn svg { width: 12px; height: 12px; }
+  .code-body {
+    flex: 1;
+    overflow-y: auto;
+    background: #09090e;
+    padding: 14px 18px;
+  }
+  .code-body::-webkit-scrollbar { width: 5px; }
+  .code-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  pre {
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.65;
+    color: #a78bfa;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 20px; right: 20px;
+    background: var(--success); color: #000;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 700; font-size: 13px;
+    transform: translateY(60px); opacity: 0;
+    transition: all .3s cubic-bezier(.34,1.56,.64,1);
+    z-index: 9999;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">⚡</div>
+  <h1>Avocloud <span>Redirect Builder</span></h1>
+  <span class="badge">avocloud.net</span>
+</header>
+
+<!-- MAIN -->
+<div class="workspace">
+
+  <!-- LEFT: CONFIG PANEL -->
+  <div class="panel" id="configPanel">
+
+    <!-- REDIRECT -->
+    <div class="section">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Redirect
+        <span class="arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div>
+          <label>Ziel-URL *</label>
+          <input type="url" id="targetUrl" value="https://discord.com/invite/2EH79jVeuG" oninput="updatePreview()">
+        </div>
+        <div class="row2">
+          <div>
+            <label>Wartezeit (s)</label>
+            <input type="number" id="delay" value="3" min="0" max="60" oninput="updatePreview()">
+          </div>
+          <div>
+            <label>Seiten-Titel</label>
+            <input type="text" id="pageTitle" value="Redirecting to Discord – Avocloud.net" oninput="updatePreview()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- META / SEO -->
+    <div class="section">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Meta / SEO
+        <span class="arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="row2">
+          <div>
+            <label>Author</label>
+            <input type="text" id="metaAuthor" value="Avocloud.net" oninput="updatePreview()">
+          </div>
+          <div>
+            <label>Canonical URL</label>
+            <input type="url" id="metaUrl" value="https://avocloud.net/discord/" oninput="updatePreview()">
+          </div>
+        </div>
+        <div>
+          <label>OG Title</label>
+          <input type="text" id="ogTitle" value="Avocloud.net Discord" oninput="updatePreview()">
+        </div>
+        <div>
+          <label>OG Description</label>
+          <textarea id="ogDesc" rows="2" oninput="updatePreview()">Join the Avocloud Discord server.</textarea>
+        </div>
+        <div>
+          <label>OG Image URL</label>
+          <input type="url" id="ogImage" value="/assets/images/logo.png" oninput="updatePreview()">
+        </div>
+        <div>
+          <label>Favicon URL</label>
+          <input type="url" id="favicon" value="../assets/images/logo.png" oninput="updatePreview()">
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="section">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Inhalt
+        <span class="arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div>
+          <label>Überschrift</label>
+          <input type="text" id="heading" value="Redirecting to Discord" oninput="updatePreview()">
+        </div>
+        <div>
+          <label>Highlight-Wort (farbig)</label>
+          <input type="text" id="highlight" value="Discord" oninput="updatePreview()">
+        </div>
+        <div>
+          <label>Beschreibungstext</label>
+          <textarea id="subtext" rows="2" oninput="updatePreview()">You'll be redirected automatically in a moment...</textarea>
+        </div>
+        <div>
+          <label>Manuelle Link-Text</label>
+          <input type="text" id="linkText" value="Click here if you are not redirected ↗" oninput="updatePreview()">
+        </div>
+      </div>
+    </div>
+
+    <!-- ICON -->
+    <div class="section">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Icon
+        <span class="arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div class="icon-grid" id="iconGrid">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- DESIGN -->
+    <div class="section">
+      <div class="section-header open" onclick="toggleSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/><path d="M13.5 9v2.5L12 13h-2"/><path d="M6.5 15V9"/></svg>
+        Design
+        <span class="arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <div>
+          <label>Akzentfarbe</label>
+          <div class="color-row">
+            <input type="color" id="accentColor" value="#9333ea" oninput="syncColorToHex('accentColor','accentHex'); updatePreview()">
+            <input type="text" id="accentHex" class="color-hex" value="#9333ea" oninput="syncHexToColor('accentHex','accentColor'); updatePreview()">
+          </div>
+          <div class="color-presets">
+            <div class="preset-dot active" style="background:#9333ea" onclick="setAccent('#9333ea',this)"></div>
+            <div class="preset-dot" style="background:#3b82f6" onclick="setAccent('#3b82f6',this)"></div>
+            <div class="preset-dot" style="background:#10b981" onclick="setAccent('#10b981',this)"></div>
+            <div class="preset-dot" style="background:#f59e0b" onclick="setAccent('#f59e0b',this)"></div>
+            <div class="preset-dot" style="background:#ef4444" onclick="setAccent('#ef4444',this)"></div>
+            <div class="preset-dot" style="background:#ec4899" onclick="setAccent('#ec4899',this)"></div>
+            <div class="preset-dot" style="background:#06b6d4" onclick="setAccent('#06b6d4',this)"></div>
+            <div class="preset-dot" style="background:#ffffff" onclick="setAccent('#ffffff',this)"></div>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <label>Dark Mode (Standard: an)</label>
+          <label class="toggle">
+            <input type="checkbox" id="darkMode" checked onchange="updatePreview()">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label>Gradient-Bar oben</label>
+          <label class="toggle">
+            <input type="checkbox" id="showGradBar" checked onchange="updatePreview()">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label>Theme-Toggle Button</label>
+          <label class="toggle">
+            <input type="checkbox" id="showThemeBtn" checked onchange="updatePreview()">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASSETS -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Asset-Pfade
+        <span class="arrow">▼</span>
+      </div>
+      <div class="section-body collapsed">
+        <div>
+          <label>CSS main.css Pfad</label>
+          <input type="text" id="cssPath" value="../assets/css/main.css" oninput="updatePreview()">
+        </div>
+        <div>
+          <label>JS theme.js Pfad</label>
+          <input type="text" id="themeJsPath" value="../assets/js/theme.js" oninput="updatePreview()">
+        </div>
+        <div>
+          <label>JS main.js Pfad</label>
+          <input type="text" id="mainJsPath" value="../assets/js/main.js" oninput="updatePreview()">
+        </div>
+        <p style="font-size:11px;color:var(--muted);font-family:var(--mono);line-height:1.6;">
+          Pfade relativ zur generierten HTML-Datei.<br>
+          Lass leer um das Asset nicht einzubinden.
+        </p>
+      </div>
+    </div>
+
+  </div><!-- /panel -->
+
+  <!-- RIGHT: PREVIEW + CODE -->
+  <div class="right-panel">
+    <!-- Browser chrome -->
+    <div class="browser-chrome">
+      <div class="browser-dots">
+        <span class="d1"></span><span class="d2"></span><span class="d3"></span>
+      </div>
+      <div class="browser-url" id="urlDisplay">
+        <span>https://avocloud.net/discord/</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);font-family:var(--mono);">Live Preview</div>
+    </div>
+
+    <!-- Preview iframe -->
+    <div class="preview-wrap">
+      <iframe id="previewFrame" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+
+    <!-- Code panel -->
+    <div class="code-panel">
+      <div class="code-header">
+        <div class="code-header-left">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b6b8a" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span id="codeFilename">discord/index.html</span>
+          <span>— generierter Code</span>
+        </div>
+        <div class="code-actions">
+          <button class="code-btn" id="copyBtn" onclick="copyCode()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Kopieren
+          </button>
+          <button class="code-btn" onclick="downloadCode()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </button>
+        </div>
+      </div>
+      <div class="code-body">
+        <pre id="codeOutput"></pre>
+      </div>
+    </div>
+
+  </div><!-- /right-panel -->
+</div><!-- /workspace -->
+
+<!-- Actions bar -->
+<div class="actions">
+  <button class="btn btn-primary" onclick="updatePreview()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+    Preview aktualisieren
+  </button>
+  <button class="btn btn-secondary" onclick="openInTab()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    In Tab öffnen
+  </button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── ICONS ───────────────────────────────────────────────
+const ICONS = {
+  spinner: {
+    label: 'Spinner',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:2.5rem;height:2.5rem;animation:spin 1.2s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`
+  },
+  discord: {
+    label: 'Discord',
+    svg: `<svg viewBox="0 0 24 24" fill="currentColor" style="width:2.5rem;height:2.5rem;"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>`
+  },
+  github: {
+    label: 'GitHub',
+    svg: `<svg viewBox="0 0 24 24" fill="currentColor" style="width:2.5rem;height:2.5rem;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>`
+  },
+  link: {
+    label: 'Link',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:2.5rem;height:2.5rem;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`
+  },
+  arrow: {
+    label: 'Arrow',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:2.5rem;height:2.5rem;animation:bounce 1s infinite;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`
+  },
+  globe: {
+    label: 'Globe',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:2.5rem;height:2.5rem;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`
+  },
+  external: {
+    label: 'Open',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:2.5rem;height:2.5rem;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`
+  },
+  star: {
+    label: 'Star',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:2.5rem;height:2.5rem;animation:spin 3s linear infinite;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`
+  },
+  rocket: {
+    label: 'Rocket',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:2.5rem;height:2.5rem;"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`
+  },
+  custom: {
+    label: 'Custom',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:2.5rem;height:2.5rem;"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41"/><path d="M5.34 17.66l-1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M18.66 18.66l1.41-1.41"/><path d="M12 2v2"/><path d="M12 20v2"/></svg>`
+  },
+};
+
+let selectedIcon = 'spinner';
+
+// Build icon grid
+const iconGrid = document.getElementById('iconGrid');
+Object.entries(ICONS).forEach(([key, val]) => {
+  const d = document.createElement('div');
+  d.className = 'icon-opt' + (key === 'spinner' ? ' active' : '');
+  d.innerHTML = `<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;">${val.svg.replace(/style="[^"]*"/,'style="width:18px;height:18px;"')}</div><span>${val.label}</span>`;
+  d.onclick = () => {
+    document.querySelectorAll('.icon-opt').forEach(x=>x.classList.remove('active'));
+    d.classList.add('active');
+    selectedIcon = key;
+    updatePreview();
+  };
+  iconGrid.appendChild(d);
+});
+
+// ─── SECTION TOGGLE ──────────────────────────────────────
+function toggleSection(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('collapsed');
+}
+
+// ─── COLOR SYNC ──────────────────────────────────────────
+function syncColorToHex(colorId, hexId) {
+  document.getElementById(hexId).value = document.getElementById(colorId).value;
+}
+function syncHexToColor(hexId, colorId) {
+  const v = document.getElementById(hexId).value.trim();
+  if (/^#[0-9a-fA-F]{6}$/.test(v)) document.getElementById(colorId).value = v;
+}
+function setAccent(hex, dot) {
+  document.querySelectorAll('.preset-dot').forEach(d=>d.classList.remove('active'));
+  dot.classList.add('active');
+  document.getElementById('accentColor').value = hex;
+  document.getElementById('accentHex').value = hex;
+  updatePreview();
+}
+
+// ─── CODE GENERATION ─────────────────────────────────────
+function getValues() {
+  return {
+    targetUrl:   document.getElementById('targetUrl').value || 'https://example.com',
+    delay:       document.getElementById('delay').value || '3',
+    pageTitle:   document.getElementById('pageTitle').value || 'Redirecting...',
+    metaAuthor:  document.getElementById('metaAuthor').value,
+    metaUrl:     document.getElementById('metaUrl').value,
+    ogTitle:     document.getElementById('ogTitle').value,
+    ogDesc:      document.getElementById('ogDesc').value,
+    ogImage:     document.getElementById('ogImage').value,
+    favicon:     document.getElementById('favicon').value,
+    heading:     document.getElementById('heading').value,
+    highlight:   document.getElementById('highlight').value,
+    subtext:     document.getElementById('subtext').value,
+    linkText:    document.getElementById('linkText').value,
+    accent:      document.getElementById('accentHex').value || '#9333ea',
+    darkMode:    document.getElementById('darkMode').checked,
+    showGradBar: document.getElementById('showGradBar').checked,
+    showThemeBtn:document.getElementById('showThemeBtn').checked,
+    cssPath:     document.getElementById('cssPath').value,
+    themeJsPath: document.getElementById('themeJsPath').value,
+    mainJsPath:  document.getElementById('mainJsPath').value,
+  };
+}
+
+function escape(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function buildHeading(heading, highlight, accent) {
+  if (!highlight || !heading.includes(highlight)) return escape(heading);
+  return heading.replace(highlight, `<span class="highlight-purple">${escape(highlight)}</span>`);
+}
+
+function getIconSvg(key, accent) {
+  const raw = ICONS[key]?.svg || ICONS.spinner.svg;
+  // replace stroke or fill color with accent
+  return raw.replace(/color:#[0-9a-fA-F]{6}/g, `color:${accent}`)
+            .replace(/stroke="currentColor"/g, `stroke="currentColor"`)
+            .replace(/fill="currentColor"/g, `fill="currentColor"`);
+}
+
+function generateCode(v, forPreview = false) {
+  const headingHtml = buildHeading(v.heading, v.highlight, v.accent);
+  const iconSvg = getIconSvg(selectedIcon, v.accent);
+
+  // Inline CSS fallback for preview (no external files)
+  const inlineCss = forPreview ? `
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      :root { --accent: ${v.accent}; }
+      body {
+        margin: 0; font-family: -apple-system, 'Segoe UI', sans-serif;
+        background: ${v.darkMode ? '#0c0c10' : '#f4f4f8'};
+        color: ${v.darkMode ? '#e2e2f0' : '#111'};
+        min-height: 100vh;
+        display: flex; align-items: center; justify-content: center;
+      }
+      #gradientbar {
+        position: fixed; top: 0; left: 0; right: 0; height: 3px;
+        background: linear-gradient(90deg, ${v.accent}, ${v.accent}88, ${v.accent});
+        display: ${v.showGradBar ? 'block' : 'none'};
+      }
+      .redirect-container {
+        display: flex; align-items: center; justify-content: center;
+        min-height: 100vh; padding: 2rem;
+      }
+      .card {
+        background: ${v.darkMode ? '#13131a' : '#fff'};
+        border: 1px solid ${v.darkMode ? '#2c2c3e' : '#e0e0ee'};
+        border-radius: 16px;
+        padding: 2.5rem 2rem;
+        max-width: 400px; width: 100%;
+        text-align: center;
+        box-shadow: 0 8px 40px rgba(0,0,0,.3);
+      }
+      .highlight-purple { color: ${v.accent}; }
+      .text-muted { color: ${v.darkMode ? '#9ca3af' : '#6b7280'}; }
+      .accent-link {
+        color: ${v.accent}; text-decoration: none; font-size: .875rem;
+        opacity: .8;
+      }
+      .accent-link:hover { opacity: 1; text-decoration: underline; }
+      .mb-4 { margin-bottom: 1rem; }
+      .mb-2 { margin-bottom: .5rem; }
+      .mb-6 { margin-bottom: 1.5rem; }
+      .text-xl { font-size: 1.25rem; }
+      .font-bold { font-weight: 700; }
+      .text-sm { font-size: .875rem; }
+      .flex { display: flex; }
+      .justify-center { justify-content: center; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+      .theme-toggle {
+        position: fixed; top: 1rem; right: 1rem;
+        background: ${v.darkMode ? '#1a1a24' : '#e5e7eb'};
+        border: 1px solid ${v.darkMode ? '#2c2c3e' : '#d1d5db'};
+        color: ${v.darkMode ? '#e2e2f0' : '#111'};
+        border-radius: 8px; padding: 8px; cursor: pointer;
+        display: ${v.showThemeBtn ? 'flex' : 'none'};
+        align-items: center; justify-content: center;
+      }
+      #theme-icon { width: 18px; height: 18px; }
+    </style>` : '';
+
+  const externalCss = !forPreview ? `
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"><\/script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">${v.cssPath ? `\n    <link rel="stylesheet" href="${escape(v.cssPath)}">` : ''}` : '';
+
+  const themeScript = !forPreview && v.themeJsPath
+    ? `\n    <script src="${escape(v.themeJsPath)}"><\/script>` : '';
+
+  const mainScript = !forPreview && v.mainJsPath
+    ? `\n    <script src="${escape(v.mainJsPath)}"><\/script>` : '';
+
+  const gradBar = v.showGradBar ? '\n    <div id="gradientbar"></div>' : '';
+
+  const themeBtn = v.showThemeBtn ? `\n    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+    </button>` : '';
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escape(v.pageTitle)}</title>${v.favicon ? `\n    <link rel="shortcut icon" href="${escape(v.favicon)}" type="image/x-icon">` : ''}
+    <meta name="description" content="${escape(v.ogDesc)}">
+    <meta name="author" content="${escape(v.metaAuthor)}">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:title" content="${escape(v.ogTitle)}">
+    <meta property="og:description" content="${escape(v.ogDesc)}">${v.ogImage ? `\n    <meta property="og:image" content="${escape(v.ogImage)}">` : ''}
+    <meta property="og:url" content="${escape(v.metaUrl)}">
+    <meta property="og:type" content="website">
+    <meta http-equiv="refresh" content="${escape(v.delay)};url=${escape(v.targetUrl)}">${externalCss}${themeScript}${inlineCss}
+</head>
+<body>${gradBar}${themeBtn}
+    <div class="redirect-container">
+        <div class="card text-center" style="max-width: 400px; width: 100%; padding: 2.5rem 2rem;">
+            <div class="flex justify-center mb-4" style="color:${escape(v.accent)}">
+                ${iconSvg.split('\n').join('\n                ')}
+            </div>
+            <h1 class="text-xl font-bold mb-2">${headingHtml}</h1>
+            <p class="text-muted text-sm mb-6">${escape(v.subtext)}</p>
+            <a href="${escape(v.targetUrl)}" class="accent-link text-sm">
+                ${escape(v.linkText)}
+            </a>
+        </div>
+    </div>
+    <style>
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    </style>${mainScript}
+</body>
+</html>`;
+}
+
+// ─── PREVIEW ─────────────────────────────────────────────
+function updatePreview() {
+  const v = getValues();
+
+  // Update URL bar
+  document.getElementById('urlDisplay').innerHTML = `<span>${escape(v.metaUrl || v.targetUrl)}</span>`;
+
+  // Suggest filename
+  try {
+    const slug = new URL(v.metaUrl).pathname.replace(/^\/|\/$/g,'') || 'redirect';
+    document.getElementById('codeFilename').textContent = slug + '/index.html';
+  } catch(e) {}
+
+  // Build preview
+  const html = generateCode(v, true);
+  const frame = document.getElementById('previewFrame');
+  const doc = frame.contentDocument || frame.contentWindow.document;
+  doc.open(); doc.write(html); doc.close();
+
+  // Update code display
+  const finalCode = generateCode(v, false);
+  document.getElementById('codeOutput').textContent = finalCode;
+}
+
+// ─── COPY / DOWNLOAD ─────────────────────────────────────
+function copyCode() {
+  const code = document.getElementById('codeOutput').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.classList.add('copied');
+    btn.textContent = '✓ Kopiert!';
+    showToast('Code kopiert!');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Kopieren`;
+    }, 2000);
+  });
+}
+
+function downloadCode() {
+  const v = getValues();
+  const code = generateCode(v, false);
+  let filename = 'index.html';
+  try {
+    const slug = new URL(v.metaUrl).pathname.replace(/^\/|\/$/g,'').split('/').pop();
+    if (slug) filename = slug + '.html';
+  } catch(e) {}
+  const blob = new Blob([code], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  showToast('Datei heruntergeladen!');
+}
+
+function openInTab() {
+  const v = getValues();
+  const code = generateCode(v, true);
+  const blob = new Blob([code], {type: 'text/html'});
+  window.open(URL.createObjectURL(blob), '_blank');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = '✓ ' + msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ─── INIT ─────────────────────────────────────────────────
+updatePreview();
+
+// Live update on Enter for inputs
+document.querySelectorAll('input,textarea,select').forEach(el => {
+  el.addEventListener('change', updatePreview);
+});
+</script>
+</body>
+</html>
