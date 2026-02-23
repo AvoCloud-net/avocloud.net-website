@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baxi - Avocloud.net</title>
+    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
+    <meta name="description" content="Baxi is a verified Discord bot with intelligent chat filter, global spammer database, and much more.">
+    <meta name="keywords" content="Baxi, Discord bot, moderation, chat filter, verification, Avocloud">
+    <meta name="author" content="Avocloud.net">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://avocloud.net/baxi/" />
+    <meta property="og:title" content="Baxi - Discord Bot">
+    <meta property="og:description" content="Baxi is a verified Discord bot with intelligent chat filter, global spammer database, and much more.">
+    <meta property="og:image" content="https://avocloud.net/baxi/baxi-banner.png">
+    <meta property="og:url" content="https://avocloud.net/baxi">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Baxi - Discord Bot">
+    <meta name="twitter:description" content="Baxi is a verified Discord bot with intelligent chat filter, global spammer database, and much more.">
+    <meta name="twitter:image" content="https://avocloud.net/baxi/baxi-banner.png">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="../assets/js/theme.js"></script>
+</head>
+
+<body>
+    <div id="gradientbar"></div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+    </button>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content w-full" style="text-align:center">
+            <h1>Welcome to <span class="highlight-purple">Baxi</span></h1>
+            <p class="hero-subtitle">
+                A modern, privacy-focused <span class="highlight-yellow">Discord moderation bot</span>
+            </p>
+
+            <!-- Invite button -->
+            <div class="flex flex-wrap gap-3 justify-center mt-4">
+                <a href="https://avocloud.net/baxi/invite/" target="_blank" class="hero-btn">
+                    <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Invite Baxi
+                </a>
+                <a href="https://baxi.avocloud.net/" target="_blank" class="hero-btn">
+                    <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <path d="M21 15l-5-5L5 21"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="https://github.com/AvoCloud-net/Baxi" target="_blank" class="hero-btn">
+                    <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:currentColor;stroke:none;flex-shrink:0">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+                <a href="https://avocloud.net/discord/" target="_blank" class="hero-btn">
+                    <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:#5865F2;stroke:none;flex-shrink:0">
+                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                    Discord
+                </a>
+            </div>
+        </div>
+        <button class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 style="width:28px;height:28px;stroke-linecap:round;stroke-linejoin:round">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </button>
+    </section>
+
+    <!-- Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <main>
+
+            <!-- About -->
+            <section class="py-24" id="about">
+                <div class="section-label">ABOUT BAXI</div>
+                <div class="card">
+                    <header>
+                        <h2 class="text-xl font-semibold flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                            What is Baxi?
+                        </h2>
+                    </header>
+                    <section>
+                        <p class="text-muted">
+                            Baxi is a modern, privacy-focused Discord bot designed to make server management
+                            <strong>safer, smarter, and easier</strong>. It combines powerful moderation tools,
+                            a customizable verification system, and global chat functionality, all configurable
+                            through an easy-to-use web dashboard.
+                        </p>
+                        <p class="text-muted mt-3">
+                            Baxi is part of the <strong>AvoCloud</strong> project, which focuses on creating
+                            modern, privacy-friendly tools for Discord communities.
+                        </p>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section class="pb-24" id="features">
+                <div class="section-label">FEATURES</div>
+                <h2 class="text-2xl font-bold mb-8">What Baxi Offers</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- AI Chat Filter -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M12 2a4 4 0 0 1 4 4c0 1.1-.9 2-2 2a2 2 0 0 0-2 2c0 1.1.9 2 2 2a4 4 0 0 1 0 8 4 4 0 0 1-4-4c0-1.1.9-2 2-2a2 2 0 0 0 2-2c0-1.1-.9-2-2-2a4 4 0 0 1-4-4 4 4 0 0 1 4-4z"/>
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                AI-Powered Chat Filter
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Two-tier filtering system: <strong>SafeText</strong> (open-source bad-word detection)
+                                + <strong>AI Filter</strong> (LLM-based content analysis hosted on AvoCloud servers).
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Global Chat -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                </svg>
+                                Global Chat
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Inter-server chatroom connecting multiple Discord servers.
+                                <em>(Only available on official hosted bot)</em>
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Verification System -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                                Flexible Verification
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Customizable onboarding: Button only, Button + CAPTCHA, or Button + Password.
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Ticket System -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                </svg>
+                                Ticket System
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Support ticket creation for help requests or moderation reports.
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Web Dashboard -->
+                    <div class="card card-hover md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <path d="M21 15l-5-5L5 21"/>
+                                </svg>
+                                Web Dashboard
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Full configuration of all features via a web interface — no complex commands needed.
+                                Everything is just a few clicks away.
+                            </p>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Installation -->
+            <section class="pb-24" id="installation">
+                <div class="section-label">GET STARTED</div>
+                <h2 class="text-2xl font-bold mb-8">Installation & Setup</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Official Bot -->
+                    <div class="card card-hover card-featured">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                    <path d="M2 17l10 5 10-5"/>
+                                    <path d="M2 12l10 5 10-5"/>
+                                </svg>
+                                Official Hosted Bot (Recommended)
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm mb-4">
+                                Get started immediately with the official Baxi bot. All features work out of the box.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <a href="https://avocloud.net/baxi/invite/" target="_blank" class="badge badge-secondary">Invite Bot ↗</a>
+                                <a href="https://baxi.avocloud.net/" target="_blank" class="badge badge-secondary">Dashboard ↗</a>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Self-Hosting -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <polyline points="16 18 22 12 16 6"/>
+                                    <polyline points="8 6 2 12 8 18"/>
+                                </svg>
+                                Self-Hosting
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm mb-3">Clone and install Baxi:</p>
+                            <pre class="text-xs bg-dark p-3 rounded mb-3 overflow-x-auto"><code>git clone https://github.com/AvoCloud-net/Baxi.git
+cd Baxi
+pip install -r requirements.txt</code></pre>
+                            <p class="text-muted text-sm mb-3">
+                                Configure <code>config/auth.py</code> with your Bot Token, then run:
+                            </p>
+                            <pre class="text-xs bg-dark p-3 rounded overflow-x-auto"><code>python main.py</code></pre>
+                        </section>
+                        <footer>
+                            <a href="https://github.com/AvoCloud-net/Baxi" target="_blank" class="badge badge-outline">GitHub Repository ↗</a>
+                        </footer>
+                    </div>
+
+                </div>
+
+                <!-- Self-Hosting Limitations -->
+                <div class="card mt-6">
+                    <header>
+                        <h3 class="font-semibold text-lg">Self-Hosting Limitations</h3>
+                    </header>
+                    <section>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                            <div>
+                                <h4 class="font-semibold text-sm mb-1">Global Chat</h4>
+                                <p class="text-muted text-sm">Not available (requires official Baxi network access)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm mb-1">SafeText Filter</h4>
+                                <p class="text-muted text-sm">Requires a Public API Key (request from AvoCloud)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm mb-1">AI Filter</h4>
+                                <p class="text-muted text-sm">Must be self-hosted (recommended: OpenWebUI + Ollama with Llama-Guard 3)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-sm mb-1">Other Features</h4>
+                                <p class="text-muted text-sm">Work fully without restrictions</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Privacy -->
+            <section class="pb-24" id="privacy">
+                <div class="section-label">PRIVACY</div>
+                <h2 class="text-2xl font-bold mb-8">Privacy Policy</h2>
+                <div class="card">
+                    <header>
+                        <h3 class="font-semibold text-lg flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            Minimal Data Collection
+                        </h3>
+                    </header>
+                    <section>
+                        <p class="text-muted mb-6">
+                            Baxi follows a <strong>minimal data collection</strong> principle. All features are optional —
+                            users decide what to enable and what data (if any) is stored.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-base mb-2 text-green-400">✓ Stored Data</h4>
+                                <ul class="text-muted text-sm space-y-2">
+                                    <li>• Chat Filter Logs (only if enabled, only for removed messages)</li>
+                                    <li>• Server Configuration (dashboard settings)</li>
+                                    <li>• Global Chat Images (for cross-server delivery)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-base mb-2 text-red-400">✗ NOT Stored</h4>
+                                <ul class="text-muted text-sm space-y-2">
+                                    <li>• Other messages</li>
+                                    <li>• Personal data</li>
+                                    <li>• Private information</li>
+                                    <li>• Tracking data</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Commands -->
+            <section class="pb-24" id="commands">
+                <div class="section-label">COMMANDS</div>
+                <h2 class="text-2xl font-bold mb-8">How to Use</h2>
+                <div class="card">
+                    <header>
+                        <h3 class="font-semibold text-lg flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <polyline points="4 7 4 4 20 4 20 7"/>
+                                <line x1="9" y1="20" x2="15" y2="20"/>
+                                <line x1="12" y1="4" x2="12" y2="20"/>
+                            </svg>
+                            Slash Commands
+                        </h3>
+                    </header>
+                    <section>
+                        <p class="text-muted">
+                            Baxi uses <strong>Discord Slash Commands</strong> (<code>/</code>).
+                            Type <code>/</code> in your server to see all available commands with built-in
+                            descriptions and options. No need to memorize complex command syntax.
+                        </p>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Support -->
+            <section class="pb-24" id="support">
+                <div class="section-label">SUPPORT</div>
+                <h2 class="text-2xl font-bold mb-8">Get Help</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                                Discord Support Server
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Join our Discord server for support and updates:</p>
+                            <a href="https://avocloud.net/discord/" target="_blank"
+                               class="text-sm accent-link mt-1 block">avocloud.net/discord ↗</a>
+                        </section>
+                        <footer>
+                            <a href="https://avocloud.net/discord/" target="_blank" class="badge badge-outline">Join Discord ↗</a>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                                    <rect x="9" y="9" width="6" height="6"/>
+                                    <line x1="9" y1="1" x2="9" y2="4"/>
+                                    <line x1="15" y1="1" x2="15" y2="4"/>
+                                    <line x1="9" y1="20" x2="9" y2="23"/>
+                                    <line x1="15" y1="20" x2="15" y2="23"/>
+                                    <line x1="20" y1="9" x2="23" y2="9"/>
+                                    <line x1="20" y1="14" x2="23" y2="14"/>
+                                    <line x1="1" y1="9" x2="4" y2="9"/>
+                                    <line x1="1" y1="14" x2="4" y2="14"/>
+                                </svg>
+                                GitHub Repository
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Report issues or contribute on GitHub:</p>
+                            <a href="https://github.com/AvoCloud-net/Baxi" target="_blank"
+                               class="text-sm accent-link mt-1 block">github.com/AvoCloud-net/Baxi ↗</a>
+                        </section>
+                        <footer>
+                            <a href="https://github.com/AvoCloud-net/Baxi" target="_blank" class="badge badge-outline">View on GitHub ↗</a>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                                Email Support
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Send us an email:</p>
+                            <a href="mailto:support@avocloud.net" class="text-sm accent-link mt-1 block">support@avocloud.net ↗</a>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Quick Links -->
+            <section class="pb-24" id="links">
+                <div class="section-label">LINKS</div>
+                <h2 class="text-2xl font-bold mb-8">Useful Links</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                </svg>
+                                Global Chat
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Connect servers via Global Chat:</p>
+                            <a href="https://baxi.avocloud.net/" target="_blank"
+                               class="text-sm accent-link mt-1 block">baxi.avocloud.net ↗</a>
+                        </section>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                                </svg>
+                                SafeText API
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Open-source text filtering:</p>
+                            <a href="https://github.com/AvoCloud-net/SafeText" target="_blank"
+                               class="text-sm accent-link mt-1 block">github.com/AvoCloud-net/SafeText ↗</a>
+                        </section>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                                </svg>
+                                Recommended AI Setup
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Self-host AI filter:</p>
+                            <a href="https://github.com/open-webui/open-webui" target="_blank"
+                               class="text-sm accent-link mt-1 block">OpenWebUI + Ollama ↗</a>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="site-footer">
+            <p>Baxi — A privacy-focused Discord moderation bot by Avocloud.net</p>
+        </footer>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+
+</html>
