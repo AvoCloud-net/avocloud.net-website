@@ -21,6 +21,8 @@
     <meta name="twitter:image" content="https://avocloud.net/baxi/baxi-banner.png">
     <meta http-equiv="refresh"
         content="3;url=https://discord.com/oauth2/authorize?client_id=981268814308184084&amp;permissions=564464222465270&amp;integration_type=0&amp;scope=bot">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
     <link rel="stylesheet" href="https://avocloud.net/assets/css/main.css">
@@ -29,9 +31,29 @@
 
 <body>
     <div id="gradientbar"></div>
-    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-        <svg id="theme-icon" viewBox="0 0 24 24"></svg>
-    </button>
+
+    <!-- Nav -->
+    <nav class="site-nav" id="site-nav">
+        <a class="avocloud-logo" href="/" aria-label="AVOCLOUD.NET">
+            <span class="avocloud-logo__slot">
+                <span class="avocloud-logo__icon">
+                    <svg viewBox="0 0 100 75" fill="none">
+                        <path d="M 43 65 L 11 65 L 33 10 L 67 65 L 91 12"
+                            stroke="currentColor" stroke-width="8.5"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            pathLength="200"/>
+                    </svg>
+                </span>
+                <span class="avocloud-logo__av">AV</span>
+            </span>
+            <span class="avocloud-logo__rest-wrap">
+                <span class="avocloud-logo__rest">CLOUD<span class="avocloud-logo__dot">.NET</span></span>
+            </span>
+        </a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+            <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+        </button>
+    </nav>
     <div class="redirect-container">
         <div class="card text-center" style="max-width: 400px; width: 100%; padding: 2.5rem 2rem;">
             <div class="flex justify-center mb-4" style="color:#9333ea">

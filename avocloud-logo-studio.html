@@ -1,0 +1,2113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVOCLOUD — Logo Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0a0a0a;
+    --surface:  #111;
+    --border:   #1c1c1c;
+    --border2:  #252525;
+    --text:     #e0dcd3;
+    --muted:    #444;
+    --accent:   #e0dcd3;
+    --radius:   6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: var(--text);
+  }
+
+  .header-sub {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── Tabs ── */
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+  }
+
+  .tab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 16px 24px 14px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .tab.active {
+    color: var(--text);
+    border-bottom-color: var(--text);
+  }
+
+  /* ── Main layout ── */
+  .main {
+    flex: 1;
+    display: flex;
+  }
+
+  /* Panel */
+  .panel {
+    display: none;
+    flex: 1;
+  }
+  .panel.active { display: flex; }
+
+  /* Left: canvas */
+  .canvas-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 500px;
+  }
+
+  .canvas-bg-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .bg-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--border2);
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+  .bg-btn.active { color: var(--text); border-color: var(--muted); }
+
+  /* Right: controls */
+  .controls {
+    width: 280px;
+    border-left: 1px solid var(--border);
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    overflow-y: auto;
+  }
+
+  .ctrl-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ctrl-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .ctrl-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .ctrl-row label {
+    font-size: 10px;
+    color: var(--muted);
+    width: 64px;
+    flex-shrink: 0;
+  }
+
+  input[type="color"] {
+    width: 36px;
+    height: 28px;
+    border: 1px solid var(--border2);
+    border-radius: 3px;
+    padding: 2px;
+    background: var(--surface);
+    cursor: pointer;
+  }
+
+  .hex-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 3px;
+    padding: 6px 10px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .hex-input:focus { border-color: var(--muted); }
+
+  input[type="range"] {
+    flex: 1;
+    accent-color: var(--text);
+    cursor: pointer;
+  }
+
+  .range-val {
+    font-size: 11px;
+    color: var(--text);
+    width: 32px;
+    text-align: right;
+  }
+
+  /* Shape buttons */
+  .shape-btns {
+    display: flex;
+    gap: 8px;
+  }
+
+  .shape-btn {
+    flex: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    padding: 8px 4px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .shape-btn.active { color: var(--text); border-color: var(--muted); }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid var(--border); }
+
+  /* Download buttons */
+  .dl-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dl-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--text);
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: opacity 0.2s;
+    text-align: center;
+  }
+  .dl-btn:hover { opacity: 0.85; }
+
+  .dl-btn-sec {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--border2);
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: border-color 0.2s;
+    text-align: center;
+  }
+  .dl-btn-sec:hover { border-color: var(--muted); }
+
+  /* ─────────────────────────────── */
+  /* SQUARE MARK                     */
+  /* ─────────────────────────────── */
+  #mark-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .av-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-radius 0.3s;
+  }
+
+  .av-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-top: 0.05em;
+    transition: color 0.2s;
+    user-select: none;
+  }
+
+  /* ─────────────────────────────── */
+  /* WORDMARK ANIMATION              */
+  /* ─────────────────────────────── */
+  #wm-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .wm-stage {
+    cursor: default;
+    display: inline-flex;
+    align-items: baseline;
+    overflow: hidden;
+    line-height: 1;
+  }
+
+  .wm-avo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color 0.2s;
+    user-select: none;
+  }
+
+  .wm-cloud {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 600px;
+    opacity: 1;
+    transform: translateX(0);
+    transition:
+      max-width 0.55s cubic-bezier(0.77,0,0.18,1),
+      opacity   0.3s ease,
+      transform 0.5s cubic-bezier(0.77,0,0.18,1),
+      color 0.2s;
+    user-select: none;
+  }
+
+  .wm-dot {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 200px;
+    opacity: 0.55;
+    transform: translateX(0);
+    transition:
+      max-width 0.55s cubic-bezier(0.77,0,0.18,1) 0.04s,
+      opacity   0.3s ease 0.04s,
+      transform 0.5s cubic-bezier(0.77,0,0.18,1) 0.04s,
+      color 0.2s;
+    user-select: none;
+  }
+
+  .wm-cloud.wm-hidden,
+  .wm-dot.wm-hidden {
+    max-width: 0 !important;
+    opacity: 0 !important;
+    transform: translateX(-8px) !important;
+  }
+
+  .wm-hint {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Preset swatches */
+  .swatches {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.15s, transform 0.15s;
+    flex-shrink: 0;
+  }
+  .swatch:hover { transform: scale(1.15); }
+  .swatch.active { border-color: var(--text); }
+
+  /* canvas bg */
+  .canvas-area.cb-light { background: #f0eeea; }
+  .canvas-area.cb-dark  { background: #0a0a0a; }
+  .canvas-area.cb-grid  {
+    background-image:
+      linear-gradient(#1a1a1a 1px, transparent 1px),
+      linear-gradient(90deg, #1a1a1a 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-color: #0a0a0a;
+  }
+
+  /* ── Hover tab ── */
+  .hover-split { display: flex; flex: 1; width: 100%; }
+
+  .hover-preview-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    background: #0a0a0a;
+    position: relative;
+  }
+
+  .hover-hint { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: #252525; }
+
+  /* ── Logo hover: icon slides LEFT out, wordmark slides in from RIGHT ── */
+  /* ── Logo hover animation: icon → expand text → swap icon for AV text ── */
+  .avocloud-logo-demo {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Mark slot: reserves space for icon+AV overlap */
+  .ald-mark-slot {
+    position: relative;
+    display: inline-grid;
+    flex-shrink: 0;
+  }
+
+  /* Icon and AV share the same grid cell → no overlap with CLOUD */
+  .ald-icon,
+  .ald-av {
+    grid-area: 1/1;
+    display: flex;
+    align-items: center;
+  }
+
+  .ald-icon {
+    transition:
+      opacity   0.32s ease,
+      transform 0.32s cubic-bezier(0.77,0,0.18,1);
+  }
+
+  /* AV text — crossfades with icon simultaneously */
+  .ald-av {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #e8e4db;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(6px);
+    transition:
+      opacity   0.32s ease,
+      transform 0.32s cubic-bezier(0.77,0,0.18,1);
+    pointer-events: none;
+    justify-content: center;
+  }
+
+  /* CLOUD.NET — slides in from right, clipped */
+  .ald-rest-wrap {
+    overflow: hidden;
+    max-width: 0;
+    transition: max-width 0.4s cubic-bezier(0.77,0,0.18,1) 0s;
+    display: flex;
+    align-items: baseline;
+  }
+
+  .ald-rest {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #e8e4db;
+    white-space: nowrap;
+    transform: translateX(20px);
+    opacity: 0;
+    transition:
+      transform 0.4s cubic-bezier(0.77,0,0.18,1) 0s,
+      opacity   0.3s ease 0.05s;
+  }
+
+  .ald-dot { opacity: 0.55; }
+
+  /* expanded class driven by JS (hover uses event listeners for typewriter) */
+  .avocloud-logo-demo.expanded .ald-rest-wrap { max-width: 600px; }
+  .avocloud-logo-demo.expanded .ald-rest      { transform: translateX(0); opacity: 1; }
+  .avocloud-logo-demo.expanded .ald-icon      { opacity: 0; transform: translateX(-12px); }
+  .avocloud-logo-demo.expanded .ald-av        { opacity: 1; transform: translateX(0); }
+  .code-panel { width: 380px; border-left: 1px solid var(--border); display: flex; flex-direction: column; }
+
+  .code-tabs { display: flex; border-bottom: 1px solid var(--border); }
+
+  .code-tab {
+    flex: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 12px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom: -1px;
+  }
+  .code-tab.active { color: var(--text); border-bottom-color: var(--text); }
+
+  .code-block { display: none; flex: 1; position: relative; overflow: hidden; }
+  .code-block.active { display: flex; flex-direction: column; }
+
+  pre {
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    line-height: 1.75;
+    color: #666;
+    background: var(--bg);
+    white-space: pre;
+    margin: 0;
+    max-height: calc(100vh - 130px);
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+    z-index: 2;
+  }
+  .copy-btn:hover { color: var(--text); border-color: var(--muted); }
+  .copy-btn.copied { color: #22c55e; border-color: #22c55e; }
+
+  .hover-size-ctrl {
+    position: absolute;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hover-size-ctrl label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  /* ── Animation tab ── */
+  .anim-split { display: flex; flex: 1; width: 100%; }
+
+  .anim-stage-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    background: #0a0a0a;
+    position: relative;
+  }
+
+  .anim-logo-wrap {
+    display: flex;
+    align-items: baseline;
+    overflow: hidden;
+    line-height: 1;
+  }
+
+  .anim-mark {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+    color: #e8e4db;
+    line-height: 1;
+  }
+
+  .anim-rest {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #e8e4db;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(-8px);
+    line-height: 1;
+  }
+
+  .anim-dot {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #e8e4db;
+    opacity: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 0;
+    transform: translateX(-8px);
+    line-height: 1;
+  }
+
+  .anim-logo-wrap.playing .anim-rest {
+    max-width: 600px;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .anim-logo-wrap.playing .anim-dot {
+    max-width: 200px;
+    opacity: 0.55;
+    transform: translateX(0);
+  }
+
+  .anim-controls {
+    width: 280px;
+    border-left: 1px solid var(--border);
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    overflow-y: auto;
+  }
+
+  .anim-status {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #333;
+  }
+
+  .anim-status.recording { color: #ef4444; }
+  .anim-status.done { color: #22c55e; }
+
+  .progress-bar {
+    width: 100%;
+    height: 2px;
+    background: #1a1a1a;
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--text);
+    width: 0%;
+    transition: width 0.1s;
+  }
+
+  /* ── MOBILE ────────────────────────────────── */
+  @media (max-width: 700px) {
+    header { padding: 12px 16px; }
+    .header-logo { font-size: 13px; }
+    .tabs { padding: 0 2px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tab  { padding: 12px 10px 10px; font-size: 8px; letter-spacing: 0.08em; white-space: nowrap; }
+
+    .split, .hover-split, .anim-split { flex-direction: column !important; overflow-y: auto; }
+
+    .canvas-area, .hover-preview-area, .anim-stage-area {
+      min-height: 200px !important; height: 200px !important; flex: none !important;
+    }
+
+    .controls, .anim-controls {
+      width: 100% !important;
+      border-left: none !important;
+      border-top: 1px solid var(--border) !important;
+      padding: 18px 14px !important;
+      overflow-y: visible !important;
+    }
+
+    #wm-canvas  { min-height: 160px !important; height: 160px !important; flex: none !important; }
+    #wm-controls { width: 100% !important; border-left: none !important; border-top: 1px solid var(--border) !important; padding: 18px 14px !important; }
+
+    .hover-preview-area { min-height: 160px !important; height: 160px !important; flex: none !important; }
+    .code-panel { width: 100% !important; border-left: none !important; border-top: 1px solid var(--border) !important; min-height: 260px !important; }
+
+    #avMark     { width: 110px !important; height: 110px !important; }
+    #animCanvas { max-width: 150px !important; max-height: 150px !important; }
+
+    .ctrl-row label { min-width: 56px !important; font-size: 9px !important; }
+    input[type=range] { flex: 1 !important; min-width: 0; }
+
+    .dl-btns { flex-direction: column; }
+    .dl-btn, .dl-btn-sec { width: 100% !important; padding: 12px 8px !important; text-align: center; }
+
+    .swatch { width: 24px !important; height: 24px !important; }
+    .shape-btns { flex-wrap: wrap !important; gap: 5px !important; }
+    .shape-btn  { flex: 1 1 calc(50% - 5px) !important; text-align: center !important; }
+
+    .hover-size-ctrl { position: static !important; margin-top: 14px; }
+    .canvas-bg-toggle { top: 8px !important; right: 8px !important; }
+
+    #wmStage   { transform: scale(0.7); transform-origin: center; min-width: unset !important; }
+    #hoverDemo { transform: scale(0.75); transform-origin: center; }
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-logo">AVOCLOUD</div>
+    <div class="header-sub" style="margin-top:4px;">Logo Studio</div>
+  </div>
+  <div class="header-sub">v1.0</div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('mark')">Square Mark</button>
+  <button class="tab" onclick="switchTab('wordmark')">Wordmark</button>
+  <button class="tab" onclick="switchTab('hover')">Website Snippet</button>
+  <button class="tab" onclick="switchTab('anim')">Animation</button>
+</div>
+
+<div class="main">
+
+  <!-- ══════════════════════════════ -->
+  <!-- TAB 1: SQUARE MARK            -->
+  <!-- ══════════════════════════════ -->
+  <div class="panel active" id="tab-mark">
+
+    <div class="canvas-area cb-grid" id="mark-canvas">
+      <div class="canvas-bg-toggle">
+        <button class="bg-btn" onclick="setMarkBg('dark', this)">Dark</button>
+        <button class="bg-btn" onclick="setMarkBg('light', this)">Light</button>
+        <button class="bg-btn active" onclick="setMarkBg('grid', this)">Grid</button>
+      </div>
+
+      <div id="mark-preview">
+        <div class="av-mark" id="avMark" style="width:160px;height:160px;background:#e8e4db;border-radius:32px;display:flex;align-items:center;justify-content:center;">
+            <svg id="avSVG" viewBox="0 0 100 75" width="66%" height="66%" fill="none">
+              <path id="pathA" d="M 11 65 L 33 10 L 67 65 L 91 12" stroke="#0d0d0d" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+              <path id="pathB" d="M 11 65 L 43 65" stroke="#0d0d0d" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+      </div>
+    </div>
+
+    <div class="controls">
+
+      <!-- BG Color -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">Hintergrund</div>
+        <div class="swatches" id="bg-swatches">
+          <div class="swatch active" style="background:#e8e4db;" onclick="applyBgSwatch('#e8e4db', this)"></div>
+          <div class="swatch" style="background:#0d0d0d;border:1px solid #333;" onclick="applyBgSwatch('#0d0d0d', this)"></div>
+          <div class="swatch" style="background:#1a1a2e;" onclick="applyBgSwatch('#1a1a2e', this)"></div>
+          <div class="swatch" style="background:#0f2027;" onclick="applyBgSwatch('#0f2027', this)"></div>
+          <div class="swatch" style="background:#1a0a2e;" onclick="applyBgSwatch('#1a0a2e', this)"></div>
+          <div class="swatch" style="background:#f0eeea;" onclick="applyBgSwatch('#f0eeea', this)"></div>
+        </div>
+        <div class="ctrl-row">
+          <label>Farbe</label>
+          <input type="color" id="bgColor" value="#e8e4db" oninput="onBgColor(this.value)">
+          <input type="text"  class="hex-input" id="bgHex" value="#e8e4db" maxlength="7" oninput="onBgHex(this.value)">
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Text Color -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">Text</div>
+        <div class="swatches" id="txt-swatches">
+          <div class="swatch active" style="background:#0d0d0d;border:1px solid #333;" onclick="applyTxtSwatch('#0d0d0d', this)"></div>
+          <div class="swatch" style="background:#e8e4db;" onclick="applyTxtSwatch('#e8e4db', this)"></div>
+          <div class="swatch" style="background:#ffffff;" onclick="applyTxtSwatch('#ffffff', this)"></div>
+          <div class="swatch" style="background:#7eb8f7;" onclick="applyTxtSwatch('#7eb8f7', this)"></div>
+          <div class="swatch" style="background:#f97316;" onclick="applyTxtSwatch('#f97316', this)"></div>
+          <div class="swatch" style="background:#22c55e;" onclick="applyTxtSwatch('#22c55e', this)"></div>
+        </div>
+        <div class="ctrl-row">
+          <label>Farbe</label>
+          <input type="color" id="txtColor" value="#0d0d0d" oninput="onTxtColor(this.value)">
+          <input type="text"  class="hex-input" id="txtHex" value="#0d0d0d" maxlength="7" oninput="onTxtHex(this.value)">
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Shape -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">Form</div>
+        <div class="shape-btns">
+          <button class="shape-btn" onclick="setShape('sharp', this)">Sharp</button>
+          <button class="shape-btn active" onclick="setShape('rounded', this)">Rounded</button>
+          <button class="shape-btn" onclick="setShape('circle', this)">Circle</button>
+        </div>
+        <div class="ctrl-row">
+          <label>Radius</label>
+          <input type="range" id="radiusSlider" min="0" max="80" value="32" oninput="onRadius(this.value)">
+          <span class="range-val" id="radiusVal">32</span>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Size -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">Größe</div>
+        <div class="ctrl-row">
+          <label>px</label>
+          <input type="range" id="sizeSlider" min="64" max="320" value="160" oninput="onSize(this.value)">
+          <span class="range-val" id="sizeVal">160</span>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Custom text -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">Buchstaben</div>
+        <div class="ctrl-row">
+          <label>Text</label>
+          <input type="text" class="hex-input" id="markText" value="AV" maxlength="3"
+            oninput="document.getElementById('avText').textContent = this.value || 'AV'">
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Downloads -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">Download</div>
+        <div class="dl-btns">
+          <button class="dl-btn" onclick="downloadMarkSVG()">SVG herunterladen</button>
+          <button class="dl-btn-sec" data-size="512" onclick="downloadMarkPNG(512)">PNG 512×512</button>
+          <button class="dl-btn-sec" data-size="1024" onclick="downloadMarkPNG(1024)">PNG 1024×1024</button>
+          <button class="dl-btn-sec" data-size="32" onclick="downloadMarkPNG(32)">Favicon 32×32</button>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /tab-mark -->
+
+  <!-- ══════════════════════════════ -->
+  <!-- TAB 2: WORDMARK               -->
+  <!-- ══════════════════════════════ -->
+  <div class="panel" id="tab-wordmark">
+
+    <div class="canvas-area cb-dark" id="wm-canvas">
+      <div class="canvas-bg-toggle">
+        <button class="bg-btn active" onclick="setWmBg('dark', this)">Dark</button>
+        <button class="bg-btn" onclick="setWmBg('light', this)">Light</button>
+        <button class="bg-btn" onclick="setWmBg('grid', this)">Grid</button>
+      </div>
+
+      <div id="wm-preview">
+        <div class="wm-stage" id="wmStage" onclick="wmToggle()" style="cursor:pointer;display:inline-flex;align-items:center;user-select:none;">
+          <!-- Mark slot: icon + AV stacked -->
+          <div class="ald-mark-slot" id="wmMarkSlot">
+            <div id="wmIcon" class="ald-icon">
+              <svg id="wmSVG" viewBox="0 0 100 75" height="56px" fill="none">
+                <path id="wmPath" d="M 43 65 L 11 65 L 33 10 L 67 65 L 91 12"
+                  stroke="#e8e4db" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"
+                  pathLength="200"/>
+              </svg>
+            </div>
+            <div id="wmAV" class="ald-av" style="font-size:56px;">AV</div>
+          </div>
+          <!-- CLOUD.NET slides out -->
+          <div id="wmRestWrap" class="ald-rest-wrap">
+            <span id="wmCloud" class="ald-rest" style="font-size:56px;">CLOUD<span id="wmDot" class="ald-dot">.NET</span></span>
+          </div>
+        </div>
+        <div class="wm-hint">click to animate</div>
+      </div>
+    </div>
+
+    <div class="controls">
+
+      <!-- Text Color -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">Textfarbe</div>
+        <div class="swatches">
+          <div class="swatch active" style="background:#e8e4db;" onclick="applyWmColor('#e8e4db', this)"></div>
+          <div class="swatch" style="background:#ffffff;" onclick="applyWmColor('#ffffff', this)"></div>
+          <div class="swatch" style="background:#0d0d0d;border:1px solid #333;" onclick="applyWmColor('#0d0d0d', this)"></div>
+          <div class="swatch" style="background:#7eb8f7;" onclick="applyWmColor('#7eb8f7', this)"></div>
+          <div class="swatch" style="background:#f97316;" onclick="applyWmColor('#f97316', this)"></div>
+          <div class="swatch" style="background:#22c55e;" onclick="applyWmColor('#22c55e', this)"></div>
+        </div>
+        <div class="ctrl-row">
+          <label>Farbe</label>
+          <input type="color" id="wmColor" value="#e8e4db" oninput="onWmColor(this.value)">
+          <input type="text" class="hex-input" id="wmColorHex" value="#e8e4db" maxlength="7" oninput="onWmColorHex(this.value)">
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- .NET opacity -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">.NET Deckkraft</div>
+        <div class="ctrl-row">
+          <label>%</label>
+          <input type="range" id="dotOpacity" min="0" max="100" value="55" oninput="onDotOpacity(this.value)">
+          <span class="range-val" id="dotOpVal">55</span>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Font size -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">Schriftgröße</div>
+        <div class="ctrl-row">
+          <label>px</label>
+          <input type="range" id="wmSize" min="24" max="96" value="56" oninput="onWmSize(this.value)">
+          <span class="range-val" id="wmSizeVal">56</span>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Animation speed -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">Animationsgeschwindigkeit</div>
+        <div class="ctrl-row">
+          <label>Sek</label>
+          <input type="range" id="animSpeed" min="2" max="20" value="6" oninput="onAnimSpeed(this.value)">
+          <span class="range-val" id="animSpeedVal">0.6s</span>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Show/hide .net -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">Inhalt</div>
+        <div class="shape-btns">
+          <button class="shape-btn active" id="btnFull" onclick="setWmMode('full', this)">AVOCLOUD.NET</button>
+          <button class="shape-btn" id="btnShort" onclick="setWmMode('short', this)">AVOCLOUD</button>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Downloads -->
+      <div class="ctrl-group">
+        <div class="ctrl-label">Download</div>
+        <div class="dl-btns">
+          <button class="dl-btn" onclick="downloadWmSVG()">SVG herunterladen</button>
+          <button class="dl-btn-sec" onclick="downloadWmPNG(1200)">PNG 1200px</button>
+          <button class="dl-btn-sec" onclick="downloadWmPNG(2400)">PNG 2400px</button>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /tab-wordmark -->
+
+  <!-- ══════════════════════════════ -->
+  <!-- TAB 3: WEBSITE SNIPPET        -->
+  <!-- ══════════════════════════════ -->
+  <div class="panel" id="tab-hover">
+    <div class="hover-split">
+
+      <!-- Live preview -->
+      <div class="hover-preview-area" id="hover-canvas">
+        <p class="hover-hint">← hover over the logo →</p>
+
+        <a class="avocloud-logo-demo" id="hoverDemo" href="#">
+          <!-- Mark slot: icon + AV stacked in same space -->
+          <span class="ald-mark-slot">
+            <span class="ald-icon" id="hoverIcon">
+              <svg id="hoverSVG" viewBox="0 0 100 75" height="2.5rem" fill="none">
+                <path id="hoverPath" d="M 43 65 L 11 65 L 33 10 L 67 65 L 91 12"
+                  stroke="#e8e4db" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"
+                  pathLength="200"/>
+              </svg>
+            </span>
+            <span class="ald-av" id="hoverAV" style="font-size:2.5rem;">AV</span>
+          </span>
+          <!-- CLOUD.NET slides out to the right -->
+          <span class="ald-rest-wrap" id="hoverRestWrap">
+            <span class="ald-rest" id="hoverRest" style="font-size:2.5rem;">CLOUD<span class="ald-dot">.NET</span></span>
+          </span>
+        </a>
+
+        <!-- Size control -->
+        <div class="hover-size-ctrl">
+          <label>Größe</label>
+          <input type="range" min="1" max="5" step="0.25" value="2.5" style="accent-color:#e0dcd3;width:120px;"
+            oninput="onHoverSize(this.value)">
+          <span id="hoverSizeVal" style="font-size:10px;color:#444;width:40px;">2.5rem</span>
+        </div>
+      </div>
+
+      <!-- Code panel -->
+      <div class="code-panel">
+        <div class="code-tabs">
+          <button class="code-tab active" onclick="switchCode('html', this)">HTML</button>
+          <button class="code-tab" onclick="switchCode('css', this)">CSS</button>
+          <button class="code-tab" onclick="switchCode('js', this)">JS</button>
+          <button class="code-tab" onclick="switchCode('font', this)">Font</button>
+        </div>
+
+        <!-- HTML block -->
+        <div class="code-block active" id="code-html">
+          <button class="copy-btn" onclick="copyCode('html-code')">Copy</button>
+          <pre id="html-code"><span style="color:#555">&lt;!-- Google Font (put in &lt;head&gt;) --&gt;</span>
+&lt;<span style="color:#7eb8f7">link</span> <span style="color:#c9a96e">rel</span>=<span style="color:#a8d8a8">"preconnect"</span> <span style="color:#c9a96e">href</span>=<span style="color:#a8d8a8">"https://fonts.googleapis.com"</span>&gt;
+&lt;<span style="color:#7eb8f7">link</span> <span style="color:#c9a96e">rel</span>=<span style="color:#a8d8a8">"stylesheet"</span>
+     <span style="color:#c9a96e">href</span>=<span style="color:#a8d8a8">"https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap"</span>&gt;
+
+<span style="color:#555">&lt;!-- Logo --&gt;</span>
+&lt;<span style="color:#7eb8f7">a</span> <span style="color:#c9a96e">class</span>=<span style="color:#a8d8a8">"avo-logo"</span> <span style="color:#c9a96e">href</span>=<span style="color:#a8d8a8">"/"</span> <span style="color:#c9a96e">aria-label</span>=<span style="color:#a8d8a8">"AVOCLOUD"</span>&gt;
+  &lt;<span style="color:#7eb8f7">span</span> <span style="color:#c9a96e">class</span>=<span style="color:#a8d8a8">"avo-icon"</span>&gt;
+    &lt;<span style="color:#7eb8f7">svg</span> <span style="color:#c9a96e">viewBox</span>=<span style="color:#a8d8a8">"0 0 100 75"</span> <span style="color:#c9a96e">height</span>=<span style="color:#a8d8a8">"2rem"</span> <span style="color:#c9a96e">fill</span>=<span style="color:#a8d8a8">"none"</span>&gt;
+      &lt;<span style="color:#7eb8f7">path</span> <span style="color:#c9a96e">class</span>=<span style="color:#a8d8a8">"avo-path"</span>
+        <span style="color:#c9a96e">d</span>=<span style="color:#a8d8a8">"M 43 65 L 11 65 L 33 10 L 67 65 L 91 12"</span>
+        <span style="color:#c9a96e">stroke</span>=<span style="color:#a8d8a8">"currentColor"</span> <span style="color:#c9a96e">stroke-width</span>=<span style="color:#a8d8a8">"8.5"</span>
+        <span style="color:#c9a96e">stroke-linecap</span>=<span style="color:#a8d8a8">"round"</span> <span style="color:#c9a96e">stroke-linejoin</span>=<span style="color:#a8d8a8">"round"</span>
+        <span style="color:#c9a96e">pathLength</span>=<span style="color:#a8d8a8">"200"</span>/&gt;
+    &lt;/<span style="color:#7eb8f7">svg</span>&gt;
+  &lt;/<span style="color:#7eb8f7">span</span>&gt;
+  &lt;<span style="color:#7eb8f7">span</span> <span style="color:#c9a96e">class</span>=<span style="color:#a8d8a8">"avo-av"</span>&gt;AV&lt;/<span style="color:#7eb8f7">span</span>&gt;
+  &lt;<span style="color:#7eb8f7">span</span> <span style="color:#c9a96e">class</span>=<span style="color:#a8d8a8">"avo-text-wrap"</span>&gt;
+    &lt;<span style="color:#7eb8f7">span</span> <span style="color:#c9a96e">class</span>=<span style="color:#a8d8a8">"avo-text"</span>&gt;CLOUD&lt;<span style="color:#7eb8f7">span</span> <span style="color:#c9a96e">class</span>=<span style="color:#a8d8a8">"avo-dot"</span>&gt;.NET&lt;/<span style="color:#7eb8f7">span</span>&gt;&lt;/<span style="color:#7eb8f7">span</span>&gt;
+  &lt;/<span style="color:#7eb8f7">span</span>&gt;
+&lt;/<span style="color:#7eb8f7">a</span>&gt;</pre>
+        </div>
+
+        <!-- CSS block -->
+        <div class="code-block" id="code-css">
+          <button class="copy-btn" onclick="copyCode('css-code')">Copy</button>
+          <pre id="css-code"><span style="color:#c9a96e">.avo-logo</span> {
+  display: inline-flex;
+  align-items: center;
+  gap: <span style="color:#e8a87c">0</span>;
+  text-decoration: none;
+  cursor: pointer;
+  color: <span style="color:#e8a87c">#e8e4db</span>; <span style="color:#555">/* anpassen */</span>
+}
+
+<span style="color:#555">/* Icon + AV text share same grid cell */</span>
+<span style="color:#c9a96e">.avo-icon</span> {
+  display: inline-grid;
+  flex-shrink: <span style="color:#e8a87c">0</span>;
+  transition: opacity <span style="color:#e8a87c">.32s</span> ease,
+              transform <span style="color:#e8a87c">.32s</span> cubic-bezier(<span style="color:#e8a87c">.77,0,.18,1</span>);
+}
+<span style="color:#c9a96e">.avo-icon > *</span> { grid-area: <span style="color:#e8a87c">1/1</span>; display: flex; align-items: center; }
+
+<span style="color:#c9a96e">.avo-av</span> {
+  font-family: <span style="color:#a8d8a8">'Syne'</span>, sans-serif;
+  font-weight: <span style="color:#e8a87c">800</span>;
+  font-size: <span style="color:#e8a87c">2rem</span>; <span style="color:#555">/* anpassen */</span>
+  letter-spacing: <span style="color:#e8a87c">.04em</span>;
+  white-space: nowrap;
+  opacity: <span style="color:#e8a87c">0</span>;
+  transform: translateX(<span style="color:#e8a87c">6px</span>);
+  transition: opacity <span style="color:#e8a87c">.32s</span> ease,
+              transform <span style="color:#e8a87c">.32s</span> cubic-bezier(<span style="color:#e8a87c">.77,0,.18,1</span>);
+}
+
+<span style="color:#c9a96e">.avo-text-wrap</span> {
+  overflow: hidden;
+  max-width: <span style="color:#e8a87c">0</span>;
+  display: flex;
+  align-items: baseline;
+  transition: max-width <span style="color:#e8a87c">.4s</span> cubic-bezier(<span style="color:#e8a87c">.77,0,.18,1</span>);
+}
+
+<span style="color:#c9a96e">.avo-text</span> {
+  font-family: <span style="color:#a8d8a8">'Syne'</span>, sans-serif;
+  font-weight: <span style="color:#e8a87c">800</span>;
+  font-size: <span style="color:#e8a87c">2rem</span>; <span style="color:#555">/* anpassen */</span>
+  letter-spacing: <span style="color:#e8a87c">.04em</span>;
+  white-space: nowrap;
+  opacity: <span style="color:#e8a87c">0</span>;
+  transform: translateX(<span style="color:#e8a87c">20px</span>);
+  transition: transform <span style="color:#e8a87c">.4s</span> cubic-bezier(<span style="color:#e8a87c">.77,0,.18,1</span>),
+              opacity <span style="color:#e8a87c">.3s</span> ease <span style="color:#e8a87c">.05s</span>;
+}
+
+<span style="color:#c9a96e">.avo-dot</span> { opacity: <span style="color:#e8a87c">.55</span>; }
+
+<span style="color:#c9a96e">.avo-path</span> {
+  stroke-dasharray: none;
+  stroke-dashoffset: <span style="color:#e8a87c">0</span>;
+}</pre>
+        </div>
+
+        
+        <!-- JS block -->
+        <div class="code-block" id="code-js">
+          <button class="copy-btn" onclick="copyCode('js-code')">Copy</button>
+          <pre id="js-code"><span style="color:#555">// attach to each .avo-logo element</span>
+<span style="color:#c594cf">document</span>.querySelectorAll(<span style="color:#a8d8a8">"[class='avo-logo']"</span>).forEach(logo =&gt; {
+  <span style="color:#c594cf">const</span> icon   = logo.querySelector(<span style="color:#a8d8a8">"[class='avo-icon']"</span>);
+  <span style="color:#c594cf">const</span> av     = logo.querySelector(<span style="color:#a8d8a8">"[class='avo-av']"</span>);
+  <span style="color:#c594cf">const</span> wrap   = logo.querySelector(<span style="color:#a8d8a8">"[class='avo-text-wrap']"</span>);
+  <span style="color:#c594cf">const</span> text   = logo.querySelector(<span style="color:#a8d8a8">"[class='avo-text']"</span>);
+  <span style="color:#c594cf">const</span> path   = logo.querySelector(<span style="color:#a8d8a8">"[class='avo-path']"</span>);
+  <span style="color:#c594cf">let</span> open = <span style="color:#c594cf">false</span>, busy = <span style="color:#c594cf">false</span>;
+
+  <span style="color:#c594cf">function</span> expand() {
+    <span style="color:#c594cf">if</span> (open || busy) <span style="color:#c594cf">return</span>;
+    open = <span style="color:#c594cf">true</span>;
+    wrap.style.maxWidth  = <span style="color:#a8d8a8">"600px"</span>;
+    text.style.transform = <span style="color:#a8d8a8">"translateX(0)"</span>;
+    text.style.opacity   = <span style="color:#a8d8a8">"1"</span>;
+    icon.style.opacity   = <span style="color:#a8d8a8">"0"</span>;
+    icon.style.transform = <span style="color:#a8d8a8">"translateX(-12px)"</span>;
+    av.style.opacity     = <span style="color:#a8d8a8">"1"</span>;
+    av.style.transform   = <span style="color:#a8d8a8">"translateX(0)"</span>;
+  }
+
+  <span style="color:#c594cf">function</span> collapse() {
+    <span style="color:#c594cf">if</span> (!open || busy) <span style="color:#c594cf">return</span>;
+    open = <span style="color:#c594cf">false</span>; busy = <span style="color:#c594cf">true</span>;
+    av.style.opacity   = <span style="color:#a8d8a8">"0"</span>;
+    av.style.transform = <span style="color:#a8d8a8">"translateX(8px)"</span>;
+    wrap.style.maxWidth  = <span style="color:#a8d8a8">"0"</span>;
+    text.style.transform = <span style="color:#a8d8a8">"translateX(20px)"</span>;
+    text.style.opacity   = <span style="color:#a8d8a8">"0"</span>;
+    setTimeout(() =&gt; {
+      icon.style.transition = <span style="color:#a8d8a8">"none"</span>;
+      icon.style.opacity    = <span style="color:#a8d8a8">"1"</span>;
+      icon.style.transform  = <span style="color:#a8d8a8">"translateX(0)"</span>;
+      <span style="color:#c594cf">void</span> icon.getBoundingClientRect();
+      path.style.transition      = <span style="color:#a8d8a8">"none"</span>;
+      path.style.strokeDasharray  = <span style="color:#a8d8a8">"200"</span>;
+      path.style.strokeDashoffset = <span style="color:#a8d8a8">"200"</span>;
+      requestAnimationFrame(() =&gt; requestAnimationFrame(() =&gt; {
+        path.style.transition      = <span style="color:#a8d8a8">"stroke-dashoffset 600ms cubic-bezier(.4,0,.2,1)"</span>;
+        path.style.strokeDashoffset = <span style="color:#a8d8a8">"0"</span>;
+        setTimeout(() =&gt; {
+          path.style.transition = "";
+          path.style.strokeDasharray = path.style.strokeDashoffset = "";
+          icon.style.transition = "";
+          busy = <span style="color:#c594cf">false</span>;
+        }, <span style="color:#e8a87c">630</span>);
+      }));
+    }, <span style="color:#e8a87c">260</span>);
+  }
+
+  logo.addEventListener(<span style="color:#a8d8a8">"mouseenter"</span>, expand);
+  logo.addEventListener(<span style="color:#a8d8a8">"mouseleave"</span>, collapse);
+  logo.addEventListener(<span style="color:#a8d8a8">"focus"</span>,      expand);
+  logo.addEventListener(<span style="color:#a8d8a8">"blur"</span>,       collapse);
+});</pre>
+        </div>
+
+        <!-- Font block -->
+        <div class="code-block" id="code-font">
+          <button class="copy-btn" onclick="copyCode('font-code')">Copy</button>
+          <pre id="font-code"><span style="color:#444">&lt;!-- In deinen &lt;head&gt; --&gt;</span>
+&lt;<span style="color:#7eb8f7">link</span>
+  <span style="color:#c9a96e">rel</span>=<span style="color:#a8d8a8">"preconnect"</span>
+  <span style="color:#c9a96e">href</span>=<span style="color:#a8d8a8">"https://fonts.googleapis.com"</span>
+&gt;
+&lt;<span style="color:#7eb8f7">link</span>
+  <span style="color:#c9a96e">rel</span>=<span style="color:#a8d8a8">"stylesheet"</span>
+  <span style="color:#c9a96e">href</span>=<span style="color:#a8d8a8">"https://fonts.googleapis.com/
+css2?family=Syne:wght@800
+&amp;display=swap"</span>
+&gt;
+
+<span style="color:#444">/* Oder in deiner CSS: */</span>
+<span style="color:#7eb8f7">@import</span> <span style="color:#a8d8a8">url('https://fonts.googleapis.com/
+css2?family=Syne:wght@800
+&display=swap')</span>;</pre>
+        </div>
+
+      </div><!-- /code-panel -->
+    </div>
+  </div><!-- /tab-hover -->
+
+
+  <!-- ══════════════════════════════ -->
+  <!-- TAB 4: ANIMATION              -->
+  <!-- ══════════════════════════════ -->
+  <div class="panel" id="tab-anim">
+    <div class="anim-split">
+
+      <div class="anim-stage-area cb-grid" id="anim-canvas-area">
+        <div class="canvas-bg-toggle">
+          <button class="bg-btn" onclick="setAnimBg('dark',this)">Dark</button>
+          <button class="bg-btn" onclick="setAnimBg('light',this)">Light</button>
+          <button class="bg-btn active" onclick="setAnimBg('grid',this)">Grid</button>
+        </div>
+
+        <!-- Canvas preview -->
+        <canvas id="animCanvas" width="200" height="200" style="border-radius:32px;"></canvas>
+
+        <div class="anim-status" id="animStatus">looping…</div>
+      </div>
+
+      <div class="anim-controls">
+
+        <div class="ctrl-group">
+          <div class="ctrl-label">Strichstärke</div>
+          <div class="ctrl-row">
+            <label>px</label>
+            <input type="range" id="animStrokeSlider" min="2" max="18" value="12"
+              oninput="document.getElementById('animStrokeVal').textContent=this.value">
+            <span class="range-val" id="animStrokeVal">12</span>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="ctrl-group">
+          <div class="ctrl-label">Farben</div>
+          <div class="ctrl-row">
+            <label>Hintergrund</label>
+            <input type="color" id="animBgColor" value="#e8e4db" oninput="animBg=this.value">
+            <input type="text" class="hex-input" value="#e8e4db" maxlength="7" oninput="if(/^#[0-9a-fA-F]{6}$/.test(this.value)){animBg=this.value;document.getElementById('animBgColor').value=this.value}">
+          </div>
+          <div class="ctrl-row">
+            <label>Text</label>
+            <input type="color" id="animTxtColor" value="#0d0d0d" oninput="animTc=this.value">
+            <input type="text" class="hex-input" value="#0d0d0d" maxlength="7" oninput="if(/^#[0-9a-fA-F]{6}$/.test(this.value)){animTc=this.value;document.getElementById('animTxtColor').value=this.value}">
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="ctrl-group">
+          <div class="ctrl-label">Animation Style</div>
+          <div class="shape-btns" id="animStyleBtns" style="flex-wrap:wrap;gap:6px;">
+            <button class="shape-btn active" style="flex:1 1 40%;" onclick="setAnimStyle('split',this)">Split</button>
+            <button class="shape-btn" style="flex:1 1 40%;" onclick="setAnimStyle('rise',this)">Rise</button>
+            <button class="shape-btn" style="flex:1 1 40%;" onclick="setAnimStyle('typewriter',this)">Typewriter</button>
+            <button class="shape-btn" style="flex:1 1 40%;" onclick="setAnimStyle('flip',this)">Flip</button>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="ctrl-group">
+          <div class="ctrl-label">Timing</div>
+          <div class="ctrl-row">
+            <label>Einblenden</label>
+            <input type="range" id="animIn" min="3" max="20" value="7" oninput="document.getElementById('animInVal').textContent=(this.value/10).toFixed(1)+'s'">
+            <span class="range-val" id="animInVal">0.7s</span>
+          </div>
+          <div class="ctrl-row">
+            <label>Hold</label>
+            <input type="range" id="animHold" min="5" max="40" value="18" oninput="document.getElementById('animHoldVal').textContent=(this.value/10).toFixed(1)+'s'">
+            <span class="range-val" id="animHoldVal">1.8s</span>
+          </div>
+          <div class="ctrl-row">
+            <label>Ausblenden</label>
+            <input type="range" id="animOut" min="3" max="20" value="6" oninput="document.getElementById('animOutVal').textContent=(this.value/10).toFixed(1)+'s'">
+            <span class="range-val" id="animOutVal">0.6s</span>
+          </div>
+          <div class="ctrl-row">
+            <label>Pause</label>
+            <input type="range" id="animPause" min="0" max="30" value="8" oninput="document.getElementById('animPauseVal').textContent=(this.value/10).toFixed(1)+'s'">
+            <span class="range-val" id="animPauseVal">0.8s</span>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="ctrl-group">
+          <div class="ctrl-label">Größe & Form</div>
+          <div class="ctrl-row">
+            <label>Größe</label>
+            <input type="range" id="animBoxSize" min="80" max="280" value="200" oninput="onAnimBoxSize(this.value)">
+            <span class="range-val" id="animBoxSizeVal">200</span>
+          </div>
+          <div class="ctrl-row">
+            <label>Radius</label>
+            <input type="range" id="animRadius" min="0" max="100" value="32" oninput="onAnimRadius(this.value)">
+            <span class="range-val" id="animRadiusVal">32</span>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="ctrl-group">
+          <div class="ctrl-label">Export</div>
+          <div class="progress-bar"><div class="progress-fill" id="animProgress"></div></div>
+          <div class="dl-btns">
+            <button class="dl-btn" onclick="exportAnimGIF()">GIF exportieren</button>
+            <button class="dl-btn-sec" onclick="exportMarkWebM()">WebM Video</button>
+          </div>
+          <div style="font-size:9px;color:#333;line-height:1.7;margin-top:4px;">GIF = loopend, überall kompatibel.<br>WebM = beste Qualität.</div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /tab-anim -->
+
+</div><!-- /main -->
+
+<script>
+// ─────────────────────────────────────────
+// TAB SWITCHING
+// ─────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`[onclick="switchTab('${name}')"]`).classList.add('active');
+  document.getElementById(`tab-${name}`).classList.add('active');
+
+  if (name === 'anim') {
+    if (!animRAF) {
+      document.fonts.ready.then(() => {
+        animLoopStart = null;
+        animRAF = requestAnimationFrame(animLoop);
+      });
+    }
+  } else {
+    if (typeof animRAF !== 'undefined' && animRAF) {
+      cancelAnimationFrame(animRAF);
+      animRAF = null;
+    }
+  }
+}
+
+// ─────────────────────────────────────────
+// SQUARE MARK CONTROLS
+// ─────────────────────────────────────────
+const mark = document.getElementById('avMark');
+const avText = document.getElementById('avText');
+
+function onBgColor(val) {
+  mark.style.background = val;
+  document.getElementById('bgHex').value = val;
+}
+function onBgHex(val) {
+  if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+    mark.style.background = val;
+    document.getElementById('bgColor').value = val;
+  }
+}
+function applyBgSwatch(hex, el) {
+  document.querySelectorAll('#bg-swatches .swatch').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  mark.style.background = hex;
+  document.getElementById('bgColor').value = hex;
+  document.getElementById('bgHex').value = hex;
+}
+
+function onTxtColor(val) {
+  document.querySelectorAll('#avSVG path').forEach(p=>p.setAttribute('stroke',val));
+  document.getElementById('txtHex').value = val;
+}
+function onTxtHex(val) {
+  if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+    document.querySelectorAll('#avSVG path').forEach(p=>p.setAttribute('stroke',val));
+    document.getElementById('txtColor').value = val;
+  }
+}
+function applyTxtSwatch(hex, el) {
+  document.querySelectorAll('#txt-swatches .swatch').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#avSVG path').forEach(p=>p.setAttribute('stroke',hex));
+  document.getElementById('txtColor').value = hex;
+  document.getElementById('txtHex').value = hex;
+}
+
+function setShape(shape, el) {
+  document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const size = parseInt(document.getElementById('sizeSlider').value);
+  if (shape === 'sharp')   { mark.style.borderRadius = '0'; document.getElementById('radiusSlider').value = 0; document.getElementById('radiusVal').textContent = 0; }
+  if (shape === 'rounded') { const r = Math.round(size * 0.2); mark.style.borderRadius = r + 'px'; document.getElementById('radiusSlider').value = r; document.getElementById('radiusVal').textContent = r; }
+  if (shape === 'circle')  { mark.style.borderRadius = '50%'; document.getElementById('radiusSlider').value = 80; document.getElementById('radiusVal').textContent = 80; }
+}
+
+function onRadius(val) {
+  mark.style.borderRadius = val + 'px';
+  document.getElementById('radiusVal').textContent = val;
+}
+
+function onSize(val) {
+  const n = parseInt(val);
+  mark.style.width  = n + 'px';
+  mark.style.height = n + 'px';
+  document.getElementById('sizeVal').textContent = n;
+}
+
+function setMarkBg(mode, el) {
+  const canvas = document.getElementById('mark-canvas');
+  canvas.className = 'canvas-area cb-' + mode;
+  document.querySelectorAll('#mark-canvas .bg-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Download mark as SVG
+// ── EXPORT: draw directly on canvas (uses browser's loaded Syne font) ──
+
+
+function drawMarkOnCanvas(canvas, sz, bg, tc, rxPct, sw) {
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.height = sz;
+  const rx = Math.round(sz * rxPct / 100);
+  ctx.clearRect(0,0,sz,sz);
+  ctx.save();
+  ctx.fillStyle = bg;
+  ctx.beginPath();
+  ctx.moveTo(rx,0); ctx.lineTo(sz-rx,0); ctx.quadraticCurveTo(sz,0,sz,rx);
+  ctx.lineTo(sz,sz-rx); ctx.quadraticCurveTo(sz,sz,sz-rx,sz);
+  ctx.lineTo(rx,sz); ctx.quadraticCurveTo(0,sz,0,sz-rx);
+  ctx.lineTo(0,rx); ctx.quadraticCurveTo(0,0,rx,0);
+  ctx.closePath(); ctx.fill(); ctx.clip();
+  const pad=sz*0.17, scx=(sz-pad*2)/100, scy=(sz-pad*2)/75;
+  ctx.strokeStyle=tc;
+  ctx.lineWidth=(sw||12)*Math.min(scx,scy)*1.4;
+  ctx.lineCap='round'; ctx.lineJoin='round';
+  const x=v=>pad+v*scx, y=v=>pad+v*scy;
+  ctx.beginPath();
+  ctx.moveTo(x(8),y(65)); ctx.lineTo(x(30),y(10));
+  ctx.lineTo(x(58),y(65)); ctx.lineTo(x(82),y(12));
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x(8),y(65)); ctx.lineTo(x(40),y(65));
+  ctx.stroke();
+  ctx.restore();
+}
+
+function getMarkConfig() {
+  const bg    = mark.style.background || '#e8e4db';
+  const tc    = document.querySelector('#avSVG path')?.getAttribute('stroke') || '#0d0d0d';
+  const r     = mark.style.borderRadius || '32px';
+  const src   = parseInt(mark.style.width) || 160;
+  const sw    = parseFloat(document.getElementById('strokeSlider')?.value || 12);
+  const rxPct = r === '50%' ? 50 : ((parseInt(r) || 32) / src * 100);
+  return { bg, tc, rxPct, sw };
+}
+
+function downloadMarkSVG() {
+  const { bg, tc, rxPct, sw } = getMarkConfig();
+  // Square 100×100 viewBox matching the canvas preview exactly:
+  // pad=16%, logo drawn in 100×75 space centered in the square
+  const sc  = 0.68;          // (1 - 0.16*2)
+  const bx  = 16;            // (100 - sc*100) / 2
+  const by  = 24.5;          // (100 - sc*75)  / 2
+  const lw  = (sw * sc).toFixed(2);
+  const rx  = ((rxPct / 100) * 100).toFixed(1);
+  const p   = (x, y) => `${(bx + x*sc).toFixed(2)},${(by + y*sc).toFixed(2)}`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="${rx}" fill="${bg}"/>
+  <g stroke="${tc}" stroke-width="${lw}" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M${p(11,65)} L${p(33,10)} L${p(67,65)} L${p(91,12)}"/>
+    <path d="M${p(11,65)} L${p(43,65)}"/>
+  </g>
+</svg>`;
+  dl(svg, 'avocloud-mark.svg', 'image/svg+xml');
+}
+
+function downloadMarkPNG(targetSize) {
+  const btn = document.querySelector(`[data-size="${targetSize}"]`);
+  const origLabel = btn ? btn.textContent : '';
+  if (btn) btn.textContent = 'Lädt…';
+  const { bg, tc, rxPct, sw } = getMarkConfig();
+  const canvas = document.createElement('canvas');
+  drawMarkOnCanvas(canvas, targetSize, bg, tc, rxPct, sw);
+  canvas.toBlob(b => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = `avocloud-mark-${targetSize}.png`;
+    a.click();
+    if (btn) setTimeout(() => { btn.textContent = origLabel; }, 500);
+  }, 'image/png');
+}
+
+
+
+
+
+// ─────────────────────────────────────────
+// WORDMARK CONTROLS
+// ─────────────────────────────────────────
+// wmAvo removed
+// wmCloud now inside wmRestWrap
+// wmDot inside wmCloud
+const wmStage = document.getElementById('wmStage');
+
+let wmExpanded = false, wmAnimating = false;
+
+// ── Typewriter via SVG stroke-dashoffset (pathLength=200 hardcoded) ──────────
+function runTypewriterSVG(pathEl, durationMs, onDone) {
+  pathEl.style.transition       = 'none';
+  pathEl.style.strokeDasharray  = '200';
+  pathEl.style.strokeDashoffset = '200';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      pathEl.style.transition       = `stroke-dashoffset ${durationMs}ms cubic-bezier(0.4,0,0.2,1)`;
+      pathEl.style.strokeDashoffset = '0';
+      setTimeout(() => {
+        pathEl.style.transition       = '';
+        pathEl.style.strokeDasharray  = '';
+        pathEl.style.strokeDashoffset = '';
+        if (onDone) onDone();
+      }, durationMs + 30);
+    });
+  });
+}
+
+// ── Wordmark toggle ──────────────────────────────────
+function wmToggle() {
+  if (wmAnimating) return;
+  wmAnimating = true;
+  const icon     = document.getElementById('wmIcon');
+  const avText   = document.getElementById('wmAV');
+  const restWrap = document.getElementById('wmRestWrap');
+  const restSpan = document.getElementById('wmCloud');
+  const path     = document.getElementById('wmPath');
+
+  if (!wmExpanded) {
+    restWrap.style.maxWidth  = '600px';
+    restSpan.style.transform = 'translateX(0)';
+    restSpan.style.opacity   = '1';
+    icon.style.opacity       = '0';
+    icon.style.transform     = 'translateX(-12px)';
+    avText.style.opacity     = '1';
+    avText.style.transform   = 'translateX(0)';
+    wmExpanded = true;
+    setTimeout(() => wmAnimating = false, 700);
+  } else {
+    wmExpanded = false;
+    avText.style.opacity     = '0';
+    avText.style.transform   = 'translateX(8px)';
+    restWrap.style.maxWidth  = '0';
+    restSpan.style.transform = 'translateX(20px)';
+    restSpan.style.opacity   = '0';
+    setTimeout(() => {
+      icon.style.transition = 'none';
+      icon.style.opacity    = '1';
+      icon.style.transform  = 'translateX(0)';
+      void icon.getBoundingClientRect();
+      runTypewriterSVG(path, 620, () => {
+        icon.style.transition = '';
+        wmAnimating = false;
+      });
+    }, 260);
+  }
+}
+
+function applyWmColor(hex, el) {
+  document.querySelectorAll('#tab-wordmark .controls .swatch').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  setWmColors(hex);
+  document.getElementById('wmColor').value = hex;
+  document.getElementById('wmColorHex').value = hex;
+}
+
+function setWmColors(hex) {
+  const opacity = parseInt(document.getElementById('dotOpacity').value) / 100;
+  document.querySelectorAll('#wmSVG path, #hoverSVG path').forEach(p => p.setAttribute('stroke', hex));
+  ['wmAV','wmCloud'].forEach(id => { const el=document.getElementById(id); if(el) el.style.color=hex; });
+  const wmDotEl = document.getElementById('wmDot');
+  if (wmDotEl) wmDotEl.style.opacity = opacity;
+  ['hoverAV','hoverRest'].forEach(id => { const el=document.getElementById(id); if(el) el.style.color=hex; });
+}
+
+function onWmColor(val) { setWmColors(val); document.getElementById('wmColorHex').value = val; }
+function onWmColorHex(val) {
+  if (/^#[0-9a-fA-F]{6}$/.test(val)) { setWmColors(val); document.getElementById('wmColor').value = val; }
+}
+
+function onDotOpacity(val) {
+  const d = document.getElementById('wmDot');
+  if (d) d.style.opacity = val / 100;
+  document.getElementById('dotOpVal').textContent = val;
+}
+
+function onWmSize(val) {
+  const svg = document.getElementById('wmSVG');
+  if (svg) svg.setAttribute('height', val+'px');
+  const wmAVel = document.getElementById('wmAV');
+  if (wmAVel) wmAVel.style.fontSize = val+'px';
+  const wmCloudEl = document.getElementById('wmCloud');
+  if (wmCloudEl) wmCloudEl.style.fontSize = val+'px';
+  document.getElementById('wmSizeVal').textContent = val;
+}
+
+function onAnimSpeed(val) {
+  const secs = (val / 10).toFixed(1);
+  document.getElementById('animSpeedVal').textContent = secs + 's';
+  const s = parseFloat(secs);
+  const _wc = document.getElementById('wmCloud');
+  if(_wc) _wc.style.transition = `max-width ${s}s cubic-bezier(0.77,0,0.18,1), opacity ${(s*0.55).toFixed(2)}s ease, transform ${(s*0.9).toFixed(2)}s cubic-bezier(0.77,0,0.18,1), color 0.2s`;
+  const _wd = document.getElementById('wmDot');
+  if(_wd) _wd.style.transition = `max-width ${s}s cubic-bezier(0.77,0,0.18,1) 0.04s, opacity ${(s*0.55).toFixed(2)}s ease 0.04s, transform ${(s*0.9).toFixed(2)}s cubic-bezier(0.77,0,0.18,1) 0.04s, color 0.2s`;
+}
+
+function setWmMode(mode, el) {
+  document.querySelectorAll('#tab-wordmark .shape-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const dot = document.getElementById('wmDot');
+  if (dot) dot.style.display = mode === 'full' ? '' : 'none';
+}
+
+function setWmBg(mode, el) {
+  const canvas = document.getElementById('wm-canvas');
+  canvas.className = 'canvas-area cb-' + mode;
+  document.querySelectorAll('#wm-canvas .bg-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function downloadWmSVG() {
+  const color  = document.getElementById('wmAV')?.style?.color || '#e8e4db';
+  const dotOp  = parseFloat(document.getElementById('wmDot')?.style?.opacity || 0.45);
+  const fs     = parseInt(document.getElementById('wmAV')?.style?.fontSize) || 56;
+  const dotTxt = document.getElementById('wmDot')?.style?.display === 'none' ? '' : '.NET';
+  const ls     = Math.round(fs * 0.04);
+  const svg    = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 ${Math.round(fs*1.3)}">
+  <text y="${fs}" font-family="Syne,sans-serif" font-weight="800" font-size="${fs}" fill="${color}" letter-spacing="${ls}">AVOCLOUD<tspan opacity="${dotOp}">${dotTxt}</tspan></text>
+</svg>`;
+  dl(svg, 'avocloud-wordmark.svg', 'image/svg+xml');
+}
+
+function downloadWmPNG(w) {
+  const color  = document.getElementById('wmAV')?.style?.color || '#e8e4db';
+  const dotOp  = parseFloat(document.getElementById('wmDot')?.style?.opacity || 0.45);
+  const dotTxt = document.getElementById('wmDot')?.style?.display === 'none' ? '' : '.NET';
+  const fs     = Math.round(w * 0.075);
+  const h      = Math.round(fs * 1.4);
+  const ls     = Math.round(fs * 0.04);
+  const svg    = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">
+  <text y="${fs}" font-family="Syne,sans-serif" font-weight="800" font-size="${fs}" fill="${color}" letter-spacing="${ls}">AVOCLOUD<tspan opacity="${dotOp}">${dotTxt}</tspan></text>
+</svg>`;
+  svgToPng(svg, w, h, `avocloud-wordmark-${w}.png`);
+}
+
+// ─────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────
+function dl(content, filename, type) {
+  const blob = new Blob([content], { type });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+}
+
+function svgToPng(svgStr, w, h, filename) {
+  return new Promise(resolve => {
+    const blob = new Blob([svgStr], { type: 'image/svg+xml' });
+    const url  = URL.createObjectURL(blob);
+    const img  = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      c.toBlob(b => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(b);
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+        resolve();
+      }, 'image/png');
+    };
+    img.src = url;
+  });
+}
+
+// Auto-demo on load
+setTimeout(() => { wmToggle(); setTimeout(() => wmToggle(), 2500); }, 1200);
+
+// ─────────────────────────────────────────
+// ANIMATION TAB
+// ─────────────────────────────────────────
+let animBg = '#e8e4db', animTc = '#0d0d0d', animStyle = 'split';
+let animRAF = null, animBoxPx = 200, animRxPx = 32, animLoopStart = null;
+
+const animCanvas = document.getElementById('animCanvas');
+const animCtx    = animCanvas.getContext('2d');
+
+// ── Logo drawing helpers ─────────────────────────────────────────────────────
+// All coords in viewbox 100×75. V-bottom at y=65 (same as baseline).
+// Main stroke: M8,65 L30,10 L58,65 L82,12   (V dips to y=65)
+// Base line:   M8,65 L40,65
+
+function getStrokeW() {
+  const el = document.getElementById('animStrokeSlider') ||
+             document.getElementById('strokeSlider');
+  return el ? parseFloat(el.value) : 12;
+}
+
+// Draw full logo instantly
+function drawLogo(ctx, W, H, tc, sw, alpha, ox, oy, scX, scY) {
+  if (alpha <= 0) return;
+  const pad = 0.16;
+  const sc  = Math.min(W*(1-pad*2)/100, H*(1-pad*2)/75);
+  const bx  = (W - sc*100)/2, by = (H - sc*75)/2;
+  ctx.save();
+  ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
+  ctx.translate(W/2+(ox||0), H/2+(oy||0));
+  ctx.scale(scX||1, scY||scX||1);
+  ctx.translate(-W/2, -H/2);
+  ctx.strokeStyle = tc;
+  ctx.lineWidth   = (sw||12)*sc;
+  ctx.lineCap='round'; ctx.lineJoin='round';
+  ctx.beginPath();
+  ctx.moveTo(bx+11*sc,by+65*sc); ctx.lineTo(bx+33*sc,by+10*sc);
+  ctx.lineTo(bx+67*sc,by+65*sc); ctx.lineTo(bx+91*sc,by+12*sc);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(bx+11*sc,by+65*sc); ctx.lineTo(bx+43*sc,by+65*sc);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// Draw logo as single continuous stroke with progress 0→1
+// Stroke order: 40,65 → 8,65 → 30,10 → 58,65 → 82,12
+function drawLogoPartial(ctx, W, H, tc, sw, alpha, prog) {
+  if (alpha<=0 || prog<=0) return;
+  const pad=0.16;
+  const sc =Math.min(W*(1-pad*2)/100, H*(1-pad*2)/75);
+  const bx=(W-sc*100)/2, by=(H-sc*75)/2;
+  const pts=[[43,65],[11,65],[33,10],[67,65],[91,12]];
+  let segs=[],total=0;
+  for(let i=1;i<pts.length;i++){
+    const l=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
+    segs.push(l); total+=l;
+  }
+  const target=prog*total;
+  let drawn=0;
+  ctx.save();
+  ctx.globalAlpha=Math.max(0,Math.min(1,alpha));
+  ctx.strokeStyle=tc; ctx.lineWidth=(sw||12)*sc;
+  ctx.lineCap='round'; ctx.lineJoin='round';
+  ctx.beginPath();
+  ctx.moveTo(bx+pts[0][0]*sc, by+pts[0][1]*sc);
+  for(let i=0;i<segs.length;i++){
+    if(drawn>=target) break;
+    const rem=target-drawn;
+    if(rem>=segs[i]){
+      ctx.lineTo(bx+pts[i+1][0]*sc, by+pts[i+1][1]*sc);
+      drawn+=segs[i];
+    } else {
+      const f=rem/segs[i];
+      ctx.lineTo(bx+(pts[i][0]+f*(pts[i+1][0]-pts[i][0]))*sc,
+                 by+(pts[i][1]+f*(pts[i+1][1]-pts[i][1]))*sc);
+      break;
+    }
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
+// ── Animation style renderers ─────────────────────────────────────────────────
+
+// SPLIT: logo slides in from right on enter, slides out right on exit
+function renderSplit(ctx, W, H, _fs, tc, tIn, tOut) {
+  const sw=getStrokeW();
+  const t = tOut!==null ? 1-easeInExpo(tOut) : easeOutExpo(tIn);
+  drawLogo(ctx,W,H,tc,sw,Math.min(t*2,1), W*0.3*(1-t),0,1,1);
+}
+
+// RISE: logo rises from below with spring bounce
+function renderRise(ctx, W, H, _fs, tc, tIn, tOut) {
+  const sw=getStrokeW();
+  if(tOut!==null){
+    const t=1-easeInOutCubic(tOut);
+    drawLogo(ctx,W,H,tc,sw,t, 0,H*0.3*(1-t),1,1);
+  } else {
+    const t=easeOutBack(tIn);
+    drawLogo(ctx,W,H,tc,sw,Math.min(tIn*2,1), 0,H*0.35*(1-Math.min(t,1)),1,1);
+  }
+}
+
+// TYPEWRITER: single continuous stroke draws in, then erases on exit
+function renderTypewriter(ctx, W, H, _fs, tc, tIn, tOut) {
+  const sw=getStrokeW();
+  if(tOut!==null){
+    drawLogoPartial(ctx,W,H,tc,sw,1, 1-easeInOutCubic(tOut));
+  } else {
+    drawLogoPartial(ctx,W,H,tc,sw,1, easeInOutCubic(tIn));
+  }
+}
+
+// FLIP: scale up from center with overshoot
+function renderFlip(ctx, W, H, _fs, tc, tIn, tOut) {
+  const sw=getStrokeW();
+  const s = tOut!==null ? 1-easeInOutCubic(tOut) : easeOutBack(tIn);
+  drawLogo(ctx,W,H,tc,sw,Math.min(Math.abs(tOut!==null?1-tOut:tIn)*2,1), 0,0,Math.abs(s),Math.abs(s));
+}
+
+function easeOutExpo(t)    { return t===1?1:1-Math.pow(2,-10*t); }
+function easeInExpo(t)     { return t===0?0:Math.pow(2,10*t-10); }
+function easeInOutCubic(t) { return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; }
+function easeOutBack(t)    { const c1=1.70158,c3=c1+1; return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2); }
+
+function setAnimBg(mode, el) {
+  const area = document.getElementById('anim-canvas-area');
+  document.querySelectorAll('#anim-canvas-area .bg-btn').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  area.classList.remove('cb-dark','cb-light','cb-grid');
+  area.classList.add('cb-'+mode);
+}
+
+function setAnimStyle(s, el) {
+  document.querySelectorAll('#animStyleBtns .shape-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  animStyle = s;
+  animLoopStart = null;
+}
+
+function onAnimBoxSize(val) {
+  animBoxPx = parseInt(val);
+  animCanvas.width = animCanvas.height = animBoxPx;
+  animCanvas.style.width = animCanvas.style.height = animBoxPx+'px';
+  animCanvas.style.borderRadius = animRxPx+'px';
+  document.getElementById('animBoxSizeVal').textContent = val;
+  animLoopStart = null;
+}
+
+function onAnimRadius(val) {
+  animRxPx = parseInt(val);
+  animCanvas.style.borderRadius = val+'px';
+  document.getElementById('animRadiusVal').textContent = val;
+}
+
+function getTimings() {
+  return {
+    inMs:    parseInt(document.getElementById('animIn').value)    * 100,
+    holdMs:  parseInt(document.getElementById('animHold').value)  * 100,
+    outMs:   parseInt(document.getElementById('animOut').value)   * 100,
+    pauseMs: parseInt(document.getElementById('animPause').value) * 100,
+  };
+}
+
+function animLoop(ts) {
+  if (!animLoopStart) animLoopStart = ts;
+  const { inMs, holdMs, outMs, pauseMs } = getTimings();
+  const cycleMs = inMs + holdMs + outMs + pauseMs;
+  const elapsed = (ts - animLoopStart + inMs) % cycleMs;
+  const W = animBoxPx, H = animBoxPx, rx = animRxPx;
+
+  animCtx.clearRect(0,0,W,H);
+  animCtx.save();
+  animCtx.fillStyle = animBg;
+  animCtx.beginPath();
+  animCtx.moveTo(rx,0); animCtx.lineTo(W-rx,0); animCtx.quadraticCurveTo(W,0,W,rx);
+  animCtx.lineTo(W,H-rx); animCtx.quadraticCurveTo(W,H,W-rx,H);
+  animCtx.lineTo(rx,H); animCtx.quadraticCurveTo(0,H,0,H-rx);
+  animCtx.lineTo(0,rx); animCtx.quadraticCurveTo(0,0,rx,0);
+  animCtx.closePath(); animCtx.fill(); animCtx.clip();
+
+  let tIn=0, tOut=null;
+  if      (elapsed < inMs)                       tIn = elapsed/inMs;
+  else if (elapsed < inMs+holdMs)                tIn = 1;
+  else if (elapsed < inMs+holdMs+outMs)         { tIn=1; tOut=(elapsed-inMs-holdMs)/outMs; }
+  else                                           { tIn=0; tOut=1; }
+
+  const isOut = tOut!==null && elapsed>=inMs+holdMs;
+  switch(animStyle) {
+    case 'split':      renderSplit(animCtx,W,H,0,animTc,tIn,isOut?tOut:null); break;
+    case 'rise':       renderRise(animCtx,W,H,0,animTc,tIn,isOut?tOut:null); break;
+    case 'typewriter': renderTypewriter(animCtx,W,H,0,animTc,tIn,isOut?tOut:null); break;
+    case 'flip':       renderFlip(animCtx,W,H,0,animTc,tIn,isOut?tOut:null); break;
+  }
+  animCtx.restore();
+  animRAF = requestAnimationFrame(animLoop);
+}
+
+// ── INLINE GIF ENCODER ──────────────────────────────
+class GIFEncoder {
+  constructor(w,h){this.w=w;this.h=h;this.frames=[];this.delay=4;}
+  setDelay(ms){this.delay=Math.round(ms/10);}
+  addFrame(imageData){this.frames.push(imageData);}
+  encode(){
+    const w=this.w,h=this.h,parts=[];
+    const palette=this._buildPalette();
+    parts.push(this._str('GIF89a'));
+    parts.push(this._word(w),this._word(h));
+    parts.push(new Uint8Array([0xF7,0,0]));
+    const ctData=new Uint8Array(768);
+    for(let i=0;i<palette.length;i++){ctData[i*3]=palette[i][0];ctData[i*3+1]=palette[i][1];ctData[i*3+2]=palette[i][2];}
+    parts.push(ctData);
+    parts.push(new Uint8Array([0x21,0xFF,0x0B]));
+    parts.push(this._str('NETSCAPE2.0'));
+    parts.push(new Uint8Array([3,1,0,0,0]));
+    for(const imgData of this.frames){
+      const indices=this._quantizeFrame(imgData,palette);
+      parts.push(new Uint8Array([0x21,0xF9,0x04,0x00]));
+      parts.push(this._word(this.delay));
+      parts.push(new Uint8Array([0,0]));
+      parts.push(new Uint8Array([0x2C]));
+      parts.push(this._word(0),this._word(0),this._word(w),this._word(h));
+      parts.push(new Uint8Array([0x00]));
+      const lzw=this._lzw(indices,8);
+      parts.push(new Uint8Array([8]));
+      let off=0;
+      while(off<lzw.length){const len=Math.min(255,lzw.length-off);parts.push(new Uint8Array([len]));parts.push(lzw.slice(off,off+len));off+=len;}
+      parts.push(new Uint8Array([0]));
+    }
+    parts.push(new Uint8Array([0x3B]));
+    return this._concat(parts);
+  }
+  _buildPalette(){
+    const counts=new Map();
+    for(const imgData of this.frames){const d=imgData.data;for(let i=0;i<d.length;i+=4){const a=d[i+3];const r=a<128?0:d[i];const g=a<128?0:d[i+1];const b=a<128?0:d[i+2];const key=(r<<16)|(g<<8)|b;counts.set(key,(counts.get(key)||0)+1);}}
+    const sorted=[...counts.entries()].sort((a,b)=>b[1]-a[1]);
+    const pal=[[0,0,0]];
+    for(const[key]of sorted){if(pal.length>=256)break;const r=(key>>16)&0xFF,g=(key>>8)&0xFF,b=key&0xFF;if(!(r===0&&g===0&&b===0))pal.push([r,g,b]);}
+    while(pal.length<256)pal.push([0,0,0]);
+    return pal;
+  }
+  _quantizeFrame(imgData,palette){
+    const d=imgData.data,px=imgData.width*imgData.height,out=new Uint8Array(px);
+    for(let i=0;i<px;i++){const a=d[i*4+3];const r=a<128?0:d[i*4];const g=a<128?0:d[i*4+1];const b=a<128?0:d[i*4+2];let best=0,bestD=Infinity;for(let j=0;j<palette.length;j++){const dr=r-palette[j][0],dg=g-palette[j][1],db=b-palette[j][2];const dist=dr*dr+dg*dg+db*db;if(dist<bestD){bestD=dist;best=j;}}out[i]=best;}
+    return out;
+  }
+  _lzw(indices,minCodeSize){
+    const clearCode=1<<minCodeSize,eoi=clearCode+1;const out=[];let bits=0,buf=0;
+    function emit(code,size){buf|=code<<bits;bits+=size;while(bits>=8){out.push(buf&0xFF);buf>>=8;bits-=8;}}
+    let codeSize=minCodeSize+1,nextCode=eoi+1,maxCode=(1<<codeSize),table=new Map();
+    for(let i=0;i<clearCode;i++)table.set(String(i),i);
+    emit(clearCode,codeSize);let str=String(indices[0]);
+    for(let i=1;i<indices.length;i++){const c=String(indices[i]);const sc=str+','+c;if(table.has(sc)){str=sc;}else{emit(table.get(str),codeSize);if(nextCode<4096){table.set(sc,nextCode++);if(nextCode>maxCode&&codeSize<12){codeSize++;maxCode<<=1;}}else{emit(clearCode,codeSize);codeSize=minCodeSize+1;nextCode=eoi+1;maxCode=(1<<codeSize);table=new Map();for(let j=0;j<clearCode;j++)table.set(String(j),j);}str=c;}}
+    emit(table.get(str),codeSize);emit(eoi,codeSize);if(bits>0)out.push(buf&0xFF);return new Uint8Array(out);
+  }
+  _str(s){return new Uint8Array([...s].map(c=>c.charCodeAt(0)));}
+  _word(n){return new Uint8Array([n&0xFF,(n>>8)&0xFF]);}
+  _concat(parts){const total=parts.reduce((s,p)=>s+p.length,0);const out=new Uint8Array(total);let off=0;for(const p of parts){out.set(p,off);off+=p.length;}return out;}
+}
+
+async function exportAnimGIF() {
+  const btn=document.querySelector('[onclick="exportAnimGIF()"]');
+  const status=document.getElementById('animStatus');
+  const prog=document.getElementById('animProgress');
+  const {inMs,holdMs,outMs,pauseMs}=getTimings();
+  const cycleMs=inMs+holdMs+outMs+pauseMs;
+  const fps=20,frameMs=1000/fps,frames=Math.ceil(cycleMs/frameMs);
+  btn.textContent='Building…';status.textContent='Frames rendern…';prog.style.width='0%';
+  await document.fonts.ready;
+  const W=animBoxPx,rx=animRxPx,bg=animBg,tc=animTc;
+  const SCALE=2,W2=W*SCALE;
+  const hiCanvas=document.createElement('canvas');hiCanvas.width=hiCanvas.height=W2;
+  const hiCtx=hiCanvas.getContext('2d');
+  const offCanvas=document.createElement('canvas');offCanvas.width=offCanvas.height=W;
+  const ctx=offCanvas.getContext('2d');
+  const gif=new GIFEncoder(W2,W2);gif.setDelay(frameMs);
+  for(let i=0;i<frames;i++){
+    const elapsed=(i*frameMs+inMs)%cycleMs;
+    let tIn=0,tOut_val=null;
+    if(elapsed<inMs)tIn=elapsed/inMs;
+    else if(elapsed<inMs+holdMs)tIn=1;
+    else if(elapsed<inMs+holdMs+outMs){tIn=1;tOut_val=(elapsed-inMs-holdMs)/outMs;}
+    else{tIn=0;tOut_val=1;}
+    const isOut=tOut_val!==null&&elapsed>=inMs+holdMs;
+    const rx2=rx*SCALE;
+    hiCtx.clearRect(0,0,W2,W2);hiCtx.save();
+    hiCtx.fillStyle=bg;
+    hiCtx.beginPath();hiCtx.moveTo(rx2,0);hiCtx.lineTo(W2-rx2,0);hiCtx.quadraticCurveTo(W2,0,W2,rx2);
+    hiCtx.lineTo(W2,W2-rx2);hiCtx.quadraticCurveTo(W2,W2,W2-rx2,W2);
+    hiCtx.lineTo(rx2,W2);hiCtx.quadraticCurveTo(0,W2,0,W2-rx2);
+    hiCtx.lineTo(0,rx2);hiCtx.quadraticCurveTo(0,0,rx2,0);
+    hiCtx.closePath();hiCtx.fill();hiCtx.clip();
+    switch(animStyle){
+      case 'split':      renderSplit(hiCtx,W2,W2,0,tc,tIn,isOut?tOut_val:null);break;
+      case 'rise':       renderRise(hiCtx,W2,W2,0,tc,tIn,isOut?tOut_val:null);break;
+      case 'typewriter': renderTypewriter(hiCtx,W2,W2,0,tc,tIn,isOut?tOut_val:null);break;
+      case 'flip':       renderFlip(hiCtx,W2,W2,0,tc,tIn,isOut?tOut_val:null);break;
+    }
+    hiCtx.restore();
+    gif.addFrame(hiCtx.getImageData(0,0,W2,W2));
+    prog.style.width=((i/frames)*70)+'%';
+    if(i%5===0)await new Promise(r=>setTimeout(r,0));
+  }
+  status.textContent='GIF encodieren…';prog.style.width='75%';
+  await new Promise(r=>setTimeout(r,0));
+  const data=gif.encode();prog.style.width='100%';
+  const blob=new Blob([data],{type:'image/gif'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='avocloud-mark-loop.gif';a.click();
+  btn.textContent='GIF exportieren';status.textContent='✓ GIF gespeichert!';
+  setTimeout(()=>{status.textContent='looping…';prog.style.width='0%';},3000);
+}
+
+async function exportMarkWebM() {
+  const btn=document.querySelector('[onclick="exportMarkWebM()"]');
+  const status=document.getElementById('animStatus');
+  const prog=document.getElementById('animProgress');
+  const {inMs,holdMs,outMs,pauseMs}=getTimings();
+  const cycleMs=inMs+holdMs+outMs+pauseMs;
+  btn.textContent='Aufnehmen…';status.textContent='● Recording…';prog.style.width='0%';
+  await document.fonts.ready;
+  const W=animBoxPx,rx=animRxPx,bg=animBg,tc=animTc;
+  const SCALE=2,W2=W*SCALE;
+  const hiCvs=document.createElement('canvas');hiCvs.width=hiCvs.height=W2;
+  const hiC=hiCvs.getContext('2d');
+  const offCanvas=document.createElement('canvas');offCanvas.width=offCanvas.height=W;
+  const ctx=offCanvas.getContext('2d');
+  const chunks=[];
+  const mimeType=MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9':'video/webm';
+  const stream=offCanvas.captureStream(60);
+  const rec=new MediaRecorder(stream,{mimeType});
+  rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
+  const start=performance.now();
+  function frame(){
+    const elapsed=(performance.now()-start)%cycleMs;
+    const progress=(performance.now()-start)/cycleMs;
+    prog.style.width=Math.min(progress*100,99)+'%';
+    let tIn=null,tOut_val=null;
+    if(elapsed<inMs)tIn=elapsed/inMs;
+    else if(elapsed<inMs+holdMs)tIn=1;
+    else if(elapsed<inMs+holdMs+outMs){tIn=1;tOut_val=(elapsed-inMs-holdMs)/outMs;}
+    else{tIn=0;tOut_val=1;}
+    const isOut=tOut_val!==null&&elapsed>=inMs+holdMs;
+    const rx2=rx*SCALE;
+    hiC.clearRect(0,0,W2,W2);hiC.save();
+    hiC.fillStyle=bg;
+    hiC.beginPath();hiC.moveTo(rx2,0);hiC.lineTo(W2-rx2,0);hiC.quadraticCurveTo(W2,0,W2,rx2);
+    hiC.lineTo(W2,W2-rx2);hiC.quadraticCurveTo(W2,W2,W2-rx2,W2);
+    hiC.lineTo(rx2,W2);hiC.quadraticCurveTo(0,W2,0,W2-rx2);
+    hiC.lineTo(0,rx2);hiC.quadraticCurveTo(0,0,rx2,0);
+    hiC.closePath();hiC.fill();hiC.clip();
+    switch(animStyle){
+      case 'split':      renderSplit(hiC,W2,W2,0,tc,tIn,isOut?tOut_val:null);break;
+      case 'rise':       renderRise(hiC,W2,W2,0,tc,tIn,isOut?tOut_val:null);break;
+      case 'typewriter': renderTypewriter(hiC,W2,W2,0,tc,tIn,isOut?tOut_val:null);break;
+      case 'flip':       renderFlip(hiC,W2,W2,0,tc,tIn,isOut?tOut_val:null);break;
+    }
+    hiC.restore();
+    ctx.clearRect(0,0,W,W);ctx.drawImage(hiCvs,0,0,W,W);
+    if(performance.now()-start<cycleMs*2)requestAnimationFrame(frame);
+    else rec.stop();
+  }
+  rec.start();requestAnimationFrame(frame);
+  rec.onstop=()=>{
+    const blob=new Blob(chunks,{type:'video/webm'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='avocloud-mark-loop.webm';a.click();
+    btn.textContent='WebM Video';status.textContent='✓ Gespeichert!';
+    setTimeout(()=>{status.textContent='looping…';prog.style.width='0%';},3000);
+  };
+}
+
+// ─────────────────────────────────────────
+// HOVER TAB
+// ─────────────────────────────────────────
+function switchCode(name, el) {
+  document.querySelectorAll('.code-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.code-block').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('code-'+name).classList.add('active');
+}
+
+function onHoverSize(val) {
+  const size = parseFloat(val).toFixed(2)+'rem';
+  const svg = document.getElementById('hoverSVG');
+  if(svg) svg.setAttribute('height', size);
+  ['hoverAV','hoverRest'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.fontSize=size;});
+  document.getElementById('hoverSizeVal').textContent = size;
+}
+
+function copyCode(id) {
+  const el=document.getElementById(id);
+  const txt=el.innerText||el.textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn=el.parentElement.querySelector('.copy-btn');
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);
+  });
+}
+
+// ── Hover snippet JS ──
+(function initHoverSnippet(){
+  const demo=document.getElementById('hoverDemo');
+  if(!demo) return;
+  const icon=document.getElementById('hoverIcon');
+  const avEl=document.getElementById('hoverAV');
+  const wrap=document.getElementById('hoverRestWrap');
+  const rest=document.getElementById('hoverRest');
+  const path=document.getElementById('hoverPath');
+  let expanded=false,locked=false;
+
+  function expand(){
+    if(expanded||locked)return;
+    expanded=true;
+    wrap.style.maxWidth='600px';rest.style.transform='translateX(0)';rest.style.opacity='1';
+    icon.style.opacity='0';icon.style.transform='translateX(-12px)';
+    avEl.style.opacity='1';avEl.style.transform='translateX(0)';
+  }
+  function collapse(){
+    if(!expanded||locked)return;
+    expanded=false;locked=true;
+    avEl.style.opacity='0';avEl.style.transform='translateX(8px)';
+    wrap.style.maxWidth='0';rest.style.transform='translateX(20px)';rest.style.opacity='0';
+    setTimeout(()=>{
+      icon.style.transition='none';
+      icon.style.opacity='1';icon.style.transform='translateX(0)';
+      void icon.getBoundingClientRect();
+      runTypewriterSVG(path,580,()=>{icon.style.transition='';locked=false;});
+    },250);
+  }
+  demo.addEventListener('mouseenter',expand);
+  demo.addEventListener('mouseleave',collapse);
+  demo.addEventListener('focus',expand);
+  demo.addEventListener('blur',collapse);
+})();
+
+</script>
+</body>
+</html>

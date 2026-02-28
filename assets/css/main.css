@@ -1,7 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Quicksand:wght@300..700&display=swap');
 
 *, *::before, *::after {
     font-family: "Quicksand", sans-serif;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Syne', sans-serif;
 }
 
 /* ===== ANIMATED GRADIENT BAR ===== */
@@ -111,7 +115,7 @@ html:not(.dark) .theme-toggle {
     text-align: center;
     position: relative;
     overflow: hidden;
-    padding: 4rem 1.5rem 8rem;
+    padding: calc(4rem + 54px) 1.5rem 8rem;
     background: oklch(0.12 0.06 270);
 }
 
@@ -179,9 +183,10 @@ html:not(.dark) .hero::before {
 }
 
 .hero h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    line-height: 1.2;
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
     margin-bottom: 1.25rem;
     color: white;
 }
@@ -200,6 +205,174 @@ html:not(.dark) .hero h1 {
 
 html:not(.dark) .hero-subtitle {
     color: oklch(0.3 0.06 280);
+}
+
+/* Hero eyebrow */
+.hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 1rem;
+}
+
+html:not(.dark) .hero-eyebrow {
+    color: oklch(0.42 0.08 280);
+}
+
+/* ===== AVOCLOUD LOGO ANIMATION (SVG icon → CLOUD.NET expand) ===== */
+.avocloud-logo {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    color: white;
+}
+
+html:not(.dark) .avocloud-logo {
+    color: oklch(0.15 0.06 280);
+}
+
+/* Mark slot: SVG icon + AV text share same grid cell */
+.avocloud-logo__slot {
+    position: relative;
+    display: inline-grid;
+    flex-shrink: 0;
+}
+
+.avocloud-logo__icon,
+.avocloud-logo__av {
+    grid-area: 1/1;
+    display: flex;
+    align-items: center;
+}
+
+.avocloud-logo__icon {
+    transition:
+        opacity   0.32s ease,
+        transform 0.32s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.avocloud-logo__icon svg {
+    display: block;
+    height: 1.3rem;
+    width: auto;
+    stroke: currentColor;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* AV text crossfades with icon */
+.avocloud-logo__av {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(6px);
+    transition:
+        opacity   0.32s ease,
+        transform 0.32s cubic-bezier(0.77, 0, 0.18, 1);
+    pointer-events: none;
+    justify-content: center;
+}
+
+/* CLOUD.NET slides in from right */
+.avocloud-logo__rest-wrap {
+    overflow: hidden;
+    max-width: 0;
+    display: flex;
+    align-items: baseline;
+    transition: max-width 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.avocloud-logo__rest {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    transform: translateX(20px);
+    opacity: 0;
+    transition:
+        transform 0.4s cubic-bezier(0.77, 0, 0.18, 1),
+        opacity   0.3s ease 0.05s;
+}
+
+.avocloud-logo__dot {
+    opacity: 0.55;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+}
+
+/* Hover state controlled by JS (see main.js initLogoHover) */
+
+/* Hero wordmark — always fully written */
+.hero-wordmark {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    font-size: clamp(1.75rem, 8vw, 5.5rem);
+    color: white;
+    line-height: 1;
+    margin: 0 0 1.5rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .hero-wordmark {
+        font-size: clamp(1.2rem, 7vw, 2.5rem);
+        letter-spacing: 0.02em;
+    }
+    .hero-wordmark-dot {
+        letter-spacing: 0.02em;
+    }
+}
+
+html:not(.dark) .hero-wordmark {
+    color: oklch(0.12 0.07 280);
+}
+
+.hero-wordmark-dot {
+    opacity: 0.55;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+}
+
+/* ===== NAV ===== */
+.site-nav {
+    position: fixed;
+    top: 4px;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1.75rem;
+    background: rgba(10, 10, 15, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+html:not(.dark) .site-nav {
+    background: rgba(242, 240, 236, 0.88);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Theme toggle when inside nav: reset fixed positioning */
+.site-nav .theme-toggle {
+    position: static;
+    margin-left: auto;
+    flex-shrink: 0;
 }
 
 /* Hero action buttons */

@@ -1,3 +1,71 @@
+// ── AVOCLOUD LOGO: SVG typewriter draw-on + hover expand ──
+function runTypewriterSVG(pathEl, durationMs, onDone) {
+    pathEl.style.transition       = 'none';
+    pathEl.style.strokeDasharray  = '200';
+    pathEl.style.strokeDashoffset = '200';
+    requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+            pathEl.style.transition       = 'stroke-dashoffset ' + durationMs + 'ms cubic-bezier(0.4,0,0.2,1)';
+            pathEl.style.strokeDashoffset = '0';
+            setTimeout(function () {
+                pathEl.style.transition       = '';
+                pathEl.style.strokeDasharray  = '';
+                pathEl.style.strokeDashoffset = '';
+                if (onDone) onDone();
+            }, durationMs);
+        });
+    });
+}
+
+document.querySelectorAll('.avocloud-logo').forEach(function (logo) {
+    var icon     = logo.querySelector('.avocloud-logo__icon');
+    var av       = logo.querySelector('.avocloud-logo__av');
+    var restWrap = logo.querySelector('.avocloud-logo__rest-wrap');
+    var rest     = logo.querySelector('.avocloud-logo__rest');
+    var path     = logo.querySelector('path');
+    if (!icon || !av || !restWrap || !rest || !path) return;
+
+    var expanded = false, locked = false;
+
+    function expand() {
+        if (expanded || locked) return;
+        expanded = true;
+        restWrap.style.maxWidth = '600px';
+        rest.style.transform    = 'translateX(0)';
+        rest.style.opacity      = '1';
+        icon.style.opacity      = '0';
+        icon.style.transform    = 'translateX(-12px)';
+        av.style.opacity        = '1';
+        av.style.transform      = 'translateX(0)';
+    }
+
+    function collapse() {
+        if (!expanded || locked) return;
+        expanded = false;
+        locked   = true;
+        av.style.opacity        = '0';
+        av.style.transform      = 'translateX(8px)';
+        restWrap.style.maxWidth = '0';
+        rest.style.transform    = 'translateX(20px)';
+        rest.style.opacity      = '0';
+        setTimeout(function () {
+            icon.style.transition = 'none';
+            icon.style.opacity    = '1';
+            icon.style.transform  = 'translateX(0)';
+            void icon.getBoundingClientRect();
+            runTypewriterSVG(path, 580, function () {
+                icon.style.transition = '';
+                locked = false;
+            });
+        }, 250);
+    }
+
+    logo.addEventListener('mouseenter', expand);
+    logo.addEventListener('mouseleave', collapse);
+    logo.addEventListener('focus',      expand);
+    logo.addEventListener('blur',       collapse);
+});
+
 // Smooth scroll on scroll-indicator click
 var scrollIndicator = document.querySelector('.scroll-indicator');
 if (scrollIndicator) {

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 – Not Found | Avocloud.net</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Syne:wght@800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0b0b0f;
@@ -57,13 +57,22 @@
             align-items: center;
             gap: 0.5rem;
         }
-        .header-logo .dot {
+        .dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
             background: var(--yellow);
             animation: blink 2s ease-in-out infinite;
         }
+        .avocloud-logo { display: inline-flex; align-items: center; gap: 0; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.05rem; letter-spacing: 0.08em; text-decoration: none; color: var(--text-primary); white-space: nowrap; overflow: hidden; }
+        .avocloud-logo__slot { display: inline-grid; grid-template-columns: 1fr; align-items: center; }
+        .avocloud-logo__icon, .avocloud-logo__av { grid-area: 1 / 1; display: inline-flex; align-items: center; }
+        .avocloud-logo__icon { opacity: 1; transform: translateX(0); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .avocloud-logo__icon svg { width: 1.8em; height: 1.35em; }
+        .avocloud-logo__av { opacity: 0; transform: translateX(-8px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .avocloud-logo__rest-wrap { overflow: hidden; max-width: 0; transition: max-width 0.45s cubic-bezier(0.4,0,0.2,1); }
+        .avocloud-logo__rest { display: inline-flex; align-items: center; opacity: 0; transform: translateX(20px); transition: opacity 0.35s ease, transform 0.35s ease; }
+        .avocloud-logo__dot { font-family: 'Syne', sans-serif; font-weight: 800; opacity: 0.55; }
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.3; }
@@ -125,7 +134,8 @@
         .error-code span { color: var(--yellow); }
         h1 {
             font-size: 1.25rem;
-            font-weight: 600;
+            font-weight: 800;
+            font-family: 'Syne', sans-serif;
             color: var(--text-primary);
             margin-bottom: 1rem;
         }
@@ -223,11 +233,23 @@
 </head>
 <body>
     <div class="header">
-        <a href="https://avocloud.net" class="header-logo">
-            <span class="dot"></span>
-            Avocloud.net
+        <a class="avocloud-logo" href="/" aria-label="AVOCLOUD.NET">
+            <span class="avocloud-logo__slot">
+                <span class="avocloud-logo__icon">
+                    <svg viewBox="0 0 100 75" fill="none">
+                        <path d="M 43 65 L 11 65 L 33 10 L 67 65 L 91 12"
+                            stroke="currentColor" stroke-width="8.5"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            pathLength="200"/>
+                    </svg>
+                </span>
+                <span class="avocloud-logo__av">AV</span>
+            </span>
+            <span class="avocloud-logo__rest-wrap">
+                <span class="avocloud-logo__rest">CLOUD<span class="avocloud-logo__dot">.NET</span></span>
+            </span>
         </a>
-        <span class="header-tag">Not Found</span>
+<span class="header-tag" style="margin-left:auto;">Not Found</span>
     </div>
     <div class="main">
         <div class="card">
@@ -273,5 +295,6 @@
     <div class="footer">
         <p>Managed by <a href="https://avocloud.net">Avocloud.net</a> &middot; <a href="https://avocloud.net/impressum.html">Imprint</a></p>
     </div>
+    <script src="/assets/js/main.js"></script>
 </body>
 </html>
