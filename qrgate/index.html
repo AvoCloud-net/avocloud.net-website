@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QrGate – Event Ticketing · Avocloud.net</title>
+    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
+    <meta name="description" content="QrGate is a full-featured event ticketing system with QR code check-in, integrated shop, Online payment, and automated email delivery.">
+    <meta name="keywords" content="QrGate, ticketing, event, QR code, Online payment, Avocloud, open source">
+    <meta name="author" content="Avocloud.net">
+    <meta name="robots" content="index, follow">
+    <meta name="color-scheme" content="light dark">
+    <link rel="canonical" href="https://avocloud.net/qrgate/" />
+    <meta property="og:title" content="QrGate – Event Ticketing · Avocloud.net">
+    <meta property="og:description" content="A full-featured event ticketing system with QR code check-in, integrated shop, and Online payment.">
+    <meta property="og:url" content="https://avocloud.net/qrgate">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="../assets/js/theme.js"></script>
+    <style>
+        /* ===== qrgate/index.html PAGE-SPECIFIC STYLES ===== */
+
+        /* --- Pulse keyframe (for status dot) --- */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.35; }
+        }
+
+        /* --- Asymmetric Hero Grid --- */
+        .qrgate-hero-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+            text-align: left;
+        }
+        .qrgate-hero-grid > * { min-width: 0; }
+        @media (max-width: 768px) {
+            .qrgate-hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+            .qrgate-hero-visual-col { order: -1; }
+        }
+        .qrgate-hero-visual-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- Hero visual ring (QR icon) --- */
+        .qrgate-visual-ring {
+            width: clamp(160px, 20vw, 240px);
+            height: clamp(160px, 20vw, 240px);
+            border-radius: 22px;
+            border: 3px solid rgba(147,51,234,0.4);
+            box-shadow:
+                0 0 0 6px rgba(147,51,234,0.1),
+                0 24px 64px rgba(147,51,234,0.28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(147,51,234,0.06);
+            flex-shrink: 0;
+        }
+        .qrgate-visual-ring svg {
+            width: 52%;
+            height: 52%;
+            color: #c084fc;
+        }
+        html:not(.dark) .qrgate-visual-ring { background: rgba(147,51,234,0.04); }
+        html:not(.dark) .qrgate-visual-ring svg { color: #9333ea; }
+
+        /* --- Editorial name --- */
+        .qrgate-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.8rem, 10vw, 8rem);
+            line-height: 0.92;
+            letter-spacing: -0.02em;
+            color: white;
+            margin-bottom: 0.15em;
+        }
+        html:not(.dark) .qrgate-name { color: oklch(0.1 0.07 280); }
+        .qrgate-name-accent {
+            display: block;
+            color: #c084fc;
+        }
+        html:not(.dark) .qrgate-name-accent { color: #9333ea; }
+
+        /* --- Gradient divider --- */
+        .qrgate-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #9333ea, #ec4899);
+            border-radius: 9999px;
+            margin: 1.5rem 0;
+        }
+        @media (max-width: 768px) {
+            .qrgate-divider { margin: 1.5rem auto; }
+        }
+
+        /* --- Hero subtitle --- */
+        .qrgate-subtitle {
+            font-size: clamp(0.875rem, 2vw, 1.05rem);
+            color: rgba(255,255,255,0.68);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        html:not(.dark) .qrgate-subtitle { color: oklch(0.3 0.06 280); }
+
+        /* --- Status badge --- */
+        .qrgate-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.3rem 0.85rem;
+            border: 1px solid rgba(34,197,94,0.3);
+            border-radius: 9999px;
+            background: rgba(34,197,94,0.07);
+            font-size: 0.73rem;
+            font-weight: 600;
+            color: rgba(74,222,128,0.95);
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.02em;
+        }
+        html:not(.dark) .qrgate-status {
+            color: #15803d;
+            border-color: rgba(22,163,74,0.3);
+            background: rgba(22,163,74,0.07);
+        }
+
+        /* --- Stats strip --- */
+        .stats-strip {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .stats-strip { justify-content: center; }
+        }
+        .stat-pill {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.6rem 1.1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(8px);
+            min-width: 72px;
+            gap: 0.12rem;
+        }
+        html:not(.dark) .stat-pill {
+            border-color: rgba(147,51,234,0.15);
+            background: rgba(147,51,234,0.05);
+        }
+        .stat-number {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #c084fc;
+            line-height: 1;
+        }
+        html:not(.dark) .stat-number { color: #9333ea; }
+        .stat-label {
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.42);
+            white-space: nowrap;
+        }
+        html:not(.dark) .stat-label { color: oklch(0.45 0.04 280); }
+
+        /* --- Hero links row --- */
+        .hero-links-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .hero-links-row { justify-content: center; }
+        }
+
+        /* --- Cards: slightly darker in dark mode --- */
+        html.dark .card {
+            background-color: color-mix(in oklch, var(--card) 75%, black);
+        }
+
+        /* --- Role card top accents --- */
+        .role-card-admin    { border-top: 2px solid #9333ea; }
+        .role-card-ticketflow { border-top: 2px solid #ec4899; }
+        .role-card-handheld { border-top: 2px solid #06b6d4; }
+
+        /* --- API endpoint rows --- */
+        .api-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 0.85rem;
+            border-radius: 8px;
+            background: rgba(147,51,234,0.06);
+            border: 1px solid rgba(147,51,234,0.12);
+        }
+        html:not(.dark) .api-row {
+            background: rgba(147,51,234,0.04);
+            border-color: rgba(147,51,234,0.1);
+        }
+        .api-method {
+            font-family: 'Syne', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 0.18rem 0.5rem;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+        .api-method-get {
+            background: rgba(34,197,94,0.15);
+            color: #4ade80;
+        }
+        html:not(.dark) .api-method-get {
+            background: rgba(22,163,74,0.12);
+            color: #15803d;
+        }
+        .api-method-post {
+            background: rgba(147,51,234,0.2);
+            color: #c084fc;
+        }
+        html:not(.dark) .api-method-post {
+            background: rgba(147,51,234,0.12);
+            color: #7e22ce;
+        }
+        .api-path {
+            font-family: monospace;
+            font-size: 0.84rem;
+            color: rgba(255,255,255,0.82);
+        }
+        html:not(.dark) .api-path { color: oklch(0.25 0.05 280); }
+    </style>
+</head>
+
+<body>
+    <div id="gradientbar"></div>
+
+    <!-- Nav -->
+    <nav class="site-nav" id="site-nav">
+        <a class="avocloud-logo" href="/" aria-label="AVOCLOUD.NET">
+            <span class="avocloud-logo__slot">
+                <span class="avocloud-logo__icon">
+                    <svg viewBox="0 0 100 75" fill="none">
+                        <path d="M 43 65 L 11 65 L 33 10 L 67 65 L 91 12"
+                            stroke="currentColor" stroke-width="8.5"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            pathLength="200"/>
+                    </svg>
+                </span>
+                <span class="avocloud-logo__av">AVO</span>
+            </span>
+            <span class="avocloud-logo__rest-wrap">
+                <span class="avocloud-logo__rest">CLOUD<span class="avocloud-logo__dot">.NET</span></span>
+            </span>
+        </a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+            <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+        </button>
+    </nav>
+
+    <!-- Hero — asymmetric editorial -->
+    <section class="hero">
+        <div class="hero-content w-full" style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
+            <div class="qrgate-hero-grid">
+
+                <!-- Left: Text -->
+                <div>
+                    <p class="hero-eyebrow">Avocloud.net · Event Ticketing</p>
+
+                    <div class="qrgate-name">
+                        Qr
+                        <span class="qrgate-name-accent">Gate</span>
+                    </div>
+
+                    <div class="qrgate-divider"></div>
+
+                    <p class="qrgate-subtitle">
+                        Full-featured event ticketing · QR code check-in<br>
+                        Integrated shop · Online payment via Stripe &amp; cash · Automated PDF delivery
+                    </p>
+
+                    <!-- Status -->
+                    <div>
+                        <span class="qrgate-status">
+                            <span style="width:7px;height:7px;background:#4ade80;border-radius:50%;display:inline-block;flex-shrink:0;animation:pulse 2s infinite;"></span>
+                            In Production · Helenenbühne Sattledt
+                        </span>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-strip">
+                        <div class="stat-pill">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">User Roles</span>
+                        </div>
+                        <div class="stat-pill">
+                            <span class="stat-number">2</span>
+                            <span class="stat-label">Languages</span>
+                        </div>
+                        <div class="stat-pill">
+                            <span class="stat-number">MIT</span>
+                            <span class="stat-label">License</span>
+                        </div>
+                    </div>
+
+                    <!-- Links -->
+                    <div class="hero-links-row">
+                        <a href="https://github.com/rwolf2467/qr_gate" target="_blank" class="hero-btn">
+                            <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:currentColor;stroke:none;flex-shrink:0">
+                                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: QR Visual -->
+                <div class="qrgate-hero-visual-col">
+                    <div class="qrgate-visual-ring">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <!-- top-left square -->
+                            <rect x="3" y="3" width="7" height="7" rx="1"/>
+                            <rect x="5" y="5" width="3" height="3" fill="currentColor" stroke="none"/>
+                            <!-- top-right square -->
+                            <rect x="14" y="3" width="7" height="7" rx="1"/>
+                            <rect x="16" y="5" width="3" height="3" fill="currentColor" stroke="none"/>
+                            <!-- bottom-left square -->
+                            <rect x="3" y="14" width="7" height="7" rx="1"/>
+                            <rect x="5" y="16" width="3" height="3" fill="currentColor" stroke="none"/>
+                            <!-- bottom-right data modules -->
+                            <rect x="14" y="14" width="2" height="2" fill="currentColor" stroke="none"/>
+                            <rect x="18" y="14" width="3" height="2" fill="currentColor" stroke="none"/>
+                            <rect x="14" y="18" width="3" height="3" fill="currentColor" stroke="none"/>
+                            <rect x="19" y="19" width="2" height="2" fill="currentColor" stroke="none"/>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <button class="scroll-indicator" onclick="window.scrollTo({top:window.innerHeight,behavior:'smooth'})">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 style="width:28px;height:28px;stroke-linecap:round;stroke-linejoin:round">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </button>
+    </section>
+
+    <!-- Content -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <main>
+
+            <!-- About -->
+            <section class="py-24" id="about">
+                <div class="section-label">ABOUT</div>
+                <div class="card">
+                    <header>
+                        <h2 class="text-xl font-semibold flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <path d="M3 9h18M9 21V9"/>
+                            </svg>
+                            What is QrGate?
+                        </h2>
+                    </header>
+                    <section>
+                        <p class="text-muted">
+                            QrGate is a web-based event management and ticketing system built for real-world use.
+                            Combining a Python backend with a PHP frontend, it handles the entire lifecycle of an
+                            event — from selling tickets online and at the door, to validating entry via QR code scan,
+                            to tracking sales and statistics in an admin dashboard.
+                        </p>
+                        <p class="text-muted mt-3">
+                            Originally developed for and actively deployed at <strong>Helenenbühne Sattledt</strong>,
+                            a local theater group in Austria, QrGate has proven itself in a real production environment.
+                            It's open source under the MIT license, fully self-hostable, and designed for any
+                            event organizer who needs a reliable ticketing solution without depending on third-party platforms.
+                        </p>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section class="pb-24" id="features">
+                <div class="section-label">FEATURES</div>
+                <h2 class="text-2xl font-bold mb-8">What QrGate Offers</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                    <!-- Row 1: Ticket Sales (featured 2col) + QR Check-In -->
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
+                                    <path d="M13 5v2M13 17v2M13 11v2"/>
+                                </svg>
+                                Ticket Sales &amp; Payment
+                            </h3>
+                            <p class="text-muted text-sm">Sell tickets directly through the integrated shop — online via Stripe or cash at the door. Tickets are automatically generated as PDFs and sent to buyers via email.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Stripe</span>
+                                <span class="badge badge-secondary">Cash</span>
+                                <span class="badge badge-secondary">PDF Generation</span>
+                                <span class="badge badge-secondary">Email Delivery</span>
+                                <span class="badge badge-secondary">Integrated Shop</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                                </svg>
+                                QR Code Check-In
+                            </h3>
+                            <p class="text-muted text-sm">Scan-based entry validation directly in the mobile browser. Instant feedback — valid, invalid, or already used.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Mobile</span>
+                                <span class="badge badge-secondary">Real-time</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <!-- Row 2: Admin Dashboard + Multi-language (featured 2col) -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <line x1="18" y1="20" x2="18" y2="10"/>
+                                    <line x1="12" y1="20" x2="12" y2="4"/>
+                                    <line x1="6" y1="20" x2="6" y2="14"/>
+                                </svg>
+                                Admin Dashboard
+                            </h3>
+                            <p class="text-muted text-sm">Configure shows, manage dates and images, view sales metrics and graphical statistics — all in one place.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Statistics</span>
+                                <span class="badge badge-secondary">Event Config</span>
+                                <span class="badge badge-secondary">Image Upload</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                    <path d="M2 12h20"/>
+                                </svg>
+                                Multi-language &amp; Responsive
+                            </h3>
+                            <p class="text-muted text-sm">Available in German and English out of the box. The full interface is responsive and works across desktop, tablet, and mobile — no app install required for any role.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Deutsch</span>
+                                <span class="badge badge-secondary">English</span>
+                                <span class="badge badge-secondary">Mobile-first</span>
+                                <span class="badge badge-secondary">No App Needed</span>
+                                <span class="badge badge-secondary">Responsive</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- User Roles -->
+            <section class="pb-24" id="roles">
+                <div class="section-label">USER ROLES</div>
+                <h2 class="text-2xl font-bold mb-8">Role-based Access</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <div class="card card-hover role-card-admin">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                Admin
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Full access to all features — event configuration, user management, sales reports, ticket creation, and system settings.</p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Full Control</span>
+                                <span class="badge badge-secondary">Statistics</span>
+                                <span class="badge badge-secondary">User Mgmt</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover role-card-ticketflow">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
+                                    <path d="M13 5v2M13 17v2M13 11v2"/>
+                                </svg>
+                                Ticketflow
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Handles ticket sales and management. Can create, issue, and view tickets — ideal for box office staff at the venue.</p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Ticket Sales</span>
+                                <span class="badge badge-secondary">Box Office</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover role-card-handheld">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                                    <path d="M12 18h.01"/>
+                                </svg>
+                                Handheld
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Mobile-first role for door staff. Just open the browser, scan the QR code, and get instant entry validation — no app needed.</p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">QR Scanner</span>
+                                <span class="badge badge-secondary">Mobile UI</span>
+                                <span class="badge badge-secondary">Entry Control</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Security -->
+            <section class="pb-24" id="security">
+                <div class="section-label">SECURITY</div>
+                <h2 class="text-2xl font-bold mb-8">Built with Security in Mind</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                Defense in Depth
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted">
+                                QrGate takes security seriously at every layer. All forms are protected against CSRF attacks,
+                                and user inputs are sanitized to prevent XSS. All backend communication requires API key
+                                authorization — the Python backend and PHP frontend are decoupled and independently secured.
+                                Sessions are managed server-side with proper authentication and automatic cleanup.
+                            </p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">CSRF Protection</span>
+                                <span class="badge badge-secondary">Input Sanitization</span>
+                                <span class="badge badge-secondary">API Key Auth</span>
+                                <span class="badge badge-secondary">Session Auth</span>
+                                <span class="badge badge-secondary">XSS Prevention</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                                Role-based Access Control
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Three hierarchical access tiers ensure each user only accesses what they need — Admin, Ticketflow, and Handheld roles are strictly enforced at the backend.</p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">RBAC</span>
+                                <span class="badge badge-secondary">Least Privilege</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                                </svg>
+                                Decoupled Architecture
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">The Python backend exposes a REST API with API key headers. The PHP frontend acts as a client — backend and frontend are independently deployable and secured.</p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">API Keys</span>
+                                <span class="badge badge-secondary">REST</span>
+                                <span class="badge badge-secondary">Decoupled</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Technology -->
+            <section class="pb-24" id="technology">
+                <div class="section-label">TECHNOLOGY</div>
+                <h2 class="text-2xl font-bold mb-8">Tech Stack</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <polyline points="16 18 22 12 16 6"/>
+                                    <polyline points="8 6 2 12 8 18"/>
+                                </svg>
+                                Backend
+                            </h3>
+                        </header>
+                        <section>
+                            <div class="flex flex-wrap gap-2 py-1">
+                                <span class="badge badge-secondary">Python 3.7+</span>
+                                <span class="badge badge-secondary">Quart</span>
+                                <span class="badge badge-secondary">quart-cors</span>
+                                <span class="badge badge-secondary">ReportLab</span>
+                                <span class="badge badge-secondary">qrcode</span>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <path d="M3 9h18"/>
+                                </svg>
+                                Frontend
+                            </h3>
+                        </header>
+                        <section>
+                            <div class="flex flex-wrap gap-2 py-1">
+                                <span class="badge badge-secondary">PHP 7.4+</span>
+                                <span class="badge badge-secondary">Composer</span>
+                                <span class="badge badge-secondary">cURL</span>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                                    <line x1="6" y1="6" x2="6.01" y2="6"/>
+                                    <line x1="6" y1="18" x2="6.01" y2="18"/>
+                                </svg>
+                                Infrastructure
+                            </h3>
+                        </header>
+                        <section>
+                            <div class="flex flex-wrap gap-2 py-1">
+                                <span class="badge badge-secondary">Apache / Nginx</span>
+                                <span class="badge badge-secondary">SMTP Email</span>
+                                <span class="badge badge-secondary">Stripe API</span>
+                                <span class="badge badge-secondary">Self-hostable</span>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- API -->
+            <section class="pb-24" id="api">
+                <div class="section-label">API</div>
+                <h2 class="text-2xl font-bold mb-8">Core API Endpoints</h2>
+                <div class="card">
+                    <section>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="api-row">
+                                <span class="api-method api-method-post">POST</span>
+                                <span class="api-path">/api/ticket/create</span>
+                            </div>
+                            <div class="api-row">
+                                <span class="api-method api-method-post">POST</span>
+                                <span class="api-path">/api/ticket/validate</span>
+                            </div>
+                            <div class="api-row">
+                                <span class="api-method api-method-get">GET</span>
+                                <span class="api-path">/api/show/get</span>
+                            </div>
+                            <div class="api-row">
+                                <span class="api-method api-method-post">POST</span>
+                                <span class="api-path">/api/show/edit</span>
+                            </div>
+                            <div class="api-row">
+                                <span class="api-method api-method-get">GET</span>
+                                <span class="api-path">/api/stats</span>
+                            </div>
+                            <div class="api-row">
+                                <span class="api-method api-method-get">GET</span>
+                                <span class="api-path">/codes/pdf</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Installation -->
+            <section class="pb-24" id="installation">
+                <div class="section-label">INSTALLATION</div>
+                <h2 class="text-2xl font-bold mb-8">Get Started with QrGate</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <polyline points="16 18 22 12 16 6"/>
+                                    <polyline points="8 6 2 12 8 18"/>
+                                </svg>
+                                Backend Setup
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted mb-4">Clone the repository and install Python dependencies:</p>
+                            <pre class="bg-muted p-4 rounded-lg overflow-x-auto text-sm"><code>git clone https://github.com/rwolf2467/qr_gate.git
+cd qr_gate/backend
+pip install quart quart-cors reportlab qrcode reds_simple_logger
+python app.py</code></pre>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Python 3.7+</span>
+                                <span class="badge badge-secondary">pip</span>
+                                <a href="https://github.com/rwolf2467/qr_gate" target="_blank" class="badge badge-outline">GitHub ↗</a>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <path d="M3 9h18"/>
+                                </svg>
+                                Frontend Setup
+                            </h3>
+                        </header>
+                        <section>
+                            <pre class="bg-muted p-3 rounded-lg overflow-x-auto text-xs"><code>cd qr_gate/frontend
+composer install</code></pre>
+                            <p class="text-muted text-sm mt-3">Configure <code>frontend/config.php</code> with your backend URL and credentials, then deploy to any PHP-capable web server (Apache, Nginx, XAMPP, LAMP).</p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">PHP 7.4+</span>
+                                <span class="badge badge-secondary">Composer</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                                </svg>
+                                Configuration
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Both config files need to be set up with:</p>
+                            <ul class="content-list mt-2">
+                                <li>API endpoint &amp; secret key</li>
+                                <li>SMTP server for email delivery</li>
+                                <li>Stripe API credentials</li>
+                                <li>Event details &amp; ticket pricing</li>
+                            </ul>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">conf.py</span>
+                                <span class="badge badge-secondary">config.php</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- License -->
+            <section class="pb-24" id="license">
+                <div class="section-label">LICENSE</div>
+                <h2 class="text-2xl font-bold mb-8">Open Source License</h2>
+                <div class="card card-featured" style="max-width:560px;">
+                    <header>
+                        <h3 class="font-semibold text-lg flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            MIT License
+                        </h3>
+                    </header>
+                    <section>
+                        <p class="text-muted">
+                            QrGate is licensed under the MIT License.
+                            Free to use, modify, and distribute — even in commercial projects.
+                        </p>
+                        <p class="text-muted mt-3">
+                            Copyright © 2025 Fabian Murauer
+                        </p>
+                    </section>
+                    <footer>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="badge badge-secondary">Open Source</span>
+                            <span class="badge badge-secondary">MIT</span>
+                            <span class="badge badge-secondary">Free to Use</span>
+                            <a href="https://github.com/rwolf2467/qr_gate" target="_blank" class="badge badge-outline">GitHub ↗</a>
+                        </div>
+                    </footer>
+                </div>
+            </section>
+
+            <!-- Links -->
+            <section class="pb-24" id="links">
+                <div class="section-label">LINKS</div>
+                <h2 class="text-2xl font-bold mb-8">Quick Links</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" style="max-width:640px;">
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                                </svg>
+                                GitHub
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Source code, issues, and contributions:</p>
+                            <a href="https://github.com/rwolf2467/qr_gate" target="_blank"
+                               class="text-sm accent-link mt-1 block">github.com/rwolf2467/qr_gate ↗</a>
+                        </section>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                                </svg>
+                                Status
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">Check uptime and service status:</p>
+                            <a href="https://status.avocloud.net" target="_blank"
+                               class="text-sm accent-link mt-1 block">status.avocloud.net ↗</a>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Back to Home -->
+            <section class="pb-24">
+                <div class="text-center">
+                    <a href="../" class="inline-flex items-center gap-2 text-sm accent-link">
+                        <svg class="lucide" viewBox="0 0 24 24" style="width:16px;height:16px;">
+                            <line x1="19" y1="12" x2="5" y2="12"/>
+                            <polyline points="12 19 5 12 12 5"/>
+                        </svg>
+                        Back to Avocloud.net
+                    </a>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="site-footer">
+            <p>QrGate — An event ticketing system by Avocloud.net</p>
+        </footer>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+
+</html>
