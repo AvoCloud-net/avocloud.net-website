@@ -66,6 +66,49 @@ document.querySelectorAll('.avocloud-logo').forEach(function (logo) {
     logo.addEventListener('blur',       collapse);
 });
 
+// ── HERO WORDMARK INTRO ANIMATION ──
+(function () {
+    var intro = document.getElementById('hero-intro');
+    if (!intro) return;
+
+    var path = intro.querySelector('.hi-path');
+    var icon = intro.querySelector('.hi-icon');
+    var av   = intro.querySelector('.hi-av');
+    var wrap = intro.querySelector('.hi-text-wrap');
+    var text = intro.querySelector('.hi-text');
+
+    function play() {
+        // Phase 1: typewriter SVG draw (1400ms)
+        path.style.transition       = 'none';
+        path.style.strokeDasharray  = '200';
+        path.style.strokeDashoffset = '200';
+        void path.getBoundingClientRect();
+        path.style.transition       = 'stroke-dashoffset 1400ms cubic-bezier(0.4, 0, 0.2, 1)';
+        path.style.strokeDashoffset = '0';
+
+        // Phase 2: icon slides out, AV fades in (at 1500ms)
+        setTimeout(function () {
+            icon.style.opacity   = '0';
+            icon.style.transform = 'translateX(-10px)';
+            av.style.opacity     = '1';
+            av.style.transform   = 'translateX(0)';
+
+            // Phase 3: OCLOUD.NET slides in (500ms later)
+            setTimeout(function () {
+                wrap.style.maxWidth  = '100vw';
+                text.style.opacity   = '1';
+                text.style.transform = 'translateX(0)';
+            }, 500);
+        }, 1500);
+    }
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () { setTimeout(play, 200); });
+    } else {
+        setTimeout(play, 400);
+    }
+}());
+
 // Smooth scroll on scroll-indicator click
 var scrollIndicator = document.querySelector('.scroll-indicator');
 if (scrollIndicator) {

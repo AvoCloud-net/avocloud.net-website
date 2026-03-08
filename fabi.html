@@ -97,19 +97,19 @@
             align-items: center;
             gap: 0.45rem;
             padding: 0.3rem 0.85rem;
-            border: 1px solid rgba(34,197,94,0.3);
+            border: 1px solid rgba(249,115,22,0.3);
             border-radius: 9999px;
-            background: rgba(34,197,94,0.07);
+            background: rgba(249,115,22,0.07);
             font-size: 0.73rem;
             font-weight: 600;
-            color: rgba(74,222,128,0.95);
+            color: rgba(251,146,60,0.95);
             margin-bottom: 1.25rem;
             letter-spacing: 0.02em;
         }
         html:not(.dark) .fabi-status {
-            color: #15803d;
-            border-color: rgba(22,163,74,0.3);
-            background: rgba(22,163,74,0.07);
+            color: #c2410c;
+            border-color: rgba(234,88,12,0.3);
+            background: rgba(234,88,12,0.07);
         }
 
         /* --- Stats strip --- */
@@ -271,7 +271,7 @@
             color: oklch(.5 0 0);
             line-height: 1.65;
         }
-        html.dark .timeline-body { color: oklch(.65 0 0); }
+        html.dark .timeline-body { color: oklch(.76 0 0); }
 
         /* --- Cards: slightly darker in dark mode --- */
         html.dark .card {
@@ -354,8 +354,8 @@
                     <!-- Status -->
                     <div>
                         <span class="fabi-status">
-                            <span style="width:7px;height:7px;background:#4ade80;border-radius:50%;display:inline-block;flex-shrink:0;animation:pulse 2s infinite;"></span>
-                            <span data-i18n="hero.status">Open to opportunities</span>
+                            <span style="width:7px;height:7px;background:#fb923c;border-radius:50%;display:inline-block;flex-shrink:0;animation:pulse 2s infinite;"></span>
+                            <span data-i18n="hero.status">Student · Not seeking employment</span>
                         </span>
                     </div>
 
@@ -858,6 +858,32 @@
                         </footer>
                     </div>
 
+                    <!-- Row 4: Helenenbühne (featured 2col) -->
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/>
+                                    <path d="m6.2 5.3 3.1 3.9"/>
+                                    <path d="m12.4 3.4 3.1 3.8"/>
+                                    <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>
+                                </svg>
+                                Helenenbühne Sattledt
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="helene.proj.desc">Website and ticketing system for the parish theater group in Sattledt, Austria. I built and maintain their website and operate QrGate as their custom ticketing &amp; shop solution.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Website</span>
+                                <span class="badge badge-secondary">Ticketing</span>
+                                <span class="badge badge-secondary">QrGate</span>
+                                <span class="badge badge-secondary">Theater</span>
+                                <a href="https://helenenbuehne.at" target="_blank" class="badge badge-outline">Website ↗</a>
+                                <a href="https://github.com/rwolf2467/qr_gate" target="_blank" class="badge badge-outline">QrGate ↗</a>
+                            </div>
+                        </footer>
+                    </div>
+
                 </div>
             </section>
 
@@ -1101,7 +1127,7 @@
       en: {
         'hero.eyebrow': 'Red_Wolf2467 · Avocloud.net',
         'hero.title': 'Software Developer · Network &amp; Systems Engineering<br>Founder of Avocloud.net · Student at HTL Traun',
-        'hero.status': 'Open to opportunities',
+        'hero.status': 'Student · Not seeking employment',
         'stat.years': 'Years',
         'stat.projects': 'Projects',
         'stat.communities': 'Communities',
@@ -1145,6 +1171,7 @@
         'skyfire.desc': 'A micro-server hosting service for running websites, projects, and status monitoring 24/7. Designed for speed, reliability, and ease of use.',
         'qrgate.desc': 'A full-featured event ticketing system with integrated shop, PayPal payment, automated email delivery, and QR code check-in.',
         'edugrade.desc': 'Secure grade management for educators — AES-256-GCM encrypted with built-in analytics.',
+        'helene.proj.desc': 'Website and ticketing system for the parish theater group in Sattledt, Austria. I built and maintain their website and operate QrGate as their custom ticketing & shop solution.',
         'community.label': 'COMMUNITY',
         'community.heading': 'Beyond the Code',
         'helene.subtitle': 'Local theater group — I handle the full technical side, from stage to code.',
@@ -1173,7 +1200,7 @@
       de: {
         'hero.eyebrow': 'Red_Wolf2467 · Avocloud.net',
         'hero.title': 'Softwareentwickler · Netzwerktechnik &amp; Systemtechnik<br>Gründer von Avocloud.net · Schüler der HTL Traun',
-        'hero.status': 'Offen für Möglichkeiten',
+        'hero.status': 'Schüler · Nicht auf Stellensuche',
         'stat.years': 'Jahre',
         'stat.projects': 'Projekte',
         'stat.communities': 'Communities',
@@ -1217,6 +1244,7 @@
         'skyfire.desc': 'Ein Micro-Server-Hosting-Dienst zum Betreiben von Websites, Projekten und Status-Monitoring rund um die Uhr. Konzipiert für Geschwindigkeit, Zuverlässigkeit und Benutzerfreundlichkeit.',
         'qrgate.desc': 'Ein vollständiges Event-Ticketing-System mit integriertem Shop, PayPal-Zahlung, automatisiertem E-Mail-Versand und QR-Code-Check-in.',
         'edugrade.desc': 'Sichere Notenführung für Lehrkräfte — AES-256-GCM-verschlüsselt mit integrierter Analyse.',
+        'helene.proj.desc': 'Website und Ticketing-System für die Pfarrtheatergruppe in Sattledt, Österreich. Ich habe ihre Website erstellt und betreibe QrGate als hauseigenes Ticketing- & Shop-System.',
         'community.label': 'COMMUNITY',
         'community.heading': 'Abseits des Codes',
         'helene.subtitle': 'Lokale Theatergruppe — ich übernehme die gesamte technische Seite, von der Bühne bis zum Code.',

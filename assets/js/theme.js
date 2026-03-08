@@ -8,9 +8,14 @@
 })();
 
 function toggleTheme() {
+    var hero = document.querySelector('.hero');
+    if (hero) hero.style.setProperty('--blob-opacity', '0');
     var isDark = document.documentElement.classList.toggle('dark');
     localStorage.setItem('avo-theme', isDark ? 'dark' : 'light');
     _syncThemeIcon(isDark);
+    setTimeout(function() {
+        if (hero) hero.style.removeProperty('--blob-opacity');
+    }, 150);
 }
 
 function _syncThemeIcon(isDark) {
