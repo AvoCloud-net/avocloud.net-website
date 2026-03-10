@@ -535,6 +535,24 @@ html:not(.dark) .highlight-yellow {
     background-color: rgba(234, 179, 8, 0.15);
 }
 
+/* ===== TYPEWRITER ANIMATION ===== */
+.typewriter-cursor {
+    display: inline-block;
+    color: #eab308;
+    font-weight: 700;
+    animation: blink 1s step-end infinite;
+    margin-left: 1px;
+}
+
+html:not(.dark) .typewriter-cursor {
+    color: rgb(113, 83, 0);
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+}
+
 .highlight-red {
     background-color: rgba(239, 68, 68, 0.15);
     padding: 2px 10px;

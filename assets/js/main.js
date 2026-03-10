@@ -136,3 +136,54 @@ function copyToClipboard() {
         document.body.removeChild(tempInput);
     }
 }
+
+// ── TYPEWRITER EFFECT FOR BAXI HERO ──
+(function () {
+    var typewriterEl = document.getElementById('typewriter-text');
+    if (!typewriterEl) return;
+
+    var words = [
+        { text: 'moderation bot', delay: 2000 },
+        { text: 'security bot', delay: 2000 },
+        { text: 'welcome bot', delay: 2000 },
+        { text: 'verification bot', delay: 2000 }
+    ];
+
+    var wordIndex = 0;
+    var charIndex = 0;
+    var isDeleting = false;
+    var currentText = '';
+
+    function type() {
+        var currentWord = words[wordIndex];
+        
+        if (isDeleting) {
+            currentText = currentWord.text.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            currentText = currentWord.text.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        typewriterEl.textContent = currentText;
+
+        var typeSpeed = isDeleting ? 50 : 100;
+        var pauseTime = 0;
+
+        if (!isDeleting && charIndex === currentWord.text.length) {
+            pauseTime = currentWord.delay;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+            pauseTime = 500;
+        }
+
+        setTimeout(function () {
+            type();
+        }, pauseTime || typeSpeed);
+    }
+
+    // Start the typewriter effect
+    setTimeout(type, 500);
+}());
