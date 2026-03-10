@@ -150,8 +150,7 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Two-tier filtering system: <strong>SafeText</strong> (open-source bad-word detection)
-                                + <strong>AI Filter</strong> (LLM-based content analysis hosted on AvoCloud servers).
+                                Two-tier filtering system to keep your server clean. <strong>SafeText</strong> handles open-source bad-word detection, while the <strong>AI Filter</strong> uses an LLM to analyze message context — catching harmful content that simple word lists miss. Flagged messages are automatically <strong>deleted</strong>. Both layers can be independently enabled and configured per server.
                             </p>
                         </section>
                     </div>
@@ -169,8 +168,8 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Inter-server chatroom connecting multiple Discord servers.
-                                <em>(Only available on official hosted bot)</em>
+                                A cross-server chatroom that connects all Discord servers with Global Chat enabled — messages are visible to everyone in the network. Every message is <strong>always</strong> checked by Baxi's AI Filter, regardless of each server's individual filter settings. Additionally, a dedicated <strong>moderation team</strong> monitors the chat around the clock.
+                                <em class="block mt-2 opacity-70">Only available on the official hosted bot.</em>
                             </p>
                         </section>
                     </div>
@@ -188,7 +187,7 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Support ticket creation for help requests or moderation reports.
+                                Members can open a support ticket directly in Discord — choosing a <strong>custom title</strong> and describing their issue at creation. A configurable <strong>staff role</strong> gets access to all tickets, so your team can respond and resolve requests without the conversation cluttering public channels.
                             </p>
                         </section>
                     </div>
@@ -206,7 +205,7 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Advanced spam detection with configurable actions: <strong>mute</strong>, <strong>warn</strong>, <strong>kick</strong>, or <strong>ban</strong> spammers automatically.
+                                Detects message spam, mention floods, and repeated content in real time. When a threshold is exceeded, Baxi automatically takes action — configurable between <strong>warn</strong>, <strong>mute</strong>, <strong>kick</strong>, or <strong>ban</strong>. Keeps your server safe without manual intervention.
                             </p>
                         </section>
                     </div>
@@ -225,7 +224,7 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Create user-defined responses for specific triggers. Automate frequently asked questions and custom server interactions.
+                                Define your own slash commands with custom responses. Use <strong>variables</strong> like the triggering user's name to create dynamic replies — perfect for automating FAQs, server rules, or any recurring information your community needs.
                             </p>
                         </section>
                     </div>
@@ -245,7 +244,24 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Send beautiful welcome messages to new members and goodbye messages when they leave. Fully customizable templates and images.
+                                Greet new members with a fully customizable welcome message using <strong>variables</strong> (e.g. username, server name). Optionally, Baxi generates a <strong>welcome image</strong> automatically — with support for a custom background image to match your server's style.
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Twitch Live Tracking -->           
+                    <div class="card card-hover">                   
+                        <header>           
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M21 2H3v16h5v4l4-4h5l4-4V2zM11 11V7m4 4V7"/>
+                                </svg>
+                                Twitch Live Tracking
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Track Twitch channels and automatically post a live announcement when a stream starts — showing <strong>stream title</strong>, <strong>viewer count</strong>, <strong>stream duration</strong>, and a <strong>stream preview image</strong>. The message updates live, so there's no spam of new posts. An optional <strong>role ping</strong> can notify your community the moment someone goes live.
                             </p>
                         </section>
                     </div>
@@ -264,8 +280,7 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Full configuration of all features via a web interface — no complex commands needed.
-                                Everything is just a few clicks away.
+                                Configure every Baxi feature through an intuitive web interface — no slash commands or config files needed. Manage your chat filter settings, welcome messages, custom commands, Twitch tracking, and more, all in one place. Changes apply to your server instantly.
                             </p>
                         </section>
                     </div>

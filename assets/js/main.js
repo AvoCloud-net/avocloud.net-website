@@ -146,7 +146,8 @@ function copyToClipboard() {
         { text: 'moderation bot', delay: 2000 },
         { text: 'security bot', delay: 2000 },
         { text: 'welcome bot', delay: 2000 },
-        { text: 'verification bot', delay: 2000 }
+        { text: 'verification bot', delay: 2000 },
+        { text: 'Twitch tracking bot', delay: 2000 }
     ];
 
     var wordIndex = 0;
