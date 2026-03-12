@@ -120,7 +120,7 @@
                         <p class="text-muted">
                             Baxi is a modern, privacy-focused Discord bot designed to make server management
                             <strong>safer, smarter, and easier</strong>. It combines powerful moderation tools,
-                            a customizable verification system, and global chat functionality, all configurable
+                            an AI-powered chat filter, cross-server global chat, and much more — all configurable
                             through an easy-to-use web dashboard.
                         </p>
                         <p class="text-muted mt-3">
@@ -137,20 +137,54 @@
                 <h2 class="text-2xl font-bold mb-8">What Baxi Offers</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <!-- AI Chat Filter -->
+                    <!-- Moderation -->
+                    <div class="card card-hover md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                Moderation
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Full moderation toolkit with slash commands for <strong>ban</strong>, <strong>kick</strong>, <strong>unban</strong>, <strong>mute</strong>, <strong>warn</strong>, and bulk message deletion (<strong>/clear</strong>). Bans and mutes can be set as <strong>temporary</strong> with a custom duration — Baxi lifts them automatically when the time is up and <strong>notifies the user via DM</strong> if possible. The warning system auto-escalates: reaching configured thresholds triggers a mute, then kick, then ban — automatically, without manual intervention.
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Anti-Spam -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M12 2a4 4 0 0 1 4 4c0 1.1-.9 2-2 2a2 2 0 0 0-2 2c0 1.1.9 2 2 2a4 4 0 0 1 0 8 4 4 0 0 1-4-4c0-1.1.9-2 2-2a2 2 0 0 0 2-2c0-1.1-.9-2-2-2a4 4 0 0 1-4-4 4 4 0 0 1 4-4z"/>
                                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                </svg>
+                                Anti-Spam
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Detects message spam, mention floods, and repeated content in real time. When a threshold is exceeded, Baxi automatically takes action — configurable between <strong>warn</strong>, <strong>mute</strong>, <strong>kick</strong>, or <strong>ban</strong>. Keeps your server safe without manual intervention.
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Chat Filter -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
                                 </svg>
                                 AI-Powered Chat Filter
                             </h3>
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Two-tier filtering system to keep your server clean. <strong>SafeText</strong> handles open-source bad-word detection, while the <strong>AI Filter</strong> uses an LLM to analyze message context — catching harmful content that simple word lists miss. Flagged messages are automatically <strong>deleted</strong>. Both layers can be independently enabled and configured per server.
+                                Two-tier filtering system to keep your server clean. <strong>SafeText</strong> handles open-source bad-word detection, while the <strong>AI Filter</strong> uses an LLM (Llama Guard) to analyze message context — catching hate speech, NSFW content, and self-harm references that simple word lists miss. Flagged messages are automatically <strong>deleted</strong>. A bypass channel can be configured per server.
                             </p>
                         </section>
                     </div>
@@ -168,7 +202,7 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                A cross-server chatroom that connects all Discord servers with Global Chat enabled — messages are visible to everyone in the network. Every message is <strong>always</strong> checked by Baxi's AI Filter, regardless of each server's individual filter settings. Additionally, a dedicated <strong>moderation team</strong> monitors the chat around the clock.
+                                A cross-server chatroom that connects all Discord servers with Global Chat enabled — messages including attachments and replies are relayed to every connected server. Every message is <strong>always</strong> checked by Baxi's AI Filter, and a dedicated <strong>moderation team</strong> monitors the chat around the clock.
                                 <em class="block mt-2 opacity-70">Only available on the official hosted bot.</em>
                             </p>
                         </section>
@@ -181,31 +215,14 @@
                                 <svg class="lucide" viewBox="0 0 24 24">
                                     <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
                                     <polyline points="14 2 14 8 20 8"/>
+                                    <path d="M8 13h8M8 17h5"/>
                                 </svg>
                                 Ticket System
                             </h3>
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Members can open a support ticket directly in Discord — choosing a <strong>custom title</strong> and describing their issue at creation. A configurable <strong>staff role</strong> gets access to all tickets, so your team can respond and resolve requests without the conversation cluttering public channels.
-                            </p>
-                        </section>
-                    </div>
-
-                    <!-- Anti-Spam System -->
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                                    <path d="m9 12 2 2 4-4"/>
-                                </svg>
-                                Anti-Spam System
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">
-                                Detects message spam, mention floods, and repeated content in real time. When a threshold is exceeded, Baxi automatically takes action — configurable between <strong>warn</strong>, <strong>mute</strong>, <strong>kick</strong>, or <strong>ban</strong>. Keeps your server safe without manual intervention.
+                                Members open support tickets via a modal — choosing a <strong>custom title</strong> and describing their issue at creation. Staff can <strong>claim</strong>, close, and archive tickets as transcripts. A configurable staff role gets access to all tickets, keeping requests out of public channels.
                             </p>
                         </section>
                     </div>
@@ -215,21 +232,20 @@
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                                    <polyline points="14 2 14 8 20 8"/>
-                                    <path d="M8 13h2M8 17h2M8 9h2"/>
+                                    <polyline points="16 18 22 12 16 6"/>
+                                    <polyline points="8 6 2 12 8 18"/>
                                 </svg>
                                 Custom Commands
                             </h3>
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Define your own slash commands with custom responses. Use <strong>variables</strong> like the triggering user's name to create dynamic replies — perfect for automating FAQs, server rules, or any recurring information your community needs.
+                                Define your own text commands with a custom trigger and response — no coding required. Use any prefix and keyword you like (e.g. <code>!help</code>, <code>.invite</code>). <strong>Variables</strong> like <code>{user}</code>, <code>{server}</code>, and <code>{membercount}</code> make replies dynamic, with optional embed support. Perfect for automating FAQs, server rules, or recurring announcements.
                             </p>
                         </section>
                     </div>
 
-                    <!-- Welcomer Module -->
+                    <!-- Welcome & Leave -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -244,14 +260,33 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Greet new members with a fully customizable welcome message using <strong>variables</strong> (e.g. username, server name). Optionally, Baxi generates a <strong>welcome image</strong> automatically — with support for a custom background image to match your server's style.
+                                Greet new members with a fully customizable welcome message using <strong>variables</strong> (username, server name, etc.). Baxi can optionally generate a <strong>welcome image</strong> with a custom background to match your server's style. The goodbye message is configurable separately.
                             </p>
                         </section>
                     </div>
 
-                    <!-- Twitch Live Tracking -->           
-                    <div class="card card-hover">                   
-                        <header>           
+                    <!-- Auto-Roles -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                    <polyline points="16 11 18 13 22 9"/>
+                                </svg>
+                                Auto-Roles
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Automatically assign one or more roles to every user when they join the server. Set it up once in the dashboard — no further action needed. Useful for default member roles, bot separators, or any role that should apply to all new members.
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Twitch Live Tracking -->
+                    <div class="card card-hover">
+                        <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
                                     <path d="M21 2H3v16h5v4l4-4h5l4-4V2zM11 11V7m4 4V7"/>
@@ -261,7 +296,45 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Track Twitch channels and automatically post a live announcement when a stream starts — showing <strong>stream title</strong>, <strong>viewer count</strong>, <strong>stream duration</strong>, and a <strong>stream preview image</strong>. The message updates live, so there's no spam of new posts. An optional <strong>role ping</strong> can notify your community the moment someone goes live.
+                                Track Twitch channels and automatically post a live announcement when a stream starts — showing <strong>stream title</strong>, <strong>viewer count</strong>, and a <strong>preview image</strong>. The message updates live so there's no spam of new posts. The channel name changes to 🔴 live / ⚫ offline, and an optional <strong>role ping</strong> notifies your community instantly.
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Stats Channels -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <line x1="18" y1="20" x2="18" y2="10"/>
+                                    <line x1="12" y1="20" x2="12" y2="4"/>
+                                    <line x1="6" y1="20" x2="6" y2="14"/>
+                                </svg>
+                                Stats Channels
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Voice channels that automatically display live server statistics — total members, humans, bots, channels, and roles. Each stat gets its own channel with a fully customizable name template, updated automatically every 10 minutes.
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Global User Flagging -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                                    <line x1="4" y1="22" x2="4" y2="15"/>
+                                </svg>
+                                Global User Flagging
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                A shared database of flagged users across all Baxi servers. Use <strong>/scan_users</strong> to check your server for reported members and take action proactively — before issues arise. Helps communities stay safe from known bad actors across the network.
+                                <em class="block mt-2 opacity-70">Only available on the official hosted bot.</em>
                             </p>
                         </section>
                     </div>
@@ -280,7 +353,7 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Configure every Baxi feature through an intuitive web interface — no slash commands or config files needed. Manage your chat filter settings, welcome messages, custom commands, Twitch tracking, and more, all in one place. Changes apply to your server instantly.
+                                Configure every Baxi feature through an intuitive web interface — login with Discord OAuth2, no slash commands or config files needed. Manage chat filter settings, welcome messages, custom commands, Twitch streamers, auto-roles, and more, all in one place. Includes an <strong>audit log</strong> and feature adoption statistics. Changes apply to your server instantly.
                             </p>
                         </section>
                     </div>

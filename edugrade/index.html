@@ -4,24 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduGrade - Avocloud.net</title>
+    <title>EduGrade – Grade Management for Teachers</title>
     <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
     <meta name="description"
-        content="EduGrade is a secure web application for educators to manage student grades, classes, and performance tracking with AES-256-GCM encryption.">
-    <meta name="keywords" content="EduGrade, education, grades, student management, encryption, open source">
+        content="EduGrade is a free web app for teachers to manage grades, classes, and attendance – secure, simple, and accessible from any device.">
+    <meta name="keywords" content="EduGrade, grade management, school, teachers, grades, students, open source">
     <meta name="author" content="Avocloud.net">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://avocloud.net/edugrade/" />
-    <meta property="og:title" content="EduGrade - Avocloud.net">
+    <meta property="og:title" content="EduGrade – Grade Management for Teachers">
     <meta property="og:description"
-        content="A secure web app for educators to manage student grades, classes, and performance tracking.">
+        content="Free web app for teachers to manage grades, classes, and attendance.">
     <meta property="og:image" content="https://avocloud.net/edugrade/edugrade-banner.png">
     <meta property="og:url" content="https://avocloud.net/edugrade">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="EduGrade - Avocloud.net">
+    <meta name="twitter:title" content="EduGrade – Grade Management for Teachers">
     <meta name="twitter:description"
-        content="A secure web app for educators to manage student grades, classes, and performance tracking.">
+        content="Free web app for teachers to manage grades, classes, and attendance.">
     <meta name="twitter:image" content="https://avocloud.net/edugrade/edugrade-banner.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,11 +60,15 @@
     <!-- Hero -->
     <section class="hero">
         <div class="hero-content">
-            
-            <h1>Welcome to <span class="highlight-purple" onclick="copyToClipboard()">EduGrade</span></h1>
+            <div class="hero-eyebrow">FREE · OPEN SOURCE · SECURE</div>
+            <h1>EduGrade</h1>
             <p class="hero-subtitle">
-                A secure web application for educators to manage<br>
-                <span class="highlight-yellow">student grades and performance</span>!
+                Grade management for teachers —<br>
+                <span class="highlight-yellow">simple, secure, and accessible from any device</span>.
+            </p>
+            <p style="max-width:540px;margin:1rem auto 0;opacity:0.75;font-size:0.95rem;line-height:1.65;">
+                Manage classes, grades, and attendance in one clean web app.
+                No installation, no paper chaos — right in the browser, on any computer, tablet, or smartphone.
             </p>
             <div class="flex flex-wrap gap-3 justify-center mt-6">
                 <a href="https://edugrade.avocloud.net" target="_blank" class="hero-btn"
@@ -98,9 +102,9 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <main>
 
-            <!-- About -->
+            <!-- What is EduGrade? -->
             <section class="py-24" id="about">
-                <div class="section-label">ABOUT</div>
+                <div class="section-label">WHAT IS EDUGRADE?</div>
                 <div class="card">
                     <header>
                         <h2 class="text-xl font-semibold flex items-center gap-2">
@@ -108,32 +112,30 @@
                                 <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
                                 <path d="M6 12v5c3 3 9 3 12 0v-5" />
                             </svg>
-                            What is EduGrade?
+                            A digital notebook for teachers
                         </h2>
                     </header>
                     <section>
                         <p class="text-muted">
-                            EduGrade is a secure web application designed for teachers and educators to manage student
-                            grades, classes, and performance tracking. Built with privacy and security in mind, it
-                            features
-                            AES-256-GCM encryption to protect all sensitive student data.
+                            EduGrade is a free web application that helps teachers manage students,
+                            their grades, and attendance in one organized place.
+                            Everything in one spot — no paper piles, no complicated spreadsheets.
                         </p>
                         <p class="text-muted mt-3">
-                            Whether you're tracking grades for a single class or multiple subjects, EduGrade provides
-                            powerful analytics, customizable grading systems, and secure grade sharing with students —
-                            all wrapped in a clean, responsive interface that works on any device.
+                            The app runs entirely in the browser: on the computer in the staff room, on a tablet
+                            in class, or at home. One account is all you need — and your data is always
+                            stored securely encrypted.
                         </p>
                     </section>
                 </div>
             </section>
 
-            <!-- Features -->
-            <section class="pb-24" id="features">
-                <div class="section-label">FEATURES</div>
-                <h2 class="text-2xl font-bold mb-8">What EduGrade Offers</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Who is EduGrade for? -->
+            <section class="pb-24" id="for-whom">
+                <div class="section-label">WHO IS IT FOR?</div>
+                <h2 class="text-2xl font-bold mb-8">EduGrade is made for …</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                    <!-- Class & Student Management -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -143,23 +145,91 @@
                                     <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                                     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                                 </svg>
-                                Class Management
+                                Teachers
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">Create classes, add students, and organize subjects. Import
-                                students via CSV or JSON for quick setup.</p>
+                            <p class="text-muted text-sm">
+                                Whether you teach one class or multiple subjects: record grades, track attendance,
+                                and get reports at the click of a button — without spreadsheets.
+                            </p>
+                        </section>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                                    <line x1="8" y1="21" x2="16" y2="21" />
+                                    <line x1="12" y1="17" x2="12" y2="21" />
+                                </svg>
+                                Schools & Departments
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                EduGrade can be self-hosted on your school's own servers — full control over
+                                all data, with no dependency on external services.
+                            </p>
+                        </section>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                </svg>
+                                Privacy-conscious users
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                All data is stored encrypted — not even the server operator
+                                can view student data. Ideal for GDPR-compliant schools.
+                            </p>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section class="pb-24" id="features">
+                <div class="section-label">FEATURES</div>
+                <h2 class="text-2xl font-bold mb-8">What can EduGrade do?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Classes & Students -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                                Manage classes
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Create classes and subjects, add students — individually or via
+                                list import (CSV/JSON). Everything stays neatly organized.
+                            </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
                                 <span class="badge badge-secondary">Classes</span>
-                                <span class="badge badge-secondary">Students</span>
-                                <span class="badge badge-secondary">CSV Import</span>
+                                <span class="badge badge-secondary">Subjects</span>
+                                <span class="badge badge-secondary">List import</span>
                             </div>
                         </footer>
                     </div>
 
-                    <!-- Grade Management -->
+                    <!-- Grades -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -167,48 +237,25 @@
                                     <path d="M12 20h9" />
                                     <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                                 </svg>
-                                Grade Management
+                                Record grades
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">Customizable categories, weights, and percentage-based
-                                grading. Auto-grading for attendance supported.</p>
+                            <p class="text-muted text-sm">
+                                Enter grades by custom categories — e.g. exams, oral participation,
+                                quizzes. Weighting and grading scales are fully customizable.
+                            </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
                                 <span class="badge badge-secondary">Categories</span>
-                                <span class="badge badge-secondary">Weights</span>
-                                <span class="badge badge-secondary">Auto-Grading</span>
+                                <span class="badge badge-secondary">Weighting</span>
+                                <span class="badge badge-secondary">Grading scale</span>
                             </div>
                         </footer>
                     </div>
 
-                    <!-- Analytics & Reporting -->
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <line x1="18" y1="20" x2="18" y2="10" />
-                                    <line x1="12" y1="20" x2="12" y2="4" />
-                                    <line x1="6" y1="20" x2="6" y2="14" />
-                                </svg>
-                                Analytics
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">Visual charts, detailed statistics, performance trends, and
-                                PDF export for printing or archiving.</p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">Charts</span>
-                                <span class="badge badge-secondary">Statistics</span>
-                                <span class="badge badge-secondary">PDF Export</span>
-                            </div>
-                        </footer>
-                    </div>
-
-                    <!-- Attendance System -->
+                    <!-- Attendance -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -218,23 +265,52 @@
                                     <line x1="8" y1="2" x2="8" y2="6" />
                                     <line x1="3" y1="10" x2="21" y2="10" />
                                 </svg>
-                                Attendance
+                                Track attendance
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">Track attendance with color-coded alerts. Automatic warnings
-                                when students approach minimum attendance.</p>
+                            <p class="text-muted text-sm">
+                                Record absences quickly and clearly. EduGrade automatically warns you when
+                                a student falls below the minimum attendance threshold.
+                            </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">Tracking</span>
-                                <span class="badge badge-secondary">Alerts</span>
-                                <span class="badge badge-secondary">Bulk Entry</span>
+                                <span class="badge badge-secondary">Absences</span>
+                                <span class="badge badge-secondary">Warnings</span>
+                                <span class="badge badge-secondary">Bulk entry</span>
                             </div>
                         </footer>
                     </div>
 
-                    <!-- Grade Sharing -->
+                    <!-- Reports -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <line x1="18" y1="20" x2="18" y2="10" />
+                                    <line x1="12" y1="20" x2="12" y2="4" />
+                                    <line x1="6" y1="20" x2="6" y2="14" />
+                                </svg>
+                                Analytics & Reports
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Charts and statistics show at a glance how the class is doing.
+                                Reports can be saved as PDF or printed.
+                            </p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Charts</span>
+                                <span class="badge badge-secondary">Statistics</span>
+                                <span class="badge badge-secondary">PDF export</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <!-- Share grades -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -242,43 +318,46 @@
                                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                                 </svg>
-                                Secure Sharing
+                                Share grades securely
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">PIN-protected access links for students with configurable
-                                expiration. 6-digit PINs per student.</p>
+                            <p class="text-muted text-sm">
+                                Students can view their own grades via a secured link —
+                                protected by a personal 6-digit PIN, with an expiry time.
+                            </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">PIN Protected</span>
-                                <span class="badge badge-secondary">Expiring Links</span>
-                                <span class="badge badge-secondary">Secure</span>
+                                <span class="badge badge-secondary">PIN protection</span>
+                                <span class="badge badge-secondary">Time limit</span>
+                                <span class="badge badge-secondary">Read-only</span>
                             </div>
                         </footer>
                     </div>
 
-                    <!-- User Experience -->
+                    <!-- Any device -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M12 16v-4" />
-                                    <path d="M12 8h.01" />
+                                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                                    <line x1="12" y1="18" x2="12.01" y2="18" />
                                 </svg>
-                                User Experience
+                                On any device
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">Dark/Light mode, responsive design, tutorial system, and data
-                                export/import for backup and restore.</p>
+                            <p class="text-muted text-sm">
+                                EduGrade runs in the browser — on PC, laptop, tablet, and smartphone.
+                                Light and dark mode included. No installation required.
+                            </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">Dark Mode</span>
-                                <span class="badge badge-secondary">Responsive</span>
-                                <span class="badge badge-secondary">Backup</span>
+                                <span class="badge badge-secondary">PC & Tablet</span>
+                                <span class="badge badge-secondary">Smartphone</span>
+                                <span class="badge badge-secondary">No download</span>
                             </div>
                         </footer>
                     </div>
@@ -288,8 +367,8 @@
 
             <!-- Security -->
             <section class="pb-24" id="security">
-                <div class="section-label">SECURITY</div>
-                <h2 class="text-2xl font-bold mb-8">Built with Security in Mind</h2>
+                <div class="section-label">SECURITY & PRIVACY</div>
+                <h2 class="text-2xl font-bold mb-8">Student data, well protected</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     <div class="card card-hover card-featured md:col-span-2">
@@ -299,24 +378,25 @@
                                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                                 </svg>
-                                AES-256-GCM Encryption
+                                All data is stored encrypted
                             </h3>
                         </header>
                         <section>
                             <p class="text-muted">
-                                All user data is encrypted at rest using AES-256-GCM encryption with PBKDF2 key
-                                derivation
-                                (200k iterations for passwords, 100k for encryption keys). The zero-knowledge
-                                architecture
-                                means server admins cannot read data without the password.
+                                All student data is secured with strong encryption — right at the moment of saving.
+                                This means: even if someone were to gain unauthorized access to the server,
+                                they cannot read the data. Only those who know the correct password have access.
+                            </p>
+                            <p class="text-muted mt-3">
+                                The principle is called <strong>Zero-Knowledge</strong>: not even the operator of
+                                the app can view the stored data. The data belongs solely to the teacher.
                             </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">AES-256-GCM</span>
-                                <span class="badge badge-secondary">PBKDF2</span>
+                                <span class="badge badge-secondary">Strong encryption</span>
                                 <span class="badge badge-secondary">Zero-Knowledge</span>
-                                <span class="badge badge-secondary">Encrypted at Rest</span>
+                                <span class="badge badge-secondary">Password-protected only</span>
                             </div>
                         </footer>
                     </div>
@@ -328,17 +408,19 @@
                                     <circle cx="12" cy="12" r="10" />
                                     <polyline points="12 6 12 12 16 14" />
                                 </svg>
-                                Short Sessions
+                                Automatic sign-out
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">1-hour sessions with automatic cleanup ensure your data stays
-                                protected even on shared devices.</p>
+                            <p class="text-muted text-sm">
+                                After one hour of inactivity, you are automatically signed out. Ideal for computers
+                                in the classroom or shared devices.
+                            </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">1-Hour Sessions</span>
-                                <span class="badge badge-secondary">Auto Cleanup</span>
+                                <span class="badge badge-secondary">1-hour session</span>
+                                <span class="badge badge-secondary">Auto sign-out</span>
                             </div>
                         </footer>
                     </div>
@@ -349,18 +431,20 @@
                                 <svg class="lucide" viewBox="0 0 24 24">
                                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                 </svg>
-                                Protected Sharing
+                                Secure grade sharing
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">6-digit PINs per student with encrypted grade shares and
-                                automatic expiration cleanup.</p>
+                            <p class="text-muted text-sm">
+                                When students need to view their grades, they receive a personal PIN.
+                                The link expires automatically — no risk of misuse.
+                            </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">6-Digit PIN</span>
-                                <span class="badge badge-secondary">Encrypted Shares</span>
-                                <span class="badge badge-secondary">Auto Expiry</span>
+                                <span class="badge badge-secondary">6-digit PIN</span>
+                                <span class="badge badge-secondary">Time-limited</span>
+                                <span class="badge badge-secondary">Secured link</span>
                             </div>
                         </footer>
                     </div>
@@ -368,67 +452,43 @@
                 </div>
             </section>
 
-            <!-- Technology -->
-            <section class="pb-24" id="technology">
-                <div class="section-label">TECHNOLOGY</div>
-                <h2 class="text-2xl font-bold mb-8">Tech Stack</h2>
-                <div class="card">
-                    <section>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div class="text-center p-4">
-                                <div class="text-3xl font-bold text-purple-500 mb-1">Python 3.8+</div>
-                                <div class="text-muted text-sm">Backend</div>
-                            </div>
-                            <div class="text-center p-4">
-                                <div class="text-3xl font-bold text-yellow-500 mb-1">Quart</div>
-                                <div class="text-muted text-sm">Async Framework</div>
-                            </div>
-                            <div class="text-center p-4">
-                                <div class="text-3xl font-bold text-purple-500 mb-1">Tailwind CSS</div>
-                                <div class="text-muted text-sm">Frontend Styling</div>
-                            </div>
-                            <div class="text-center p-4">
-                                <div class="text-3xl font-bold text-yellow-500 mb-1">Chart.js</div>
-                                <div class="text-muted text-sm">Data Visualization</div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </section>
-
-            <!-- Deployment -->
-            <section class="pb-24" id="deployment">
-                <div class="section-label">DEPLOYMENT</div>
-                <h2 class="text-2xl font-bold mb-8">Get Started with EduGrade</h2>
+            <!-- How to get started? -->
+            <section class="pb-24" id="start">
+                <div class="section-label">GET STARTED</div>
+                <h2 class="text-2xl font-bold mb-8">How can I use EduGrade?</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <!-- Docker -->
+                    <!-- Hosted version -->
                     <div class="card card-hover card-featured md:col-span-2">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
                                 </svg>
-                                Docker (Recommended)
+                                Start directly in the browser — recommended
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted mb-4">Quick deployment using Docker:</p>
-                            <pre class="bg-muted p-4 rounded-lg overflow-x-auto text-sm"><code>docker pull redwolf2467/edugrade
-docker run -d --name edugrade -p 8080:1601 \
-  -v edugrade-data:/app/data \
-  --restart unless-stopped \
-  redwolf2467/edugrade:latest</code></pre>
+                            <p class="text-muted">
+                                The easiest way: just open the app at
+                                <a href="https://edugrade.avocloud.net" target="_blank" class="accent-link">edugrade.avocloud.net</a>,
+                                create an account, and get started right away.
+                                No installation, no technical knowledge required.
+                            </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <a href="https://hub.docker.com/r/redwolf2467/edugrade" target="_blank"
-                                    class="badge badge-outline">Docker Hub ↗</a>
+                                <a href="https://edugrade.avocloud.net" target="_blank"
+                                    class="badge badge-outline">Start now ↗</a>
+                                <span class="badge badge-secondary">No download</span>
+                                <span class="badge badge-secondary">Ready instantly</span>
+                                <span class="badge badge-secondary">Free</span>
                             </div>
                         </footer>
                     </div>
 
-                    <!-- Docker Compose -->
+                    <!-- Self-hosted -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -438,43 +498,48 @@ docker run -d --name edugrade -p 8080:1601 \
                                     <line x1="6" y1="6" x2="6.01" y2="6" />
                                     <line x1="6" y1="18" x2="6.01" y2="18" />
                                 </svg>
-                                Docker Compose
+                                Run on your own school server
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">Use the provided docker-compose.yml configuration file from
-                                the repository for easy deployment with persistent storage.</p>
+                            <p class="text-muted text-sm">
+                                Schools and IT departments can install and run EduGrade on their own server
+                                — for maximum control over all data. Setup instructions
+                                are available in the GitHub repository.
+                            </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">Persistent Storage</span>
-                                <span class="badge badge-secondary">Easy Setup</span>
+                                <a href="https://github.com/rwolf2467/EduGrade" target="_blank"
+                                    class="badge badge-outline">Instructions on GitHub ↗</a>
+                                <span class="badge badge-secondary">Full control</span>
                             </div>
                         </footer>
                     </div>
 
-                    <!-- Manual Installation -->
+                    <!-- Backup & Export -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
-                                    <polyline points="16 18 22 12 16 6" />
-                                    <polyline points="8 6 2 12 8 18" />
+                                    <polyline points="8 17 12 21 16 17" />
+                                    <line x1="12" y1="12" x2="12" y2="21" />
+                                    <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29" />
                                 </svg>
-                                Manual Installation
+                                Back up & export data
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm mb-3">Install from source:</p>
-                            <pre class="bg-muted p-3 rounded-lg overflow-x-auto text-xs"><code>git clone https://github.com/rwolf2467/edugrade.git
-cd edugrade
-pip install -r requirements.txt
-python app.py</code></pre>
+                            <p class="text-muted text-sm">
+                                All data can be exported and backed up at any time — as a downloadable file.
+                                No grades are ever lost, and switching servers is always possible.
+                            </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">Full Control</span>
-                                <span class="badge badge-secondary">Development</span>
+                                <span class="badge badge-secondary">Export</span>
+                                <span class="badge badge-secondary">Import</span>
+                                <span class="badge badge-secondary">Data backup</span>
                             </div>
                         </footer>
                     </div>
@@ -485,7 +550,7 @@ python app.py</code></pre>
             <!-- License -->
             <section class="pb-24" id="license">
                 <div class="section-label">LICENSE</div>
-                <h2 class="text-2xl font-bold mb-8">Open Source License</h2>
+                <h2 class="text-2xl font-bold mb-8">Free and Open Source</h2>
                 <div class="card card-featured">
                     <header>
                         <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -494,14 +559,14 @@ python app.py</code></pre>
                                 <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
                                 <line x1="12" y1="17" x2="12.01" y2="17" />
                             </svg>
-                            AGPL-3.0 License
+                            AGPL-3.0 — Free to use for schools and teachers
                         </h3>
                     </header>
                     <section>
                         <p class="text-muted">
-                            EduGrade is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
-                            Free to use, modify, and share. Modified versions must provide source code.
-                            Cannot be made proprietary.
+                            EduGrade is completely free — for individuals, schools, and educational institutions.
+                            The source code is publicly available and may be freely used, modified, and redistributed.
+                            Modified versions must also remain freely accessible.
                         </p>
                         <p class="text-muted mt-3">
                             Copyright © 2026 Fabian Murauer
@@ -509,10 +574,10 @@ python app.py</code></pre>
                     </section>
                     <footer>
                         <div class="flex flex-wrap gap-2">
+                            <span class="badge badge-secondary">Free</span>
                             <span class="badge badge-secondary">Open Source</span>
                             <span class="badge badge-secondary">AGPL-3.0</span>
-                            <span class="badge badge-secondary">Free to Use</span>
-                            <span class="badge badge-secondary">Modifiable</span>
+                            <span class="badge badge-secondary">Suitable for schools</span>
                         </div>
                     </footer>
                 </div>
@@ -521,7 +586,7 @@ python app.py</code></pre>
             <!-- Links -->
             <section class="pb-24" id="links">
                 <div class="section-label">LINKS</div>
-                <h2 class="text-2xl font-bold mb-8">Quick Links</h2>
+                <h2 class="text-2xl font-bold mb-8">Further links</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                     <div class="card card-hover">
@@ -531,11 +596,11 @@ python app.py</code></pre>
                                     <path
                                         d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
                                 </svg>
-                                GitHub
+                                Source code on GitHub
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">View source code and contribute:</p>
+                            <p class="text-muted text-sm">For IT admins: installation guide and source code:</p>
                             <a href="https://github.com/rwolf2467/EduGrade" target="_blank"
                                 class="text-sm accent-link mt-1 block">github.com/rwolf2467/EduGrade ↗</a>
                         </section>
@@ -545,15 +610,16 @@ python app.py</code></pre>
                         <header>
                             <h3 class="font-semibold flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
                                 </svg>
-                                Docker Hub
+                                EduGrade App
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">Pull the Docker image:</p>
-                            <a href="https://hub.docker.com/r/redwolf2467/edugrade" target="_blank"
-                                class="text-sm accent-link mt-1 block">hub.docker.com/r/redwolf2467/edugrade ↗</a>
+                            <p class="text-muted text-sm">Go directly to the hosted version:</p>
+                            <a href="https://edugrade.avocloud.net" target="_blank"
+                                class="text-sm accent-link mt-1 block">edugrade.avocloud.net ↗</a>
                         </section>
                     </div>
 
@@ -567,7 +633,7 @@ python app.py</code></pre>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">Check uptime status:</p>
+                            <p class="text-muted text-sm">Check app availability:</p>
                             <a href="https://status.avocloud.net" target="_blank"
                                 class="text-sm accent-link mt-1 block">status.avocloud.net ↗</a>
                         </section>
@@ -592,7 +658,7 @@ python app.py</code></pre>
         </main>
 
         <footer class="site-footer">
-            <p>EduGrade — A secure grade management system by Avocloud.net</p>
+            <p>EduGrade — Secure grade management for teachers, by Avocloud.net</p>
         </footer>
     </div>
 
