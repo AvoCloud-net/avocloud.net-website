@@ -184,7 +184,7 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Two-tier filtering system to keep your server clean. <strong>SafeText</strong> handles open-source bad-word detection, while the <strong>AI Filter</strong> uses an LLM (Llama Guard) to analyze message context — catching hate speech, NSFW content, and self-harm references that simple word lists miss. Flagged messages are automatically <strong>deleted</strong>. A bypass channel can be configured per server.
+                                Multi-tier filtering system to keep your server clean. <strong>SafeText</strong> handles open-source bad-word detection, while the <strong>AI Filter</strong> uses an LLM (Llama Guard) to analyze message context — catching hate speech, NSFW content, and self-harm references that simple word lists miss. The optional <strong>Phishing Link Detection</strong> scans every message for known scam and phishing URLs and removes them before anyone can click. Flagged messages are automatically <strong>deleted</strong>. A bypass channel can be configured per server.
                             </p>
                         </section>
                     </div>
@@ -316,6 +316,28 @@
                         <section>
                             <p class="text-muted text-sm">
                                 Voice channels that automatically display live server statistics — total members, humans, bots, channels, and roles. Each stat gets its own channel with a fully customizable name template, updated automatically every 10 minutes.
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Temp Voice -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                    <line x1="12" y1="19" x2="12" y2="23"/>
+                                    <line x1="8" y1="23" x2="16" y2="23"/>
+                                </svg>
+                                Temp Voice
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                When a user joins a designated <strong>creator channel</strong>, Baxi instantly creates a
+                                private temporary voice channel for them — and moves them in automatically. The channel
+                                is <strong>automatically deleted</strong> as soon as the last person leaves.
                             </p>
                         </section>
                     </div>
