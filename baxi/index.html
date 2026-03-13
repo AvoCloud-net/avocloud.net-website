@@ -57,12 +57,27 @@
     <!-- Hero -->
     <section class="hero">
         <div class="hero-content w-full" style="text-align:center">
+            <p class="hero-eyebrow">Discord Bot &middot; Verified &middot; Open Source</p>
             <h1>Welcome to Baxi</h1>
             <p class="hero-subtitle">
                 A modern, privacy-focused <span class="highlight-yellow">Discord <span id="typewriter-text"></span><span class="typewriter-cursor">|</span></span>
             </p>
-
-            <!-- Invite button -->
+            <!-- Stat strip -->
+            <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-bottom:1.5rem;">
+                <div class="stat-pill">
+                    <span class="stat-number">12+</span>
+                    <span class="stat-label">Features</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-number">Verified</span>
+                    <span class="stat-label">Discord Bot</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-number">MIT</span>
+                    <span class="stat-label">Open Source</span>
+                </div>
+            </div>
+            <!-- Buttons -->
             <div class="flex flex-wrap gap-3 justify-center mt-4">
                 <a href="https://avocloud.net/baxi/invite/" target="_blank" class="hero-btn">
                     <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
@@ -107,27 +122,45 @@
             <!-- About -->
             <section class="py-24" id="about">
                 <div class="section-label">ABOUT BAXI</div>
-                <div class="card">
-                    <header>
-                        <h2 class="text-xl font-semibold flex items-center gap-2">
-                            <svg class="lucide" viewBox="0 0 24 24">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                            </svg>
-                            What is Baxi?
-                        </h2>
-                    </header>
-                    <section>
-                        <p class="text-muted">
+                <div class="about-editorial">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-6">Hi, meet Baxi.</h2>
+                        <p class="text-muted mb-4">
                             Baxi is a modern, privacy-focused Discord bot designed to make server management
                             <strong>safer, smarter, and easier</strong>. It combines powerful moderation tools,
                             an AI-powered chat filter, cross-server global chat, and much more — all configurable
                             through an easy-to-use web dashboard.
                         </p>
-                        <p class="text-muted mt-3">
+                        <p class="text-muted">
                             Baxi is part of the <strong>AvoCloud</strong> project, which focuses on creating
-                            modern, privacy-friendly tools for Discord communities.
+                            modern, privacy-friendly tools for Discord communities. Everything is open source
+                            under the MIT license and freely available on GitHub.
                         </p>
-                    </section>
+                    </div>
+                    <div>
+                        <h3 class="section-h3 mb-3">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            Privacy by Design
+                        </h3>
+                        <p class="text-muted mb-6">
+                            Baxi stores only what your server actually needs — nothing more.
+                            Every feature is opt-in, and no personal data or messages are
+                            retained beyond what's strictly required to operate the feature you enabled.
+                        </p>
+                        <h3 class="section-h3 mb-3">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                            Open Source
+                        </h3>
+                        <p class="text-muted">
+                            The full source code is on GitHub under the MIT license. Self-host it,
+                            audit it, contribute to it — total transparency, no black boxes.
+                        </p>
+                    </div>
                 </div>
             </section>
 
@@ -135,10 +168,10 @@
             <section class="pb-24" id="features">
                 <div class="section-label">FEATURES</div>
                 <h2 class="text-2xl font-bold mb-8">What Baxi Offers</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-                    <!-- Moderation -->
-                    <div class="card card-hover md:col-span-2">
+                    <!-- ROW 1: Moderation (2col) + Anti-Spam (1col) -->
+                    <div class="card card-hover card-featured md:col-span-2">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
@@ -149,12 +182,19 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Full moderation toolkit with slash commands for <strong>ban</strong>, <strong>kick</strong>, <strong>unban</strong>, <strong>mute</strong>, <strong>warn</strong>, and bulk message deletion (<strong>/clear</strong>). Bans and mutes can be set as <strong>temporary</strong> with a custom duration — Baxi lifts them automatically when the time is up and <strong>notifies the user via DM</strong> if possible. The warning system auto-escalates: reaching configured thresholds triggers a mute, then kick, then ban — automatically, without manual intervention.
+                                Full toolkit with slash commands for <strong>ban</strong>, <strong>kick</strong>, <strong>unban</strong>, <strong>mute</strong>, <strong>warn</strong>, and bulk message deletion (<strong>/clear</strong>). Bans and mutes can be <strong>temporary</strong> with a custom duration — Baxi lifts them automatically and <strong>notifies the user via DM</strong>. The warning system auto-escalates: hitting configured thresholds triggers a mute, then kick, then ban — without any manual intervention.
                             </p>
                         </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Ban / Kick / Mute</span>
+                                <span class="badge badge-secondary">Temp Actions</span>
+                                <span class="badge badge-secondary">Auto-Escalation</span>
+                                <span class="badge badge-secondary">DM Notifications</span>
+                            </div>
+                        </footer>
                     </div>
 
-                    <!-- Anti-Spam -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -167,29 +207,12 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Detects message spam, mention floods, and repeated content in real time. When a threshold is exceeded, Baxi automatically takes action — configurable between <strong>warn</strong>, <strong>mute</strong>, <strong>kick</strong>, or <strong>ban</strong>. Keeps your server safe without manual intervention.
+                                Detects message spam, mention floods, and repeated content in real time. Configurable action: <strong>warn</strong>, <strong>mute</strong>, <strong>kick</strong>, or <strong>ban</strong>.
                             </p>
                         </section>
                     </div>
 
-                    <!-- Chat Filter -->
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
-                                </svg>
-                                AI-Powered Chat Filter
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">
-                                Multi-tier filtering system to keep your server clean. <strong>SafeText</strong> handles open-source bad-word detection, while the <strong>AI Filter</strong> uses an LLM (Llama Guard) to analyze message context — catching hate speech, NSFW content, and self-harm references that simple word lists miss. The optional <strong>Phishing Link Detection</strong> scans every message for known scam and phishing URLs and removes them before anyone can click. Flagged messages are automatically <strong>deleted</strong>. A bypass channel can be configured per server.
-                            </p>
-                        </section>
-                    </div>
-
-                    <!-- Global Chat -->
+                    <!-- ROW 2: Global Chat (1col) + AI Chat Filter (2col) — zigzag -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -202,13 +225,37 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                A cross-server chatroom that connects all Discord servers with Global Chat enabled — messages including attachments and replies are relayed to every connected server. Every message is <strong>always</strong> checked by Baxi's AI Filter, and a dedicated <strong>moderation team</strong> monitors the chat around the clock.
-                                <em class="block mt-2 opacity-70">Only available on the official hosted bot.</em>
+                                Cross-server chatroom connecting all Baxi servers. Always AI-filtered, monitored around the clock.
+                                <em class="block mt-2 opacity-70">Official hosted bot only.</em>
                             </p>
                         </section>
                     </div>
 
-                    <!-- Ticket System -->
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                                </svg>
+                                AI-Powered Chat Filter
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Multi-tier filtering to keep your server clean. <strong>SafeText</strong> handles open-source bad-word detection, while the <strong>AI Filter</strong> (Llama Guard) analyzes message context — catching hate speech, NSFW content, and self-harm references that simple word lists miss. <strong>Phishing Link Detection</strong> scans every message for known scam URLs and removes them before anyone can click. Flagged messages are deleted automatically. A bypass channel can be configured per server.
+                            </p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">SafeText</span>
+                                <span class="badge badge-secondary">Llama Guard AI</span>
+                                <span class="badge badge-secondary">Phishing Detection</span>
+                                <span class="badge badge-secondary">Auto-Delete</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <!-- ROW 3: Ticket · Custom Commands · Welcome & Leave (3×1col) -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -222,12 +269,11 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Members open support tickets via a modal — choosing a <strong>custom title</strong> and describing their issue at creation. Staff can <strong>claim</strong>, close, and archive tickets as transcripts. A configurable staff role gets access to all tickets, keeping requests out of public channels.
+                                Members open support tickets via a modal with a custom title. Staff can <strong>claim</strong>, close, and archive tickets as transcripts.
                             </p>
                         </section>
                     </div>
 
-                    <!-- Custom Commands -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -240,12 +286,11 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Define your own text commands with a custom trigger and response — no coding required. Use any prefix and keyword you like (e.g. <code>!help</code>, <code>.invite</code>). <strong>Variables</strong> like <code>{user}</code>, <code>{server}</code>, and <code>{membercount}</code> make replies dynamic, with optional embed support. Perfect for automating FAQs, server rules, or recurring announcements.
+                                Define your own text commands with any prefix and trigger. Variables like <code>{user}</code>, <code>{server}</code>, <code>{membercount}</code> make replies dynamic. Embed support included.
                             </p>
                         </section>
                     </div>
 
-                    <!-- Welcome & Leave -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -255,17 +300,43 @@
                                     <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
                                     <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                                 </svg>
-                                Welcome & Leave Messages
+                                Welcome & Leave
                             </h3>
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Greet new members with a fully customizable welcome message using <strong>variables</strong> (username, server name, etc.). Baxi can optionally generate a <strong>welcome image</strong> with a custom background to match your server's style. The goodbye message is configurable separately.
+                                Customizable welcome messages with variables and optional <strong>welcome image</strong> with a custom background. Goodbye message configurable separately.
                             </p>
                         </section>
                     </div>
 
-                    <!-- Auto-Roles -->
+                    <!-- ROW 4: Web Dashboard (2col) + Auto-Roles (1col) -->
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <path d="M21 15l-5-5L5 21"/>
+                                </svg>
+                                Web Dashboard
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Configure every Baxi feature through an intuitive web interface — login with Discord OAuth2, no slash commands or config files needed. Manage chat filter settings, welcome messages, custom commands, Twitch streamers, auto-roles, and more in one place. Includes an <strong>audit log</strong> and feature adoption statistics. Changes apply instantly.
+                            </p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <a href="https://baxi.avocloud.net/" target="_blank" class="badge badge-secondary">Open Dashboard ↗</a>
+                                <span class="badge badge-outline">Discord OAuth2</span>
+                                <span class="badge badge-outline">Audit Log</span>
+                                <span class="badge badge-outline">Instant Apply</span>
+                            </div>
+                        </footer>
+                    </div>
+
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -279,12 +350,12 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Automatically assign one or more roles to every user when they join the server. Set it up once in the dashboard — no further action needed. Useful for default member roles, bot separators, or any role that should apply to all new members.
+                                Assign one or more roles automatically when a user joins. Set it once in the dashboard — no further action needed.
                             </p>
                         </section>
                     </div>
 
-                    <!-- Twitch Live Tracking -->
+                    <!-- ROW 5: Twitch · Stats · Temp Voice (3×1col) -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -296,12 +367,11 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Track Twitch channels and automatically post a live announcement when a stream starts — showing <strong>stream title</strong>, <strong>viewer count</strong>, and a <strong>preview image</strong>. The message updates live so there's no spam of new posts. The channel name changes to 🔴 live / ⚫ offline, and an optional <strong>role ping</strong> notifies your community instantly.
+                                Auto-post a live announcement when a stream starts — title, viewer count, preview image. Updates live, no spam. Channel name changes to 🔴 / ⚫, optional <strong>role ping</strong>.
                             </p>
                         </section>
                     </div>
 
-                    <!-- Stats Channels -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -315,12 +385,11 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Voice channels that automatically display live server statistics — total members, humans, bots, channels, and roles. Each stat gets its own channel with a fully customizable name template, updated automatically every 10 minutes.
+                                Voice channels that display live server stats — members, humans, bots, channels, roles. Updated automatically every 10 minutes.
                             </p>
                         </section>
                     </div>
 
-                    <!-- Temp Voice -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
@@ -335,15 +404,13 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                When a user joins a designated <strong>creator channel</strong>, Baxi instantly creates a
-                                private temporary voice channel for them — and moves them in automatically. The channel
-                                is <strong>automatically deleted</strong> as soon as the last person leaves.
+                                Joining a designated creator channel instantly creates a private temporary voice channel. Deleted automatically when the last person leaves.
                             </p>
                         </section>
                     </div>
 
-                    <!-- Global User Flagging -->
-                    <div class="card card-hover">
+                    <!-- ROW 6: Global User Flagging (full width) -->
+                    <div class="card card-hover md:col-span-3">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
@@ -351,35 +418,75 @@
                                     <line x1="4" y1="22" x2="4" y2="15"/>
                                 </svg>
                                 Global User Flagging
+                                <em class="text-xs font-normal opacity-50 ml-2">Official hosted bot only</em>
                             </h3>
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                A shared database of flagged users across all Baxi servers. Use <strong>/scan_users</strong> to check your server for reported members and take action proactively — before issues arise. Helps communities stay safe from known bad actors across the network.
-                                <em class="block mt-2 opacity-70">Only available on the official hosted bot.</em>
+                                Shared database of flagged users across all Baxi servers. Use <strong>/scan_users</strong> to check your server for reported members proactively — before issues arise. Helps communities stay safe from known bad actors across the network.
                             </p>
                         </section>
                     </div>
 
-                    <!-- Web Dashboard -->
-                    <div class="card card-hover md:col-span-2">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                    <circle cx="8.5" cy="8.5" r="1.5"/>
-                                    <path d="M21 15l-5-5L5 21"/>
-                                </svg>
-                                Web Dashboard
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">
-                                Configure every Baxi feature through an intuitive web interface — login with Discord OAuth2, no slash commands or config files needed. Manage chat filter settings, welcome messages, custom commands, Twitch streamers, auto-roles, and more, all in one place. Includes an <strong>audit log</strong> and feature adoption statistics. Changes apply to your server instantly.
-                            </p>
-                        </section>
-                    </div>
+                </div>
+            </section>
 
+            <!-- Privacy -->
+            <section class="pb-24" id="privacy">
+                <div class="section-label">PRIVACY</div>
+                <h2 class="text-2xl font-bold mb-8">Your Data, Your Control</h2>
+                <div class="about-editorial">
+                    <div>
+                        <h3 class="section-h3 mb-3">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            Only what your server needs
+                        </h3>
+                        <p class="text-muted mb-4">
+                            Baxi follows a strict <strong>minimal data collection</strong> principle.
+                            Every feature is opt-in — and when you enable one, only the data that
+                            feature actually requires is stored. Nothing is collected in the background.
+                        </p>
+                        <p class="text-muted">
+                            If you disable a feature, its data is no longer used. You are always
+                            in control of what Baxi does in your server.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="card" style="margin-bottom:1rem;">
+                            <header>
+                                <h4 class="font-semibold text-sm text-green-400 flex items-center gap-2">
+                                    <svg style="width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                                    Stored (only if feature enabled)
+                                </h4>
+                            </header>
+                            <section>
+                                <ul class="text-muted text-sm space-y-1">
+                                    <li>• Chat filter logs — only for removed messages</li>
+                                    <li>• Server configuration — your dashboard settings</li>
+                                    <li>• Global chat images — for cross-server delivery</li>
+                                </ul>
+                            </section>
+                        </div>
+                        <div class="card">
+                            <header>
+                                <h4 class="font-semibold text-sm text-red-400 flex items-center gap-2">
+                                    <svg style="width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                    Never stored
+                                </h4>
+                            </header>
+                            <section>
+                                <ul class="text-muted text-sm space-y-1">
+                                    <li>• Regular messages or chat history</li>
+                                    <li>• Personal data or user profiles</li>
+                                    <li>• Tracking or analytics data</li>
+                                    <li>• Private information of any kind</li>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -398,13 +505,12 @@
                                     <path d="M2 17l10 5 10-5"/>
                                     <path d="M2 12l10 5 10-5"/>
                                 </svg>
-                                Official Hosted Bot (Recommended)
+                                Official Hosted Bot
+                                <span class="badge badge-secondary" style="font-size:0.65rem;padding:2px 8px;margin-left:auto;">Recommended</span>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm mb-4">
-                                Get started immediately with the official Baxi bot. All features work out of the box.
-                            </p>
+                            <p class="text-muted text-sm mb-4">Get started in seconds — invite the bot and configure everything via the dashboard. No setup required.</p>
                             <div class="flex flex-wrap gap-2">
                                 <a href="https://avocloud.net/baxi/invite/" target="_blank" class="badge badge-secondary">Invite Bot ↗</a>
                                 <a href="https://baxi.avocloud.net/" target="_blank" class="badge badge-secondary">Dashboard ↗</a>
@@ -424,114 +530,20 @@
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm mb-3">Clone and install Baxi:</p>
                             <pre class="text-xs bg-dark p-3 rounded mb-3 overflow-x-auto"><code>git clone https://github.com/AvoCloud-net/Baxi.git
-cd Baxi
-pip install -r requirements.txt</code></pre>
-                            <p class="text-muted text-sm mb-3">
-                                Configure <code>config/auth.py</code> with your Bot Token, then run:
-                            </p>
-                            <pre class="text-xs bg-dark p-3 rounded overflow-x-auto"><code>python main.py</code></pre>
+cd Baxi && pip install -r requirements.txt
+python main.py</code></pre>
+                            <p class="text-muted text-sm">Configure <code>config/auth.py</code> with your Bot Token before running.</p>
                         </section>
                         <footer>
-                            <a href="https://github.com/AvoCloud-net/Baxi" target="_blank" class="badge badge-outline">GitHub Repository ↗</a>
+                            <div class="flex flex-wrap gap-2">
+                                <a href="https://github.com/AvoCloud-net/Baxi" target="_blank" class="badge badge-outline">GitHub ↗</a>
+                                <span class="badge badge-outline" style="opacity:0.6;cursor:default">Global Chat: N/A</span>
+                                <span class="badge badge-outline" style="opacity:0.6;cursor:default">AI Filter: self-host</span>
+                            </div>
                         </footer>
                     </div>
 
-                </div>
-
-                <!-- Self-Hosting Limitations -->
-                <div class="card mt-6">
-                    <header>
-                        <h3 class="font-semibold text-lg">Self-Hosting Limitations</h3>
-                    </header>
-                    <section>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                            <div>
-                                <h4 class="font-semibold text-sm mb-1">Global Chat</h4>
-                                <p class="text-muted text-sm">Not available (requires official Baxi network access)</p>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-sm mb-1">SafeText Filter</h4>
-                                <p class="text-muted text-sm">Requires a Public API Key (request from AvoCloud)</p>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-sm mb-1">AI Filter</h4>
-                                <p class="text-muted text-sm">Must be self-hosted (recommended: OpenWebUI + Ollama with Llama-Guard 3)</p>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-sm mb-1">Other Features</h4>
-                                <p class="text-muted text-sm">Work fully without restrictions</p>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </section>
-
-            <!-- Privacy -->
-            <section class="pb-24" id="privacy">
-                <div class="section-label">PRIVACY</div>
-                <h2 class="text-2xl font-bold mb-8">Privacy Policy</h2>
-                <div class="card">
-                    <header>
-                        <h3 class="font-semibold text-lg flex items-center gap-2">
-                            <svg class="lucide" viewBox="0 0 24 24">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                            </svg>
-                            Minimal Data Collection
-                        </h3>
-                    </header>
-                    <section>
-                        <p class="text-muted mb-6">
-                            Baxi follows a <strong>minimal data collection</strong> principle. All features are optional —
-                            users decide what to enable and what data (if any) is stored.
-                        </p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <h4 class="font-semibold text-base mb-2 text-green-400">✓ Stored Data</h4>
-                                <ul class="text-muted text-sm space-y-2">
-                                    <li>• Chat Filter Logs (only if enabled, only for removed messages)</li>
-                                    <li>• Server Configuration (dashboard settings)</li>
-                                    <li>• Global Chat Images (for cross-server delivery)</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-base mb-2 text-red-400">✗ NOT Stored</h4>
-                                <ul class="text-muted text-sm space-y-2">
-                                    <li>• Other messages</li>
-                                    <li>• Personal data</li>
-                                    <li>• Private information</li>
-                                    <li>• Tracking data</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </section>
-
-            <!-- Commands -->
-            <section class="pb-24" id="commands">
-                <div class="section-label">COMMANDS</div>
-                <h2 class="text-2xl font-bold mb-8">How to Use</h2>
-                <div class="card">
-                    <header>
-                        <h3 class="font-semibold text-lg flex items-center gap-2">
-                            <svg class="lucide" viewBox="0 0 24 24">
-                                <polyline points="4 7 4 4 20 4 20 7"/>
-                                <line x1="9" y1="20" x2="15" y2="20"/>
-                                <line x1="12" y1="4" x2="12" y2="20"/>
-                            </svg>
-                            Slash Commands
-                        </h3>
-                    </header>
-                    <section>
-                        <p class="text-muted">
-                            Baxi uses <strong>Discord Slash Commands</strong> (<code>/</code>).
-                            Type <code>/</code> in your server to see all available commands with built-in
-                            descriptions and options. No need to memorize complex command syntax.
-                        </p>
-                    </section>
                 </div>
             </section>
 
@@ -539,7 +551,7 @@ pip install -r requirements.txt</code></pre>
             <section class="pb-24" id="support">
                 <div class="section-label">SUPPORT</div>
                 <h2 class="text-2xl font-bold mb-8">Get Help</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                     <div class="card card-hover">
                         <header>
@@ -547,11 +559,11 @@ pip install -r requirements.txt</code></pre>
                                 <svg class="lucide" viewBox="0 0 24 24">
                                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                                 </svg>
-                                Discord Support Server
+                                Discord
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">Join our Discord server for support and updates:</p>
+                            <p class="text-muted text-sm">Join our server for support and updates:</p>
                             <a href="https://avocloud.net/discord/" target="_blank"
                                class="text-sm accent-link mt-1 block">avocloud.net/discord ↗</a>
                         </section>
@@ -564,22 +576,13 @@ pip install -r requirements.txt</code></pre>
                         <header>
                             <h3 class="font-semibold flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
-                                    <rect x="4" y="4" width="16" height="16" rx="2"/>
-                                    <rect x="9" y="9" width="6" height="6"/>
-                                    <line x1="9" y1="1" x2="9" y2="4"/>
-                                    <line x1="15" y1="1" x2="15" y2="4"/>
-                                    <line x1="9" y1="20" x2="9" y2="23"/>
-                                    <line x1="15" y1="20" x2="15" y2="23"/>
-                                    <line x1="20" y1="9" x2="23" y2="9"/>
-                                    <line x1="20" y1="14" x2="23" y2="14"/>
-                                    <line x1="1" y1="9" x2="4" y2="9"/>
-                                    <line x1="1" y1="14" x2="4" y2="14"/>
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
                                 </svg>
-                                GitHub Repository
+                                GitHub
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">Report issues or contribute on GitHub:</p>
+                            <p class="text-muted text-sm">Report issues or contribute:</p>
                             <a href="https://github.com/AvoCloud-net/Baxi" target="_blank"
                                class="text-sm accent-link mt-1 block">github.com/AvoCloud-net/Baxi ↗</a>
                         </section>
@@ -588,79 +591,19 @@ pip install -r requirements.txt</code></pre>
                         </footer>
                     </div>
 
-                    <div class="card card-hover md:col-span-2">
+                    <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
                                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                                     <polyline points="22,6 12,13 2,6"/>
                                 </svg>
-                                Email Support
+                                Email
                             </h3>
                         </header>
                         <section>
                             <p class="text-muted text-sm">Send us an email:</p>
                             <a href="mailto:support@avocloud.net" class="text-sm accent-link mt-1 block">support@avocloud.net ↗</a>
-                        </section>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- Quick Links -->
-            <section class="pb-24" id="links">
-                <div class="section-label">LINKS</div>
-                <h2 class="text-2xl font-bold mb-8">Useful Links</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                                </svg>
-                                Global Chat
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">Connect servers via Global Chat:</p>
-                            <a href="https://baxi.avocloud.net/" target="_blank"
-                               class="text-sm accent-link mt-1 block">baxi.avocloud.net ↗</a>
-                        </section>
-                    </div>
-
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                                </svg>
-                                SafeText API
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">Open-source text filtering:</p>
-                            <a href="https://github.com/AvoCloud-net/SafeText" target="_blank"
-                               class="text-sm accent-link mt-1 block">github.com/AvoCloud-net/SafeText ↗</a>
-                        </section>
-                    </div>
-
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                                    <line x1="12" y1="22.08" x2="12" y2="12"/>
-                                </svg>
-                                Recommended AI Setup
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">Self-host AI filter:</p>
-                            <a href="https://github.com/open-webui/open-webui" target="_blank"
-                               class="text-sm accent-link mt-1 block">OpenWebUI + Ollama ↗</a>
                         </section>
                     </div>
 
