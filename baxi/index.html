@@ -324,7 +324,7 @@
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Configure every Baxi feature through an intuitive web interface — login with Discord OAuth2, no slash commands or config files needed. Manage chat filter settings, welcome messages, custom commands, Twitch streamers, auto-roles, and more in one place. Includes an <strong>audit log</strong> and feature adoption statistics. Changes apply instantly.
+                                Configure every Baxi feature through an intuitive web interface — login with Discord OAuth2, no slash commands or config files needed. Manage chat filter settings, welcome messages, custom commands, live tracking (Twitch, YouTube, TikTok), auto-roles, and more in one place. Includes an <strong>audit log</strong> and feature adoption statistics. Changes apply instantly.
                             </p>
                         </section>
                         <footer>
@@ -355,19 +355,19 @@
                         </section>
                     </div>
 
-                    <!-- ROW 5: Twitch · Stats · Temp Voice (3×1col) -->
+                    <!-- ROW 5: Live Tracking · Stats · Temp Voice (3×1col) -->
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M21 2H3v16h5v4l4-4h5l4-4V2zM11 11V7m4 4V7"/>
+                                    <circle cx="12" cy="12" r="2"/><path d="M16.72 9.29a6 6 0 0 1 0 5.42M19.5 6.5a10 10 0 0 1 0 11M7.28 9.29a6 6 0 0 0 0 5.42M4.5 6.5a10 10 0 0 0 0 11"/>
                                 </svg>
-                                Twitch Live Tracking
+                                Live Tracking
                             </h3>
                         </header>
                         <section>
                             <p class="text-muted text-sm">
-                                Auto-post a live announcement when a stream starts — title, viewer count, preview image. Updates live, no spam. Channel name changes to 🔴 / ⚫, optional <strong>role ping</strong>.
+                                Auto-post a live announcement when a stream goes live — supports <strong>Twitch</strong>, <strong>YouTube</strong>, and <strong>TikTok</strong>. Shows title, preview, and viewer count. Channel name changes to 🔴 / ⚫, optional <strong>role ping</strong>.
                             </p>
                         </section>
                     </div>
@@ -409,8 +409,34 @@
                         </section>
                     </div>
 
-                    <!-- ROW 6: Global User Flagging (full width) -->
-                    <div class="card card-hover md:col-span-3">
+                    <!-- ROW 6: Prism (2col) + Global User Flagging (1col) -->
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                                </svg>
+                                Prism — Behavior Analysis &amp; Trust Scoring
+                                <em class="text-xs font-normal opacity-50 ml-2">Official hosted bot only</em>
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Prism tracks user behavior <strong>network-wide</strong> across all Baxi servers and maintains an automatic trust score per user. Moderation events like bans, warnings, or filter hits lower the score — good behavior over time restores it. Users who fall below a critical threshold are <strong>automatically added to the global flagging list</strong> and removed again once they recover. No manual action required. Server owners can opt out via the dashboard.
+                            </p>
+                        </section>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Network-wide</span>
+                                <span class="badge badge-secondary">Auto-Flag</span>
+                                <span class="badge badge-secondary">Auto-Recovery</span>
+                                <span class="badge badge-outline">Opt-out per Server</span>
+                            </div>
+                        </footer>
+                    </div>
+
+                    <!-- ROW 7: Global User Flagging (1col, same row as Prism) -->
+                    <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold text-lg flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
@@ -428,6 +454,221 @@
                         </section>
                     </div>
 
+                    <!-- ROW 8: Button Roles · Auto-Slowmode · Verification (3×1col) -->
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="m4 4 7.07 17 2.51-7.39L21 11.07z"/>
+                                </svg>
+                                Button Roles
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Members assign themselves roles by clicking buttons under an embed. Set up panels with custom title, color, and per-button emoji/label via the dashboard. Clicking again removes the role.
+                            </p>
+                        </section>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                Auto-Slowmode
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                Detects message floods in channels and automatically enables slowmode — then removes it again after a configurable duration. Threshold, interval, and delay are all adjustable per server.
+                            </p>
+                        </section>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    <polyline points="9 12 11 14 15 10"/>
+                                </svg>
+                                Verification
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm">
+                                New members must verify before gaining server access. Choose between a simple button click, a CAPTCHA, or a custom server password. Baxi assigns the configured role on success and reposts the panel if deleted.
+                            </p>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Compare -->
+            <section class="pb-24" id="compare">
+                <div class="section-label">COMPARISON</div>
+                <h2 class="text-2xl font-bold mb-2">Why Baxi?</h2>
+                <p class="text-muted text-sm mb-8">Baxi is <strong>fully free</strong> — no features locked behind a paywall. Here's how it stacks up against popular alternatives.</p>
+
+                <div class="overflow-x-auto rounded-xl border border-[var(--border)] mb-4">
+                    <table style="width:100%;border-collapse:collapse;font-size:0.875rem;">
+                        <thead>
+                            <tr style="border-bottom:1px solid var(--border);">
+                                <th style="text-align:left;padding:0.75rem 1rem;font-weight:600;opacity:0.6;min-width:13rem;">Feature</th>
+                                <th style="padding:0.75rem 1rem;font-weight:700;color:#a855f7;background:color-mix(in srgb,#a855f7 6%,transparent);min-width:6rem;text-align:center;">Baxi</th>
+                                <th style="padding:0.75rem 1rem;font-weight:600;opacity:0.6;min-width:6rem;text-align:center;">MEE6</th>
+                                <th style="padding:0.75rem 1rem;font-weight:600;opacity:0.6;min-width:6rem;text-align:center;">Carl-bot</th>
+                                <th style="padding:0.75rem 1rem;font-weight:600;opacity:0.6;min-width:6rem;text-align:center;">Dyno</th>
+                                <th style="padding:0.75rem 1rem;font-weight:600;opacity:0.6;min-width:6rem;text-align:center;">ProBot</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Moderation (warn / kick / ban / timeout)</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;" title="Basic commands free; full auto-mod plugin is premium"><span style="opacity:0.5">~</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">AI Chat Filter</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Anti-Spam</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#fbbf24;font-weight:700" title="Premium only">★</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Auto-Slowmode</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="color:#fbbf24;font-weight:700" title="Premium only">★</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Button / Reaction Roles</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#fbbf24;font-weight:700" title="Premium only">★</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;" title="3 messages free, unlimited with premium"><span style="opacity:0.5">~</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Verification System</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.5">~</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Ticket System</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#fbbf24;font-weight:700" title="Premium only">★</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Welcome Messages</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;" title="Basic text free; custom images/embeds premium"><span style="opacity:0.5">~</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Auto-Roles</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Custom Commands</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;" title="Basic free; advanced automations premium"><span style="opacity:0.5">~</span></td>
+                                <td style="text-align:center;" title="Tagscript free; advanced features limited"><span style="opacity:0.5">~</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Temp Voice Channels</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#fbbf24;font-weight:700" title="Premium only">★</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Live Tracking (Twitch, YouTube, TikTok)</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="color:#fbbf24;font-weight:700" title="Premium only">★</span></td>
+                                <td style="text-align:center;" title="Twitch: 5 channels free; no TikTok"><span style="opacity:0.5">~</span></td>
+                                <td style="text-align:center;"><span style="color:#fbbf24;font-weight:700" title="Premium only">★</span></td>
+                                <td style="text-align:center;" title="YouTube notifications available; Twitch/TikTok limited"><span style="opacity:0.5">~</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;">Network-wide Safety (Prism + Flagging)</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                            </tr>
+                            <tr style="border-top:1px solid var(--border);">
+                                <td style="padding:0.6rem 1rem;font-weight:600;">Fully Free</td>
+                                <td style="text-align:center;background:color-mix(in srgb,#a855f7 4%,transparent);"><span style="color:#22c55e;font-weight:700">✓</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.35">✗</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.5">~</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.5">~</span></td>
+                                <td style="text-align:center;"><span style="opacity:0.5">~</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="display:flex;flex-wrap:wrap;gap:1rem 2rem;font-size:0.75rem;opacity:0.6;margin-bottom:2.5rem;">
+                    <span><span style="color:#22c55e;font-weight:700">✓</span> free</span>
+                    <span><span style="color:#fbbf24;font-weight:700">★</span> premium only</span>
+                    <span>~ partial / limited</span>
+                    <span>✗ not available</span>
+                    <span style="opacity:0.7;font-style:italic;">Based on publicly available information — may change over time.</span>
+                </div>
+
+                <p class="text-sm font-semibold mb-4">Baxi can replace</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="info-box" style="margin:0;">
+                        <p class="text-sm font-semibold mb-1">MEE6 Premium</p>
+                        <p class="text-muted text-xs">Button Roles, Custom Commands, Auto-Mod — all free in Baxi.</p>
+                    </div>
+                    <div class="info-box" style="margin:0;">
+                        <p class="text-sm font-semibold mb-1">Verification Bots</p>
+                        <p class="text-muted text-xs">Button, CAPTCHA, and password verification built right in.</p>
+                    </div>
+                    <div class="info-box" style="margin:0;">
+                        <p class="text-sm font-semibold mb-1">Temp Voice Bots</p>
+                        <p class="text-muted text-xs">Automatic user-created voice channels without a dedicated bot.</p>
+                    </div>
+                    <div class="info-box" style="margin:0;">
+                        <p class="text-sm font-semibold mb-1">Multi-bot setups</p>
+                        <p class="text-muted text-xs">Replace MEE6 + Dyno + a role bot — Baxi covers it all in one.</p>
+                    </div>
                 </div>
             </section>
 
