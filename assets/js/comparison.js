@@ -161,6 +161,26 @@
                 }
             },
             {
+                feature: 'Minigames',
+                values: {
+                    baxi: { status: ComparisonStatus.FREE },
+                    mee6: { status: ComparisonStatus.NONE },
+                    carl: { status: ComparisonStatus.NONE },
+                    dyno: { status: ComparisonStatus.NONE },
+                    probot: { status: ComparisonStatus.PARTIAL, tooltip: 'Some fun commands, no structured minigames' }
+                }
+            },
+            {
+                feature: 'Suggestion System',
+                values: {
+                    baxi: { status: ComparisonStatus.FREE },
+                    mee6: { status: ComparisonStatus.NONE },
+                    carl: { status: ComparisonStatus.PARTIAL },
+                    dyno: { status: ComparisonStatus.FREE },
+                    probot: { status: ComparisonStatus.FREE }
+                }
+            },
+            {
                 feature: 'Fully Free',
                 isBold: true,
                 values: {
