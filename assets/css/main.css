@@ -117,7 +117,7 @@ html:not(.dark) .theme-toggle {
     position: relative;
     overflow: hidden;
     padding: calc(4rem + 54px) 1.5rem 8rem;
-    background: oklch(0.12 0.06 270);
+    background: oklch(0.13 0.05 272);
     transition: background-color 0.3s ease;
 }
 
@@ -132,10 +132,10 @@ html:not(.dark) .hero {
     inset: 0;
     z-index: 0;
     background:
-        radial-gradient(ellipse 55% 45% at 20% 30%, oklch(0.58 0.30 290 / 0.80) 0%, transparent 70%),
-        radial-gradient(ellipse 45% 50% at 78% 65%, oklch(0.62 0.28 330 / 0.70) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 55% 15%, oklch(0.65 0.22 200 / 0.55) 0%, transparent 70%);
-    filter: blur(60px);
+        radial-gradient(ellipse 55% 45% at 20% 30%, oklch(0.58 0.30 290 / 0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 45% 50% at 78% 65%, oklch(0.62 0.28 330 / 0.42) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 55% 15%, oklch(0.65 0.22 200 / 0.38) 0%, transparent 70%);
+    filter: blur(65px);
     pointer-events: none;
     opacity: var(--blob-opacity, 1);
     transition: opacity 0.3s ease;
@@ -435,8 +435,164 @@ html:not(.dark) .site-nav {
 /* Theme toggle when inside nav: reset fixed positioning */
 .site-nav .theme-toggle {
     position: static;
-    margin-left: auto;
     flex-shrink: 0;
+}
+
+/* ── PAGE NAV LINKS (desktop) ── */
+.nav-links {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.125rem;
+}
+
+.nav-link {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    white-space: nowrap;
+}
+
+html:not(.dark) .nav-link {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.nav-link:hover {
+    color: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+html:not(.dark) .nav-link:hover {
+    color: rgba(0, 0, 0, 0.88);
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.nav-link.active {
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.09);
+}
+
+html:not(.dark) .nav-link.active {
+    color: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.07);
+}
+
+/* ── NAV RIGHT (hamburger + theme) ── */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+}
+
+/* ── HAMBURGER BUTTON ── */
+.nav-hamburger {
+    display: none;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 6px;
+    color: inherit;
+    transition: background 0.15s;
+}
+
+.nav-hamburger:hover {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+html:not(.dark) .nav-hamburger:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.nav-hamburger svg {
+    width: 18px;
+    height: 16px;
+}
+
+.ham-bars { display: block; }
+.ham-close { display: none; }
+.nav-hamburger.open .ham-bars { display: none; }
+.nav-hamburger.open .ham-close { display: block; }
+
+/* ── MOBILE SLIDE-DOWN MENU ── */
+.nav-mobile-menu {
+    position: fixed;
+    top: 57px;
+    left: 0;
+    right: 0;
+    z-index: 190;
+    background: rgba(10, 10, 15, 0.97);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    display: flex;
+    flex-direction: column;
+    padding: 0.375rem 0 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+html:not(.dark) .nav-mobile-menu {
+    background: rgba(242, 240, 236, 0.98);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.nav-mobile-menu.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.nav-mobile-link {
+    display: block;
+    padding: 0.7rem 1.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+
+html:not(.dark) .nav-mobile-link {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.nav-mobile-link:hover,
+.nav-mobile-link.active {
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.05);
+    border-left-color: #a855f7;
+}
+
+html:not(.dark) .nav-mobile-link:hover,
+html:not(.dark) .nav-mobile-link.active {
+    color: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.04);
+    border-left-color: #a855f7;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 767px) {
+    .nav-links {
+        display: none;
+    }
+    .nav-hamburger {
+        display: flex;
+    }
 }
 
 /* Hero action buttons */
@@ -1087,7 +1243,9 @@ code {
 }
 
 .status-partial {
-    opacity: 0.5;
+    color: #fb923c;
+    font-weight: 700;
+    font-size: 1.15em;
 }
 
 .status-none {

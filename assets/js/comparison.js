@@ -151,6 +151,16 @@
                 }
             },
             {
+                feature: 'YouTube Video Alerts',
+                values: {
+                    baxi: { status: ComparisonStatus.FREE },
+                    mee6: { status: ComparisonStatus.PREMIUM, tooltip: 'Premium only' },
+                    carl: { status: ComparisonStatus.NONE },
+                    dyno: { status: ComparisonStatus.NONE },
+                    probot: { status: ComparisonStatus.PARTIAL, tooltip: 'YouTube upload notifications available; limited channels' }
+                }
+            },
+            {
                 feature: 'Network-wide Safety (Prism + Flagging)',
                 values: {
                     baxi: { status: ComparisonStatus.FREE },
@@ -177,6 +187,26 @@
                     mee6: { status: ComparisonStatus.NONE },
                     carl: { status: ComparisonStatus.PARTIAL },
                     dyno: { status: ComparisonStatus.FREE },
+                    probot: { status: ComparisonStatus.FREE }
+                }
+            },
+            {
+                feature: 'Sticky Messages',
+                values: {
+                    baxi: { status: ComparisonStatus.FREE },
+                    mee6: { status: ComparisonStatus.NONE },
+                    carl: { status: ComparisonStatus.NONE },
+                    dyno: { status: ComparisonStatus.NONE },
+                    probot: { status: ComparisonStatus.NONE }
+                }
+            },
+            {
+                feature: 'Leveling System',
+                values: {
+                    baxi: { status: ComparisonStatus.FREE },
+                    mee6: { status: ComparisonStatus.PARTIAL, tooltip: 'Basic XP free; role rewards and custom messages premium' },
+                    carl: { status: ComparisonStatus.NONE },
+                    dyno: { status: ComparisonStatus.NONE },
                     probot: { status: ComparisonStatus.FREE }
                 }
             },

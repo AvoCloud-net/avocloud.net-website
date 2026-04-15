@@ -137,6 +137,71 @@ function copyToClipboard() {
     }
 }
 
+// ── PAGE NAVIGATION (hamburger + active section tracking) ──
+(function () {
+    var hamburger  = document.getElementById('nav-hamburger');
+    var mobileMenu = document.getElementById('nav-mobile-menu');
+    var siteNav    = document.getElementById('site-nav');
+    if (!hamburger || !mobileMenu) return;
+
+    function openMenu() {
+        hamburger.classList.add('open');
+        mobileMenu.classList.add('open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        mobileMenu.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeMenu() {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+    }
+
+    hamburger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        hamburger.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    mobileMenu.querySelectorAll('.nav-mobile-link').forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+            closeMenu();
+        }
+    });
+
+    // Keep mobile menu below the nav even if nav height changes
+    function syncMenuTop() {
+        if (siteNav) mobileMenu.style.top = siteNav.offsetHeight + 'px';
+    }
+    syncMenuTop();
+    window.addEventListener('resize', syncMenuTop);
+
+    // Active section highlighting
+    var sections  = document.querySelectorAll('section[id]');
+    var allLinks  = document.querySelectorAll('.nav-link, .nav-mobile-link');
+
+    if ('IntersectionObserver' in window && sections.length) {
+        var currentId = null;
+
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    currentId = entry.target.id;
+                    allLinks.forEach(function (link) {
+                        link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+                    });
+                }
+            });
+        }, { rootMargin: '-25% 0px -65% 0px', threshold: 0 });
+
+        sections.forEach(function (s) { observer.observe(s); });
+    }
+}());
+
 // ── TYPEWRITER EFFECT FOR BAXI HERO ──
 (function () {
     var typewriterEl = document.getElementById('typewriter-text');
