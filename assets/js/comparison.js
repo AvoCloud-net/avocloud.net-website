@@ -191,6 +191,26 @@
                 }
             },
             {
+                feature: 'Poll System (2–10 answers, image upload, auto-close)',
+                values: {
+                    baxi: { status: ComparisonStatus.FREE },
+                    mee6: { status: ComparisonStatus.PARTIAL, tooltip: 'Basic yes/no polls free; no image upload, no duration/auto-close' },
+                    carl: { status: ComparisonStatus.PARTIAL, tooltip: 'Reaction-based polls free; no image upload, no duration/auto-close' },
+                    dyno: { status: ComparisonStatus.PARTIAL, tooltip: 'Basic multiple-choice polls free; no image upload, no auto-close' },
+                    probot: { status: ComparisonStatus.PARTIAL, tooltip: 'Basic polls available; no image upload, no duration/auto-close' }
+                }
+            },
+            {
+                feature: 'Giveaway',
+                values: {
+                    baxi: { status: ComparisonStatus.FREE },
+                    mee6: { status: ComparisonStatus.PREMIUM, tooltip: 'Premium only' },
+                    carl: { status: ComparisonStatus.FREE },
+                    dyno: { status: ComparisonStatus.FREE },
+                    probot: { status: ComparisonStatus.PARTIAL, tooltip: 'Basic giveaway available; limited features' }
+                }
+            },
+            {
                 feature: 'Sticky Messages',
                 values: {
                     baxi: { status: ComparisonStatus.FREE },
@@ -360,7 +380,7 @@
         const infoSpan = document.createElement('span');
         infoSpan.style.opacity = '0.7';
         infoSpan.style.fontStyle = 'italic';
-        infoSpan.textContent = 'Based on publicly available information — may change over time.';
+        infoSpan.textContent = 'Based on publicly available information - may change over time.';
         legendContainer.appendChild(infoSpan);
     }
 
