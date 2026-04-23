@@ -1,34 +1,677 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduGrade – Grade Management for Teachers</title>
-    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
-    <meta name="description"
-        content="EduGrade is a free web app for teachers to manage grades, classes, and attendance – secure, simple, and accessible from any device.">
-    <meta name="keywords" content="EduGrade, grade management, school, teachers, grades, students, open source">
+    <title>EduGrade – Notenverwaltung für Lehrkräfte</title>
+    <link rel="shortcut icon" href="https://avocloud.net/assets/images/logo.png" type="image/x-icon">
+    <meta name="description" content="EduGrade ist die kostenlose digitale Notenverwaltung für Lehrkräfte – einfach, sicher und übersichtlich. Klassen, Noten und Anwesenheit an einem Ort.">
+    <meta name="keywords" content="EduGrade, Notenverwaltung, Schule, Lehrer, Noten, Schüler, Open Source">
     <meta name="author" content="Avocloud.net">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://avocloud.net/edugrade/" />
-    <meta property="og:title" content="EduGrade – Grade Management for Teachers">
-    <meta property="og:description"
-        content="Free web app for teachers to manage grades, classes, and attendance.">
+    <meta property="og:title" content="EduGrade – Notenverwaltung für Lehrkräfte">
+    <meta property="og:description" content="Kostenlose Web-App für Lehrkräfte zur Verwaltung von Noten, Klassen und Anwesenheit.">
     <meta property="og:image" content="https://avocloud.net/edugrade/edugrade-banner.png">
     <meta property="og:url" content="https://avocloud.net/edugrade">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="EduGrade – Grade Management for Teachers">
-    <meta name="twitter:description"
-        content="Free web app for teachers to manage grades, classes, and attendance.">
+    <meta name="twitter:title" content="EduGrade – Notenverwaltung für Lehrkräfte">
+    <meta name="twitter:description" content="Kostenlose Web-App für Lehrkräfte zur Verwaltung von Noten, Klassen und Anwesenheit.">
     <meta name="twitter:image" content="https://avocloud.net/edugrade/edugrade-banner.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800;12..96,900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <script src="../assets/js/theme.js"></script>
+    <link rel="stylesheet" href="https://avocloud.net/assets/css/main.css">
+    <script src="https://avocloud.net/assets/js/theme.js"></script>
+
+    <style>
+        /* ── Screenshot mockup ── */
+        .screenshot-wrapper {
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .screenshot-browser {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.07);
+            background: #13121f;
+        }
+        .screenshot-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .screenshot-url {
+            flex: 1;
+            height: 22px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.07);
+            margin: 0 8px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            font-size: 0.7rem;
+            opacity: 0.6;
+            font-family: monospace;
+            color: #ccc;
+        }
+
+        .screenshot-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .screenshot-body {
+            padding: 0;
+            overflow: hidden;
+            border-radius: 0 0 12px 12px;
+            min-height: 60px;
+        }
+        .screenshot-body img {
+            width: 100%;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* Light mode: keep dark appearance for dark screenshot window */
+        html:not(.dark) .screenshot-dark .screenshot-browser {
+            box-shadow: 0 32px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.1);
+            background: #13121f;
+        }
+        html:not(.dark) .screenshot-dark .screenshot-bar {
+            background: rgba(255,255,255,0.04);
+            border-bottom-color: rgba(255,255,255,0.07);
+        }
+
+        /* ── Screenshot visibility toggle ── */
+        .screenshot-dark { display: block; }
+        .screenshot-light { display: none; }
+        html:not(.dark) .screenshot-dark { display: none; }
+        html:not(.dark) .screenshot-light { display: block; }
+
+        /* Light mode: light screenshot window */
+        html:not(.dark) .screenshot-light .screenshot-browser {
+            box-shadow: 0 32px 80px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.08);
+            background: #f0eff4;
+        }
+        html:not(.dark) .screenshot-light .screenshot-bar {
+            background: rgba(0,0,0,0.04);
+            border-bottom-color: rgba(0,0,0,0.08);
+        }
+        html:not(.dark) .screenshot-light .screenshot-url {
+            background: rgba(0,0,0,0.06);
+            color: #555;
+        }
+        html:not(.dark) .screenshot-glow {
+            background: radial-gradient(ellipse, rgba(147,51,234,0.1) 0%, transparent 70%);
+        }
+
+        /* ── Trust badges strip ── */
+        .trust-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin: 2rem 0 0;
+        }
+        .trust-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            background: rgba(147,51,234,0.12);
+            border: 1px solid rgba(147,51,234,0.3);
+            color: inherit;
+            opacity: 0.9;
+        }
+        .trust-pill svg {
+            width: 13px; height: 13px;
+            flex-shrink: 0;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ── Accessibility: larger base text for teachers ── */
+        .text-sm { font-size: 0.95rem !important; }
+        .text-muted { font-size: 1rem; line-height: 1.7; }
+        .card section p { font-size: 0.97rem; line-height: 1.7; }
+        .testimonial-text { font-size: 1.05rem; line-height: 1.75; }
+        .testimonial-name { font-weight: 600; font-size: 1rem; }
+        .testimonial-role { font-size: 0.85rem; opacity: 0.5; }
+        .section-eyebrow { font-size: 0.75rem; }
+        .trust-pill { font-size: 0.82rem; }
+        .cta-section p { font-size: 1.05rem; }
+        .highlight-blue { color: #818cf8; }
+
+        /* ── Hero heading custom font ── */
+        .hero-heading {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+            line-height: 1.0;
+            font-weight: 900;
+            margin-bottom: 0.75rem;
+            position: relative;
+            letter-spacing: -0.02em;
+        }
+
+        /* ── Hero background structure ── */
+        .hero-bg-grid {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        /* Icon grid via SVG data URI */
+        .hero-bg-grid::before {
+            content: '';
+            position: absolute;
+            inset: -50%;
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg opacity='0.18' stroke='white' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3C!-- clipboard @ 20,20 --%3E%3Crect width='12' height='6' x='33' y='16' rx='1' ry='1'/%3E%3Cpath d='M45 19h3a3 3 0 0 1 3 3v20a3 3 0 0 1-3 3H27a3 3 0 0 1-3-3V22a3 3 0 0 1 3-3h3'/%3E%3Cpath d='M36 30h10'/%3E%3Cpath d='M36 37h10'/%3E%3Cpath d='M30 30h.01'/%3E%3Cpath d='M30 37h.01'/%3E%3C!-- users @ 150,20 --%3E%3Cpath d='M168 45v-3a6 6 0 0 0-6-6h-8a6 6 0 0 0-6 6v3'/%3E%3Cpath d='M168 22a6 6 0 0 1 0 11.6'/%3E%3Cpath d='M176 45v-3a6 6 0 0 0-4.5-5.8'/%3E%3Ccircle cx='158' cy='25' r='6'/%3E%3C!-- notebook @ 20,150 --%3E%3Cpath d='M40.6 156H30a3 3 0 0 0-3 3v20a3 3 0 0 0 3 3h16a3 3 0 0 0 3-3v-10'/%3E%3Cpath d='M22 161h8'/%3E%3Cpath d='M22 167h8'/%3E%3Cpath d='M22 173h8'/%3E%3Cpath d='M22 179h8'/%3E%3Cpath d='M53.6 158.4a1.5 1.5 0 1 0-4.5-4.5l-7.5 7.5a3 3 0 0 0-.76 1.28l-1.25 4.3a.75.75 0 0 0 .93.93l4.3-1.25a3 3 0 0 0 1.28-.76z'/%3E%3C!-- chart-line @ 150,150 --%3E%3Cpath d='M153 153v22a3 3 0 0 0 3 3h22'/%3E%3Cpath d='m175 162-7 7-5-5-5 5'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 260px 260px;
+            transform: rotate(-15deg);
+            mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 10%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 10%, transparent 100%);
+        }
+        html:not(.dark) .hero-bg-grid::before {
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg opacity='0.1' stroke='%236030b0' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='12' height='6' x='33' y='16' rx='1' ry='1'/%3E%3Cpath d='M45 19h3a3 3 0 0 1 3 3v20a3 3 0 0 1-3 3H27a3 3 0 0 1-3-3V22a3 3 0 0 1 3-3h3'/%3E%3Cpath d='M36 30h10'/%3E%3Cpath d='M36 37h10'/%3E%3Cpath d='M30 30h.01'/%3E%3Cpath d='M30 37h.01'/%3E%3Cpath d='M168 45v-3a6 6 0 0 0-6-6h-8a6 6 0 0 0-6 6v3'/%3E%3Cpath d='M168 22a6 6 0 0 1 0 11.6'/%3E%3Cpath d='M176 45v-3a6 6 0 0 0-4.5-5.8'/%3E%3Ccircle cx='158' cy='25' r='6'/%3E%3Cpath d='M40.6 156H30a3 3 0 0 0-3 3v20a3 3 0 0 0 3 3h16a3 3 0 0 0 3-3v-10'/%3E%3Cpath d='M22 161h8'/%3E%3Cpath d='M22 167h8'/%3E%3Cpath d='M22 173h8'/%3E%3Cpath d='M22 179h8'/%3E%3Cpath d='M53.6 158.4a1.5 1.5 0 1 0-4.5-4.5l-7.5 7.5a3 3 0 0 0-.76 1.28l-1.25 4.3a.75.75 0 0 0 .93.93l4.3-1.25a3 3 0 0 0 1.28-.76z'/%3E%3Cpath d='M153 153v22a3 3 0 0 0 3 3h22'/%3E%3Cpath d='m175 162-7 7-5-5-5 5'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        /* Floating orbs */
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            opacity: 0;
+            animation: orb-drift 12s ease-in-out infinite;
+        }
+        .hero-orb-1 {
+            width: 6px; height: 6px;
+            background: rgba(192,132,252,0.7);
+            top: 22%; left: 15%;
+            animation-delay: 0s;
+        }
+        .hero-orb-2 {
+            width: 4px; height: 4px;
+            background: rgba(236,72,153,0.6);
+            top: 55%; left: 78%;
+            animation-delay: -4s;
+        }
+        .hero-orb-3 {
+            width: 5px; height: 5px;
+            background: rgba(96,165,250,0.5);
+            top: 70%; left: 25%;
+            animation-delay: -7s;
+        }
+        .hero-orb-4 {
+            width: 3px; height: 3px;
+            background: rgba(192,132,252,0.5);
+            top: 30%; left: 82%;
+            animation-delay: -2s;
+        }
+        .hero-orb-5 {
+            width: 5px; height: 5px;
+            background: rgba(234,179,8,0.4);
+            top: 80%; left: 60%;
+            animation-delay: -9s;
+        }
+        @keyframes orb-drift {
+            0%   { opacity: 0;   transform: translateY(0px) scale(1); }
+            20%  { opacity: 1; }
+            80%  { opacity: 0.8; }
+            100% { opacity: 0;   transform: translateY(-40px) scale(0.8); }
+        }
+        /* Thin horizontal line accents */
+        .hero-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(147,51,234,0.3), transparent);
+            pointer-events: none;
+        }
+        .hero-line-1 { width: 40%; top: 35%; left: 5%; }
+        .hero-line-2 { width: 25%; top: 65%; right: 8%; }
+        html:not(.dark) .hero-line {
+            background: linear-gradient(90deg, transparent, rgba(147,51,234,0.2), transparent);
+        }
+
+        /* ── Nav CTA button ── */
+        .nav-cta-btn {
+            padding: 0.35rem 0.9rem;
+            font-size: 0.8rem;
+            background: rgba(147,51,234,0.25);
+            border: 1px solid rgba(147,51,234,0.6);
+            border-radius: 6px;
+            text-decoration: none;
+            color: inherit;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            transition: background 0.15s, border-color 0.15s;
+            font-weight: 600;
+        }
+        .nav-cta-btn:hover {
+            background: rgba(147,51,234,0.4);
+            border-color: rgba(147,51,234,0.9);
+        }
+        /* lang-toggle inside nav: reset fixed positioning */
+        .site-nav .lang-toggle {
+            position: static;
+            flex-shrink: 0;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            font-size: 0.85rem;
+            opacity: 0.75;
+            margin: 0 1.5rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+            transition: opacity 0.15s;
+            white-space: nowrap;
+        }
+        .nav-links a:hover { opacity: 1; }
+
+        /* ── Sticky nav controls ── */
+        .nav-controls {
+            margin-left: auto;
+            display: flex;
+            gap: 0.4rem;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .nav-cta-btn {
+            padding: 0.35rem 0.9rem;
+            font-size: 0.8rem;
+            background: rgba(147,51,234,0.25);
+            border: 1px solid rgba(147,51,234,0.6);
+            border-radius: 6px;
+            text-decoration: none;
+            color: inherit;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .nav-cta-btn:hover {
+            background: rgba(147,51,234,0.4);
+            border-color: rgba(147,51,234,0.9);
+        }
+
+        /* ── Section preview label ── */
+        .section-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0.5;
+            margin-bottom: 1rem;
+        }
+        .section-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 16px; height: 2px;
+            background: currentColor;
+            border-radius: 2px;
+        }
+
+        /* ── Workflow steps ── */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            counter-reset: steps;
+        }
+        .step-card {
+            position: relative;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: none;
+            background: transparent;
+            counter-increment: steps;
+        }
+        :root[data-theme="light"] .step-card,
+        html:not(.dark) .step-card {
+            border: none;
+            background: transparent;
+        }
+        .step-card::before {
+            content: counter(steps, decimal-leading-zero);
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            color: rgba(167, 92, 255, 0.55);
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+        :root[data-theme="light"] .step-card::before {
+            color: rgba(130, 60, 220, 0.5);
+        }
+        .step-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+        .step-card p {
+            font-size: 0.95rem;
+            opacity: 0.6;
+            line-height: 1.6;
+        }
+
+        /* ── CTA section ── */
+        .cta-section {
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(147,51,234,0.15) 0%, rgba(79,70,229,0.1) 100%);
+            border: 1px solid rgba(147,51,234,0.25);
+        }
+        .cta-section h2 {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+        .cta-section p {
+            opacity: 0.7;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ── Testimonial ── */
+        .testimonial-card {
+            border-radius: 14px;
+            padding: 2rem;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.07);
+            position: relative;
+        }
+        :root[data-theme="light"] .testimonial-card {
+            background: rgba(0,0,0,0.02);
+            border-color: rgba(0,0,0,0.07);
+        }
+        .testimonial-card::before {
+            content: '"';
+            font-size: 5rem;
+            line-height: 1;
+            color: rgba(167,92,255,0.5);
+            position: absolute;
+            top: 0.5rem;
+            left: 1.5rem;
+            font-family: Georgia, serif;
+        }
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            opacity: 0.85;
+            padding-top: 1.5rem;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+        .testimonial-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: rgba(147,51,234,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .testimonial-name { font-weight: 600; font-size: 0.9rem; }
+        .testimonial-role { font-size: 0.75rem; opacity: 0.5; }
+
+        /* ── Feature icon ── */
+        .feature-icon {
+            width: 44px; height: 44px;
+            border-radius: 10px;
+            background: rgba(167,92,255,0.18);
+            border: 1px solid rgba(167,92,255,0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+        }
+        .feature-icon svg {
+            width: 20px; height: 20px;
+            fill: none;
+            stroke: rgba(190,130,255,0.95);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ── Hamburger button (mobile only) ── */
+        .hamburger-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px 4px;
+            color: inherit;
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+        .hamburger-bar {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: currentColor;
+            border-radius: 2px;
+            transition: transform 0.25s, opacity 0.25s;
+            transform-origin: center;
+        }
+        .hamburger-btn.open .hamburger-bar:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .hamburger-btn.open .hamburger-bar:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .hamburger-btn.open .hamburger-bar:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+        @media (max-width: 768px) {
+            .hamburger-btn { display: flex; }
+            #nav-links-desktop { display: none !important; }
+            .nav-right { display: none !important; }
+        }
+
+        /* ── Mobile overlay ── */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+        .mobile-overlay.open { display: block; }
+
+        /* ── Mobile drawer ── */
+        @media (min-width: 769px) {
+            .mobile-overlay,
+            .mobile-drawer,
+            .hamburger-btn { display: none !important; }
+        }
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: min(300px, 88vw);
+            height: 100dvh;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            padding: 1.25rem 1.25rem 2rem;
+            transform: translateX(100%);
+            transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), visibility 0s linear 0.28s;
+            visibility: hidden;
+            overflow-y: auto;
+            background: #14131f;
+            border-left: 1px solid rgba(255,255,255,0.08);
+        }
+        html:not(.dark) .mobile-drawer {
+            background: #faf9ff;
+            border-left-color: rgba(0,0,0,0.08);
+        }
+        .mobile-drawer.open {
+            transform: translateX(0);
+            visibility: visible;
+            transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), visibility 0s linear 0s;
+        }
+
+        .mobile-drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1.25rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        html:not(.dark) .mobile-drawer-header { border-bottom-color: rgba(0,0,0,0.07); }
+
+        .mobile-drawer-close {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            padding: 4px;
+            opacity: 0.6;
+            display: flex;
+            align-items: center;
+        }
+        .mobile-drawer-close:hover { opacity: 1; }
+
+        .mobile-nav-link {
+            display: block;
+            padding: 0.85rem 0.25rem;
+            text-decoration: none;
+            color: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            opacity: 0.75;
+            transition: opacity 0.15s;
+        }
+        html:not(.dark) .mobile-nav-link { border-bottom-color: rgba(0,0,0,0.06); }
+        .mobile-nav-link:hover { opacity: 1; }
+        .mobile-nav-link.mobile-docs-link {
+            color: rgba(167,130,255,1);
+            opacity: 0.95;
+            font-weight: 600;
+        }
+
+        .mobile-drawer-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            padding: 1rem 0.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 1rem;
+        }
+        html:not(.dark) .mobile-drawer-controls { border-bottom-color: rgba(0,0,0,0.06); }
+
+        .mobile-drawer-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+        .mobile-drawer-cta .nav-cta-btn {
+            justify-content: center;
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 0.65rem 1rem;
+        }
+
+        /* ── Nav docs button ── */
+        .nav-docs-btn {
+            background: rgba(99,102,241,0.15) !important;
+            border-color: rgba(99,102,241,0.45) !important;
+        }
+        .nav-docs-btn:hover {
+            background: rgba(99,102,241,0.3) !important;
+            border-color: rgba(99,102,241,0.8) !important;
+        }
+
+        /* ── Screenshot section label ── */
+        .screenshot-section {
+            padding: 5rem 0;
+        }
+        .screenshot-tabs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .screenshot-tab {
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: inherit;
+            transition: all 0.2s;
+            opacity: 0.5;
+        }
+        :root[data-theme="light"] .screenshot-tab {
+            border-color: rgba(0,0,0,0.1);
+        }
+        .screenshot-tab.active {
+            background: rgba(147,51,234,0.2);
+            border-color: rgba(147,51,234,0.4);
+            opacity: 1;
+        }
+
+        /* ── Decorative glow behind screenshot ── */
+        .screenshot-glow {
+            position: absolute;
+            width: 60%; height: 40%;
+            background: radial-gradient(ellipse, rgba(147,51,234,0.15) 0%, transparent 70%);
+            top: -10%;
+            left: 20%;
+            pointer-events: none;
+            filter: blur(40px);
+        }
+    </style>
 </head>
 
 <body>
@@ -52,399 +695,284 @@
                 <span class="avocloud-logo__rest">CLOUD<span class="avocloud-logo__dot">.NET</span></span>
             </span>
         </a>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-            <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+
+        <!-- Nav links center -->
+        <div class="nav-links" id="nav-links-desktop">
+            <a href="#features" class="nav-link" data-i18n="nav.features">Features</a>
+            <a href="#preview" class="nav-link" data-i18n="nav.preview">Dashboard</a>
+            <a href="#opensource" class="nav-link" data-i18n="nav.opensource">Open Source</a>
+            <a href="https://edugrade.avocloud.net/docs/" target="_blank" class="nav-link" data-i18n="nav.docs">Docs</a>
+        </div>
+
+        <!-- Nav right: lang + theme + docs + CTA -->
+        <div class="nav-right">
+            <button class="lang-toggle" id="lang-btn" onclick="toggleLang()" title="Switch to English">EN</button>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Theme wechseln">
+                <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+            </button>
+            <a href="https://edugrade.avocloud.net/docs/" target="_blank" class="nav-cta-btn nav-docs-btn">
+                <span data-i18n="nav.docs.btn">Docs</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+            </a>
+            <a href="https://edugrade.avocloud.net" target="_blank" class="nav-cta-btn">
+                <span data-i18n="nav.cta">Jetzt starten</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+            </a>
+        </div>
+
+        <!-- Hamburger (mobile only) -->
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Menü öffnen" aria-expanded="false" onclick="toggleMobileMenu()">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
         </button>
     </nav>
 
+    <!-- Mobile overlay -->
+    <div class="mobile-overlay" id="mobile-overlay" onclick="closeMobileMenu()"></div>
+
+    <!-- Mobile drawer -->
+    <div class="mobile-drawer" id="mobile-drawer">
+        <div class="mobile-drawer-header">
+            <span style="font-weight:700;opacity:0.6;font-size:0.8rem;letter-spacing:0.1em;">MENU</span>
+            <button class="mobile-drawer-close" onclick="closeMobileMenu()" aria-label="Schließen">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+
+        <nav>
+            <a href="#features" class="mobile-nav-link" data-i18n="nav.features" onclick="closeMobileMenu()">Features</a>
+            <a href="#preview" class="mobile-nav-link" data-i18n="nav.preview" onclick="closeMobileMenu()">Dashboard</a>
+            <a href="#opensource" class="mobile-nav-link" data-i18n="nav.opensource" onclick="closeMobileMenu()">Open Source</a>
+            <a href="https://edugrade.avocloud.net/docs/" target="_blank" class="mobile-nav-link mobile-docs-link" data-i18n="nav.docs" onclick="closeMobileMenu()">Docs</a>
+        </nav>
+
+        <div class="mobile-drawer-controls">
+            <button class="lang-toggle" id="mobile-lang-btn" onclick="toggleLang()" title="Sprache wechseln">EN</button>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Theme wechseln">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="mobile-drawer-cta">
+            <a href="https://edugrade.avocloud.net/docs/" target="_blank" class="nav-cta-btn nav-docs-btn">
+                <span data-i18n="nav.docs.btn">Docs</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+            </a>
+            <a href="https://edugrade.avocloud.net" target="_blank" class="nav-cta-btn">
+                <span data-i18n="nav.cta">Jetzt starten</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+            </a>
+        </div>
+    </div>
+
     <!-- Hero -->
     <section class="hero">
+        <!-- Background structure -->
+        <div class="hero-bg-grid"></div>
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+        <div class="hero-orb hero-orb-4"></div>
+        <div class="hero-orb hero-orb-5"></div>
+        <div class="hero-line hero-line-1"></div>
+        <div class="hero-line hero-line-2"></div>
         <div class="hero-content">
-            <div class="hero-eyebrow">FREE · OPEN SOURCE · SECURE</div>
-            <h1>EduGrade</h1>
-            <p class="hero-subtitle">
-                Grade management for teachers -<br>
-                <span class="highlight-yellow">simple, secure, and accessible from any device</span>.
+            <div class="hero-eyebrow" data-i18n="hero.eyebrow">KOSTENLOS · OPEN SOURCE · DSGVO-KONFORM</div>
+            <h1 class="hero-heading">
+                <span data-i18n="hero.h1a">Notenverwaltung,</span><br>
+                <span class="highlight-blue" data-i18n="hero.h1b">neu gedacht.</span>
+            </h1>
+            <p class="hero-subtitle" style="max-width:520px;margin:0 auto 0.75rem;" data-i18n="hero.subtitle">
+                EduGrade ist die digitale Notenverwaltung für Lehrkräfte –
+                einfach, sicher und übersichtlich.
             </p>
-            <p style="max-width:540px;margin:1rem auto 0;opacity:0.75;font-size:0.95rem;line-height:1.65;">
-                Manage classes, grades, and attendance in one clean web app.
-                No installation, no paper chaos - right in the browser, on any computer, tablet, or smartphone.
+            <p style="max-width:480px;margin:0 auto 0;opacity:0.65;font-size:1rem;line-height:1.7;" data-i18n="hero.desc">
+                Klassen, Schüler, Noten und Anwesenheit an einem Ort.
+                Kein Download, kein Papierchaos – direkt im Browser, auf jedem Gerät.
             </p>
+
             <div class="flex flex-wrap gap-3 justify-center mt-6">
                 <a href="https://edugrade.avocloud.net" target="_blank" class="hero-btn"
-                    style="background: rgba(147,51,234,0.25); border-color: rgba(147,51,234,0.65);">
-                    <svg class="lucide" viewBox="0 0 24 24"
-                        style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
-                        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                        <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                    style="background:rgba(147,51,234,0.25);border-color:rgba(147,51,234,0.65);">
+                    <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
                     </svg>
-                    Launch EduGrade
+                    <span data-i18n="hero.btn.start">Jetzt kostenlos starten</span>
                 </a>
                 <a href="https://github.com/rwolf2467/EduGrade" target="_blank" class="hero-btn">
-                    <svg viewBox="0 0 24 24"
-                        style="width:1.1em;height:1.1em;fill:currentColor;stroke:none;flex-shrink:0">
-                        <path
-                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                    <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:currentColor;stroke:none;flex-shrink:0">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
                     </svg>
                     GitHub
                 </a>
             </div>
+
+            <!-- Trust pills -->
+            <div class="trust-strip">
+                <span class="trust-pill">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="trust.free">Komplett kostenlos</span>
+                </span>
+                <span class="trust-pill">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span data-i18n="trust.secure">Sicher & DSGVO-konform</span>
+                </span>
+                <span class="trust-pill">
+                    <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    <span data-i18n="trust.anydevice">Auf jedem Gerät</span>
+                </span>
+                <span class="trust-pill">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    <span data-i18n="trust.noinst">Kein Download nötig</span>
+                </span>
+            </div>
         </div>
-        <button class="scroll-indicator">
+        <button class="scroll-indicator" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 style="width:28px;height:28px;stroke-linecap:round;stroke-linejoin:round">
-                <polyline points="6 9 12 15 18 9" />
+                <polyline points="6 9 12 15 18 9"/>
             </svg>
         </button>
     </section>
 
-    <!-- Content -->
+    <!-- ───────────────────────────────────────────── -->
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <main>
 
-            <!-- What is EduGrade? -->
-            <section class="py-24" id="about">
-                <div class="section-label">WHAT IS EDUGRADE?</div>
-                <div class="card">
-                    <header>
-                        <h2 class="text-xl font-semibold flex items-center gap-2">
-                            <svg class="lucide" viewBox="0 0 24 24">
-                                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                                <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                            </svg>
-                            A digital notebook for teachers
-                        </h2>
-                    </header>
-                    <section>
-                        <p class="text-muted">
-                            EduGrade is a free web application that helps teachers manage students,
-                            their grades, and attendance in one organized place.
-                            Everything in one spot - no paper piles, no complicated spreadsheets.
-                        </p>
-                        <p class="text-muted mt-3">
-                            The app runs entirely in the browser: on the computer in the staff room, on a tablet
-                            in class, or at home. One account is all you need - and your data is always
-                            stored securely encrypted.
-                        </p>
-                    </section>
-                </div>
-            </section>
-
-            <!-- Who is EduGrade for? -->
-            <section class="pb-24" id="for-whom">
-                <div class="section-label">WHO IS IT FOR?</div>
-                <h2 class="text-2xl font-bold mb-8">EduGrade is made for …</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                    <circle cx="9" cy="7" r="4" />
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                </svg>
-                                Teachers
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">
-                                Whether you teach one class or multiple subjects: record grades, track attendance,
-                                and get reports at the click of a button - without spreadsheets.
-                            </p>
-                        </section>
-                    </div>
-
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                                    <line x1="8" y1="21" x2="16" y2="21" />
-                                    <line x1="12" y1="17" x2="12" y2="21" />
-                                </svg>
-                                Schools & Departments
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">
-                                EduGrade can be self-hosted on your school's own servers - full control over
-                                all data, with no dependency on external services.
-                            </p>
-                        </section>
-                    </div>
-
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                </svg>
-                                Privacy-conscious users
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">
-                                All data is stored encrypted - not even the server operator
-                                can view student data. Ideal for GDPR-compliant schools.
-                            </p>
-                        </section>
-                    </div>
-
-                </div>
-            </section>
-
             <!-- Features -->
-            <section class="pb-24" id="features">
-                <div class="section-label">FEATURES</div>
-                <h2 class="text-2xl font-bold mb-8">What can EduGrade do?</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <section class="py-24" id="features">
+                <div class="section-eyebrow" data-i18n="features.label">Features</div>
+                <h2 class="text-3xl font-bold mb-3" style="line-height:1.15;">
+                    <span data-i18n="features.h2a">Alles, was Lehrkräfte</span><br>
+                    <span class="highlight-blue" data-i18n="features.h2b">wirklich brauchen.</span>
+                </h2>
+                <p class="text-muted mb-10" style="max-width:480px;" data-i18n="features.desc">
+                    Von der Klassenerstellung bis zum PDF-Export – EduGrade deckt den gesamten Workflow ab.
+                </p>
 
-                    <!-- Classes & Students -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                    <!-- Klassen & Schuljahre -->
                     <div class="card card-hover">
                         <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                    <circle cx="9" cy="7" r="4" />
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                </svg>
-                                Manage classes
-                            </h3>
+                            <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                            <h3 class="font-semibold" data-i18n="feat.classes.title">Klassen & Schuljahre</h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">
-                                Create classes and subjects, add students - individually or via
-                                list import (CSV/JSON). Everything stays neatly organized.
-                            </p>
+                            <p class="text-muted text-sm" data-i18n="feat.classes.desc">Klassen anlegen, Schüler einzeln oder per CSV importieren. Mehrere Schuljahre parallel verwalten.</p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">Classes</span>
-                                <span class="badge badge-secondary">Subjects</span>
-                                <span class="badge badge-secondary">List import</span>
+                                <span class="badge badge-secondary" data-i18n="badge.classes">Klassen</span>
+                                <span class="badge badge-secondary" data-i18n="badge.import">CSV-Import</span>
                             </div>
                         </footer>
                     </div>
 
-                    <!-- Grades -->
+                    <!-- Noten -->
                     <div class="card card-hover">
                         <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M12 20h9" />
-                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                                </svg>
-                                Record grades
-                            </h3>
+                            <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        </div>
+                            <h3 class="font-semibold" data-i18n="feat.grades.title">Noten mit Gewichtung</h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">
-                                Enter grades by custom categories - e.g. exams, oral participation,
-                                quizzes. Weighting and grading scales are fully customizable.
-                            </p>
+                            <p class="text-muted text-sm" data-i18n="feat.grades.desc">Kategorien, Plus/Minus-System und individuelle Gewichtung. Der Durchschnitt wird automatisch berechnet.</p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">Categories</span>
-                                <span class="badge badge-secondary">Weighting</span>
-                                <span class="badge badge-secondary">Grading scale</span>
+                                <span class="badge badge-secondary" data-i18n="badge.weighting">Gewichtung</span>
+                                <span class="badge badge-secondary" data-i18n="badge.plusminus">Plus/Minus</span>
                             </div>
                         </footer>
                     </div>
 
-                    <!-- Attendance -->
+                    <!-- Anwesenheit -->
                     <div class="card card-hover">
                         <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                                    <line x1="16" y1="2" x2="16" y2="6" />
-                                    <line x1="8" y1="2" x2="8" y2="6" />
-                                    <line x1="3" y1="10" x2="21" y2="10" />
-                                </svg>
-                                Track attendance
-                            </h3>
+                            <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        </div>
+                            <h3 class="font-semibold" data-i18n="feat.attendance.title">Anwesenheits-Tracking</h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">
-                                Record absences quickly and clearly. EduGrade automatically warns you when
-                                a student falls below the minimum attendance threshold.
-                            </p>
+                            <p class="text-muted text-sm" data-i18n="feat.attendance.desc">Abwesenheiten schnell erfassen. Automatische Warnung bei Unterschreitung der Mindestpräsenz.</p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">Absences</span>
-                                <span class="badge badge-secondary">Warnings</span>
-                                <span class="badge badge-secondary">Bulk entry</span>
+                                <span class="badge badge-secondary" data-i18n="badge.absent">Abwesenheiten</span>
+                                <span class="badge badge-secondary" data-i18n="badge.warnings">Warnungen</span>
                             </div>
                         </footer>
                     </div>
 
-                    <!-- Reports -->
+                    <!-- PDF Export -->
                     <div class="card card-hover">
                         <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <line x1="18" y1="20" x2="18" y2="10" />
-                                    <line x1="12" y1="20" x2="12" y2="4" />
-                                    <line x1="6" y1="20" x2="6" y2="14" />
-                                </svg>
-                                Analytics & Reports
-                            </h3>
+                            <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        </div>
+                            <h3 class="font-semibold" data-i18n="feat.export.title">Berichte & PDF-Export</h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">
-                                Charts and statistics show at a glance how the class is doing.
-                                Reports can be saved as PDF or printed.
-                            </p>
+                            <p class="text-muted text-sm" data-i18n="feat.export.desc">Schülerberichte als PDF drucken oder exportieren. Übersichtliche Tabellen für jede Klasse.</p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">Charts</span>
-                                <span class="badge badge-secondary">Statistics</span>
-                                <span class="badge badge-secondary">PDF export</span>
+                                <span class="badge badge-secondary">PDF</span>
+                                <span class="badge badge-secondary" data-i18n="badge.reports">Berichte</span>
                             </div>
                         </footer>
                     </div>
 
-                    <!-- Share grades -->
+                    <!-- Sicheres Teilen -->
                     <div class="card card-hover">
                         <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                </svg>
-                                Share grades securely
-                            </h3>
+                            <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                            <h3 class="font-semibold" data-i18n="feat.share.title">Noten sicher teilen</h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">
-                                Students can view their own grades via a secured link -
-                                protected by a personal 6-digit PIN, with an expiry time.
-                            </p>
+                            <p class="text-muted text-sm" data-i18n="feat.share.desc">Schüler erhalten ihre Noten per individuellem PIN. Der Link läuft automatisch ab – kein Missbrauch möglich.</p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">PIN protection</span>
-                                <span class="badge badge-secondary">Time limit</span>
-                                <span class="badge badge-secondary">Read-only</span>
+                                <span class="badge badge-secondary" data-i18n="badge.pin">6-stelliger PIN</span>
+                                <span class="badge badge-secondary" data-i18n="badge.timelimited">Zeitbegrenzt</span>
                             </div>
                         </footer>
                     </div>
 
-                    <!-- Any device -->
-                    <div class="card card-hover">
+                    <!-- Verschlüsselt -->
+                    <div class="card card-hover card-featured">
                         <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-                                    <line x1="12" y1="18" x2="12.01" y2="18" />
-                                </svg>
-                                On any device
-                            </h3>
+                            <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </div>
+                            <h3 class="font-semibold" data-i18n="feat.encrypt.title">Verschlüsselt & DSGVO-konform</h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">
-                                EduGrade runs in the browser - on PC, laptop, tablet, and smartphone.
-                                Light and dark mode included. No installation required.
-                            </p>
+                            <p class="text-muted text-sm" data-i18n="feat.encrypt.desc">Alle Daten werden mit AES-256-GCM verschlüsselt. Zero-Knowledge: Selbst der Server-Betreiber kann die Daten nicht lesen.</p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">PC & Tablet</span>
-                                <span class="badge badge-secondary">Smartphone</span>
-                                <span class="badge badge-secondary">No download</span>
-                            </div>
-                        </footer>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- Security -->
-            <section class="pb-24" id="security">
-                <div class="section-label">SECURITY & PRIVACY</div>
-                <h2 class="text-2xl font-bold mb-8">Student data, well protected</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                    <div class="card card-hover card-featured md:col-span-2">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                </svg>
-                                All data is stored encrypted
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted">
-                                All student data is secured with strong encryption - right at the moment of saving.
-                                This means: even if someone were to gain unauthorized access to the server,
-                                they cannot read the data. Only those who know the correct password have access.
-                            </p>
-                            <p class="text-muted mt-3">
-                                The principle is called <strong>Zero-Knowledge</strong>: not even the operator of
-                                the app can view the stored data. The data belongs solely to the teacher.
-                            </p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">Strong encryption</span>
+                                <span class="badge badge-secondary">AES-256-GCM</span>
                                 <span class="badge badge-secondary">Zero-Knowledge</span>
-                                <span class="badge badge-secondary">Password-protected only</span>
-                            </div>
-                        </footer>
-                    </div>
-
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                Automatic sign-out
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">
-                                After one hour of inactivity, you are automatically signed out. Ideal for computers
-                                in the classroom or shared devices.
-                            </p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">1-hour session</span>
-                                <span class="badge badge-secondary">Auto sign-out</span>
-                            </div>
-                        </footer>
-                    </div>
-
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                </svg>
-                                Secure grade sharing
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">
-                                When students need to view their grades, they receive a personal PIN.
-                                The link expires automatically - no risk of misuse.
-                            </p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">6-digit PIN</span>
-                                <span class="badge badge-secondary">Time-limited</span>
-                                <span class="badge badge-secondary">Secured link</span>
+                                <span class="badge badge-secondary">DSGVO</span>
                             </div>
                         </footer>
                     </div>
@@ -452,205 +980,280 @@
                 </div>
             </section>
 
-            <!-- How to get started? -->
+            <!-- Screenshot Preview -->
+            <section class="screenshot-section" id="preview">
+                <div style="position:relative;">
+                    <div class="section-eyebrow" data-i18n="preview.label">Dashboard</div>
+                    <h2 class="text-3xl font-bold mb-3" data-i18n="preview.h2">Alles im Blick, auf einen Blick.</h2>
+                    <p class="text-muted mb-8" style="max-width:420px;" data-i18n="preview.desc">
+                        Das intuitive Dashboard zeigt Ihnen alle wichtigen Kennzahlen Ihrer Klassen auf einen Blick.
+                    </p>
+
+                    <div class="screenshot-wrapper" style="position:relative;">
+                        <div class="screenshot-glow"></div>
+
+                        <!-- Dark theme screenshot -->
+                        <div class="screenshot-dark">
+                            <div class="screenshot-browser">
+                                <div class="screenshot-bar">
+                                    <span class="screenshot-dot" style="background:#ff5f57;"></span>
+                                    <span class="screenshot-dot" style="background:#febc2e;"></span>
+                                    <span class="screenshot-dot" style="background:#28c840;"></span>
+                                    <span class="screenshot-url">edugrade.avocloud.net</span>
+                                </div>
+                                <div class="screenshot-body">
+                                    <!-- Placeholder – replace src with real dark screenshot -->
+                                    <img
+                                        src="https://avocloud.net/assets/images/edugrade-screenshot-dark.png"
+                                        alt="EduGrade Dashboard – Dark Mode"
+                                        onerror="this.parentElement.innerHTML=`<div style='height:420px;display:flex;align-items:center;justify-content:center;opacity:0.3;font-size:0.85rem;'>Screenshot (dark) – edugrade-screenshot-dark.png</div>`"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Light theme screenshot -->
+                        <div class="screenshot-light">
+                            <div class="screenshot-browser">
+                                <div class="screenshot-bar">
+                                    <span class="screenshot-dot" style="background:#ff5f57;"></span>
+                                    <span class="screenshot-dot" style="background:#febc2e;"></span>
+                                    <span class="screenshot-dot" style="background:#28c840;"></span>
+                                    <span class="screenshot-url">edugrade.avocloud.net</span>
+                                </div>
+                                <div class="screenshot-body">
+                                    <!-- Placeholder – replace src with real light screenshot -->
+                                    <img
+                                        src="https://avocloud.net/assets/images/edugrade-screenshot-light.png"
+                                        alt="EduGrade Dashboard – Light Mode"
+                                        onerror="this.parentElement.innerHTML=`<div style='height:420px;display:flex;align-items:center;justify-content:center;opacity:0.3;font-size:0.85rem;'>Screenshot (light) – edugrade-screenshot-light.png</div>`"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How to get started -->
             <section class="pb-24" id="start">
-                <div class="section-label">GET STARTED</div>
-                <h2 class="text-2xl font-bold mb-8">How can I use EduGrade?</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="section-eyebrow" data-i18n="start.label">Einstieg</div>
+                <h2 class="text-3xl font-bold mb-3" data-i18n="start.h2">In 3 Schritten startklar.</h2>
+                <p class="text-muted mb-10" style="max-width:420px;" data-i18n="start.desc">Keine Installation, kein IT-Aufwand. Einfach öffnen und loslegen.</p>
 
-                    <!-- Hosted version -->
-                    <div class="card card-hover card-featured md:col-span-2">
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <h3 data-i18n="step1.title">Account erstellen</h3>
+                        <p data-i18n="step1.desc">Registrieren Sie sich kostenlos auf edugrade.avocloud.net – in weniger als einer Minute.</p>
+                    </div>
+                    <div class="step-card">
+                        <h3 data-i18n="step2.title">Klasse anlegen</h3>
+                        <p data-i18n="step2.desc">Klasse, Schuljahr und Fächer einrichten. Schüler einzeln oder per CSV-Liste importieren.</p>
+                    </div>
+                    <div class="step-card">
+                        <h3 data-i18n="step3.title">Noten eintragen</h3>
+                        <p data-i18n="step3.desc">Noten, Kategorien und Gewichtungen festlegen. Der Durchschnitt wird automatisch berechnet.</p>
+                    </div>
+                    <div class="step-card">
+                        <h3 data-i18n="step4.title">Berichte exportieren</h3>
+                        <p data-i18n="step4.desc">PDF-Berichte pro Schüler oder ganze Klasse exportieren – fertig für den Unterricht.</p>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <div class="card card-featured" style="max-width:100%;">
                         <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                                </svg>
-                                Start directly in the browser - recommended
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                                <span data-i18n="hosted.title">Direkt im Browser starten – empfohlen</span>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted">
-                                The easiest way: just open the app at
-                                <a href="https://edugrade.avocloud.net" target="_blank" class="accent-link">edugrade.avocloud.net</a>,
-                                create an account, and get started right away.
-                                No installation, no technical knowledge required.
+                            <p class="text-muted" data-i18n-html="hosted.desc">
+                                Einfach <a href="https://edugrade.avocloud.net" target="_blank" class="accent-link">edugrade.avocloud.net</a> öffnen, Account anlegen und sofort loslegen. Kein Download, kein technisches Vorwissen erforderlich.
                             </p>
                         </section>
                         <footer>
                             <div class="flex flex-wrap gap-2">
-                                <a href="https://edugrade.avocloud.net" target="_blank"
-                                    class="badge badge-outline">Start now ↗</a>
-                                <span class="badge badge-secondary">No download</span>
-                                <span class="badge badge-secondary">Ready instantly</span>
-                                <span class="badge badge-secondary">Free</span>
+                                <a href="https://edugrade.avocloud.net" target="_blank" class="badge badge-outline" style="display:inline-flex;align-items:center;gap:0.3rem;">
+                                    <span data-i18n="hosted.btn">Jetzt starten</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                                </a>
+                                <span class="badge badge-secondary" data-i18n="badge.nodownload">Kein Download</span>
+                                <span class="badge badge-secondary" data-i18n="badge.sofort">Sofort bereit</span>
+                                <span class="badge badge-secondary" data-i18n="badge.free2">Kostenlos</span>
                             </div>
                         </footer>
                     </div>
-
-                    <!-- Self-hosted -->
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
-                                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
-                                    <line x1="6" y1="6" x2="6.01" y2="6" />
-                                    <line x1="6" y1="18" x2="6.01" y2="18" />
-                                </svg>
-                                Run on your own school server
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">
-                                Schools and IT departments can install and run EduGrade on their own server
-                                - for maximum control over all data. Setup instructions
-                                are available in the GitHub repository.
-                            </p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <a href="https://github.com/rwolf2467/EduGrade" target="_blank"
-                                    class="badge badge-outline">Instructions on GitHub ↗</a>
-                                <span class="badge badge-secondary">Full control</span>
-                            </div>
-                        </footer>
-                    </div>
-
-                    <!-- Backup & Export -->
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold text-lg flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <polyline points="8 17 12 21 16 17" />
-                                    <line x1="12" y1="12" x2="12" y2="21" />
-                                    <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29" />
-                                </svg>
-                                Back up & export data
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm">
-                                All data can be exported and backed up at any time - as a downloadable file.
-                                No grades are ever lost, and switching servers is always possible.
-                            </p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">Export</span>
-                                <span class="badge badge-secondary">Import</span>
-                                <span class="badge badge-secondary">Data backup</span>
-                            </div>
-                        </footer>
-                    </div>
-
                 </div>
             </section>
 
-            <!-- License -->
-            <section class="pb-24" id="license">
-                <div class="section-label">LICENSE</div>
-                <h2 class="text-2xl font-bold mb-8">Free and Open Source</h2>
+            <!-- Open Source -->
+            <section class="pb-24" id="opensource">
+                <div class="section-eyebrow" data-i18n="oss.label">Open Source</div>
+                <h2 class="text-3xl font-bold mb-3">
+                    <span data-i18n="oss.h2a">Transparenz ist</span>
+                    <span class="highlight-blue" data-i18n="oss.h2b"> Vertrauen.</span>
+                </h2>
+                <p class="text-muted mb-10" style="max-width:480px;" data-i18n="oss.desc">
+                    EduGrade ist und bleibt Open Source. Jeder kann den Code einsehen und mitgestalten.
+                </p>
+
                 <div class="card card-featured">
                     <header>
-                        <h3 class="font-semibold text-lg flex items-center gap-2">
-                            <svg class="lucide" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                <line x1="12" y1="17" x2="12.01" y2="17" />
-                            </svg>
-                            AGPL-3.0 - Free to use for schools and teachers
+                        <h3 class="font-semibold flex items-center gap-2">
+                            <svg class="lucide" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <span data-i18n="oss.card.title">AGPL-3.0 – Kostenlos für Schulen und Lehrkräfte</span>
                         </h3>
                     </header>
                     <section>
-                        <p class="text-muted">
-                            EduGrade is completely free - for individuals, schools, and educational institutions.
-                            The source code is publicly available and may be freely used, modified, and redistributed.
-                            Modified versions must also remain freely accessible.
+                        <p class="text-muted" data-i18n="oss.card.desc1">
+                            EduGrade ist vollständig kostenlos – für Einzelpersonen, Schulen und Bildungseinrichtungen. Der Quellcode ist öffentlich verfügbar und darf frei genutzt, verändert und weitergegeben werden.
                         </p>
-                        <p class="text-muted mt-3">
-                            Copyright © 2026 Fabian Murauer
+                        <p class="text-muted mt-3" data-i18n="oss.card.desc2">
+                            Veränderte Versionen müssen ebenfalls frei zugänglich bleiben. Copyright © 2026 Fabian Murauer
                         </p>
                     </section>
                     <footer>
                         <div class="flex flex-wrap gap-2">
-                            <span class="badge badge-secondary">Free</span>
+                            <span class="badge badge-secondary" data-i18n="badge.free3">Kostenlos</span>
                             <span class="badge badge-secondary">Open Source</span>
                             <span class="badge badge-secondary">AGPL-3.0</span>
-                            <span class="badge badge-secondary">Suitable for schools</span>
+                            <span class="badge badge-secondary" data-i18n="badge.school">Schulgeeignet</span>
+                            <a href="https://github.com/rwolf2467/EduGrade" target="_blank" class="badge badge-outline" style="display:inline-flex;align-items:center;gap:0.3rem;">
+                                GitHub
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                            </a>
                         </div>
                     </footer>
                 </div>
             </section>
 
+            <!-- Testimonial -->
+            <section class="pb-24" id="testimonial">
+                <div class="section-eyebrow" data-i18n="testi.label">Erfahrungsbericht</div>
+                <h2 class="text-3xl font-bold mb-8" data-i18n="testi.h2">Vom Studenten zum Entwickler.</h2>
+
+                <div class="testimonial-card" style="max-width:680px;">
+                    <p class="testimonial-text" data-i18n="testi.text">
+                        „In meinem Unterricht habe ich gelernt, mit KI als Denkpartner zu arbeiten – nicht als Ersatz. Daraus ist EduGrade entstanden: eine Open-Source-Notenverwaltung für Lehrkräfte, die ich selbst entwickelt habe."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">FM</div>
+                        <div>
+                            <div class="testimonial-name">Fabian Murauer</div>
+                            <div class="testimonial-role" data-i18n="testi.role">Schüler & Entwickler, HTBLA Traun · Avocloud.net</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="pb-24">
+                <div class="cta-section">
+                    <h2 data-i18n="cta.h2">Bereit, EduGrade auszuprobieren?</h2>
+                    <p data-i18n="cta.desc">Registrieren Sie sich in weniger als einer Minute und entdecken Sie, wie einfach digitale Notenverwaltung sein kann.</p>
+                    <div class="flex flex-wrap gap-3 justify-center">
+                        <a href="https://edugrade.avocloud.net" target="_blank" class="hero-btn"
+                            style="background:rgba(147,51,234,0.3);border-color:rgba(147,51,234,0.7);">
+                            <span data-i18n="cta.btn">Kostenlos registrieren</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                        </a>
+                        <a href="https://github.com/rwolf2467/EduGrade" target="_blank" class="hero-btn">
+                            <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:currentColor;stroke:none;flex-shrink:0"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Docs CTA -->
+            <section class="pb-24">
+                <div class="cta-section">
+                    <h2 data-i18n="docs.h2">Benötigst du Hilfe mit der Anwendung?</h2>
+                    <p data-i18n="docs.desc">In der Dokumentation findest du alles, was du zur Nutzung von EduGrade brauchst – von der Einrichtung bis zu den einzelnen Features.</p>
+                    <div class="flex flex-wrap gap-3 justify-center">
+                        <a href="https://edugrade.avocloud.net/docs/" target="_blank" class="hero-btn"
+                            style="background:rgba(99,102,241,0.25);border-color:rgba(99,102,241,0.65);">
+                            <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                            <span data-i18n="docs.btn">Zur Dokumentation</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
             <!-- Links -->
             <section class="pb-24" id="links">
-                <div class="section-label">LINKS</div>
-                <h2 class="text-2xl font-bold mb-8">Further links</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="section-eyebrow" data-i18n="links.label">Links</div>
+                <h2 class="text-2xl font-bold mb-8" data-i18n="links.h2">Weitere Links</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path
-                                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                                </svg>
-                                Source code on GitHub
+                                <svg class="lucide" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                                <span data-i18n="link.github.title">Quellcode auf GitHub</span>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">For IT admins: installation guide and source code:</p>
-                            <a href="https://github.com/rwolf2467/EduGrade" target="_blank"
-                                class="text-sm accent-link mt-1 block">github.com/rwolf2467/EduGrade ↗</a>
+                            <p class="text-muted text-sm" data-i18n="link.github.desc">Für IT-Admins: Installationsanleitung und Quellcode</p>
+                            <a href="https://github.com/rwolf2467/EduGrade" target="_blank" class="text-sm accent-link mt-1 block" style="display:inline-flex;align-items:center;gap:0.3rem;">
+                                github.com/rwolf2467/EduGrade
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                            </a>
                         </section>
                     </div>
 
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                                </svg>
-                                EduGrade App
+                                <svg class="lucide" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                                <span data-i18n="link.app.title">EduGrade App</span>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">Go directly to the hosted version:</p>
-                            <a href="https://edugrade.avocloud.net" target="_blank"
-                                class="text-sm accent-link mt-1 block">edugrade.avocloud.net ↗</a>
+                            <p class="text-muted text-sm" data-i18n="link.app.desc">Direkt zur gehosteten Version:</p>
+                            <a href="https://edugrade.avocloud.net" target="_blank" class="text-sm accent-link mt-1 block" style="display:inline-flex;align-items:center;gap:0.3rem;">
+                                edugrade.avocloud.net
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                            </a>
                         </section>
                     </div>
 
                     <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                                </svg>
-                                Status
+                                <svg class="lucide" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                                <span data-i18n="link.status.title">Status</span>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm">Check app availability:</p>
-                            <a href="https://status.avocloud.net" target="_blank"
-                                class="text-sm accent-link mt-1 block">status.avocloud.net ↗</a>
+                            <p class="text-muted text-sm" data-i18n="link.status.desc">Verfügbarkeit der App prüfen:</p>
+                            <a href="https://status.avocloud.net" target="_blank" class="text-sm accent-link mt-1 block" style="display:inline-flex;align-items:center;gap:0.3rem;">
+                                status.avocloud.net
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                            </a>
                         </section>
                     </div>
 
                 </div>
             </section>
 
-            <!-- Back to Home -->
+            <!-- Back -->
             <section class="pb-24">
                 <div class="text-center">
                     <a href="../" class="inline-flex items-center gap-2 text-sm accent-link">
                         <svg class="lucide" viewBox="0 0 24 24" style="width:16px;height:16px;">
-                            <line x1="19" y1="12" x2="5" y2="12" />
-                            <polyline points="12 19 5 12 12 5" />
+                            <line x1="19" y1="12" x2="5" y2="12"/>
+                            <polyline points="12 19 5 12 12 5"/>
                         </svg>
-                        Back to Avocloud.net
+                        <span data-i18n="back">Zurück zu Avocloud.net</span>
                     </a>
                 </div>
             </section>
@@ -658,11 +1261,263 @@
         </main>
 
         <footer class="site-footer">
-            <p>EduGrade - Secure grade management for teachers, by Avocloud.net</p>
+            <p data-i18n="footer.text">EduGrade – Sichere Notenverwaltung für Lehrkräfte, von Avocloud.net</p>
         </footer>
     </div>
 
-    <script src="../assets/js/main.js"></script>
-</body>
+    <script src="https://avocloud.net/assets/js/main.js"></script>
 
+    <script>
+    // ── i18n ──────────────────────────────────────────────────────────
+    var _i18n = {
+      de: {
+        'nav.features': 'Features',
+        'nav.preview': 'Dashboard',
+        'nav.opensource': 'Open Source',
+        'nav.docs': 'Docs',
+        'nav.docs.btn': 'Docs',
+        'nav.cta': 'Jetzt starten',
+        'hero.eyebrow': 'KOSTENLOS · OPEN SOURCE · DSGVO-KONFORM',
+        'hero.h1a': 'Notenverwaltung,',
+        'hero.h1b': 'neu gedacht.',
+        'hero.subtitle': 'EduGrade ist die digitale Notenverwaltung für Lehrkräfte – einfach, sicher und übersichtlich.',
+        'hero.desc': 'Klassen, Schüler, Noten und Anwesenheit an einem Ort. Kein Download, kein Papierchaos – direkt im Browser, auf jedem Gerät.',
+        'hero.btn.start': 'Jetzt kostenlos starten',
+        'trust.free': 'Komplett kostenlos',
+        'trust.secure': 'Sicher & DSGVO-konform',
+        'trust.anydevice': 'Auf jedem Gerät',
+        'trust.noinst': 'Kein Download nötig',
+        'features.label': 'Features',
+        'features.h2a': 'Alles, was Lehrkräfte',
+        'features.h2b': 'wirklich brauchen.',
+        'features.desc': 'Von der Klassenerstellung bis zum PDF-Export – EduGrade deckt den gesamten Workflow ab.',
+        'feat.classes.title': 'Klassen & Schuljahre',
+        'feat.classes.desc': 'Klassen anlegen, Schüler einzeln oder per CSV importieren. Mehrere Schuljahre parallel verwalten.',
+        'feat.grades.title': 'Noten mit Gewichtung',
+        'feat.grades.desc': 'Kategorien, Plus/Minus-System und individuelle Gewichtung. Der Durchschnitt wird automatisch berechnet.',
+        'feat.attendance.title': 'Anwesenheits-Tracking',
+        'feat.attendance.desc': 'Abwesenheiten schnell erfassen. Automatische Warnung bei Unterschreitung der Mindestpräsenz.',
+        'feat.export.title': 'Berichte & PDF-Export',
+        'feat.export.desc': 'Schülerberichte als PDF drucken oder exportieren. Übersichtliche Tabellen für jede Klasse.',
+        'feat.share.title': 'Noten sicher teilen',
+        'feat.share.desc': 'Schüler erhalten ihre Noten per individuellem PIN. Der Link läuft automatisch ab – kein Missbrauch möglich.',
+        'feat.encrypt.title': 'Verschlüsselt & DSGVO-konform',
+        'feat.encrypt.desc': 'Alle Daten werden mit AES-256-GCM verschlüsselt. Zero-Knowledge: Selbst der Server-Betreiber kann die Daten nicht lesen.',
+        'badge.classes': 'Klassen',
+        'badge.import': 'CSV-Import',
+        'badge.weighting': 'Gewichtung',
+        'badge.plusminus': 'Plus/Minus',
+        'badge.absent': 'Abwesenheiten',
+        'badge.warnings': 'Warnungen',
+        'badge.reports': 'Berichte',
+        'badge.pin': '6-stelliger PIN',
+        'badge.timelimited': 'Zeitbegrenzt',
+        'badge.free3': 'Kostenlos',
+        'badge.school': 'Schulgeeignet',
+        'badge.nodownload': 'Kein Download',
+        'badge.sofort': 'Sofort bereit',
+        'badge.free2': 'Kostenlos',
+        'preview.label': 'Dashboard',
+        'preview.h2': 'Alles im Blick, auf einen Blick.',
+        'preview.desc': 'Das intuitive Dashboard zeigt Ihnen alle wichtigen Kennzahlen Ihrer Klassen auf einen Blick.',
+        'start.label': 'Einstieg',
+        'start.h2': 'In 3 Schritten startklar.',
+        'start.desc': 'Keine Installation, kein IT-Aufwand. Einfach öffnen und loslegen.',
+        'step1.title': 'Account erstellen',
+        'step1.desc': 'Registrieren Sie sich kostenlos auf edugrade.avocloud.net – in weniger als einer Minute.',
+        'step2.title': 'Klasse anlegen',
+        'step2.desc': 'Klasse, Schuljahr und Fächer einrichten. Schüler einzeln oder per CSV-Liste importieren.',
+        'step3.title': 'Noten eintragen',
+        'step3.desc': 'Noten, Kategorien und Gewichtungen festlegen. Der Durchschnitt wird automatisch berechnet.',
+        'step4.title': 'Berichte exportieren',
+        'step4.desc': 'PDF-Berichte pro Schüler oder ganze Klasse exportieren – fertig für den Unterricht.',
+        'hosted.title': 'Direkt im Browser starten – empfohlen',
+        'hosted.desc': 'Einfach <a href="https://edugrade.avocloud.net" target="_blank" class="accent-link">edugrade.avocloud.net</a> öffnen, Account anlegen und sofort loslegen. Kein Download, kein technisches Vorwissen erforderlich.',
+        'hosted.btn': 'Jetzt starten',
+        'badge.free2': 'Kostenlos',
+        'oss.label': 'Open Source',
+        'oss.h2a': 'Transparenz ist',
+        'oss.h2b': ' Vertrauen.',
+        'oss.desc': 'EduGrade ist und bleibt Open Source. Jeder kann den Code einsehen und mitgestalten.',
+        'oss.card.title': 'AGPL-3.0 – Kostenlos für Schulen und Lehrkräfte',
+        'oss.card.desc1': 'EduGrade ist vollständig kostenlos – für Einzelpersonen, Schulen und Bildungseinrichtungen. Der Quellcode ist öffentlich verfügbar und darf frei genutzt, verändert und weitergegeben werden.',
+        'oss.card.desc2': 'Veränderte Versionen müssen ebenfalls frei zugänglich bleiben. Copyright © 2026 Fabian Murauer',
+        'testi.label': 'Erfahrungsbericht',
+        'testi.h2': 'Vom Studenten zum Entwickler.',
+        'testi.text': '„In meinem Unterricht habe ich gelernt, mit KI als Denkpartner zu arbeiten – nicht als Ersatz. Daraus ist EduGrade entstanden: eine Open-Source-Notenverwaltung für Lehrkräfte, die ich selbst entwickelt habe."',
+        'testi.role': 'Schüler & Entwickler, HTBLA Traun · Avocloud.net',
+        'cta.h2': 'Bereit, EduGrade auszuprobieren?',
+        'cta.desc': 'Registrieren Sie sich in weniger als einer Minute und entdecken Sie, wie einfach digitale Notenverwaltung sein kann.',
+        'cta.btn': 'Kostenlos registrieren',
+        'links.label': 'Links',
+        'links.h2': 'Weitere Links',
+        'link.github.title': 'Quellcode auf GitHub',
+        'link.github.desc': 'Für IT-Admins: Installationsanleitung und Quellcode',
+        'link.app.title': 'EduGrade App',
+        'link.app.desc': 'Direkt zur gehosteten Version:',
+        'link.status.title': 'Status',
+        'link.status.desc': 'Verfügbarkeit der App prüfen:',
+        'docs.h2': 'Benötigst du Hilfe mit der Anwendung?',
+        'docs.desc': 'In der Dokumentation findest du alles, was du zur Nutzung von EduGrade brauchst – von der Einrichtung bis zu den einzelnen Features.',
+        'docs.btn': 'Zur Dokumentation',
+        'back': 'Zurück zu Avocloud.net',
+        'footer.text': 'EduGrade – Sichere Notenverwaltung für Lehrkräfte, von Avocloud.net',
+      },
+      en: {
+        'nav.features': 'Features',
+        'nav.preview': 'Dashboard',
+        'nav.opensource': 'Open Source',
+        'nav.docs': 'Docs',
+        'nav.docs.btn': 'Docs',
+        'nav.cta': 'Get started',
+        'hero.eyebrow': 'FREE · OPEN SOURCE · GDPR-COMPLIANT',
+        'hero.h1a': 'Grade management,',
+        'hero.h1b': 'reimagined.',
+        'hero.subtitle': 'EduGrade is the digital grade management for teachers – simple, secure, and accessible from any device.',
+        'hero.desc': 'Classes, students, grades and attendance in one place. No download, no paper chaos – right in the browser, on any device.',
+        'hero.btn.start': 'Start for free',
+        'trust.free': 'Completely free',
+        'trust.secure': 'Secure & GDPR-compliant',
+        'trust.anydevice': 'On any device',
+        'trust.noinst': 'No download needed',
+        'features.label': 'Features',
+        'features.h2a': 'Everything teachers',
+        'features.h2b': 'actually need.',
+        'features.desc': 'From class creation to PDF export – EduGrade covers the entire workflow.',
+        'feat.classes.title': 'Classes & School Years',
+        'feat.classes.desc': 'Create classes, add students individually or import via CSV. Manage multiple school years at once.',
+        'feat.grades.title': 'Grades with Weighting',
+        'feat.grades.desc': 'Custom categories, plus/minus system and individual weighting. Averages are calculated automatically.',
+        'feat.attendance.title': 'Attendance Tracking',
+        'feat.attendance.desc': 'Record absences quickly. Automatic warning when a student falls below the minimum attendance threshold.',
+        'feat.export.title': 'Reports & PDF Export',
+        'feat.export.desc': 'Print or export student reports as PDF. Clear tables for every class.',
+        'feat.share.title': 'Share Grades Securely',
+        'feat.share.desc': 'Students receive their grades via an individual PIN. The link expires automatically – no risk of misuse.',
+        'feat.encrypt.title': 'Encrypted & GDPR-Compliant',
+        'feat.encrypt.desc': 'All data is encrypted with AES-256-GCM. Zero-Knowledge: even the server operator cannot read the data.',
+        'badge.classes': 'Classes',
+        'badge.import': 'CSV Import',
+        'badge.weighting': 'Weighting',
+        'badge.plusminus': 'Plus/Minus',
+        'badge.absent': 'Absences',
+        'badge.warnings': 'Warnings',
+        'badge.reports': 'Reports',
+        'badge.pin': '6-digit PIN',
+        'badge.timelimited': 'Time-limited',
+        'badge.free3': 'Free',
+        'badge.school': 'School-ready',
+        'badge.nodownload': 'No download',
+        'badge.sofort': 'Ready instantly',
+        'badge.free2': 'Free',
+        'preview.label': 'Dashboard',
+        'preview.h2': 'Everything at a glance.',
+        'preview.desc': 'The intuitive dashboard shows all key metrics for your classes at a single glance.',
+        'start.label': 'Get Started',
+        'start.h2': 'Ready in 3 steps.',
+        'start.desc': 'No installation, no IT effort. Just open and go.',
+        'step1.title': 'Create an account',
+        'step1.desc': 'Register for free at edugrade.avocloud.net – in less than a minute.',
+        'step2.title': 'Set up a class',
+        'step2.desc': 'Add your class, school year, and subjects. Import students individually or via CSV.',
+        'step3.title': 'Enter grades',
+        'step3.desc': 'Define grades, categories and weighting. The average is calculated automatically.',
+        'step4.title': 'Export reports',
+        'step4.desc': 'Export PDF reports per student or entire class – ready for the classroom.',
+        'hosted.title': 'Start directly in the browser – recommended',
+        'hosted.desc': 'Simply open <a href="https://edugrade.avocloud.net" target="_blank" class="accent-link">edugrade.avocloud.net</a>, create an account, and get started. No installation, no technical knowledge required.',
+        'hosted.btn': 'Start now',
+        'oss.label': 'Open Source',
+        'oss.h2a': 'Transparency is',
+        'oss.h2b': ' trust.',
+        'oss.desc': 'EduGrade is and remains open source. Anyone can view the code and contribute.',
+        'oss.card.title': 'AGPL-3.0 – Free for schools and teachers',
+        'oss.card.desc1': 'EduGrade is completely free – for individuals, schools and educational institutions. The source code is publicly available and may be freely used, modified and redistributed.',
+        'oss.card.desc2': 'Modified versions must also remain freely accessible. Copyright © 2026 Fabian Murauer',
+        'testi.label': 'Story',
+        'testi.h2': 'From student to developer.',
+        'testi.text': '"In my classes I learned to work with AI as a thinking partner – not a replacement. That\'s how EduGrade was born: an open-source grade management app for teachers, built by myself."',
+        'testi.role': 'Student & Developer, HTBLA Traun · Avocloud.net',
+        'cta.h2': 'Ready to try EduGrade?',
+        'cta.desc': 'Register in less than a minute and discover how easy digital grade management can be.',
+        'cta.btn': 'Register for free',
+        'links.label': 'Links',
+        'links.h2': 'Further Links',
+        'link.github.title': 'Source code on GitHub',
+        'link.github.desc': 'For IT admins: installation guide and source code',
+        'link.app.title': 'EduGrade App',
+        'link.app.desc': 'Go directly to the hosted version:',
+        'link.status.title': 'Status',
+        'link.status.desc': 'Check app availability:',
+        'docs.h2': 'Need help with the application?',
+        'docs.desc': 'The documentation has everything you need to use EduGrade – from setup to all the features.',
+        'docs.btn': 'Go to Documentation',
+        'back': 'Back to Avocloud.net',
+        'footer.text': 'EduGrade – Secure grade management for teachers, by Avocloud.net',
+      }
+    };
+
+    function applyLang(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (_i18n[lang] && _i18n[lang][key] !== undefined) {
+          el.textContent = _i18n[lang][key];
+        }
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n-html');
+        if (_i18n[lang] && _i18n[lang][key] !== undefined) {
+          el.innerHTML = _i18n[lang][key];
+        }
+      });
+      var btn = document.getElementById('lang-btn');
+      if (btn) {
+        btn.textContent = lang === 'de' ? 'EN' : 'DE';
+        btn.title = lang === 'de' ? 'Switch to English' : 'Auf Deutsch wechseln';
+      }
+      var mobileBtn = document.getElementById('mobile-lang-btn');
+      if (mobileBtn) {
+        mobileBtn.textContent = lang === 'de' ? 'EN' : 'DE';
+        mobileBtn.title = lang === 'de' ? 'Switch to English' : 'Auf Deutsch wechseln';
+      }
+      document.documentElement.lang = lang;
+      localStorage.setItem('edu-lang', lang);
+    }
+
+    function toggleLang() {
+      var current = localStorage.getItem('edu-lang') || 'de';
+      applyLang(current === 'de' ? 'en' : 'de');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var savedLang = localStorage.getItem('edu-lang') || 'de';
+      applyLang(savedLang);
+    });
+
+    // ── Mobile menu ──────────────────────────────────────────────────
+    function toggleMobileMenu() {
+      var drawer = document.getElementById('mobile-drawer');
+      if (drawer.classList.contains('open')) {
+        closeMobileMenu();
+      } else {
+        drawer.classList.add('open');
+        document.getElementById('mobile-overlay').classList.add('open');
+        document.getElementById('hamburger-btn').classList.add('open');
+        document.getElementById('hamburger-btn').setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    function closeMobileMenu() {
+      document.getElementById('mobile-drawer').classList.remove('open');
+      document.getElementById('mobile-overlay').classList.remove('open');
+      var btn = document.getElementById('hamburger-btn');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeMobileMenu();
+    });
+    </script>
+</body>
 </html>

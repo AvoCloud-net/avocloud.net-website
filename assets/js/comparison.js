@@ -231,6 +231,16 @@
                 }
             },
             {
+                feature: 'Auto-Release (auto-publish news channels)',
+                values: {
+                    baxi: { status: ComparisonStatus.FREE },
+                    mee6: { status: ComparisonStatus.NONE },
+                    carl: { status: ComparisonStatus.FREE, tooltip: 'Autopublish available for news channels' },
+                    dyno: { status: ComparisonStatus.NONE },
+                    probot: { status: ComparisonStatus.NONE }
+                }
+            },
+            {
                 feature: 'Fully Free',
                 isBold: true,
                 values: {

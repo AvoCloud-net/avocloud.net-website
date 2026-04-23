@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avocloud.net x Craft Attack</title>
+    <title>Avocloud.net x Craft Attack – Season 2</title>
     <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
-    <meta name="description" content="Avocloud.net x Craft Attack – An open Minecraft Survival project for everyone!">
-    <meta name="keywords" content="Craft Attack, Minecraft, Avocloud, Survival, Multiplayer, Java, Bedrock, Crossplay">
+    <meta name="description" content="Avocloud.net x Craft Attack Season 2 – Die Asche von Aerlon. An open Minecraft Survival project set in the ruins of a lost world.">
+    <meta name="keywords" content="Craft Attack, Minecraft, Avocloud, Survival, Multiplayer, Season 2, Die Asche von Aerlon, Java, Bedrock, Crossplay">
     <meta name="author" content="Avocloud.net">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Avocloud.net x Craft Attack">
-    <meta property="og:description" content="An open Minecraft Survival project for everyone – whether streamer or private person!">
-    <meta property="og:image" content="/assets/images/logo.png">
+    <meta property="og:title" content="Avocloud.net x Craft Attack – Season 2">
+    <meta property="og:description" content="Die Asche von Aerlon – An open Minecraft Survival project set in the ruins of a lost world.">
+    <meta property="og:image" content="/assets/images/craftattack/ca-s2-4.png">
     <meta property="og:url" content="https://avocloud.net/craftattack/">
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +21,61 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
     <link rel="stylesheet" href="../assets/css/main.css">
     <script src="../assets/js/theme.js"></script>
+    <style>
+        .gallery-card { position: relative; cursor: pointer; }
+        .gallery-zoom-overlay {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            background: rgba(0,0,0,0);
+            transition: opacity 0.2s ease, background 0.2s ease;
+            pointer-events: none;
+        }
+        .gallery-card:hover .gallery-zoom-overlay {
+            opacity: 1;
+            background: rgba(0,0,0,0.32);
+        }
+        .gallery-zoom-overlay svg {
+            width: 48px; height: 48px; color: white;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+        }
+        #lightbox {
+            display: flex !important;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.24s ease, visibility 0.24s ease;
+        }
+        #lightbox.lb-active { opacity: 1; visibility: visible; }
+        #lightbox-img {
+            transform: scale(0.88);
+            transition: transform 0.24s ease;
+        }
+        #lightbox.lb-active #lightbox-img { transform: scale(1); }
+        /* Kill blobs and white fade from main.css hero pseudo-elements */
+        .hero::before {
+            background: rgba(0,0,0,0.42) !important;
+            filter: none !important;
+        }
+        .hero::after { display: none !important; }
+        /* Hero always has dark bg image — force white text in light mode */
+        html:not(.dark) .hero h1 { color: white; }
+        html:not(.dark) .hero-subtitle { color: rgba(255,255,255,0.85); }
+        html:not(.dark) .hero p { color: rgba(255,255,255,0.75); }
+        html:not(.dark) .hero-btn { color: white; border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.1); }
+        html:not(.dark) .hero-btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.6); }
+        html:not(.dark) .hero .highlight-red { color: #f87171; }
+        html:not(.dark) .hero .highlight-purple { color: rgb(216, 180, 254); background-color: rgba(147,51,234,0.35); }
+        html:not(.dark) .hero .highlight-yellow { color: rgb(253, 224, 71); background-color: rgba(234,179,8,0.25); }
+        /* Transparent nav at top */
+        .site-nav.nav-at-top {
+            background: transparent !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-bottom-color: transparent !important;
+        }
+        .site-nav.nav-at-top .avocloud-logo,
+        .site-nav.nav-at-top .lang-toggle,
+        .site-nav.nav-at-top .theme-toggle { color: white !important; }
+    </style>
 </head>
 
 <body>
@@ -44,34 +99,36 @@
                 <span class="avocloud-logo__rest">CLOUD<span class="avocloud-logo__dot">.NET</span></span>
             </span>
         </a>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-            <svg id="theme-icon" viewBox="0 0 24 24"></svg>
-        </button>
+        <div style="margin-left:auto;display:flex;gap:0.5rem;align-items:center;">
+            <button class="lang-toggle" id="lang-btn" onclick="toggleLang()" title="Auf Deutsch wechseln">DE</button>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" style="margin-left:0">
+                <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+            </button>
+        </div>
     </nav>
 
-    <!-- Hero with video background -->
-    <section class="hero">
-        <video autoplay muted loop playsinline>
-            <source src="../assets/videos/craftattack.webm" type="video/webm">
-        </video>
-        <div class="hero-content">
+    <!-- Hero with image background -->
+    <section class="hero" style="position: relative; background: url('../assets/images/craftattack/ca-s2-4.png') center/cover fixed no-repeat;">
+        <div class="hero-content" style="position: relative; z-index: 2;">
             <h1>
                 <span class="highlight-purple">Avocloud.net</span> x
                 <span class="highlight-yellow">Craft Attack</span>
             </h1>
             <p class="hero-subtitle">
-                The legendary Minecraft survival format –<br>
-                <strong>now for everyone for the first time</strong>!<br><br>
-                Server Address: <span class="highlight-red"><strong>craftattack.avocloud.net</strong></span>
+                <strong data-i18n="hero.season">Season 2 – The Ashes of Aerlon</strong><br><br>
+                <span data-i18n="hero.serveraddr">Server Address:</span> <span class="highlight-red"><strong>craftattack.avocloud.net</strong></span>
+            </p>
+            <p style="font-size: 0.9rem; font-style: italic; opacity: 0.75; max-width: 480px; margin: 0.75rem auto 1.5rem; line-height: 1.6;" data-i18n-html="hero.quote">
+                „Aerlon was once a great kingdom, powerful, radiant, full of magic and life.<br>
+                Now new travelers come to the land."
             </p>
             <div class="flex gap-3 justify-center mt-6">
-                <a href="https://cloud.avocloud.net/apps/forms/s/GLnYZTeBijPEFyEcpc5WqEXm"
-                    class="hero-btn" target="_blank" title="Join now!">
+                <a href="#join" class="hero-btn" title="Apply Now">
                     <svg class="lucide" viewBox="0 0 24 24">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                     </svg>
-                    Apply Now
+                    <span data-i18n="hero.btn.apply">Apply Now</span>
                 </a>
                 <a href="https://avocloud.net/discord/" class="hero-btn" target="_blank" title="Discord">
                     <svg class="lucide" viewBox="0 0 24 24">
@@ -92,137 +149,286 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
         <main id="about">
 
-            <!-- Countdowns -->
-            <section class="py-16" id="countdowns-section">
-                <div class="section-label">SEASON 1 – COMPLETED</div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Lore -->
+            <section class="py-16" id="lore">
+                <div class="section-label" data-i18n="lore.label">DIE ASCHE VON AERLON</div>
 
-                    <div class="card">
-                        <header>
-                            <h3 class="font-semibold flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <polyline points="12 6 12 12 16 14"/>
-                                </svg>
-                                Project Started On:
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-sm text-muted mb-2"><strong>December 1, 2025 at 6:00 PM CET</strong></p>
-                            <div id="countdown" class="countdown-display">
-                                <span id="days">??</span>d
-                                <span id="hours">??</span>h
-                                <span id="minutes">??</span>m
-                                <span id="seconds">??</span>s
-                            </div>
-                        </section>
+                <div class="about-editorial" style="margin-bottom: 2rem;">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-4" data-i18n="lore.reborn.heading">A World Reborn from Ash</h2>
+                        <p class="text-muted mb-4" data-i18n="lore.reborn.body1">
+                            Aerlon was once a great kingdom, powerful, radiant, full of magic and life. What exactly happened,
+                            nobody remembers anymore. All that remained was ash: overgrown ruins, silent forests, forgotten paths.
+                        </p>
+                        <p class="text-muted">
+                            <span data-i18n="lore.reborn.body2">Now new travelers come to the land. Not as heroes or heirs, simply as the first to return.
+                            Some seek treasure. Some seek a new beginning.</span> <strong data-i18n="lore.reborn.strong">The land is open. What you make of it is up to you.</strong>
+                        </p>
                     </div>
-
-                    <div class="card">
-                        <header>
-                            <h3 class="font-semibold flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
-                                </svg>
-                                Nether Opened On:
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-sm text-muted mb-2"><strong>December 6, 2025 at 3:00 PM CET</strong></p>
-                            <div id="nether-countdown" class="countdown-display">
-                                <span id="nether-days">??</span>d
-                                <span id="nether-hours">??</span>h
-                                <span id="nether-minutes">??</span>m
-                                <span id="nether-seconds">??</span>s
-                            </div>
-                        </section>
+                    <div>
+                        <h3 class="section-h3 mb-3">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            </svg>
+                            <span data-i18n="lore.world.heading">Custom World – Aerlon</span>
+                        </h3>
+                        <p class="text-muted mb-4" data-i18n="lore.world.body">
+                            Aerlon stretches across dense forests where stone arches of an older age still loom between the trees,
+                            over vast arid plains backed by towering cliffs, through overgrown plazas lined with ancient columns,
+                            past forgotten settlements behind weathered wooden gates, and down into dark underground chambers
+                            where old structures still stand.
+                        </p>
+                        <h3 class="section-h3 mb-3">
+                            <svg class="lucide" viewBox="0 0 24 24">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                            <span data-i18n="lore.goal.heading">Our Goal</span>
+                        </h3>
+                        <p class="text-muted" data-i18n="lore.goal.body">
+                            Build a world together, as a community. Whether you're a streamer, a YouTuber,
+                            or just someone who wants to have fun and explore: everyone is welcome.
+                            No gates, no elites. Just people who want to create something together.
+                        </p>
                     </div>
-
-                    <div class="card">
-                        <header>
-                            <h3 class="font-semibold flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                                </svg>
-                                End Opened On:
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-sm text-muted mb-2"><strong>December 19, 2025 at 8:00 PM CET</strong></p>
-                            <div id="end-countdown" class="countdown-display">
-                                <span id="end-days">??</span>d
-                                <span id="end-hours">??</span>h
-                                <span id="end-minutes">??</span>m
-                                <span id="end-seconds">??</span>s
-                            </div>
-                        </section>
-                    </div>
-
                 </div>
+
+                <!-- World Gallery -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="card card-hover gallery-card" style="padding: 0; overflow: hidden; border-radius: var(--radius);">
+                        <img src="../assets/images/craftattack/ca-s2-1.png" alt="The overgrown ruins of Aerlon"
+                             class="gallery-img" style="width: 100%; height: 210px; object-fit: cover; display: block;">
+                        <div class="gallery-zoom-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                    </div>
+                    <div class="card card-hover gallery-card" style="padding: 0; overflow: hidden; border-radius: var(--radius);">
+                        <img src="../assets/images/craftattack/ca-s2-3.png" alt="The vast mountain ranges of Aerlon"
+                             class="gallery-img" style="width: 100%; height: 210px; object-fit: cover; display: block;">
+                        <div class="gallery-zoom-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                    </div>
+                    <div class="card card-hover gallery-card" style="padding: 0; overflow: hidden; border-radius: var(--radius);">
+                        <img src="../assets/images/craftattack/ca-s2-4.png" alt="Ancient columns stand in an overgrown plaza"
+                             class="gallery-img" style="width: 100%; height: 210px; object-fit: cover; display: block;">
+                        <div class="gallery-zoom-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                    </div>
+                    <div class="card card-hover gallery-card" style="padding: 0; overflow: hidden; border-radius: var(--radius);">
+                        <img src="../assets/images/craftattack/ca-s2-7.png" alt="A forgotten settlement behind a weathered wooden gate"
+                             class="gallery-img" style="width: 100%; height: 210px; object-fit: cover; display: block;">
+                        <div class="gallery-zoom-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                    </div>
+                    <div class="card card-hover gallery-card" style="padding: 0; overflow: hidden; border-radius: var(--radius);">
+                        <img src="../assets/images/craftattack/ca-s2-5.png" alt="Ancient ruins deep underground"
+                             class="gallery-img" style="width: 100%; height: 210px; object-fit: cover; display: block;">
+                        <div class="gallery-zoom-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                    </div>
+                    <div class="card card-hover gallery-card" style="padding: 0; overflow: hidden; border-radius: var(--radius);">
+                        <img src="../assets/images/craftattack/ca-s2-8.png" alt="Ancient underground structures glowing in the dark"
+                             class="gallery-img" style="width: 100%; height: 210px; object-fit: cover; display: block;">
+                        <div class="gallery-zoom-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+                    </div>
+                </div>
+                <p class="text-muted text-sm text-center mt-4 italic" data-i18n="lore.gallery.caption">
+                    Screenshots from the Aerlon world – Season 2.
+                </p>
             </section>
 
-            <!-- About -->
-            <section class="pb-16" id="about-project">
-                <div class="section-label">WHAT IS CRAFT ATTACK?</div>
-                <div class="flex flex-col gap-6">
 
-                    <div class="card">
-                        <header>
-                            <h2 class="text-lg font-semibold flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                                </svg>
-                                The Original: Craft Attack
-                            </h2>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm leading-relaxed">
-                                Craft Attack is a long-running, legendary Minecraft survival event that has been played annually
-                                by well-known German YouTubers and streamers for over 13 years. Each year, the adventure starts
-                                completely new: building together, exploring, farming – and of course drama, friendships, and
-                                epic moments.<br><br>
-                                However, participation has been strictly limited so far: Only invited, mostly large content
-                                creators were allowed to participate. For the community, the project usually remained a
-                                spectator experience.
-                            </p>
-                        </section>
-                    </div>
+            <!-- What's New in S2 -->
+            <section class="pb-16" id="new">
+                <div class="section-label" data-i18n="new.label">NEW IN SEASON 2</div>
+                <div class="card mb-6">
+                    <section>
+                        <p class="text-muted text-sm" data-i18n="new.intro">
+                            Season 2 keeps everything that worked in Season 1 and adds new systems based on community feedback and lessons learned.
+                        </p>
+                    </section>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-                    <div class="card">
+                    <div class="card card-hover card-featured md:col-span-2">
                         <header>
-                            <h2 class="text-lg font-semibold flex items-center gap-2">
+                            <h3 class="font-semibold flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
                                     <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                                     <circle cx="9" cy="7" r="4"/>
                                     <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
                                     <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                                 </svg>
-                                Avocloud.net x Craft Attack – For Everyone!
-                            </h2>
+                                <span data-i18n="clan.heading">Clan System</span>
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="clan.subtitle">Form groups, build together, and declare wars (opt-in).</p>
                         </header>
                         <section>
-                            <p class="text-muted text-sm leading-relaxed">
-                                We at Avocloud.net love Craft Attack – but we believe such a project <strong>shouldn't only be
-                                for influencers</strong>. That's why we're starting our own, open format:<br><br>
-                                <strong>Everyone can participate!</strong> Whether you are a big streamer, a small YouTuber, or
-                                simply someone who wants to play Minecraft with nice people – you are warmly welcome.<br><br>
-                                Our goal: To build a friendly, creative, and fair community where everyone can have fun –
-                                without griefing, without chaos, but with a lot of togetherness.
+                            <p class="text-muted text-sm leading-relaxed" data-i18n-html="clan.body">
+                                Clans have their own chat (<code>/cc</code>), bank, home point, claim territory, and shared chest.
+                                Ally with other clans or declare war. Both require mutual consent.<br><br>
+                                <strong>Roles:</strong> Leader · Co-Leader (max. 2) · Officer · Member<br>
+                                <strong>Founding:</strong> 3 players + 5,000 Coins
                             </p>
                         </section>
+                        <footer>
+                            <span class="badge badge-secondary">New in S2</span>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 8v4l3 3"/>
+                                </svg>
+                                <span data-i18n="coins.heading">Coin Economy</span>
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="coins.subtitle">Earn coins, expand your territory.</p>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm leading-relaxed" data-i18n="coins.body">
+                                Start with 500 Coins. Earn more through mob kills, playtime bonuses, Jobs, and trading.
+                                Coins fund claim expansion beyond the free 500 blocks.
+                            </p>
+                        </section>
+                        <footer>
+                            <span class="badge badge-secondary">New in S2</span>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/>
+                                    <path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                                    <path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/>
+                                    <path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/>
+                                    <path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/>
+                                    <path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/>
+                                    <path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/>
+                                    <path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/>
+                                </svg>
+                                <span data-i18n="pvp.heading">PvP Toggle System</span>
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="pvp.subtitle">Opt-in PvP with 24h cooldown.</p>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm leading-relaxed" data-i18n-html="pvp.body">
+                                Use <code>/pvp on</code> to enable. Turning it back off has a 24h cooldown.
+                                New players get 48h auto-protection. Spawn is always PvP-free.
+                            </p>
+                        </section>
+                        <footer>
+                            <span class="badge badge-secondary">New in S2</span>
+                            <span class="badge badge-secondary">PvPManager</span>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover card-featured md:col-span-2">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                </svg>
+                                <span data-i18n="world.heading">Custom World – Aerlon</span>
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="world.subtitle">Fantasy landscapes, dramatic terrain, and ancient ruins.</p>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm leading-relaxed" data-i18n-html="world.body">
+                                Dense forests with ancient stone arches, towering cliff-backed plains, overgrown plazas,
+                                forgotten settlements with weathered gates, dark underground chambers.
+                                The world of Aerlon was hand-crafted and pre-generated for smooth performance from day one.<br><br>
+                                <strong>BlueMap</strong>, live web map of the entire world.
+                            </p>
+                        </section>
+                        <footer>
+                            <span class="badge badge-secondary">New in S2</span>
+                            <span class="badge badge-secondary">Custom Worldgen</span>
+                            <span class="badge badge-secondary">BlueMap</span>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                    <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                    <line x1="15" y1="9" x2="15.01" y2="9"/>
+                                </svg>
+                                <span data-i18n="rp.heading">RP Status System</span>
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="rp.subtitle">Voluntary roleplay with a visible tag.</p>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm leading-relaxed" data-i18n-html="rp.body">
+                                Toggle with <code>/rp on</code>. Active RP players show <code>[RP]</code> in chat.
+                                Roleplay is always optional. Nobody is forced to participate.
+                            </p>
+                        </section>
+                        <footer>
+                            <span class="badge badge-secondary">New in S2</span>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
+                                    <line x1="13" y1="19" x2="19" y2="13"/>
+                                    <line x1="16" y1="16" x2="20" y2="20"/>
+                                    <line x1="19" y1="21" x2="21" y2="19"/>
+                                </svg>
+                                <span data-i18n="duel.heading">Duel System</span>
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="duel.subtitle">Fair arena fights, no loot lost.</p>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm leading-relaxed" data-i18n-html="duel.body">
+                                Challenge anyone with <code>/duel &lt;player&gt;</code>.
+                                Arena-based, items kept, leaderboard tracking. Available for PvP-off players too.
+                            </p>
+                        </section>
+                        <footer>
+                            <span class="badge badge-secondary">New in S2</span>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                    <polyline points="9 22 9 12 15 12 15 22"/>
+                                </svg>
+                                <span data-i18n="claims.heading">Flexible Region Claims</span>
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="claims.subtitle">Claim any shape, not just chunks.</p>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm leading-relaxed" data-i18n-html="claims.body">
+                                <strong>Homestead</strong> replaces chunk-based claims. Define any region shape with 75+ permission flags.
+                                First 500 blocks² free, then costs Coins.
+                            </p>
+                        </section>
+                        <footer>
+                            <span class="badge badge-secondary">Upgraded in S2</span>
+                            <span class="badge badge-secondary">Homestead</span>
+                        </footer>
                     </div>
 
                 </div>
             </section>
 
-            <!-- Features -->
+            <!-- Features (returning) -->
             <section class="pb-16" id="features">
-                <div class="section-label">SPECIAL FEATURES</div>
+                <div class="section-label" data-i18n="features.label">ALL FEATURES</div>
                 <div class="card mb-6">
                     <section>
-                        <p class="text-muted text-sm">
-                            Our server offers a mix of proven ideas and innovative new features – specifically designed for
-                            a fair, fun, and inclusive Minecraft experience.
+                        <p class="text-muted text-sm" data-i18n="features.intro">
+                            Everything that made Season 1 great is back, plus all the new systems above.
                         </p>
                     </section>
                 </div>
@@ -237,18 +443,17 @@
                                     <path d="m16 21 4-4-4-4"/>
                                     <path d="M20 17H4"/>
                                 </svg>
-                                Java &amp; Bedrock Crossplay
+                                <span data-i18n="f.crossplay.heading">Java &amp; Bedrock Crossplay</span>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm leading-relaxed">
-                                Play together with friends – regardless of whether they are on Java Edition or Bedrock
-                                Edition (e.g., consoles, mobile, Windows 10/11). Thanks to Geyser and Floodgate,
-                                everything runs seamlessly on one server.
+                            <p class="text-muted text-sm leading-relaxed" data-i18n="f.crossplay.body">
+                                Play together regardless of platform: Java or Bedrock (consoles, mobile, Windows 10/11).
+                                Geyser + Floodgate bridge both editions seamlessly.
                             </p>
                         </section>
                         <footer>
-                            <span class="badge badge-secondary">New Feature</span>
+                            <span class="badge badge-outline">Returning Feature</span>
                         </footer>
                     </div>
 
@@ -260,40 +465,17 @@
                                     <line x1="16" y1="8" x2="2" y2="22"/>
                                     <line x1="17.5" y1="15" x2="9" y2="15"/>
                                 </svg>
-                                One-Time Elytra at Spawn
+                                <span data-i18n="f.elytra.heading">One-Time Elytra at Spawn</span>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm leading-relaxed">
-                                At spawn, you receive an Elytra which you can <strong>use once</strong> to explore the
-                                world – just like in the original Craft Attack. After that, it is consumed. This keeps
-                                the feature fair and remains a special start bonus.
+                            <p class="text-muted text-sm leading-relaxed" data-i18n="f.elytra.body">
+                                Receive an Elytra at spawn to explore the world, used once, then consumed.
+                                Keeps the start fair while still giving a special boost.
                             </p>
                         </section>
                         <footer>
-                            <span class="badge badge-outline">Existing Feature</span>
-                        </footer>
-                    </div>
-
-                    <div class="card card-hover">
-                        <header>
-                            <h3 class="font-semibold flex items-center gap-2">
-                                <svg class="lucide" viewBox="0 0 24 24">
-                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                                    <polyline points="9 22 9 12 15 12 15 22"/>
-                                </svg>
-                                Chunk Claim
-                            </h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm leading-relaxed">
-                                Secure your builds and farms with our easy-to-use chunk claim system. Each player can
-                                claim the chunks around their builds to protect their creations from griefing and
-                                unauthorized access.
-                            </p>
-                        </section>
-                        <footer>
-                            <span class="badge">Extra Feature</span>
+                            <span class="badge badge-outline">Returning Feature</span>
                         </footer>
                     </div>
 
@@ -304,17 +486,17 @@
                                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                                 </svg>
-                                Chest &amp; Block Protection
+                                <span data-i18n="f.protection.heading">Chest &amp; Block Protection</span>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm leading-relaxed">
-                                Secure your chests, doors, Redstone machines, and entire bases with a simple right-click.
-                                No one can access your contents without permission.
+                            <p class="text-muted text-sm leading-relaxed" data-i18n="f.protection.body">
+                                Secure chests, doors, and Redstone with a simple right-click.
+                                Nobody accesses your containers without explicit permission.
                             </p>
                         </section>
                         <footer>
-                            <span class="badge">Extra Feature</span>
+                            <span class="badge badge-outline">Returning Feature</span>
                         </footer>
                     </div>
 
@@ -327,17 +509,17 @@
                                     <line x1="12" y1="19" x2="12" y2="22"/>
                                     <line x1="8" y1="22" x2="16" y2="22"/>
                                 </svg>
-                                Voice Chat with 3D Audio
+                                <span data-i18n="f.voice.heading">Voice Chat with 3D Audio</span>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm leading-relaxed">
-                                Communicate directly in the game with other players! Our voice chat plugin offers spatial
-                                sound – you hear from which direction someone is speaking. (Java players only.)
+                            <p class="text-muted text-sm leading-relaxed" data-i18n="f.voice.body">
+                                Spatial voice chat in-game. Hear exactly which direction other players are speaking from.
+                                (Java Edition only.)
                             </p>
                         </section>
                         <footer>
-                            <span class="badge">Extra Feature</span>
+                            <span class="badge badge-outline">Returning Feature</span>
                         </footer>
                     </div>
 
@@ -345,36 +527,54 @@
                         <header>
                             <h3 class="font-semibold flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-                                    <line x1="9" y1="9" x2="9.01" y2="9"/>
-                                    <line x1="15" y1="9" x2="15.01" y2="9"/>
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                                 </svg>
-                                Role-Play Elements
+                                <span data-i18n="f.moderation.heading">Transparent Moderation</span>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm leading-relaxed">
-                                Let your creativity run free with in-game voice chat or the possibility to sit down
-                                properly.
+                            <p class="text-muted text-sm leading-relaxed" data-i18n="f.moderation.body">
+                                CoreProtect logs all block actions. AntiCheat results are in a public Discord channel.
+                                BlueMap web map lets everyone explore the world live.
                             </p>
                         </section>
                         <footer>
-                            <span class="badge">Extra Feature</span>
+                            <span class="badge badge-outline">Returning Feature</span>
+                        </footer>
+                    </div>
+
+                    <div class="card card-hover">
+                        <header>
+                            <h3 class="font-semibold flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M8 3 4 7l4 4"/>
+                                    <path d="M4 7h16"/>
+                                    <path d="m16 21 4-4-4-4"/>
+                                </svg>
+                                <span data-i18n="f.whitelist.heading">Whitelist System</span>
+                            </h3>
+                        </header>
+                        <section>
+                            <p class="text-muted text-sm leading-relaxed" data-i18n="f.whitelist.body">
+                                Short application process before joining. Not a strict gate, just a brief intro round to build a positive, respectful community from day one.
+                            </p>
+                        </section>
+                        <footer>
+                            <span class="badge badge-outline">Returning Feature</span>
                         </footer>
                     </div>
 
                 </div>
                 <p class="text-muted text-sm text-center mt-6 italic">
-                    For detailed instructions on joining with Bedrock, installing optional Java mods, and more,
-                    check out our <a href="https://cloud.avocloud.net/apps/collectives/p/oziR6xHsTfRzw6Y/CraftAttack-13-Community-4"
+                    For Bedrock join instructions and optional Java mods, check our
+                    <a href="https://cloud.avocloud.net/apps/collectives/p/oziR6xHsTfRzw6Y/CraftAttack-13-Community-4"
                         target="_blank" class="accent-link">Documentation ↗</a>.
                 </p>
             </section>
 
             <!-- How to Join -->
             <section class="pb-16" id="join">
-                <div class="section-label">HOW TO JOIN?</div>
+                <div class="section-label" data-i18n="join.label">HOW TO JOIN</div>
                 <div class="card">
                     <header>
                         <h2 class="text-lg font-semibold flex items-center gap-2">
@@ -384,29 +584,33 @@
                                 <line x1="19" y1="8" x2="19" y2="14"/>
                                 <line x1="22" y1="11" x2="16" y2="11"/>
                             </svg>
-                            How Can I Participate?
+                            <span data-i18n="join.heading">How Can I Participate?</span>
                         </h2>
                     </header>
                     <section>
-                        <p class="text-muted text-sm leading-relaxed mb-4">
-                            Getting started is easy: Click the Apply Now button above or fill out the form here directly.<br><br>
-                            This is not a strict "application," but rather a brief introduction round: We want to know who
-                            you are, whether you have experience with Minecraft, and what you expect from the project.<br><br>
-                            This helps us create a <strong>positive and respectful community</strong> and minimize the risk of
-                            griefing, cheating, or toxic behavior from the start. Fairness and fun are our top priorities.
-                            Registration is required to be added to the whitelist!
+                        <p class="text-muted text-sm leading-relaxed mb-4" data-i18n-html="join.body">
+                            Season 2 is currently in planning. Applications will open about 3 weeks before the season starts.<br><br>
+                            To stay updated and be first to know when applications open, join our Discord.
+                            We'll post all announcements there, including the 6-part lore story that sets the stage for Aerlon.<br><br>
+                            This is not a strict application, just a brief introduction round. We want to know who you are,
+                            whether you have Minecraft experience, and what you're looking for.
+                            Our goal: a <strong>positive and respectful community</strong> from the very first day.
                         </p>
-                        <iframe src="https://cloud.avocloud.net/apps/forms/embed/Y4cTLFDtw7HggFQ23sKWFZg2"
-                            height="500"
-                            style="border-radius: 8px; width: 100%; border: none; background: rgba(20, 20, 30, 0.7);"
-                            loading="lazy"></iframe>
+                        <div class="flex gap-3 flex-wrap">
+                            <a href="https://avocloud.net/discord/" class="hero-btn" target="_blank">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                                <span data-i18n="join.btn">Join Discord for Updates</span>
+                            </a>
+                        </div>
                     </section>
                 </div>
             </section>
 
-            <!-- Server Rules -->
+            <!-- Server Rules v3 -->
             <section class="pb-16" id="rules">
-                <div class="section-label">SERVER RULES</div>
+                <div class="section-label" data-i18n="rules.label">SERVER RULES</div>
                 <div class="card">
                     <header>
                         <h2 class="text-lg font-semibold flex items-center gap-2">
@@ -417,301 +621,180 @@
                                 <path d="m9 7 8 8"/>
                                 <path d="m21 11-8-8"/>
                             </svg>
-                            Official Server Rules v2.0
+                            Official Server Rules v3.0
                         </h2>
                     </header>
                     <section>
 
+                        <div class="info-box mb-6" data-i18n-html="rules.grundprinzip">
+                            <strong>Core Principle:</strong> These rules exist so everyone has fun. When in doubt: respect, fairness, common sense. Ask staff if unsure.
+                        </div>
+
                         <ul class="content-list">
 
                             <li><strong>1. No Griefing:</strong>
-                                Destroying, damaging, altering, or obstructing any player's builds, farms, Redstone
-                                contraptions, storage, roads, landscape designs, or claimed areas is <strong>strictly forbidden</strong>.<br>
-                                <strong>Unclaimed Territory Protection:</strong> Areas outside claims are protected if they show
-                                <strong>clear active use</strong>, defined as:
+                                Don't destroy, damage, or alter other players' builds, farms, Redstone, or claimed areas.
                                 <ul class="content-list-2">
-                                    <li>Recent construction (within last 7 days – visible via block history)</li>
-                                    <li>Farms with growing crops or active Redstone</li>
-                                    <li>Marked areas with signs, torches, or boundary indicators</li>
-                                    <li>Storage containers or item frames with items</li>
+                                    <li>Applies to claims AND actively used unclaimed areas</li>
+                                    <li>Unclaimed pure wilderness may be modified normally</li>
+                                    <li>Accidental damage? Report immediately and it will be restored</li>
                                 </ul>
                                 <em><strong>Punishment:</strong></em>
                                 <ul class="content-list-2">
-                                    <li>Minor damage (1–5 blocks): 1-day timeout + full restoration</li>
-                                    <li>Moderate damage (6–20 blocks): 3-day timeout + restoration</li>
-                                    <li>Major destruction (21+ blocks) or malicious intent: 7-day ban or permanent ban</li>
-                                    <li>Repeat offenders: Permanent ban after 3 griefing incidents</li>
+                                    <li>Minor (1–5 blocks): 1-day timeout + restoration</li>
+                                    <li>Moderate (6–20 blocks): 3-day timeout + restoration</li>
+                                    <li>Major (21+) / malicious: 7-day ban; repeat → permanent ban</li>
                                 </ul>
                             </li>
 
                             <li><strong>2. No Stealing:</strong>
-                                Taking items from any container (chests, shulker boxes, barrels, droppers, dispensers,
-                                hoppers, furnaces), player inventories, or protected areas is <strong>never permitted</strong>. This includes:
+                                No access to chests, inventories, or protected areas without permission.
                                 <ul class="content-list-2">
-                                    <li>"Borrowing" items without explicit permission</li>
-                                    <li>Taking items from death chests or graves</li>
-                                    <li>Using hoppers to auto-collect from others' containers</li>
-                                    <li>Stealing from unclaimed but actively used areas</li>
+                                    <li>All containers: Chests, Shulkers, Barrels, Hoppers, Dispensers, Furnaces</li>
+                                    <li>"Borrowing" without permission = theft</li>
+                                    <li>Auto-Hopper pointed at others' containers = immediate violation</li>
+                                    <li>Graves are protected (see Rule 6)</li>
                                 </ul>
                                 <em><strong>Punishment:</strong></em>
                                 <ul class="content-list-2">
-                                    <li>First offense (low value): 2-day timeout + item return</li>
-                                    <li>First offense (high value/rare items): 7-day ban</li>
-                                    <li>Repeat offense: Permanent ban</li>
-                                    <li>Stealing from graves: 3-day ban minimum (Rule 6 applies)</li>
+                                    <li>Low value: 2-day timeout + item return</li>
+                                    <li>High value / rare items: 7-day ban; repeat → permanent</li>
                                 </ul>
                             </li>
 
                             <li><strong>3. Respectful Conduct:</strong>
-                                Harassment, discrimination (racism, sexism, homophobia, transphobia, xenophobia), threats,
-                                bullying, doxxing, or intentionally toxic behavior in-game or Discord is <strong>zero tolerance</strong>.<br>
-                                <strong>Clear Definitions:</strong>
+                                No insults, discrimination, hate speech, harassment, threats, or doxxing, in-game and on Discord.
                                 <ul class="content-list-2">
-                                    <li><strong>Harassment:</strong> Repeated unwanted contact, following players, spam messaging</li>
-                                    <li><strong>Threats:</strong> Any threat of real-world harm or coordinated in-game targeting</li>
-                                    <li><strong>Discrimination:</strong> Slurs, hate speech, or exclusion based on protected characteristics</li>
+                                    <li>Zero tolerance: racism, sexism, homo-/transphobia, slurs</li>
+                                    <li>Repeated contact after "stop" = harassment</li>
+                                    <li>Trolling RP scenes = harassment</li>
                                 </ul>
                                 <em><strong>Punishment:</strong></em>
                                 <ul class="content-list-2">
-                                    <li>Minor offense (single incident, mild language): 1-hour timeout + warning</li>
-                                    <li>Moderate offense (repeated behavior): 1–3 day timeout</li>
-                                    <li>Severe offense (hate speech, threats): 7-day ban minimum</li>
-                                    <li>Extreme offense (doxxing, real threats): Permanent ban + IP ban</li>
+                                    <li>Minor: 1h timeout + warning</li>
+                                    <li>Repeated: 1–3 day timeout</li>
+                                    <li>Severe (hate speech): 7-day ban minimum</li>
+                                    <li>Extreme (doxxing, threats): permanent + IP ban</li>
                                 </ul>
                             </li>
 
-                            <li><strong>4. Land Claim System:</strong>
-                                <div class="section-h3">Claim Commands</div>
+                            <li><strong>4. Claims &amp; Clans:</strong>
+                                Protect your builds with the claim system. Respect others' claims. Follow clan rules.
                                 <ul class="content-list-2">
-                                    <li>Use <code>/claim</code> to claim your first chunk (16×16 blocks)</li>
-                                    <li>To add adjacent chunks: Go to the next chunk and type <code>/claim addchunk [claim name]</code></li>
-                                    <li>Configure permissions: <code>/claim settings</code> (manage trusted players, PvP settings, container access)</li>
-                                    <li>Check claim info: <code>/claim info</code></li>
-                                    <li>Maximum claim size: 64 chunks per player (1024×1024 blocks total)</li>
+                                    <li>First 500 blocks² free; beyond that costs Coins (via Homestead)</li>
+                                    <li>No overlapping claims; 10-block minimum distance</li>
+                                    <li>60 days inactivity → auto-unclaim (80% Coin refund if voluntarily unclaimed)</li>
+                                    <li>Clan founding: 3 players + 5,000 Coins; leader is responsible for members</li>
+                                    <li>Alliances and Wars require mutual consent</li>
                                 </ul>
-                                <div class="section-h3">Claim Responsibilities</div>
-                                <ul class="content-list-2">
-                                    <li>Claims must not overlap with the spawn area (the gorge where the spawn building is built, marked by a claim)</li>
-                                    <li>You may share claim access with <code>/claim trust [player]</code></li>
-                                </ul>
-                                <div class="warning-box">
-                                    <strong>Claiming does not grant immunity from other rules.</strong> You cannot use claims to trap players, create lag machines, or store stolen items.
-                                </div>
+                                <em><strong>Punishment:</strong> Claim/clan abuse → 3-day ban + dissolution</em>
                             </li>
 
-                            <li><strong>5. Roleplay Framework:</strong>
-                                <div class="section-h3">IC vs. OOC Boundaries</div>
-                                <p class="text-muted text-sm mt-1">
-                                    Roleplay areas must be clearly marked with signs. All other areas are OOC by default.
-                                    Use [OOC] tag in chat for out-of-character communication.
-                                    <strong>Roleplay never overrides core rules.</strong> You cannot RP-grief, RP-steal, or
-                                    RP-harass. Any rule violation disguised as RP is punished at double severity.
-                                </p>
-                                <div class="section-h3">Consent is Mandatory</div>
+                            <li><strong>5. Consensual PvP:</strong>
+                                PvP requires <code>/pvp on</code> from both players. Spawn is always safe.
                                 <ul class="content-list-2">
-                                    <li>OOC refusal ("No," "Stop," "OOC break") must be honored immediately</li>
-                                    <li>Joining RP does not consent to permanent character death, item loss, or trauma themes</li>
-                                    <li>Sensitive themes (violence, death, discrimination) require explicit OOC consent</li>
-                                </ul>
-                                <div class="warning-box">
-                                    <strong>Ignoring OOC consent signals is harassment.</strong> Continuing RP after "stop" or
-                                    "break character" results in immediate timeout.<br>
-                                    <em><strong>Punishment:</strong> 2-day timeout for first offense; 7-day ban for repeat violations.</em>
-                                </div>
-                                <div class="section-h3">PvP in Roleplay</div>
-                                <ul class="content-list-2">
-                                    <li>Follows Rule 6 (Balanced PvP) and Rule 7 (Grave Protection)</li>
-                                    <li>Maximum one death per RP encounter unless both players explicitly agree to more</li>
-                                    <li>If a player logs off or disengages, RP combat must stop immediately</li>
-                                    <li>OOC discomfort during RP PvP requires immediate cessation</li>
-                                </ul>
-                            </li>
-
-                            <li><strong>6. Consensual PvP System:</strong>
-                                PvP is only permitted between players who have explicitly agreed to it beforehand.<br>
-                                A single hit with a fist or non-weapon items (e.g., carrots, flowers, tools not intended for
-                                combat) is allowed and does <em>not</em> count as PvP, provided that:
-                                <ul class="content-list-2">
-                                    <li>No armor, equipment, or held items are damaged or destroyed</li>
-                                    <li>No player is killed as a result</li>
+                                    <li>Default: <code>/pvp off</code> for all players</li>
+                                    <li><code>/pvp on → off</code>: 24h cooldown</li>
+                                    <li>Newbie protection: 48h auto-off for new players</li>
+                                    <li>Spawn (500 block radius): always PvP-free</li>
+                                    <li>Combat Tag: 15 sec, no logout, teleport, or PvP toggle</li>
+                                    <li>Combat-Log = treated as death</li>
+                                    <li>Duel System: arena-based, no loot loss, available for all</li>
+                                    <li>Clan Wars: opt-in, 7-day auto-end; no base destruction, grave rules still apply</li>
                                 </ul>
                                 <em><strong>Punishment:</strong></em>
                                 <ul class="content-list-2">
-                                    <li>Unconsented PvP (minor, no death): 1-hour timeout</li>
-                                    <li>Repeated unconsented PvP or causing death without consent: 1-day timeout</li>
-                                    <li>PvP with significant power imbalance or after disengagement: 3-day timeout</li>
-                                    <li>Malicious PvP (e.g., grave robbing after kill): 7-day ban (Rule 7 applies)</li>
+                                    <li>Unauthorized PvP: 1h timeout</li>
+                                    <li>Traps / spawn camping: 3-day timeout</li>
+                                    <li>Status abuse: 1-day timeout; repeat → 7-day ban</li>
                                 </ul>
                             </li>
 
-                            <li><strong>7. Absolute Grave Protection:</strong>
-                                Death locations and graves are <strong>sacred zones</strong> protected in ALL contexts:
+                            <li><strong>6. Absolute Grave Protection:</strong>
+                                Graves are untouchable for 15 minutes after death. No exceptions.
                                 <ul class="content-list-2">
-                                    <li><strong>Grave Definition:</strong> Death chest location or exact death coordinates if no chest was placed</li>
-                                    <li><strong>Protection Duration:</strong> Graves remain protected for exactly <strong>15 minutes</strong> after death</li>
-                                    <li><strong>Protection Radius:</strong> 15-block radius around grave is completely protected</li>
-                                    <li><strong>Forbidden Actions:</strong> Looting, destroying, blocking access, placing hazards (lava, cacti), PvP trapping, or preventing grave access</li>
-                                    <li><strong>After 15 Minutes:</strong> Items will drop from graves and become fair game for anyone to collect</li>
-                                </ul>
-                                <div class="warning-box">
-                                    <strong>This rule applies universally – no exceptions for RP, war, revenge, or "they deserved it."</strong>
-                                    Even accidental grave interference requires immediate reporting and restoration.
-                                </div>
-                                <em><strong>Punishment:</strong></em>
-                                <ul class="content-list-2">
-                                    <li>Accidental interference (immediately reported): Warning + restoration</li>
-                                    <li>Intentional interference: 3-day ban minimum</li>
-                                    <li>Malicious interference (trapping, destroying): 7-day ban</li>
-                                    <li>Repeat offense: Permanent ban</li>
-                                </ul>
-                            </li>
-
-                            <li><strong>8. No Cheating or Unfair Advantages:</strong>
-                                The following are <strong>strictly prohibited</strong>:
-                                <ul class="content-list-2">
-                                    <li><strong>Cheat Clients:</strong> Any hacked client (Wurst, Sigma, Impact, etc.)</li>
-                                    <li><strong>Combat Hacks:</strong> Aimbot, triggerbot, reach, hitboxes, autoclickers</li>
-                                    <li><strong>Movement Hacks:</strong> Speed, flight, spider, step, phase, nofall</li>
-                                    <li><strong>X-Ray:</strong> Any texture pack, mod, or tool that reveals ores (includes "ore highlight" packs)</li>
-                                    <li><strong>Entity Radar:</strong> Mods showing player/mob locations through walls</li>
-                                    <li><strong>Auto-Farmers:</strong> Any automation that operates without player input (AutoFish, AutoMine, AutoEat)</li>
-                                    <li><strong>Coordinate Calculators:</strong> Tools that find structures (bastions, fortresses, monuments)</li>
-                                    <li><strong>Chunk Pregenerators:</strong> Tools that load chunks without player presence</li>
+                                    <li>Grave = death chest at death spot; protection radius 3 blocks</li>
+                                    <li>Only the owner can open during the 15-minute window</li>
+                                    <li>After 15 min: items drop and are free for anyone</li>
+                                    <li>Applies in ALL contexts: PvP, Clan Wars, RP, "they deserved it"</li>
+                                    <li>No trapping (lava, cactus, pistons, mob spawners) or blocking access</li>
                                 </ul>
                                 <em><strong>Punishment:</strong></em>
                                 <ul class="content-list-2">
-                                    <li>First offense: 3-day ban + mod removal verification</li>
-                                    <li>Second offense: 14-day ban</li>
-                                    <li>Third offense or distributing cheats: Permanent ban + IP ban</li>
-                                    <li>Intentional advantage-taking: Permanent ban regardless of offense count</li>
+                                    <li>Accidental (reported immediately): warning + restoration</li>
+                                    <li>Intentional: 3-day ban minimum</li>
+                                    <li>Malicious (trapping): 7-day ban; repeat → permanent</li>
                                 </ul>
                             </li>
 
-                            <li><strong>9. Minimap &amp; Client Rules:</strong>
-                                Minimaps (Xaero's, VoxelMap, etc.) must comply with strict limitations:
+                            <li><strong>7. No Cheats or Unfair Mods:</strong>
+                                No hack clients, X-Ray, auto-farmers, entity radar, or coordinate tools.
                                 <ul class="content-list-2">
-                                    <li><strong>Allowed:</strong> Surface mapping only, basic coordinate display, player arrows (only your own)</li>
-                                    <li><strong>Forbidden:</strong> Cave mode/underground rendering, waypoints at other players' claims without permission, automatic mapping via external tools</li>
-                                    <li><strong>Screenshot Requirement:</strong> Staff may request screenshots of your minimap settings at any time</li>
-                                </ul>
-                                <em><strong>Punishment:</strong> Same as Rule 8 (Cheating) since unfair advantages compromise server integrity.</em>
-                            </li>
-
-                            <li><strong>10. Spawn &amp; Hub Area Rules:</strong>
-                                Spawn area (including the canyon/spawn gorge) has special protections:
-                                <ul class="content-list-2">
-                                    <li><strong>No PvP:</strong> Absolutely no player vs. player combat in the entire spawn canyon area</li>
-                                    <li><strong>PvE Allowed:</strong> You may fight hostile mobs (zombies, skeletons, creepers, etc.) in spawn</li>
-                                    <li><strong>No Traps:</strong> No water/lava traps, piston traps, or fall damage mechanisms</li>
-                                    <li><strong>Building Restrictions:</strong> Only build in designated creative plots or with staff permission</li>
+                                    <li><strong>Forbidden:</strong> Cheat clients (Wurst, Sigma, Impact), combat hacks (aimbot, reach, killaura), movement hacks (fly, speed, nofall), X-Ray + ore-highlight packs, entity radar, auto-farming without input, coordinate finders, chunk pre-gen tools</li>
+                                    <li><strong>Minimaps allowed:</strong> Surface mapping, own position, own waypoints</li>
+                                    <li><strong>Minimaps forbidden:</strong> Cave mode, radar, entity tracking</li>
                                 </ul>
                                 <em><strong>Punishment:</strong></em>
                                 <ul class="content-list-2">
-                                    <li>Minor violation (loitering): 30-minute timeout</li>
-                                    <li>Moderate violation (unauthorized building): 1-day timeout + removal</li>
-                                    <li>Severe violation (PvP in spawn canyon): 3-day timeout</li>
-                                    <li>Malicious violation (griefing spawn): 7-day ban minimum</li>
+                                    <li>1st offense: 3-day ban + mod removal verification</li>
+                                    <li>2nd offense: 14-day ban</li>
+                                    <li>3rd offense / distributing cheats: permanent + IP ban</li>
                                 </ul>
                             </li>
 
-                            <li><strong>11. Performance &amp; Lag Prevention:</strong>
-                                Players must not create builds or farms that degrade server performance, as observed using
-                                <code>/tps</code> or <code>/tpsbar</code>. Any setup causing sustained TPS drops
-                                must be modified or removed immediately upon staff request.
-                                <em><strong>Punishment:</strong></em>
+                            <li><strong>8. No Lag Machines:</strong>
+                                Builds and farms must not degrade server performance.
                                 <ul class="content-list-2">
-                                    <li><strong>Minor lag (temporary):</strong> Warning + 1 hour to fix</li>
-                                    <li><strong>Moderate lag (persistent):</strong> 6-hour timeout + required optimization</li>
-                                    <li><strong>Severe lag (risk of crash):</strong> 3-day ban + staff removal of the build</li>
-                                </ul>
-                            </li>
-
-                            <li><strong>12. Advertising &amp; Self-Promotion:</strong>
-                                Promoting external content requires explicit staff permission:
-                                <ul class="content-list-2">
-                                    <li><strong>Forbidden:</strong> Discord servers, YouTube/Twitch channels, websites, shops, other Minecraft servers</li>
-                                    <li><strong>Allowed with Permission:</strong> Server-related content, community events, charity streams</li>
-                                    <li><strong>Where Banned:</strong> Chat, signs, books, player names, Discord profiles, private messages</li>
-                                    <li><strong>Staff Exception:</strong> Staff may advertise server events and community initiatives</li>
+                                    <li>Staff checks via <code>/tps</code> and profiling</li>
+                                    <li>Large Redstone farms are fine as long as TPS stays stable</li>
+                                    <li>Optimization chance is given before any penalty</li>
                                 </ul>
                                 <em><strong>Punishment:</strong></em>
                                 <ul class="content-list-2">
-                                    <li>First offense: 1-hour timeout + content removal</li>
-                                    <li>Repeat offense: 1-day timeout</li>
-                                    <li>Spam/malicious advertising: 7-day ban</li>
+                                    <li>Minor: warning + 1h fix time</li>
+                                    <li>Persistent: 6h timeout + required fix</li>
+                                    <li>Crash risk: 3-day ban + staff removes the build</li>
                                 </ul>
                             </li>
 
-                            <li><strong>13. Evidence-Based Reporting:</strong>
-                                All reports must be submitted through the official Discord server:
+                            <li><strong>9. Roleplay is Voluntary:</strong>
+                                RP is allowed, but nobody is forced. No coercion, no trolling of RP scenes.
                                 <ul class="content-list-2">
-                                    <li><strong>Primary Method:</strong> Create a ticket on our Discord server: <a href="https://avocloud.net/discord/" target="_blank" class="accent-link">avocloud.net/discord ↗</a></li>
-                                    <li><strong>Required Evidence:</strong> Screenshots with visible coordinates/timestamps OR video recordings</li>
-                                    <li><strong>Context Required:</strong> Evidence must show full context (not just the violation moment)</li>
-                                    <li><strong>In-Game Backup:</strong> You may use <code>/report [player] [reason]</code> but Discord tickets take priority</li>
-                                    <li><strong>Response Time:</strong> Staff will respond to tickets within 24 hours</li>
-                                </ul>
-                                <div class="warning-box">
-                                    <strong>Reports without proper evidence or submitted incorrectly may be ignored.</strong>
-                                    Discord tickets ensure faster processing and better documentation.
-                                </div>
-                            </li>
-
-                            <li><strong>14. Content Creation Policy:</strong>
-                                Streamers and YouTubers must follow strict guidelines:
-                                <ul class="content-list-2">
-                                    <li><strong>Live Mode:</strong> Mandatory <code>/togglelive on</code> before recording/streaming</li>
-                                    <li><strong>Consent Required:</strong> Get explicit OOC permission before filming other players</li>
-                                    <li><strong>Claim Attribution:</strong> Credit server and community in video descriptions</li>
+                                    <li>Toggle with <code>/rp on/off</code>; active RP players show <code>[RP]</code> prefix</li>
+                                    <li>RP players may not pressure others to participate</li>
+                                    <li>Non-RP players don't disrupt active RP scenes</li>
+                                    <li>OOC mark: <code>((Text))</code> or <code>[OOC]</code></li>
+                                    <li>OOC stop signal applies ALWAYS: <code>((stop))</code> or "OOC Stop" in voice chat</li>
+                                    <li>Sensitive topics (violence, death, trauma, discrimination) require explicit OOC consent</li>
+                                    <li>Character death / item loss only with mutual OOC agreement</li>
+                                    <li>RP never overrides server rules. RP violations are double-punished</li>
                                 </ul>
                                 <em><strong>Punishment:</strong></em>
                                 <ul class="content-list-2">
-                                    <li>Minor violation (forgot toggle): Warning</li>
-                                    <li>Major violation (no consent): 1-day timeout + video removal request</li>
-                                    <li>Malicious violation (exploiting rules for views): 7-day ban + permanent streaming ban</li>
+                                    <li>1st offense: warning</li>
+                                    <li>2nd offense: 1-day timeout</li>
+                                    <li>Ignoring OOC stop / RP griefing: 3–7 day ban</li>
                                 </ul>
-                            </li>
-
-                            <li><strong>15. Appeal &amp; Due Process:</strong>
-                                All punishments can be appealed fairly:
-                                <ul class="content-list-2">
-                                    <li><strong>Appeal Window:</strong> 7 days from punishment date</li>
-                                    <li><strong>Process:</strong> Submit appeal via Discord ticket with evidence and explanation</li>
-                                    <li><strong>Review Panel:</strong> Appeals reviewed by 2+ staff members not involved in original decision</li>
-                                    <li><strong>Transparency:</strong> Written explanation provided for all appeal decisions</li>
-                                    <li><strong>Emergency Unban:</strong> Immediate review for accidental permanent bans</li>
-                                </ul>
-                                <em><strong>Note:</strong> Appeal success depends on evidence, cooperation, and genuine remorse. Repeat offenders have lower success rates.</em>
-                            </li>
-
-                            <li><strong>16. Full Agreement &amp; 3-Strike System:</strong>
-                                By joining, you accept these rules completely. The server operates on a strict 3-strike system:
-                                <div class="warning-box">
-                                    <strong>Strike System:</strong><br>
-                                    • <strong>Strike 1:</strong> Temporary ban (duration based on rule severity)<br>
-                                    • <strong>Strike 2:</strong> Longer temporary ban (minimum 7 days)<br>
-                                    • <strong>Strike 3:</strong> Permanent ban from server<br>
-                                    • <strong>Instant Permanent Ban:</strong> For severe violations (hate speech, doxxing, malicious griefing of entire builds)
-                                </div>
-                                <em><strong>Note:</strong> Strikes reset after 6 months of perfect behavior. Genuine accidents with immediate reporting may not count as strikes.</em>
                             </li>
 
                         </ul>
 
-                        <div class="info-box mt-6">
-                            <strong>Community First Philosophy:</strong> These rules exist to protect our community, not
-                            to punish. We prioritize education and restoration over bans.
-                            If you witness a rule violation:<br>
-                            1. <strong>Don't retaliate</strong> – this often makes things worse<br>
-                            2. <strong>Document evidence</strong> with screenshots/video<br>
-                            3. <strong>Report properly</strong> via Discord ticket at <a href="https://avocloud.net/discord/" target="_blank" class="accent-link">avocloud.net/discord ↗</a><br>
-                            4. <strong>Trust the process</strong> – staff will handle it fairly
+                        <div class="warning-box mt-4">
+                            <strong>Advertising:</strong> External content (Discord servers, YouTube channels, other Minecraft servers, shops) may not be promoted in chat, on signs, in books, or in player names. Community-related content is usually fine, ask staff if unsure. Abuse: timeout up to permanent ban.
+                        </div>
+
+                        <div class="info-box mt-4">
+                            <strong>Reporting:</strong> Via Discord ticket at <a href="https://avocloud.net/discord/" target="_blank" class="accent-link">avocloud.net/discord ↗</a><br>
+                            Required: screenshots with coordinates/timestamps OR video. Response time: &lt;24h.<br><br>
+                            <strong>3-Strike System:</strong> Strike 1 = temporary ban · Strike 2 = longer ban (min. 7 days) · Strike 3 = permanent ban.<br>
+                            Instant perma-ban for: hate speech, doxxing, mass griefing, cheat distribution.<br>
+                            Strikes reset after 6 months without violations. Accidents reported immediately may not count.<br><br>
+                            <strong>Appeals:</strong> 7-day window via Discord ticket. Reviewed by 2+ uninvolved staff. Decision provided in writing.
                         </div>
 
                         <p class="text-muted text-sm mt-4 leading-relaxed">
-                            Have questions or need clarification? <strong>Contact staff immediately:</strong><br>
-                            • Discord: Open a ticket at <a href="https://avocloud.net/discord/" target="_blank" class="accent-link">avocloud.net/discord ↗</a><br><br>
-                            <strong>Remember:</strong> A great server is built by players who respect each other. Let's make this community amazing together.
+                            <strong>Community First:</strong> These rules exist so everyone has fun. Education before punishment.
+                            If you see a violation: don't retaliate, document it, report via Discord ticket, trust the process.
                         </p>
 
                     </section>
@@ -720,45 +803,36 @@
 
             <!-- Logging -->
             <section class="pb-16" id="logging">
-                <div class="section-label">SERVER MONITORING &amp; LOGGING</div>
+                <div class="section-label" data-i18n="logging.label">SERVER MONITORING &amp; LOGGING</div>
                 <div class="card">
                     <header>
                         <h2 class="text-lg font-semibold flex items-center gap-2">
                             <svg class="lucide" viewBox="0 0 24 24">
                                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                             </svg>
-                            Transparency in Moderation
+                            <span data-i18n="logging.heading">Transparency in Moderation</span>
                         </h2>
                     </header>
                     <section>
-                        <p class="text-muted text-sm mb-4">
-                            To ensure a safe and fair environment for all players, we employ several monitoring and logging systems:
+                        <p class="text-muted text-sm mb-4" data-i18n="logging.intro">
+                            To ensure a safe and fair environment for all players, we run several monitoring and logging systems:
                         </p>
                         <ul class="content-list">
-                            <li><strong>Chat Logging:</strong> All Minecraft chat messages are logged and sent to a Discord
-                                channel that is only accessible to staff members for moderation purposes.</li>
-                            <li><strong>Player Analytics:</strong> We have the "Plan – Player Analytics" plugin installed to
-                                monitor server performance, gather analytics, and assist with moderation decisions.</li>
-                            <li><strong>CoreProtect Logging:</strong> We log player actions including block
-                                placement/destruction, item drops/pickups, container access, and other interactions using
-                                the CoreProtect plugin. These logs are used exclusively for moderation purposes, grief
-                                investigations, and rollbacks when needed.</li>
-                            <li><strong>Public AntiCheat Logging:</strong> All AntiCheat detections and resulting
-                                punishments are logged in a public Discord channel visible to all server members to ensure
-                                transparency in our moderation process.</li>
+                            <li><strong>Chat Logging:</strong> All in-game chat messages are logged and forwarded to a staff-only Discord channel for moderation purposes.</li>
+                            <li><strong>Player Analytics:</strong> The "Plan – Player Analytics" plugin monitors server performance and assists with moderation decisions.</li>
+                            <li><strong>CoreProtect Logging:</strong> All block placements, destructions, item drops/pickups, and container access are logged. Used exclusively for grief investigations and rollbacks.</li>
+                            <li><strong>Public AntiCheat Logging:</strong> All AntiCheat detections and resulting punishments are logged in a public Discord channel for full transparency.</li>
                         </ul>
                         <div class="info-box">
-                            <strong>Privacy Commitment:</strong> All logged data is used solely for server moderation,
-                            performance optimization, and community protection. We do not share personal gameplay data
-                            with third parties.
+                            <strong>Privacy Commitment:</strong> All logged data is used solely for server moderation, performance optimization, and community protection. We do not share personal gameplay data with third parties.
                         </div>
                     </section>
                 </div>
             </section>
 
-            <!-- Downloads -->
+            <!-- Season 1 Archive -->
             <section class="pb-16" id="downloads">
-                <div class="section-label">DOWNLOADS</div>
+                <div class="section-label" data-i18n="archive.label">SEASON 1 ARCHIVE</div>
                 <div class="card mb-6">
                     <header>
                         <h2 class="text-lg font-semibold flex items-center gap-2">
@@ -767,13 +841,13 @@
                                 <polyline points="7 10 12 15 17 10"/>
                                 <line x1="12" y1="15" x2="12" y2="3"/>
                             </svg>
-                            Server Backups
+                            <span data-i18n="archive.heading">Season 1 Server Backups</span>
                         </h2>
                     </header>
                     <section>
-                        <p class="text-muted text-sm mb-6">
-                            These are full, ready-to-run backups of the CraftAttack server. You can download, extract, and
-                            launch them directly – perfect for private testing, archiving, or self-hosting.
+                        <p class="text-muted text-sm mb-6" data-i18n="archive.intro">
+                            Season 1 is complete. These are full, ready-to-run backups of the CraftAttack Season 1 server.
+                            Download, extract, and launch them directly, perfect for private testing, archiving, or self-hosting.
                         </p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -845,92 +919,231 @@
         </main>
 
         <footer class="site-footer">
-            <p>Avocloud.net &mdash; An open-source software development group</p>
+            <p data-i18n="footer.text">Avocloud.net, an open-source software development group</p>
         </footer>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" onclick="closeLightbox()"
+         style="position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out;">
+        <img id="lightbox-img" src="" alt=""
+             style="max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 0 60px rgba(0,0,0,0.7);">
+        <button onclick="closeLightbox()"
+                style="position:absolute;top:1rem;right:1.25rem;background:none;border:none;color:white;font-size:2rem;line-height:1;cursor:pointer;opacity:0.8;">&#x2715;</button>
     </div>
 
     <script src="../assets/js/main.js"></script>
 
     <script>
-        function updateCountdown() {
-            var targetDate = new Date('2025-12-01T18:00:00+01:00');
-            var now = new Date();
-            var diff = targetDate - now;
+    // Lightbox
+    function openLightbox(src, alt) {
+        var lb = document.getElementById('lightbox');
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox-img').alt = alt || '';
+        lb.classList.add('lb-active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('lb-active');
+        document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeLightbox();
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.gallery-card').forEach(function(card) {
+            card.addEventListener('click', function() {
+                var img = card.querySelector('.gallery-img');
+                openLightbox(img.src, img.alt);
+            });
+        });
+    });
 
-            if (diff <= 0) {
-                document.getElementById('countdown').innerHTML = '<span style="color:#9333ea;">Season 1 has ended</span>';
-                return;
-            }
+    // i18n
+    const _i18nData = {
+      en: {
+        'hero.btn.apply': 'Apply Now',
+        'hero.season': 'Season 2 – The Ashes of Aerlon',
+        'hero.serveraddr': 'Server Address:',
+        'hero.quote': '„Aerlon was once a great kingdom, powerful, radiant, full of magic and life.<br>Now new travelers come to the land."',
+        'lore.label': 'THE ASHES OF AERLON',
+        'lore.reborn.heading': 'A World Reborn from Ash',
+        'lore.reborn.body1': 'Aerlon was once a great kingdom, powerful, radiant, full of magic and life. What exactly happened, nobody remembers anymore. All that remained was ash: overgrown ruins, silent forests, forgotten paths.',
+        'lore.reborn.body2': 'Now new travelers come to the land. Not as heroes or heirs, simply as the first to return. Some seek treasure. Some seek a new beginning.',
+        'lore.reborn.strong': 'The land is open. What you make of it is up to you.',
+        'lore.world.heading': 'Custom World – Aerlon',
+        'lore.world.body': 'Aerlon stretches across dense forests where stone arches of an older age still loom between the trees, over vast arid plains backed by towering cliffs, through overgrown plazas lined with ancient columns, past forgotten settlements behind weathered wooden gates, and down into dark underground chambers where old structures still stand.',
+        'lore.goal.heading': 'Our Goal',
+        'lore.goal.body': 'Build a world together, as a community. Whether you\'re a streamer, a YouTuber, or just someone who wants to have fun and explore: everyone is welcome. No gates, no elites. Just people who want to create something together.',
+        'lore.gallery.caption': 'Screenshots from the Aerlon world – Season 2.',
+        'new.label': 'NEW IN SEASON 2',
+        'new.intro': 'Season 2 keeps everything that worked in Season 1 and adds new systems based on community feedback and lessons learned.',
+        'clan.heading': 'Clan System',
+        'clan.subtitle': 'Form groups, build together, and declare wars (opt-in).',
+        'clan.body': 'Clans have their own chat (<code>/cc</code>), bank, home point, claim territory, and shared chest. Ally with other clans or declare war. Both require mutual consent.<br><br><strong>Roles:</strong> Leader · Co-Leader (max. 2) · Officer · Member<br><strong>Founding:</strong> 3 players + 5,000 Coins',
+        'coins.heading': 'Coin Economy',
+        'coins.subtitle': 'Earn coins, expand your territory.',
+        'coins.body': 'Start with 500 Coins. Earn more through mob kills, playtime bonuses, Jobs, and trading. Coins fund claim expansion beyond the free 500 blocks.',
+        'pvp.heading': 'PvP Toggle System',
+        'pvp.subtitle': 'Opt-in PvP with 24h cooldown.',
+        'pvp.body': 'Use <code>/pvp on</code> to enable. Turning it back off has a 24h cooldown. New players get 48h auto-protection. Spawn is always PvP-free.',
+        'world.heading': 'Custom World – Aerlon',
+        'world.subtitle': 'Fantasy landscapes, dramatic terrain, and ancient ruins.',
+        'world.body': 'Dense forests with ancient stone arches, towering cliff-backed plains, overgrown plazas, forgotten settlements with weathered gates, dark underground chambers. The world of Aerlon was hand-crafted and pre-generated for smooth performance from day one.<br><br><strong>BlueMap</strong>, live web map of the entire world.',
+        'rp.heading': 'RP Status System',
+        'rp.subtitle': 'Voluntary roleplay with a visible tag.',
+        'rp.body': 'Toggle with <code>/rp on</code>. Active RP players show <code>[RP]</code> in chat. Roleplay is always optional. Nobody is forced to participate.',
+        'duel.heading': 'Duel System',
+        'duel.subtitle': 'Fair arena fights, no loot lost.',
+        'duel.body': 'Challenge anyone with <code>/duel &lt;player&gt;</code>. Arena-based, items kept, leaderboard tracking. Available for PvP-off players too.',
+        'claims.heading': 'Flexible Region Claims',
+        'claims.subtitle': 'Claim any shape, not just chunks.',
+        'claims.body': '<strong>Homestead</strong> replaces chunk-based claims. Define any region shape with 75+ permission flags. First 500 blocks² free, then costs Coins.',
+        'features.label': 'ALL FEATURES',
+        'features.intro': 'Everything that made Season 1 great is back, plus all the new systems above.',
+        'f.crossplay.heading': 'Java & Bedrock Crossplay',
+        'f.crossplay.body': 'Play together regardless of platform: Java or Bedrock (consoles, mobile, Windows 10/11). Geyser + Floodgate bridge both editions seamlessly.',
+        'f.elytra.heading': 'One-Time Elytra at Spawn',
+        'f.elytra.body': 'Receive an Elytra at spawn to explore the world, used once, then consumed. Keeps the start fair while still giving a special boost.',
+        'f.protection.heading': 'Chest & Block Protection',
+        'f.protection.body': 'Secure chests, doors, and Redstone with a simple right-click. Nobody accesses your containers without explicit permission.',
+        'f.voice.heading': 'Voice Chat with 3D Audio',
+        'f.voice.body': 'Spatial voice chat in-game. Hear exactly which direction other players are speaking from. (Java Edition only.)',
+        'f.moderation.heading': 'Transparent Moderation',
+        'f.moderation.body': 'CoreProtect logs all block actions. AntiCheat results are in a public Discord channel. BlueMap web map lets everyone explore the world live.',
+        'f.whitelist.heading': 'Whitelist System',
+        'f.whitelist.body': 'Short application process before joining. Not a strict gate, just a brief intro round to build a positive, respectful community from day one.',
+        'join.label': 'HOW TO JOIN',
+        'join.heading': 'How Can I Participate?',
+        'join.body': 'Season 2 is currently in planning. Applications will open about 3 weeks before the season starts.<br><br>To stay updated and be first to know when applications open, join our Discord. We’ll post all announcements there, including the 6-part lore story that sets the stage for Aerlon.<br><br>This is not a strict application, just a brief introduction round. We want to know who you are, whether you have Minecraft experience, and what you’re looking for. Our goal: a <strong>positive and respectful community</strong> from the very first day.',
+        'join.btn': 'Join Discord for Updates',
+        'rules.label': 'SERVER RULES',
+        'rules.grundprinzip': '<strong>Core Principle:</strong> These rules exist so everyone has fun. When in doubt: respect, fairness, common sense. Ask staff if unsure.',
+        'logging.label': 'SERVER MONITORING & LOGGING',
+        'logging.heading': 'Transparency in Moderation',
+        'logging.intro': 'To ensure a safe and fair environment for all players, we run several monitoring and logging systems:',
+        'archive.label': 'SEASON 1 ARCHIVE',
+        'archive.heading': 'Season 1 Server Backups',
+        'archive.intro': 'Season 1 is complete. These are full, ready-to-run backups of the CraftAttack Season 1 server. Download, extract, and launch them directly, perfect for private testing, archiving, or self-hosting.',
+        'footer.text': 'Avocloud.net, an open-source software development group',
+      },
+      de: {
+        'hero.btn.apply': 'Jetzt bewerben',
+        'hero.season': 'Season 2 – Die Asche von Aerlon',
+        'hero.serveraddr': 'Serveradresse:',
+        'hero.quote': '„Aerlon war einst ein großes Reich, mächtig, leuchtend, voll Magie und Leben.<br>Jetzt kommen neue Reisende ins Land."',
+        'lore.label': 'DIE ASCHE VON AERLON',
+        'lore.reborn.heading': 'Eine Welt, neugeboren aus der Asche',
+        'lore.reborn.body1': 'Aerlon war einst ein großes Königreich, mächtig, strahlend, voller Magie und Leben. Was genau geschah, erinnert sich niemand mehr. Übrig blieb nur Asche: verwachsene Ruinen, stille Wälder, vergessene Pfade.',
+        'lore.reborn.body2': 'Nun kommen neue Reisende ins Land. Nicht als Helden oder Erben, einfach als die Ersten, die zurückkehren. Manche suchen Schätze. Manche suchen einen Neuanfang.',
+        'lore.reborn.strong': 'Das Land ist offen. Was du daraus machst, liegt bei dir.',
+        'lore.world.heading': 'Custom World – Aerlon',
+        'lore.world.body': 'Aerlon erstreckt sich über dichte Wälder, in denen steinerne Bögen aus einer älteren Zeit zwischen den Bäumen aufragen, über weite karge Ebenen vor mächtigen Klippen, durch verwachsene Plätze mit alten Säulen, an vergessenen Siedlungen hinter verwitterten Holztoren vorbei und tief hinab in dunkle unterirdische Kammern, in denen alte Strukturen noch immer stehen.',
+        'lore.goal.heading': 'Unser Ziel',
+        'lore.goal.body': 'Gemeinsam eine Welt aufbauen, als Community. Egal ob Streamer, YouTuber oder einfach jemand, der Spaß haben und erkunden möchte: Alle sind willkommen. Keine Schranken, keine Eliten. Einfach Menschen, die zusammen etwas erschaffen wollen.',
+        'lore.gallery.caption': 'Screenshots aus der Aerlon-Welt – Season 2.',
+        'new.label': 'NEU IN SEASON 2',
+        'new.intro': 'Season 2 behält alles, was Season 1 ausgemacht hat, und ergänzt neue Systeme basierend auf Community-Feedback und Erfahrungen.',
+        'clan.heading': 'Clan-System',
+        'clan.subtitle': 'Gruppen gründen, zusammenbauen und Kriege erklären (opt-in).',
+        'clan.body': 'Clans haben eigenen Chat (<code>/cc</code>), Bankguthaben, Heimatpunkt, Gebietsanspruch und gemeinsame Truhe. Allianzen oder Kriege erklären. Beides erfordert gegenseitiges Einverständnis.<br><br><strong>Röllen:</strong> Leader · Co-Leader (max. 2) · Officer · Member<br><strong>Gründung:</strong> 3 Spieler + 5.000 Coins',
+        'coins.heading': 'Münzwirtschaft',
+        'coins.subtitle': 'Münzen verdienen, Territorium ausbauen.',
+        'coins.body': 'Start mit 500 Coins. Weitere verdienen durch Mob-Kills, Spielzeit-Boni, Jobs und Handel. Coins finanzieren die Claim-Erweiterung über die kostenlosen 500 Blöcke hinaus.',
+        'pvp.heading': 'PvP-Toggle-System',
+        'pvp.subtitle': 'Opt-in PvP mit 24h-Abklingzeit.',
+        'pvp.body': 'Mit <code>/pvp on</code> aktivieren. Zum Deaktivieren gibt es eine 24h Abklingzeit. Neue Spieler erhalten 48h Auto-Schutz. Spawn ist immer PvP-frei.',
+        'world.heading': 'Custom World – Aerlon',
+        'world.subtitle': 'Weitläufige Landschaften, dramatisches Gelände und alte Ruinen.',
+        'world.body': 'Dichte Wälder mit alten Steinbögen, karge Ebenen vor mächtigen Klippen, verwachsene Plätze, vergessene Siedlungen mit verwitterten Toren, dunkle unterirdische Kammern. Die Welt Aerlons wurde handgefertigt und vorab generiert für flussige Performance vom ersten Tag an.<br><br><strong>BlueMap</strong>, Live-Webkarte der gesamten Welt.',
+        'rp.heading': 'RP-Status-System',
+        'rp.subtitle': 'Freiwilliges Rollenspiel mit sichtbarem Tag.',
+        'rp.body': 'Mit <code>/rp on</code> umschalten. Aktive RP-Spieler zeigen <code>[RP]</code> im Chat. Rollenspiel ist immer optional. Niemand wird gezwungen.',
+        'duel.heading': 'Duell-System',
+        'duel.subtitle': 'Faire Arenakampfe, kein Loot-Verlust.',
+        'duel.body': 'Herausforderung mit <code>/duel &lt;player&gt;</code>. Arenabasiert, Items behalten, Bestenliste. Auch für Spieler mit PvP-off verfügbar.',
+        'claims.heading': 'Flexible Gebietsansprüche',
+        'claims.subtitle': 'Beliebige Formen beanspruchen, nicht nur Chunks.',
+        'claims.body': '<strong>Homestead</strong> ersetzt chunk-basierte Claims. Beliebige Gebietsformen mit 75+ Berechtigungsflags. Erste 500 Blöcke² kostenlos, danach Coins.',
+        'features.label': 'ALLE FEATURES',
+        'features.intro': 'Alles, was Season 1 groß gemacht hat, ist zurück, plus alle neuen Systeme oben.',
+        'f.crossplay.heading': 'Java & Bedrock Crossplay',
+        'f.crossplay.body': 'Gemeinsam spielen unabhängig von der Plattform: Java oder Bedrock (Konsolen, Mobil, Windows 10/11). Geyser + Floodgate verbinden beide Editionen nahtlos.',
+        'f.elytra.heading': 'Einmalige Elytra beim Spawn',
+        'f.elytra.body': 'Eine Elytra beim Spawn erhalten, um die Welt zu erkunden, einmal verwendet, dann verbraucht. Hält den Start fair und gibt trotzdem einen besonderen Boost.',
+        'f.protection.heading': 'Truhen- & Blockschutz',
+        'f.protection.body': 'Truhen, Türen und Redstone mit einem einfachen Rechtsklick schützen. Niemand greift ohne explizite Erlaubnis auf Container zu.',
+        'f.voice.heading': 'Sprachchat mit 3D-Audio',
+        'f.voice.body': 'Räumlicher Sprachchat im Spiel, genau hören, aus welcher Richtung andere Spieler sprechen. (Nur Java Edition.)',
+        'f.moderation.heading': 'Transparente Moderation',
+        'f.moderation.body': 'CoreProtect loggt alle Blockaktionen. AntiCheat-Ergebnisse in einem öffentlichen Discord-Kanal. BlueMap-Webkarte lässt jeden die Welt live erkunden.',
+        'f.whitelist.heading': 'Whitelist-System',
+        'f.whitelist.body': 'Kurzer Bewerbungsprozess vor dem Beitreten. Kein striktes Gate, nur eine kurze Vorstellungsrunde für eine positive, respektvolle Community vom ersten Tag an.',
+        'join.label': 'WIE BEITRETEN?',
+        'join.heading': 'Wie kann ich mitmachen?',
+        'join.body': 'Season 2 ist derzeit in Planung. Bewerbungen öffnen etwa 3 Wochen vor Saisonstart.<br><br>Um auf dem Laufenden zu bleiben, tritt unserem Discord bei. Alle Ankündigungen werden dort gepostet, einschließlich der 6-teiligen Lore-Geschichte, die die Bühne für Aerlon bereitet.<br><br>Das ist keine strenge Bewerbung, nur eine kurze Vorstellungsrunde. Wir möchten wissen, wer du bist, ob du Minecraft-Erfahrung hast und was du suchst. Unser Ziel: eine <strong>positive und respektvolle Community</strong> vom allerersten Tag an.',
+        'join.btn': 'Discord beitreten für Updates',
+        'rules.label': 'SERVER-REGELN',
+        'rules.grundprinzip': '<strong>Grundprinzip:</strong> Diese Regeln existieren, damit alle Spaß haben. Im Zweifel gilt: Respekt, Fairness, gesunder Menschenverstand. Frag Staff bei Unklarheit.',
+        'logging.label': 'SERVER-MONITORING & LOGGING',
+        'logging.heading': 'Transparenz in der Moderation',
+        'logging.intro': 'Um eine sichere und faire Umgebung für alle Spieler zu gewährleisten, betreiben wir mehrere Überwachungs- und Logging-Systeme:',
+        'archive.label': 'SEASON 1 ARCHIV',
+        'archive.heading': 'Season 1 Server-Backups',
+        'archive.intro': 'Season 1 ist abgeschlossen. Dies sind vollständige, startbereite Backups des CraftAttack Season 1 Servers. Einfach herunterladen, entpacken und starten, perfekt für privates Testen, Archivieren oder Self-Hosting.',
+        'footer.text': 'Avocloud.net, eine Open-Source-Softwareentwicklungsgruppe',
+      }
+    };
 
-            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('days').textContent = String(days).padStart(2, '0');
-            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    function applyLang(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (_i18nData[lang] && _i18nData[lang][key] !== undefined) {
+          el.textContent = _i18nData[lang][key];
         }
-
-        function updateNetherCountdown() {
-            var netherDate = new Date('2025-12-06T15:00:00+01:00');
-            var now = new Date();
-            var diff = netherDate - now;
-
-            if (diff <= 0) {
-                document.getElementById('nether-countdown').innerHTML = '<span style="color:#9333ea;">Season 1 has ended</span>';
-                return;
-            }
-
-            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('nether-days').textContent = String(days).padStart(2, '0');
-            document.getElementById('nether-hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('nether-minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('nether-seconds').textContent = String(seconds).padStart(2, '0');
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n-html');
+        if (_i18nData[lang] && _i18nData[lang][key] !== undefined) {
+          el.innerHTML = _i18nData[lang][key];
         }
+      });
+      var btn = document.getElementById('lang-btn');
+      if (btn) {
+        btn.textContent = lang === 'en' ? 'DE' : 'EN';
+        btn.title = lang === 'en' ? 'Auf Deutsch wechseln' : 'Switch to English';
+      }
+      document.documentElement.lang = lang === 'en' ? 'en' : 'de';
+      localStorage.setItem('avo-lang', lang);
+    }
 
-        function updateEndCountdown() {
-            var endDate = new Date('2025-12-19T20:00:00+01:00');
-            var now = new Date();
-            var diff = endDate - now;
+    function toggleLang() {
+      var current = localStorage.getItem('avo-lang') || 'en';
+      applyLang(current === 'en' ? 'de' : 'en');
+    }
 
-            if (diff <= 0) {
-                document.getElementById('end-countdown').innerHTML = '<span style="color:#9333ea;">Season 1 has ended</span>';
-                return;
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+      applyLang(localStorage.getItem('avo-lang') || 'en');
+    });
 
-            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('end-days').textContent = String(days).padStart(2, '0');
-            document.getElementById('end-hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('end-minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('end-seconds').textContent = String(seconds).padStart(2, '0');
+    // Transparent nav at top
+    (function() {
+        var nav = document.getElementById('site-nav');
+        function updateNav() {
+            nav.classList.toggle('nav-at-top', window.scrollY < 10);
         }
-
-        updateCountdown();
-        updateNetherCountdown();
-        updateEndCountdown();
-        setInterval(updateCountdown, 1000);
-        setInterval(updateNetherCountdown, 1000);
-        setInterval(updateEndCountdown, 1000);
+        window.addEventListener('scroll', updateNav, { passive: true });
+        updateNav();
+    })();
     </script>
 
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "Avocloud.net x Craft Attack – Open Minecraft Survival",
-  "startDate": "2025-11-07T18:00:00+01:00",
-  "description": "A community CraftAttack project for everyone – whether streamer or private person! Server Address: craftattack.avocloud.net",
-  "url": "https://avocloud.net",
+  "name": "Avocloud.net x Craft Attack – Season 2: Die Asche von Aerlon",
+  "description": "A community CraftAttack project for everyone, Season 2 set in the ruins of Aerlon. Server: craftattack.avocloud.net",
+  "url": "https://avocloud.net/craftattack/",
   "eventStatus": "https://schema.org/EventScheduled",
   "location": {
     "@type": "Place",
