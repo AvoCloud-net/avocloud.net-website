@@ -241,6 +241,26 @@
                 }
             },
             {
+                feature: 'Music Player (YouTube, SoundCloud, Radio)',
+                values: {
+                    baxi: { status: ComparisonStatus.FREE },
+                    mee6: { status: ComparisonStatus.PREMIUM, tooltip: 'Music plugin requires premium' },
+                    carl: { status: ComparisonStatus.NONE },
+                    dyno: { status: ComparisonStatus.NONE },
+                    probot: { status: ComparisonStatus.PARTIAL, tooltip: 'Limited music features' }
+                }
+            },
+            {
+                feature: 'DiscordGate (Minecraft account linking)',
+                values: {
+                    baxi: { status: ComparisonStatus.FREE },
+                    mee6: { status: ComparisonStatus.NONE },
+                    carl: { status: ComparisonStatus.NONE },
+                    dyno: { status: ComparisonStatus.NONE },
+                    probot: { status: ComparisonStatus.NONE }
+                }
+            },
+            {
                 feature: 'Fully Free',
                 isBold: true,
                 values: {

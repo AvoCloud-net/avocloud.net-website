@@ -4,25 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduGrade – Notenverwaltung für Lehrkräfte</title>
-    <link rel="shortcut icon" href="https://avocloud.net/assets/images/logo.png" type="image/x-icon">
-    <meta name="description" content="EduGrade ist die kostenlose digitale Notenverwaltung für Lehrkräfte – einfach, sicher und übersichtlich. Klassen, Noten und Anwesenheit an einem Ort.">
-    <meta name="keywords" content="EduGrade, Notenverwaltung, Schule, Lehrer, Noten, Schüler, Open Source">
+    <title>EduGrade — Kostenlose Notenverwaltung für Lehrkräfte (DSGVO-konform, Open Source) | Avocloud.net</title>
+    <link rel="icon" href="https://avocloud.net/assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="https://avocloud.net/assets/images/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="https://avocloud.net/assets/images/apple-touch-icon.png">
+    <meta name="description" content="EduGrade — kostenlose, DSGVO-konforme Notenverwaltung für Lehrkräfte. Klassen, Noten, Anwesenheit, PDF-Berichte, sicheres Notenteilen per PIN. Open Source, im Browser auf jedem Gerät.">
+    <meta name="keywords" content="EduGrade, Notenverwaltung, digitale Notenverwaltung, Notenverwaltung Lehrer, Notenverwaltung Lehrkräfte, Notenverwaltung Schule, Notenverwaltung kostenlos, Notenverwaltung Open Source, Notenverwaltung DSGVO, Notenrechner, Notendurchschnitt, Anwesenheits-Tracking, Klassenverwaltung, Lehrer App, Lehrer Software, grade book, grade management, teacher grade app, Notenbuch digital, Avocloud">
     <meta name="author" content="Avocloud.net">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <meta name="googlebot" content="index, follow">
     <link rel="canonical" href="https://avocloud.net/edugrade/" />
-    <meta property="og:title" content="EduGrade – Notenverwaltung für Lehrkräfte">
-    <meta property="og:description" content="Kostenlose Web-App für Lehrkräfte zur Verwaltung von Noten, Klassen und Anwesenheit.">
+    <link rel="alternate" hreflang="de" href="https://avocloud.net/edugrade/">
+    <link rel="alternate" hreflang="en" href="https://avocloud.net/edugrade/?lang=en">
+    <link rel="alternate" hreflang="x-default" href="https://avocloud.net/edugrade/">
+    <meta property="og:title" content="EduGrade — Kostenlose Notenverwaltung für Lehrkräfte (DSGVO-konform, Open Source)">
+    <meta property="og:description" content="Kostenlose, DSGVO-konforme Notenverwaltung für Lehrkräfte: Klassen, Noten, Anwesenheit, PDF-Berichte, sicheres Notenteilen per PIN. Open Source, im Browser.">
     <meta property="og:image" content="https://avocloud.net/edugrade/edugrade-banner.png">
-    <meta property="og:url" content="https://avocloud.net/edugrade">
+    <meta property="og:image:alt" content="EduGrade Dashboard — digitale Notenverwaltung für Lehrkräfte">
+    <meta property="og:url" content="https://avocloud.net/edugrade/">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Avocloud.net">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:locale:alternate" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="EduGrade – Notenverwaltung für Lehrkräfte">
-    <meta name="twitter:description" content="Kostenlose Web-App für Lehrkräfte zur Verwaltung von Noten, Klassen und Anwesenheit.">
+    <meta name="twitter:title" content="EduGrade — Kostenlose Notenverwaltung für Lehrkräfte (DSGVO-konform, Open Source)">
+    <meta name="twitter:description" content="Kostenlose, DSGVO-konforme Notenverwaltung für Lehrkräfte: Klassen, Noten, Anwesenheit, PDF-Berichte, PIN-Teilen. Open Source, im Browser.">
     <meta name="twitter:image" content="https://avocloud.net/edugrade/edugrade-banner.png">
+    <meta name="theme-color" content="#0B0B0B">
+    <link rel="preload" as="image" href="edugrade-banner.png" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800;12..96,900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
     <link rel="stylesheet" href="https://avocloud.net/assets/css/main.css">
@@ -111,7 +122,7 @@
             color: #555;
         }
         html:not(.dark) .screenshot-glow {
-            background: radial-gradient(ellipse, rgba(147,51,234,0.1) 0%, transparent 70%);
+            background: radial-gradient(ellipse, rgba(var(--avo-primary-rgb, 255,107,74),0.1) 0%, transparent 70%);
         }
 
         /* ── Trust badges strip ── */
@@ -131,8 +142,8 @@
             font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 0.03em;
-            background: rgba(147,51,234,0.12);
-            border: 1px solid rgba(147,51,234,0.3);
+            background: rgba(var(--avo-primary-rgb, 255,107,74),0.12);
+            border: 1px solid rgba(var(--avo-primary-rgb, 255,107,74),0.3);
             color: inherit;
             opacity: 0.9;
         }
@@ -156,14 +167,24 @@
         .section-eyebrow { font-size: 0.75rem; }
         .trust-pill { font-size: 0.82rem; }
         .cta-section p { font-size: 1.05rem; }
-        .highlight-blue { color: #818cf8; }
+        .highlight-blue { color: var(--avo-primary-soft); }
 
-        /* ── Hero heading custom font ── */
+        /* ── All headings use Syne (brand heading font) ──
+           Also target child spans: the global `* { Quicksand }` rule
+           otherwise sets the font directly on inner <span>s, beating
+           the Syne inherited from the heading. */
+        h1, h2, h3, h4, h5, h6, .hero-heading,
+        h1 *, h2 *, h3 *, h4 *, h5 *, h6 *, .hero-heading *,
+        .card h3, .card h4, .card header h3, .card-featured h3,
+        .step-card h3, .cta-section h2 {
+            font-family: 'Syne', sans-serif !important;
+        }
+
+        /* ── Hero heading ── */
         .hero-heading {
-            font-family: 'Bricolage Grotesque', sans-serif;
             font-size: clamp(2.6rem, 6.5vw, 4.6rem);
             line-height: 1.0;
-            font-weight: 900;
+            font-weight: 800;
             margin-bottom: 0.75rem;
             position: relative;
             letter-spacing: -0.02em;
@@ -203,31 +224,31 @@
         }
         .hero-orb-1 {
             width: 6px; height: 6px;
-            background: rgba(192,132,252,0.7);
+            background: rgba(var(--avo-primary-soft-rgb, 255,147,121),0.7);
             top: 22%; left: 15%;
             animation-delay: 0s;
         }
         .hero-orb-2 {
             width: 4px; height: 4px;
-            background: rgba(236,72,153,0.6);
+            background: rgba(var(--avo-primary-soft-rgb, 255,147,121),0.6);
             top: 55%; left: 78%;
             animation-delay: -4s;
         }
         .hero-orb-3 {
             width: 5px; height: 5px;
-            background: rgba(96,165,250,0.5);
+            background: rgba(var(--avo-primary-soft-rgb, 255,147,121),0.5);
             top: 70%; left: 25%;
             animation-delay: -7s;
         }
         .hero-orb-4 {
             width: 3px; height: 3px;
-            background: rgba(192,132,252,0.5);
+            background: rgba(var(--avo-primary-soft-rgb, 255,147,121),0.5);
             top: 30%; left: 82%;
             animation-delay: -2s;
         }
         .hero-orb-5 {
             width: 5px; height: 5px;
-            background: rgba(234,179,8,0.4);
+            background: rgba(var(--avo-primary-rgb, 255,107,74),0.4);
             top: 80%; left: 60%;
             animation-delay: -9s;
         }
@@ -241,21 +262,21 @@
         .hero-line {
             position: absolute;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(147,51,234,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(var(--avo-primary-rgb, 255,107,74),0.3), transparent);
             pointer-events: none;
         }
         .hero-line-1 { width: 40%; top: 35%; left: 5%; }
         .hero-line-2 { width: 25%; top: 65%; right: 8%; }
         html:not(.dark) .hero-line {
-            background: linear-gradient(90deg, transparent, rgba(147,51,234,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(var(--avo-primary-rgb, 255,107,74),0.2), transparent);
         }
 
         /* ── Nav CTA button ── */
         .nav-cta-btn {
             padding: 0.35rem 0.9rem;
             font-size: 0.8rem;
-            background: rgba(147,51,234,0.25);
-            border: 1px solid rgba(147,51,234,0.6);
+            background: rgba(var(--avo-primary-rgb, 255,107,74),0.25);
+            border: 1px solid rgba(var(--avo-primary-rgb, 255,107,74),0.6);
             border-radius: 6px;
             text-decoration: none;
             color: inherit;
@@ -266,8 +287,8 @@
             font-weight: 600;
         }
         .nav-cta-btn:hover {
-            background: rgba(147,51,234,0.4);
-            border-color: rgba(147,51,234,0.9);
+            background: rgba(var(--avo-primary-rgb, 255,107,74),0.4);
+            border-color: rgba(var(--avo-primary-rgb, 255,107,74),0.9);
         }
         /* lang-toggle inside nav: reset fixed positioning */
         .site-nav .lang-toggle {
@@ -301,8 +322,8 @@
         .nav-cta-btn {
             padding: 0.35rem 0.9rem;
             font-size: 0.8rem;
-            background: rgba(147,51,234,0.25);
-            border: 1px solid rgba(147,51,234,0.6);
+            background: rgba(var(--avo-primary-rgb, 255,107,74),0.25);
+            border: 1px solid rgba(var(--avo-primary-rgb, 255,107,74),0.6);
             border-radius: 6px;
             text-decoration: none;
             color: inherit;
@@ -312,8 +333,8 @@
             transition: background 0.15s, border-color 0.15s;
         }
         .nav-cta-btn:hover {
-            background: rgba(147,51,234,0.4);
-            border-color: rgba(147,51,234,0.9);
+            background: rgba(var(--avo-primary-rgb, 255,107,74),0.4);
+            border-color: rgba(var(--avo-primary-rgb, 255,107,74),0.9);
         }
 
         /* ── Section preview label ── */
@@ -362,12 +383,12 @@
             font-weight: 800;
             letter-spacing: -0.04em;
             line-height: 1;
-            color: rgba(167, 92, 255, 0.55);
+            color: rgba(var(--avo-primary-rgb, 255,107,74), 0.55);
             display: block;
             margin-bottom: 0.75rem;
         }
         :root[data-theme="light"] .step-card::before {
-            color: rgba(130, 60, 220, 0.5);
+            color: rgba(var(--avo-primary-rgb, 255,107,74), 0.5);
         }
         .step-card h3 {
             font-size: 1.05rem;
@@ -385,8 +406,8 @@
             border-radius: 16px;
             padding: 3rem 2rem;
             text-align: center;
-            background: linear-gradient(135deg, rgba(147,51,234,0.15) 0%, rgba(79,70,229,0.1) 100%);
-            border: 1px solid rgba(147,51,234,0.25);
+            background: linear-gradient(135deg, rgba(var(--avo-primary-rgb, 255,107,74),0.15) 0%, rgba(79,70,229,0.1) 100%);
+            border: 1px solid rgba(var(--avo-primary-rgb, 255,107,74),0.25);
         }
         .cta-section h2 {
             font-size: clamp(1.5rem, 3vw, 2.2rem);
@@ -418,7 +439,7 @@
             content: '"';
             font-size: 5rem;
             line-height: 1;
-            color: rgba(167,92,255,0.5);
+            color: rgba(var(--avo-primary-rgb, 255,107,74),0.5);
             position: absolute;
             top: 0.5rem;
             left: 1.5rem;
@@ -439,7 +460,7 @@
         .testimonial-avatar {
             width: 36px; height: 36px;
             border-radius: 50%;
-            background: rgba(147,51,234,0.3);
+            background: rgba(var(--avo-primary-rgb, 255,107,74),0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -453,8 +474,8 @@
         .feature-icon {
             width: 44px; height: 44px;
             border-radius: 10px;
-            background: rgba(167,92,255,0.18);
-            border: 1px solid rgba(167,92,255,0.35);
+            background: rgba(var(--avo-primary-rgb, 255,107,74),0.18);
+            border: 1px solid rgba(var(--avo-primary-rgb, 255,107,74),0.35);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -465,7 +486,7 @@
         .feature-icon svg {
             width: 20px; height: 20px;
             fill: none;
-            stroke: rgba(190,130,255,0.95);
+            stroke: rgba(var(--avo-primary-soft-rgb, 255,147,121),0.95);
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
@@ -591,7 +612,7 @@
         html:not(.dark) .mobile-nav-link { border-bottom-color: rgba(0,0,0,0.06); }
         .mobile-nav-link:hover { opacity: 1; }
         .mobile-nav-link.mobile-docs-link {
-            color: rgba(167,130,255,1);
+            color: rgba(var(--avo-primary-soft-rgb, 255,147,121),1);
             opacity: 0.95;
             font-weight: 600;
         }
@@ -622,12 +643,12 @@
 
         /* ── Nav docs button ── */
         .nav-docs-btn {
-            background: rgba(99,102,241,0.15) !important;
-            border-color: rgba(99,102,241,0.45) !important;
+            background: transparent !important;
+            border-color: rgba(128,128,128,0.35) !important;
         }
         .nav-docs-btn:hover {
-            background: rgba(99,102,241,0.3) !important;
-            border-color: rgba(99,102,241,0.8) !important;
+            background: rgba(128,128,128,0.12) !important;
+            border-color: rgba(128,128,128,0.6) !important;
         }
 
         /* ── Screenshot section label ── */
@@ -656,8 +677,8 @@
             border-color: rgba(0,0,0,0.1);
         }
         .screenshot-tab.active {
-            background: rgba(147,51,234,0.2);
-            border-color: rgba(147,51,234,0.4);
+            background: rgba(var(--avo-primary-rgb, 255,107,74),0.2);
+            border-color: rgba(var(--avo-primary-rgb, 255,107,74),0.4);
             opacity: 1;
         }
 
@@ -665,11 +686,263 @@
         .screenshot-glow {
             position: absolute;
             width: 60%; height: 40%;
-            background: radial-gradient(ellipse, rgba(147,51,234,0.15) 0%, transparent 70%);
+            background: radial-gradient(ellipse, rgba(var(--avo-primary-rgb, 255,107,74),0.15) 0%, transparent 70%);
             top: -10%;
             left: 20%;
             pointer-events: none;
             filter: blur(40px);
+        }
+
+        /* ════════════════════════════════════════════════════════════
+           APPLE-STYLE MOTION + LAYOUT  (scoped to this page)
+           ════════════════════════════════════════════════════════════ */
+
+        /* ── Scroll-reveal engine ── */
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: calc(var(--d, 0) * 80ms);
+            will-change: opacity, transform;
+        }
+        [data-reveal="left"]  { transform: translateX(-40px); }
+        [data-reveal="right"] { transform: translateX(40px); }
+        [data-reveal="scale"] { transform: scale(0.94); }
+        [data-reveal].is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* ── Stats band ── */
+        .stats-band {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(2rem, 4vw, 3rem) 1rem;
+            padding: 3rem 0;
+            margin: 1rem 0 2rem;
+            border-top: 1px dashed rgba(128,128,128,0.25);
+            border-bottom: 1px dashed rgba(128,128,128,0.25);
+        }
+        .stat-item { text-align: center; }
+        .stat-value {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            white-space: nowrap;
+            color: var(--avo-primary-soft, #FF9379);
+        }
+        .stat-label {
+            font-family: var(--avo-font-mono, ui-monospace, monospace);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.55;
+            margin-top: 0.6rem;
+        }
+        @media (max-width: 640px) {
+            .stats-band { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; }
+        }
+
+        /* ── Full-bleed breakout (escape the max-w-6xl container) ── */
+        body { overflow-x: clip; }
+        .full-bleed {
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+        }
+
+        /* ── Parallax / zoom scroll effects ── */
+        .feature-row-media .screenshot-browser { will-change: transform; }
+        .dash-frame .screenshot-browser {
+            transform: scale(0.84);
+            transform-origin: center 60%;
+            will-change: transform;
+        }
+
+        /* ── Alternating feature rows ── */
+        .feature-row {
+            display: grid;
+            grid-template-columns: 0.8fr 1.6fr;
+            align-items: center;
+            gap: clamp(2rem, 5vw, 5.5rem);
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: clamp(3.5rem, 8vw, 7rem) clamp(1.25rem, 4vw, 4rem);
+        }
+        .feature-row.reverse .feature-row-text  { order: 2; }
+        .feature-row.reverse .feature-row-media { order: 1; }
+        .feature-row-eyebrow {
+            font-family: var(--avo-font-mono, ui-monospace, monospace);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(var(--avo-primary-rgb, 255,107,74), 0.9);
+            margin-bottom: 1rem;
+        }
+        .feature-row-text h2 {
+            font-size: clamp(2.1rem, 4.6vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.04;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.1rem;
+        }
+        .feature-row-text p {
+            font-size: 1.08rem;
+            line-height: 1.75;
+            opacity: 0.72;
+            max-width: 46ch;
+        }
+        .feature-row-text .feature-row-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .feature-row-media { position: relative; perspective: 1400px; }
+        .feature-row-media .screenshot-glow {
+            width: 80%; height: 70%;
+            top: 0; left: 10%;
+        }
+        @media (max-width: 860px) {
+            .feature-row {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 3rem clamp(1.25rem, 5vw, 2rem);
+            }
+            .feature-row.reverse .feature-row-text  { order: 1; }
+            .feature-row.reverse .feature-row-media { order: 2; }
+            .feature-row-text p { max-width: none; }
+            .feature-row-media .screenshot-browser, .dash-frame .screenshot-browser { transform: none !important; }
+        }
+
+        /* ── Big immersive dashboard showcase ── */
+        .dash-showcase {
+            padding: clamp(4rem, 9vw, 8rem) clamp(1.5rem, 5vw, 5rem) clamp(3rem, 6vw, 5rem);
+            text-align: center;
+        }
+        .dash-showcase-head {
+            max-width: 640px;
+            margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+        }
+        .dash-showcase-head .section-eyebrow { justify-content: center; }
+        .dash-showcase-head h2 {
+            font-size: clamp(2.2rem, 5.5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.03;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+        .dash-showcase-head p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            opacity: 0.7;
+            max-width: 48ch;
+            margin: 0 auto;
+        }
+        .dash-frame {
+            position: relative;
+            max-width: 1720px;
+            margin: 0 auto;
+            perspective: 1700px;
+        }
+        .dash-frame .screenshot-glow {
+            width: 90%; height: 80%;
+            top: -8%; left: 5%;
+            filter: blur(60px);
+        }
+        .dash-frame .screenshot-browser {
+            box-shadow: 0 48px 120px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.07);
+        }
+        html:not(.dark) .dash-frame .screenshot-browser {
+            box-shadow: 0 48px 120px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.08);
+        }
+
+        /* ── Word-by-word headline reveal ── */
+        .word-reveal .wr {
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: top;
+            line-height: 1.04;
+        }
+        .word-reveal .wr > span {
+            display: inline-block;
+            transform: translateY(112%);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+        }
+        .word-reveal.words-in .wr > span {
+            transform: none;
+            opacity: 1;
+        }
+
+        /* ── Aurora glow behind feature rows ── */
+        .feature-rows { position: relative; }
+        .feature-row  { position: relative; z-index: 1; }
+        .aurora {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .aurora span {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.45;
+        }
+        .aurora span:nth-child(1) {
+            width: 42vw; height: 42vw; left: -6%; top: 4%;
+            background: radial-gradient(circle, rgba(var(--avo-primary-rgb, 255,107,74),0.32), transparent 70%);
+            animation: aurora-a 22s ease-in-out infinite;
+        }
+        .aurora span:nth-child(2) {
+            width: 36vw; height: 36vw; right: -6%; top: 34%;
+            background: radial-gradient(circle, rgba(var(--avo-primary-soft-rgb, 255,147,121),0.24), transparent 70%);
+            animation: aurora-b 27s ease-in-out infinite;
+        }
+        .aurora span:nth-child(3) {
+            width: 32vw; height: 32vw; left: 32%; bottom: -4%;
+            background: radial-gradient(circle, rgba(var(--avo-primary-rgb, 255,107,74),0.20), transparent 70%);
+            animation: aurora-c 31s ease-in-out infinite;
+        }
+        html:not(.dark) .aurora span { opacity: 0.26; }
+        @keyframes aurora-a { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(8vw,6vh) scale(1.15); } }
+        @keyframes aurora-b { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-7vw,-5vh) scale(1.1); } }
+        @keyframes aurora-c { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(5vw,-7vh) scale(1.2); } }
+
+        /* ── Reduced motion: everything static ── */
+        @media (prefers-reduced-motion: reduce) {
+            [data-reveal] {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+            .hero-orb { animation: none !important; opacity: 0.6 !important; }
+            .feature-row-media .screenshot-browser, .dash-frame .screenshot-browser { transform: none !important; }
+            .word-reveal .wr > span { transform: none !important; opacity: 1 !important; }
+            .aurora span { animation: none !important; }
+        }
+
+        /* ── Screenshot fallback (placeholder until real images exist) ── */
+        .screenshot-body { position: relative; }
+        .shot-fallback {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 300px;
+            padding: 2rem 1.5rem;
+            opacity: 0.4;
+            font-family: var(--avo-font-mono, ui-monospace, monospace);
+            font-size: 0.82rem;
+            letter-spacing: 0.03em;
+            line-height: 1.6;
+            word-break: break-all;
         }
     </style>
 </head>
@@ -682,11 +955,12 @@
         <a class="avocloud-logo" href="/" aria-label="AVOCLOUD.NET">
             <span class="avocloud-logo__slot">
                 <span class="avocloud-logo__icon">
-                    <svg viewBox="0 0 100 75" fill="none">
-                        <path d="M 43 65 L 11 65 L 33 10 L 67 65 L 91 12"
-                            stroke="currentColor" stroke-width="8.5"
+                    <svg viewBox="0 0 72 72" fill="none">
+                        <path d="M22 18 L12 18 L12 54 L22 54 M50 18 L60 18 L60 54 L50 54 M26 30 L33 36 L26 42"
+                            stroke="currentColor" stroke-width="6"
                             stroke-linecap="round" stroke-linejoin="round"
                             pathLength="200"/>
+                        <rect class="logo-cursor" x="40" y="28" width="4" height="16" rx="2"/>
                     </svg>
                 </span>
                 <span class="avocloud-logo__av">AVO</span>
@@ -783,8 +1057,6 @@
         <div class="hero-orb hero-orb-3"></div>
         <div class="hero-orb hero-orb-4"></div>
         <div class="hero-orb hero-orb-5"></div>
-        <div class="hero-line hero-line-1"></div>
-        <div class="hero-line hero-line-2"></div>
         <div class="hero-content">
             <div class="hero-eyebrow" data-i18n="hero.eyebrow">KOSTENLOS · OPEN SOURCE · DSGVO-KONFORM</div>
             <h1 class="hero-heading">
@@ -802,7 +1074,7 @@
 
             <div class="flex flex-wrap gap-3 justify-center mt-6">
                 <a href="https://edugrade.avocloud.net" target="_blank" class="hero-btn"
-                    style="background:rgba(147,51,234,0.25);border-color:rgba(147,51,234,0.65);">
+                    style="background:rgba(var(--avo-primary-rgb, 255,107,74),0.25);border-color:rgba(var(--avo-primary-rgb, 255,107,74),0.65);">
                     <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
                         <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
                         <path d="M6 12v5c3 3 9 3 12 0v-5"/>
@@ -849,190 +1121,201 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <main>
 
-            <!-- Features -->
-            <section class="py-24" id="features">
-                <div class="section-eyebrow" data-i18n="features.label">Features</div>
-                <h2 class="text-3xl font-bold mb-3" style="line-height:1.15;">
-                    <span data-i18n="features.h2a">Alles, was Lehrkräfte</span><br>
-                    <span class="highlight-blue" data-i18n="features.h2b">wirklich brauchen.</span>
-                </h2>
-                <p class="text-muted mb-10" style="max-width:480px;" data-i18n="features.desc">
-                    Von der Klassenerstellung bis zum PDF-Export – EduGrade deckt den gesamten Workflow ab.
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-
-                    <!-- Klassen & Schuljahre -->
-                    <div class="card card-hover">
-                        <header>
-                            <div class="feature-icon">
-                            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                        </div>
-                            <h3 class="font-semibold" data-i18n="feat.classes.title">Klassen & Schuljahre</h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm" data-i18n="feat.classes.desc">Klassen anlegen, Schüler einzeln oder per CSV importieren. Mehrere Schuljahre parallel verwalten.</p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary" data-i18n="badge.classes">Klassen</span>
-                                <span class="badge badge-secondary" data-i18n="badge.import">CSV-Import</span>
-                            </div>
-                        </footer>
+            <!-- Stats band -->
+            <section class="pt-16" id="features">
+                <div class="stats-band" data-reveal="up">
+                    <div class="stat-item">
+                        <div class="stat-value" data-count="0" data-suffix="€">0€</div>
+                        <div class="stat-label" data-i18n="stat.cost.label">Kosten</div>
                     </div>
-
-                    <!-- Noten -->
-                    <div class="card card-hover">
-                        <header>
-                            <div class="feature-icon">
-                            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                        </div>
-                            <h3 class="font-semibold" data-i18n="feat.grades.title">Noten mit Gewichtung</h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm" data-i18n="feat.grades.desc">Kategorien, Plus/Minus-System und individuelle Gewichtung. Der Durchschnitt wird automatisch berechnet.</p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary" data-i18n="badge.weighting">Gewichtung</span>
-                                <span class="badge badge-secondary" data-i18n="badge.plusminus">Plus/Minus</span>
-                            </div>
-                        </footer>
+                    <div class="stat-item">
+                        <div class="stat-value" data-static>∞</div>
+                        <div class="stat-label" data-i18n="stat.unlimited.label">Klassen &amp; Schüler</div>
                     </div>
-
-                    <!-- Anwesenheit -->
-                    <div class="card card-hover">
-                        <header>
-                            <div class="feature-icon">
-                            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        </div>
-                            <h3 class="font-semibold" data-i18n="feat.attendance.title">Anwesenheits-Tracking</h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm" data-i18n="feat.attendance.desc">Abwesenheiten schnell erfassen. Automatische Warnung bei Unterschreitung der Mindestpräsenz.</p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary" data-i18n="badge.absent">Abwesenheiten</span>
-                                <span class="badge badge-secondary" data-i18n="badge.warnings">Warnungen</span>
-                            </div>
-                        </footer>
+                    <div class="stat-item">
+                        <div class="stat-value" data-count="3">3</div>
+                        <div class="stat-label" data-i18n="stat.steps.label">Schritte zum Start</div>
                     </div>
-
-                    <!-- PDF Export -->
-                    <div class="card card-hover">
-                        <header>
-                            <div class="feature-icon">
-                            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                        </div>
-                            <h3 class="font-semibold" data-i18n="feat.export.title">Berichte & PDF-Export</h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm" data-i18n="feat.export.desc">Schülerberichte als PDF drucken oder exportieren. Übersichtliche Tabellen für jede Klasse.</p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">PDF</span>
-                                <span class="badge badge-secondary" data-i18n="badge.reports">Berichte</span>
-                            </div>
-                        </footer>
+                    <div class="stat-item">
+                        <div class="stat-value" data-static data-i18n="stat.setup.value">&lt; 1 Min</div>
+                        <div class="stat-label" data-i18n="stat.setup.label">bis startklar</div>
                     </div>
-
-                    <!-- Sicheres Teilen -->
-                    <div class="card card-hover">
-                        <header>
-                            <div class="feature-icon">
-                            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        </div>
-                            <h3 class="font-semibold" data-i18n="feat.share.title">Noten sicher teilen</h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm" data-i18n="feat.share.desc">Schüler erhalten ihre Noten per individuellem PIN. Der Link läuft automatisch ab – kein Missbrauch möglich.</p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary" data-i18n="badge.pin">6-stelliger PIN</span>
-                                <span class="badge badge-secondary" data-i18n="badge.timelimited">Zeitbegrenzt</span>
-                            </div>
-                        </footer>
+                    <div class="stat-item">
+                        <div class="stat-value" data-static>Web</div>
+                        <div class="stat-label" data-i18n="stat.device.label">auf jedem Gerät</div>
                     </div>
-
-                    <!-- Verschlüsselt -->
-                    <div class="card card-hover card-featured">
-                        <header>
-                            <div class="feature-icon">
-                            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                        </div>
-                            <h3 class="font-semibold" data-i18n="feat.encrypt.title">Verschlüsselt & DSGVO-konform</h3>
-                        </header>
-                        <section>
-                            <p class="text-muted text-sm" data-i18n="feat.encrypt.desc">Alle Daten werden mit AES-256-GCM verschlüsselt. Zero-Knowledge: Selbst der Server-Betreiber kann die Daten nicht lesen.</p>
-                        </section>
-                        <footer>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="badge badge-secondary">AES-256-GCM</span>
-                                <span class="badge badge-secondary">Zero-Knowledge</span>
-                                <span class="badge badge-secondary">DSGVO</span>
-                            </div>
-                        </footer>
+                    <div class="stat-item">
+                        <div class="stat-value" data-static data-i18n="stat.dsgvo.value">DSGVO</div>
+                        <div class="stat-label" data-i18n="stat.dsgvo.label">konform</div>
                     </div>
-
                 </div>
             </section>
 
-            <!-- Screenshot Preview -->
-            <section class="screenshot-section" id="preview">
-                <div style="position:relative;">
+            <!-- Dashboard showcase (big immersive) -->
+            <section class="dash-showcase full-bleed" id="preview">
+                <div class="dash-showcase-head" data-reveal="up">
                     <div class="section-eyebrow" data-i18n="preview.label">Dashboard</div>
-                    <h2 class="text-3xl font-bold mb-3" data-i18n="preview.h2">Alles im Blick, auf einen Blick.</h2>
-                    <p class="text-muted mb-8" style="max-width:420px;" data-i18n="preview.desc">
-                        Das intuitive Dashboard zeigt Ihnen alle wichtigen Kennzahlen Ihrer Klassen auf einen Blick.
-                    </p>
-
-                    <div class="screenshot-wrapper" style="position:relative;">
-                        <div class="screenshot-glow"></div>
-
-                        <!-- Dark theme screenshot -->
-                        <div class="screenshot-dark">
-                            <div class="screenshot-browser">
-                                <div class="screenshot-bar">
-                                    <span class="screenshot-dot" style="background:#ff5f57;"></span>
-                                    <span class="screenshot-dot" style="background:#febc2e;"></span>
-                                    <span class="screenshot-dot" style="background:#28c840;"></span>
-                                    <span class="screenshot-url">edugrade.avocloud.net</span>
-                                </div>
-                                <div class="screenshot-body">
-                                    <!-- Placeholder – replace src with real dark screenshot -->
-                                    <img
-                                        src="https://avocloud.net/assets/images/edugrade-screenshot-dark.png"
-                                        alt="EduGrade Dashboard – Dark Mode"
-                                        onerror="this.parentElement.innerHTML=`<div style='height:420px;display:flex;align-items:center;justify-content:center;opacity:0.3;font-size:0.85rem;'>Screenshot (dark) – edugrade-screenshot-dark.png</div>`"
-                                    />
-                                </div>
-                            </div>
+                    <h2 data-i18n="preview.h2">Alles im Blick, auf einen Blick.</h2>
+                    <p data-i18n="preview.desc">Das intuitive Dashboard zeigt Ihnen alle wichtigen Kennzahlen Ihrer Klassen auf einen Blick.</p>
+                </div>
+                <div class="dash-frame">
+                    <div class="screenshot-glow"></div>
+                    <div class="screenshot-browser">
+                        <div class="screenshot-bar">
+                            <span class="screenshot-dot" style="background:#ff5f57;"></span>
+                            <span class="screenshot-dot" style="background:#febc2e;"></span>
+                            <span class="screenshot-dot" style="background:#28c840;"></span>
+                            <span class="screenshot-url">edugrade.avocloud.net</span>
                         </div>
+                        <div class="screenshot-body">
+                            <img class="shot-img" data-shot="dashboard" alt="EduGrade Dashboard — digitale Notenverwaltung für Lehrkräfte" width="1100" height="688" loading="lazy" decoding="async">
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                        <!-- Light theme screenshot -->
-                        <div class="screenshot-light">
-                            <div class="screenshot-browser">
-                                <div class="screenshot-bar">
-                                    <span class="screenshot-dot" style="background:#ff5f57;"></span>
-                                    <span class="screenshot-dot" style="background:#febc2e;"></span>
-                                    <span class="screenshot-dot" style="background:#28c840;"></span>
-                                    <span class="screenshot-url">edugrade.avocloud.net</span>
-                                </div>
-                                <div class="screenshot-body">
-                                    <!-- Placeholder – replace src with real light screenshot -->
-                                    <img
-                                        src="https://avocloud.net/assets/images/edugrade-screenshot-light.png"
-                                        alt="EduGrade Dashboard – Light Mode"
-                                        onerror="this.parentElement.innerHTML=`<div style='height:420px;display:flex;align-items:center;justify-content:center;opacity:0.3;font-size:0.85rem;'>Screenshot (light) – edugrade-screenshot-light.png</div>`"
-                                    />
-                                </div>
+            <!-- Feature rows (Apple-style alternating) -->
+            <section class="feature-rows full-bleed">
+                <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+
+                <!-- Row 1 · Klassen -->
+                <div class="feature-row">
+                    <div class="feature-row-text" data-reveal="up">
+                        <div class="feature-row-eyebrow" data-i18n="feat.classes.title">Klassen &amp; Schuljahre</div>
+                        <h2 data-i18n="feat.classes.h2">Klassen anlegen in Sekunden.</h2>
+                        <p data-i18n="feat.classes.desc">Klassen anlegen, Schüler einzeln oder per CSV importieren. Mehrere Schuljahre parallel verwalten.</p>
+                        <div class="feature-row-badges">
+                            <span class="badge badge-secondary" data-i18n="badge.classes">Klassen</span>
+                            <span class="badge badge-secondary" data-i18n="badge.import">CSV-Import</span>
+                        </div>
+                    </div>
+                    <div class="feature-row-media" data-reveal="scale">
+                        <div class="screenshot-glow"></div>
+                        <div class="screenshot-browser">
+                            <div class="screenshot-bar">
+                                <span class="screenshot-dot" style="background:#ff5f57;"></span>
+                                <span class="screenshot-dot" style="background:#febc2e;"></span>
+                                <span class="screenshot-dot" style="background:#28c840;"></span>
+                                <span class="screenshot-url">edugrade.avocloud.net</span>
+                            </div>
+                            <div class="screenshot-body">
+                                <img class="shot-img" data-shot="classes" alt="EduGrade — Klassen &amp; Schüler verwalten" width="1100" height="688" loading="lazy" decoding="async">
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Row 2 · Noten -->
+                <div class="feature-row reverse">
+                    <div class="feature-row-text" data-reveal="up">
+                        <div class="feature-row-eyebrow" data-i18n="feat.grades.title">Noten mit Gewichtung</div>
+                        <h2 data-i18n="feat.grades.h2">Noten, die sich selbst rechnen.</h2>
+                        <p data-i18n="feat.grades.desc">Kategorien, Plus/Minus-System und individuelle Gewichtung. Der Durchschnitt wird automatisch berechnet.</p>
+                        <div class="feature-row-badges">
+                            <span class="badge badge-secondary" data-i18n="badge.weighting">Gewichtung</span>
+                            <span class="badge badge-secondary" data-i18n="badge.plusminus">Plus/Minus</span>
+                        </div>
+                    </div>
+                    <div class="feature-row-media" data-reveal="scale">
+                        <div class="screenshot-glow"></div>
+                        <div class="screenshot-browser">
+                            <div class="screenshot-bar">
+                                <span class="screenshot-dot" style="background:#ff5f57;"></span>
+                                <span class="screenshot-dot" style="background:#febc2e;"></span>
+                                <span class="screenshot-dot" style="background:#28c840;"></span>
+                                <span class="screenshot-url">edugrade.avocloud.net</span>
+                            </div>
+                            <div class="screenshot-body">
+                                <img class="shot-img" data-shot="grades" alt="EduGrade — Noten mit Gewichtung erfassen" width="1100" height="688" loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3 · Anwesenheit -->
+                <div class="feature-row">
+                    <div class="feature-row-text" data-reveal="up">
+                        <div class="feature-row-eyebrow" data-i18n="feat.attendance.title">Anwesenheits-Tracking</div>
+                        <h2 data-i18n="feat.attendance.h2">Anwesenheit immer im Blick.</h2>
+                        <p data-i18n="feat.attendance.desc">Abwesenheiten schnell erfassen. Automatische Warnung bei Unterschreitung der Mindestpräsenz.</p>
+                        <div class="feature-row-badges">
+                            <span class="badge badge-secondary" data-i18n="badge.absent">Abwesenheiten</span>
+                            <span class="badge badge-secondary" data-i18n="badge.warnings">Warnungen</span>
+                        </div>
+                    </div>
+                    <div class="feature-row-media" data-reveal="scale">
+                        <div class="screenshot-glow"></div>
+                        <div class="screenshot-browser">
+                            <div class="screenshot-bar">
+                                <span class="screenshot-dot" style="background:#ff5f57;"></span>
+                                <span class="screenshot-dot" style="background:#febc2e;"></span>
+                                <span class="screenshot-dot" style="background:#28c840;"></span>
+                                <span class="screenshot-url">edugrade.avocloud.net</span>
+                            </div>
+                            <div class="screenshot-body">
+                                <img class="shot-img" data-shot="attendance" alt="EduGrade — Anwesenheit tracken mit Warnungen" width="1100" height="688" loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 4 · PDF Export -->
+                <div class="feature-row reverse">
+                    <div class="feature-row-text" data-reveal="up">
+                        <div class="feature-row-eyebrow" data-i18n="feat.export.title">Berichte &amp; PDF-Export</div>
+                        <h2 data-i18n="feat.export.h2">Berichte als PDF, in einem Klick.</h2>
+                        <p data-i18n="feat.export.desc">Schülerberichte als PDF drucken oder exportieren. Übersichtliche Tabellen für jede Klasse.</p>
+                        <div class="feature-row-badges">
+                            <span class="badge badge-secondary">PDF</span>
+                            <span class="badge badge-secondary" data-i18n="badge.reports">Berichte</span>
+                        </div>
+                    </div>
+                    <div class="feature-row-media" data-reveal="scale">
+                        <div class="screenshot-glow"></div>
+                        <div class="screenshot-browser">
+                            <div class="screenshot-bar">
+                                <span class="screenshot-dot" style="background:#ff5f57;"></span>
+                                <span class="screenshot-dot" style="background:#febc2e;"></span>
+                                <span class="screenshot-dot" style="background:#28c840;"></span>
+                                <span class="screenshot-url">edugrade.avocloud.net</span>
+                            </div>
+                            <div class="screenshot-body">
+                                <img class="shot-img" data-shot="classes" alt="EduGrade — PDF-Bericht aus der Klassenansicht exportieren" width="1100" height="688" loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 5 · Sicher & verschlüsselt -->
+                <div class="feature-row">
+                    <div class="feature-row-text" data-reveal="up">
+                        <div class="feature-row-eyebrow" data-i18n="feat.secure.title">Sicher &amp; verschlüsselt</div>
+                        <h2 data-i18n="feat.secure.h2">Daten teilen, Ende zu Ende geschützt.</h2>
+                        <p data-i18n="feat.secure.desc">Schüler erhalten ihre Noten per individuellem PIN über einen zeitbegrenzten Link. Alle Daten sind mit AES-256-GCM verschlüsselt – Zero-Knowledge, niemand außer Ihnen kann sie lesen.</p>
+                        <div class="feature-row-badges">
+                            <span class="badge badge-secondary" data-i18n="badge.pin">6-stelliger PIN</span>
+                            <span class="badge badge-secondary" data-i18n="badge.timelimited">Zeitbegrenzt</span>
+                            <span class="badge badge-secondary">AES-256-GCM</span>
+                            <span class="badge badge-secondary">Zero-Knowledge</span>
+                            <span class="badge badge-secondary">DSGVO</span>
+                        </div>
+                    </div>
+                    <div class="feature-row-media" data-reveal="scale">
+                        <div class="screenshot-glow"></div>
+                        <div class="screenshot-browser">
+                            <div class="screenshot-bar">
+                                <span class="screenshot-dot" style="background:#ff5f57;"></span>
+                                <span class="screenshot-dot" style="background:#febc2e;"></span>
+                                <span class="screenshot-dot" style="background:#28c840;"></span>
+                                <span class="screenshot-url">edugrade.avocloud.net</span>
+                            </div>
+                            <div class="screenshot-body">
+                                <img class="shot-img" data-shot="share" alt="EduGrade — Noten sicher per PIN teilen" width="1100" height="688" loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </section>
 
             <!-- How to get started -->
@@ -1096,22 +1379,22 @@
                     <span class="highlight-blue" data-i18n="oss.h2b"> Vertrauen.</span>
                 </h2>
                 <p class="text-muted mb-10" style="max-width:480px;" data-i18n="oss.desc">
-                    EduGrade ist und bleibt Open Source. Jeder kann den Code einsehen und mitgestalten.
+                    EduGrade ist und bleibt Open Source – für Sie heißt das: keine versteckten Kosten, keine Werbung und volle Kontrolle über Ihre Daten.
                 </p>
 
                 <div class="card card-featured">
                     <header>
                         <h3 class="font-semibold flex items-center gap-2">
                             <svg class="lucide" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                            <span data-i18n="oss.card.title">AGPL-3.0 – Kostenlos für Schulen und Lehrkräfte</span>
+                            <span data-i18n="oss.card.title">Kostenlos für Schulen und Lehrkräfte</span>
                         </h3>
                     </header>
                     <section>
                         <p class="text-muted" data-i18n="oss.card.desc1">
-                            EduGrade ist vollständig kostenlos – für Einzelpersonen, Schulen und Bildungseinrichtungen. Der Quellcode ist öffentlich verfügbar und darf frei genutzt, verändert und weitergegeben werden.
+                            EduGrade ist vollständig kostenlos – für einzelne Lehrkräfte, Schulen und Bildungseinrichtungen. Keine Premium-Tarife, keine versteckten Kosten, keine Werbung.
                         </p>
                         <p class="text-muted mt-3" data-i18n="oss.card.desc2">
-                            Veränderte Versionen müssen ebenfalls frei zugänglich bleiben. Copyright © 2026 Fabian Murauer
+                            Der Quellcode ist offen einsehbar – EduGrade hat nichts zu verbergen. Copyright © 2026 Fabian Murauer
                         </p>
                     </section>
                     <footer>
@@ -1155,7 +1438,7 @@
                     <p data-i18n="cta.desc">Registrieren Sie sich in weniger als einer Minute und entdecken Sie, wie einfach digitale Notenverwaltung sein kann.</p>
                     <div class="flex flex-wrap gap-3 justify-center">
                         <a href="https://edugrade.avocloud.net" target="_blank" class="hero-btn"
-                            style="background:rgba(147,51,234,0.3);border-color:rgba(147,51,234,0.7);">
+                            style="background:rgba(var(--avo-primary-rgb, 255,107,74),0.3);border-color:rgba(var(--avo-primary-rgb, 255,107,74),0.7);">
                             <span data-i18n="cta.btn">Kostenlos registrieren</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                         </a>
@@ -1174,7 +1457,7 @@
                     <p data-i18n="docs.desc">In der Dokumentation findest du alles, was du zur Nutzung von EduGrade brauchst – von der Einrichtung bis zu den einzelnen Features.</p>
                     <div class="flex flex-wrap gap-3 justify-center">
                         <a href="https://edugrade.avocloud.net/docs/" target="_blank" class="hero-btn"
-                            style="background:rgba(99,102,241,0.25);border-color:rgba(99,102,241,0.65);">
+                            style="background:rgba(var(--avo-primary-rgb, 255,107,74),0.15);border-color:rgba(var(--avo-primary-rgb, 255,107,74),0.4);">
                             <svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                                 <polyline points="14 2 14 8 20 8"/>
@@ -1198,11 +1481,11 @@
                         <header>
                             <h3 class="font-semibold flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-                                <span data-i18n="link.github.title">Quellcode auf GitHub</span>
+                                <span data-i18n="link.github.title">Open Source & Transparenz</span>
                             </h3>
                         </header>
                         <section>
-                            <p class="text-muted text-sm" data-i18n="link.github.desc">Für IT-Admins: Installationsanleitung und Quellcode</p>
+                            <p class="text-muted text-sm" data-i18n="link.github.desc">Der vollständige Quellcode ist öffentlich einsehbar – für volle Transparenz und Vertrauen.</p>
                             <a href="https://github.com/rwolf2467/EduGrade" target="_blank" class="text-sm accent-link mt-1 block" style="display:inline-flex;align-items:center;gap:0.3rem;">
                                 github.com/rwolf2467/EduGrade
                                 <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
@@ -1291,6 +1574,21 @@
         'features.h2a': 'Alles, was Lehrkräfte',
         'features.h2b': 'wirklich brauchen.',
         'features.desc': 'Von der Klassenerstellung bis zum PDF-Export – EduGrade deckt den gesamten Workflow ab.',
+        'stat.cost.label': 'Kosten',
+        'stat.unlimited.label': 'Klassen & Schüler',
+        'stat.steps.label': 'Schritte zum Start',
+        'stat.setup.value': '< 1 Min',
+        'stat.setup.label': 'bis startklar',
+        'stat.device.label': 'auf jedem Gerät',
+        'stat.dsgvo.value': 'DSGVO',
+        'stat.dsgvo.label': 'konform',
+        'feat.classes.h2': 'Klassen anlegen in Sekunden.',
+        'feat.grades.h2': 'Noten, die sich selbst rechnen.',
+        'feat.attendance.h2': 'Anwesenheit immer im Blick.',
+        'feat.export.h2': 'Berichte als PDF, in einem Klick.',
+        'feat.secure.title': 'Sicher & verschlüsselt',
+        'feat.secure.h2': 'Daten teilen, Ende zu Ende geschützt.',
+        'feat.secure.desc': 'Schüler erhalten ihre Noten per individuellem PIN über einen zeitbegrenzten Link. Alle Daten sind mit AES-256-GCM verschlüsselt – Zero-Knowledge, niemand außer Ihnen kann sie lesen.',
         'feat.classes.title': 'Klassen & Schuljahre',
         'feat.classes.desc': 'Klassen anlegen, Schüler einzeln oder per CSV importieren. Mehrere Schuljahre parallel verwalten.',
         'feat.grades.title': 'Noten mit Gewichtung',
@@ -1302,7 +1600,7 @@
         'feat.share.title': 'Noten sicher teilen',
         'feat.share.desc': 'Schüler erhalten ihre Noten per individuellem PIN. Der Link läuft automatisch ab – kein Missbrauch möglich.',
         'feat.encrypt.title': 'Verschlüsselt & DSGVO-konform',
-        'feat.encrypt.desc': 'Alle Daten werden mit AES-256-GCM verschlüsselt. Zero-Knowledge: Selbst der Server-Betreiber kann die Daten nicht lesen.',
+        'feat.encrypt.desc': 'Alle Daten werden mit AES-256-GCM verschlüsselt – niemand außer Ihnen kann sie lesen, nicht einmal wir. So bleiben die Daten Ihrer Schüler privat.',
         'badge.classes': 'Klassen',
         'badge.import': 'CSV-Import',
         'badge.weighting': 'Gewichtung',
@@ -1338,10 +1636,10 @@
         'oss.label': 'Open Source',
         'oss.h2a': 'Transparenz ist',
         'oss.h2b': ' Vertrauen.',
-        'oss.desc': 'EduGrade ist und bleibt Open Source. Jeder kann den Code einsehen und mitgestalten.',
-        'oss.card.title': 'AGPL-3.0 – Kostenlos für Schulen und Lehrkräfte',
-        'oss.card.desc1': 'EduGrade ist vollständig kostenlos – für Einzelpersonen, Schulen und Bildungseinrichtungen. Der Quellcode ist öffentlich verfügbar und darf frei genutzt, verändert und weitergegeben werden.',
-        'oss.card.desc2': 'Veränderte Versionen müssen ebenfalls frei zugänglich bleiben. Copyright © 2026 Fabian Murauer',
+        'oss.desc': 'EduGrade ist und bleibt Open Source – für Sie heißt das: keine versteckten Kosten, keine Werbung und volle Kontrolle über Ihre Daten.',
+        'oss.card.title': 'Kostenlos für Schulen und Lehrkräfte',
+        'oss.card.desc1': 'EduGrade ist vollständig kostenlos – für einzelne Lehrkräfte, Schulen und Bildungseinrichtungen. Keine Premium-Tarife, keine versteckten Kosten, keine Werbung.',
+        'oss.card.desc2': 'Der Quellcode ist offen einsehbar – EduGrade hat nichts zu verbergen. Copyright © 2026 Fabian Murauer',
         'testi.label': 'Erfahrungsbericht',
         'testi.h2': 'Vom Studenten zum Entwickler.',
         'testi.text': '„In meinem Unterricht habe ich gelernt, mit KI als Denkpartner zu arbeiten – nicht als Ersatz. Daraus ist EduGrade entstanden: eine Open-Source-Notenverwaltung für Lehrkräfte, die ich selbst entwickelt habe."',
@@ -1351,8 +1649,8 @@
         'cta.btn': 'Kostenlos registrieren',
         'links.label': 'Links',
         'links.h2': 'Weitere Links',
-        'link.github.title': 'Quellcode auf GitHub',
-        'link.github.desc': 'Für IT-Admins: Installationsanleitung und Quellcode',
+        'link.github.title': 'Open Source & Transparenz',
+        'link.github.desc': 'Der vollständige Quellcode ist öffentlich einsehbar – für volle Transparenz und Vertrauen.',
         'link.app.title': 'EduGrade App',
         'link.app.desc': 'Direkt zur gehosteten Version:',
         'link.status.title': 'Status',
@@ -1384,6 +1682,21 @@
         'features.h2a': 'Everything teachers',
         'features.h2b': 'actually need.',
         'features.desc': 'From class creation to PDF export – EduGrade covers the entire workflow.',
+        'stat.cost.label': 'Cost',
+        'stat.unlimited.label': 'Classes & students',
+        'stat.steps.label': 'Steps to start',
+        'stat.setup.value': '< 1 min',
+        'stat.setup.label': 'until ready',
+        'stat.device.label': 'on any device',
+        'stat.dsgvo.value': 'GDPR',
+        'stat.dsgvo.label': 'compliant',
+        'feat.classes.h2': 'Set up classes in seconds.',
+        'feat.grades.h2': 'Grades that calculate themselves.',
+        'feat.attendance.h2': 'Attendance, always in view.',
+        'feat.export.h2': 'Reports as PDF, in one click.',
+        'feat.secure.title': 'Secure & encrypted',
+        'feat.secure.h2': 'Share data, protected end to end.',
+        'feat.secure.desc': 'Students receive their grades via an individual PIN through a time-limited link. All data is encrypted with AES-256-GCM – zero-knowledge, no one but you can read it.',
         'feat.classes.title': 'Classes & School Years',
         'feat.classes.desc': 'Create classes, add students individually or import via CSV. Manage multiple school years at once.',
         'feat.grades.title': 'Grades with Weighting',
@@ -1395,7 +1708,7 @@
         'feat.share.title': 'Share Grades Securely',
         'feat.share.desc': 'Students receive their grades via an individual PIN. The link expires automatically – no risk of misuse.',
         'feat.encrypt.title': 'Encrypted & GDPR-Compliant',
-        'feat.encrypt.desc': 'All data is encrypted with AES-256-GCM. Zero-Knowledge: even the server operator cannot read the data.',
+        'feat.encrypt.desc': 'All data is encrypted with AES-256-GCM – no one but you can read it, not even us. Your students\' data stays private.',
         'badge.classes': 'Classes',
         'badge.import': 'CSV Import',
         'badge.weighting': 'Weighting',
@@ -1430,10 +1743,10 @@
         'oss.label': 'Open Source',
         'oss.h2a': 'Transparency is',
         'oss.h2b': ' trust.',
-        'oss.desc': 'EduGrade is and remains open source. Anyone can view the code and contribute.',
-        'oss.card.title': 'AGPL-3.0 – Free for schools and teachers',
-        'oss.card.desc1': 'EduGrade is completely free – for individuals, schools and educational institutions. The source code is publicly available and may be freely used, modified and redistributed.',
-        'oss.card.desc2': 'Modified versions must also remain freely accessible. Copyright © 2026 Fabian Murauer',
+        'oss.desc': 'EduGrade is and remains open source – which means for you: no hidden costs, no ads, and full control over your data.',
+        'oss.card.title': 'Free for schools and teachers',
+        'oss.card.desc1': 'EduGrade is completely free – for individual teachers, schools and educational institutions. No premium tiers, no hidden costs, no ads.',
+        'oss.card.desc2': 'The source code is openly available – EduGrade has nothing to hide. Copyright © 2026 Fabian Murauer',
         'testi.label': 'Story',
         'testi.h2': 'From student to developer.',
         'testi.text': '"In my classes I learned to work with AI as a thinking partner – not a replacement. That\'s how EduGrade was born: an open-source grade management app for teachers, built by myself."',
@@ -1443,8 +1756,8 @@
         'cta.btn': 'Register for free',
         'links.label': 'Links',
         'links.h2': 'Further Links',
-        'link.github.title': 'Source code on GitHub',
-        'link.github.desc': 'For IT admins: installation guide and source code',
+        'link.github.title': 'Open Source & Transparency',
+        'link.github.desc': 'The complete source code is publicly available – for full transparency and trust.',
         'link.app.title': 'EduGrade App',
         'link.app.desc': 'Go directly to the hosted version:',
         'link.status.title': 'Status',
@@ -1457,7 +1770,33 @@
       }
     };
 
+    const _seoData = {
+      de: {
+        title: 'EduGrade — Kostenlose Notenverwaltung für Lehrkräfte (DSGVO-konform, Open Source) | Avocloud.net',
+        description: 'EduGrade — kostenlose, DSGVO-konforme Notenverwaltung für Lehrkräfte. Klassen, Noten, Anwesenheit, PDF-Berichte, sicheres Notenteilen per PIN. Open Source, im Browser auf jedem Gerät.'
+      },
+      en: {
+        title: 'EduGrade — Free Grade Management for Teachers (GDPR-compliant, Open Source) | Avocloud.net',
+        description: 'EduGrade — free, GDPR-compliant grade management for teachers. Classes, grades, attendance, PDF reports, secure grade sharing via PIN. Open source, in your browser on any device.'
+      }
+    };
+
+    function _setMeta(selector, attr, value) {
+      var el = document.querySelector(selector);
+      if (el) el.setAttribute(attr, value);
+    }
+
     function applyLang(lang) {
+      var seo = _seoData[lang] || _seoData.de;
+      document.title = seo.title;
+      _setMeta('meta[name="description"]', 'content', seo.description);
+      _setMeta('meta[property="og:title"]', 'content', seo.title);
+      _setMeta('meta[property="og:description"]', 'content', seo.description);
+      _setMeta('meta[property="og:locale"]', 'content', lang === 'en' ? 'en_US' : 'de_DE');
+      _setMeta('meta[property="og:locale:alternate"]', 'content', lang === 'en' ? 'de_DE' : 'en_US');
+      _setMeta('meta[name="twitter:title"]', 'content', seo.title);
+      _setMeta('meta[name="twitter:description"]', 'content', seo.description);
+
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var key = el.getAttribute('data-i18n');
         if (_i18n[lang] && _i18n[lang][key] !== undefined) {
@@ -1490,8 +1829,11 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      var savedLang = localStorage.getItem('edu-lang') || 'de';
-      applyLang(savedLang);
+      var urlLang = new URLSearchParams(location.search).get('lang');
+      var initial = (urlLang === 'de' || urlLang === 'en')
+        ? urlLang
+        : (localStorage.getItem('edu-lang') || 'de');
+      applyLang(initial);
     });
 
     // ── Mobile menu ──────────────────────────────────────────────────
@@ -1518,6 +1860,323 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeMobileMenu();
     });
+    </script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://avocloud.net/#org",
+      "name": "Avocloud.net",
+      "alternateName": "Avocloud",
+      "url": "https://avocloud.net/",
+      "logo": "https://avocloud.net/logo.png",
+      "description": "Open-Source-Softwareentwicklungsgruppe, Betreiber von EduGrade — der kostenlosen Notenverwaltung für Lehrkräfte.",
+      "sameAs": [
+        "https://avocloud.net/discord/",
+        "https://github.com/AvoCloud-net",
+        "https://github.com/rwolf2467/EduGrade"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://avocloud.net/#website",
+      "url": "https://avocloud.net/",
+      "name": "Avocloud.net",
+      "publisher": { "@id": "https://avocloud.net/#org" },
+      "inLanguage": ["de", "en"]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://avocloud.net/edugrade/#webpage",
+      "url": "https://avocloud.net/edugrade/",
+      "name": "EduGrade — Kostenlose Notenverwaltung für Lehrkräfte",
+      "isPartOf": { "@id": "https://avocloud.net/#website" },
+      "inLanguage": "de",
+      "description": "Kostenlose, DSGVO-konforme Notenverwaltung für Lehrkräfte: Klassen, Noten, Anwesenheit, PDF-Berichte, PIN-Teilen. Open Source.",
+      "primaryImageOfPage": "https://avocloud.net/edugrade/edugrade-banner.png"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://avocloud.net/" },
+        { "@type": "ListItem", "position": 2, "name": "EduGrade", "item": "https://avocloud.net/edugrade/" }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "EduGrade",
+      "alternateName": ["EduGrade Notenverwaltung", "EduGrade Grade Management"],
+      "description": "Kostenlose, DSGVO-konforme, Open-Source-Notenverwaltung für Lehrkräfte. Klassen anlegen, Schüler per CSV importieren, Noten mit Gewichtung erfassen, Anwesenheit tracken, PDF-Berichte exportieren und Noten sicher per PIN mit Schülern teilen. AES-256-GCM-Verschlüsselung, Zero-Knowledge.",
+      "url": "https://avocloud.net/edugrade/",
+      "applicationCategory": "EducationalApplication",
+      "applicationSubCategory": "GradeBook",
+      "operatingSystem": "Web (browser-based, any OS)",
+      "browserRequirements": "Requires modern browser with JavaScript enabled.",
+      "image": "https://avocloud.net/edugrade/edugrade-banner.png",
+      "screenshot": [
+        "https://avocloud.net/assets/images/edugrade-screenshot-dark.png",
+        "https://avocloud.net/assets/images/edugrade-screenshot-light.png"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock"
+      },
+      "softwareVersion": "1.0",
+      "inLanguage": ["de", "en"],
+      "isAccessibleForFree": true,
+      "license": "https://github.com/rwolf2467/EduGrade",
+      "author": { "@id": "https://avocloud.net/#org" },
+      "publisher": { "@id": "https://avocloud.net/#org" },
+      "featureList": [
+        "Klassenverwaltung & Schuljahre",
+        "Schüler-Import per CSV",
+        "Noten mit Gewichtung und Kategorien",
+        "Plus/Minus-Notensystem",
+        "Automatische Durchschnittsberechnung",
+        "Anwesenheits-Tracking mit Warnungen",
+        "PDF-Berichte und -Export",
+        "Sicheres Notenteilen per 6-stelligem PIN",
+        "AES-256-GCM-Verschlüsselung",
+        "Zero-Knowledge-Architektur",
+        "DSGVO-konform",
+        "Open Source"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Ist EduGrade wirklich kostenlos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, EduGrade ist komplett kostenlos und Open Source. Es gibt keine Premium-Tarife, keine versteckten Kosten und keine Werbung."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ist EduGrade DSGVO-konform?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Alle Schüler- und Notendaten werden mit AES-256-GCM clientseitig verschlüsselt. EduGrade nutzt Zero-Knowledge-Architektur — selbst der Server-Betreiber kann die Daten nicht lesen. Hosting in der EU."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Muss ich etwas installieren?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nein. EduGrade läuft komplett im Browser auf jedem Gerät (PC, Tablet, Smartphone). Einfach edugrade.avocloud.net öffnen und loslegen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie können Schüler ihre Noten einsehen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jeder Schüler erhält einen individuellen 6-stelligen PIN. Damit kann er einen zeitbegrenzten Link öffnen, der nur seine eigenen Noten zeigt. Der Link läuft automatisch ab."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann ich Schüler per CSV importieren?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. EduGrade unterstützt CSV-Import. Klassen anlegen, CSV hochladen, fertig. Auch mehrere Schuljahre parallel sind möglich."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ist EduGrade Open Source?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Der Quellcode ist auf GitHub einsehbar: github.com/rwolf2467/EduGrade. Self-Hosting ist möglich."
+          }
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <script>
+    // ── Apple-style motion (scoped to this page) ──────────────────────
+    (function () {
+        var reduce = window.matchMedia &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var SHOT_BASE = '../assets/images/edugrade/';
+
+        // ── Detach feature/dash headings from global main.js h2-scramble NOW ──
+        //    main.js captured these h2 nodes at parse-time and will .observe() them
+        //    at +120ms; replacing the nodes synchronously leaves it with stale refs,
+        //    so the scramble never fires here — freeing them for word-by-word reveal.
+        var wordHeads = [].slice.call(
+            document.querySelectorAll('.feature-row-text h2, .dash-showcase-head h2')
+        ).map(function (el) {
+            var clone = el.cloneNode(true);
+            el.parentNode.replaceChild(clone, el);
+            return clone;
+        });
+
+        function theme()    { return document.documentElement.classList.contains('dark') ? 'dark' : 'light'; }
+        function shotFile(v){ return 'edugrade-' + v + '-' + theme() + '.png'; }
+
+        // ── Screenshots: theme-aware src + labelled fallback ──
+        function showFallback(img, f) {
+            var body = img.closest('.screenshot-body');
+            if (!body) return;
+            img.style.display = 'none';
+            var fb = body.querySelector('.shot-fallback');
+            if (!fb) { fb = document.createElement('div'); fb.className = 'shot-fallback'; body.appendChild(fb); }
+            fb.textContent = '⤓ ' + f;
+            fb.style.display = 'flex';
+        }
+        function hideFallback(img) {
+            var body = img.closest('.screenshot-body');
+            var fb = body && body.querySelector('.shot-fallback');
+            if (fb) fb.style.display = 'none';
+            img.style.display = '';
+        }
+        function applyOneShot(img) {
+            var v = img.getAttribute('data-shot');
+            if (!v) return;
+            var f = shotFile(v);
+            img.onerror = function () { showFallback(img, f); };
+            img.onload  = function () { hideFallback(img); };
+            img.src = SHOT_BASE + f;
+        }
+        function applyAllShots() {
+            document.querySelectorAll('img[data-shot]').forEach(applyOneShot);
+        }
+        applyAllShots();
+
+        // Re-swap screenshots when the theme class on <html> changes
+        if (window.MutationObserver) {
+            var lastTheme = theme();
+            new MutationObserver(function () {
+                if (theme() !== lastTheme) { lastTheme = theme(); applyAllShots(); }
+            }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        }
+
+        // ── Scroll-reveal ──
+        if ('IntersectionObserver' in window) {
+            var revObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) { e.target.classList.add('is-visible'); revObs.unobserve(e.target); }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+            document.querySelectorAll('[data-reveal]').forEach(function (el) { revObs.observe(el); });
+        } else {
+            document.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-visible'); });
+        }
+
+        // ── Word-by-word headline reveal (wrap AFTER applyLang sets the language) ──
+        function wrapWords(el) {
+            var text = el.textContent;
+            if (reduce) { el.classList.add('words-in'); return; }
+            el.textContent = '';
+            el.classList.add('word-reveal');
+            var i = 0;
+            text.split(/(\s+)/).forEach(function (w) {
+                if (!w.trim()) { el.appendChild(document.createTextNode(w)); return; }
+                var mask = document.createElement('span'); mask.className = 'wr';
+                var inner = document.createElement('span'); inner.textContent = w;
+                inner.style.transitionDelay = (i * 70) + 'ms';
+                mask.appendChild(inner); el.appendChild(mask);
+                i++;
+            });
+        }
+        function initWordReveal() {
+            if (!wordHeads.length) return;
+            wordHeads.forEach(wrapWords);
+            if ('IntersectionObserver' in window && !reduce) {
+                var wObs = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (e) {
+                        if (e.isIntersecting) { e.target.classList.add('words-in'); wObs.unobserve(e.target); }
+                    });
+                }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+                wordHeads.forEach(function (el) { wObs.observe(el); });
+            } else {
+                wordHeads.forEach(function (el) { el.classList.add('words-in'); });
+            }
+        }
+        // Our DCL handler registers after the i18n script's, so applyLang runs first.
+        if (document.readyState === 'loading') {
+            window.addEventListener('DOMContentLoaded', initWordReveal);
+        } else {
+            initWordReveal();
+        }
+
+        // ── Count-up stats ──
+        function animateCount(el) {
+            var target = parseFloat(el.getAttribute('data-count'));
+            var suffix = el.getAttribute('data-suffix') || '';
+            if (reduce || isNaN(target)) { el.textContent = (isNaN(target) ? el.textContent : target) + suffix; return; }
+            var dur = 900, start = performance.now();
+            (function frame(now) {
+                var p = Math.min((now - start) / dur, 1);
+                var eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(target * eased) + suffix;
+                if (p < 1) requestAnimationFrame(frame);
+                else el.textContent = target + suffix;
+            })(start);
+        }
+        var band = document.querySelector('.stats-band');
+        if (band && 'IntersectionObserver' in window) {
+            var statObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) {
+                        e.target.querySelectorAll('[data-count]').forEach(animateCount);
+                        statObs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.4 });
+            statObs.observe(band);
+        }
+
+        // ── Scroll effects: hero parallax · image parallax · dashboard zoom ──
+        if (!reduce) {
+            var grid   = document.querySelector('.hero-bg-grid');
+            var parEls = [].slice.call(document.querySelectorAll('.feature-row-media .screenshot-browser')).map(function (el) {
+                var row = el.closest('.feature-row');
+                return { el: el, side: (row && row.classList.contains('reverse')) ? -1 : 1 };
+            });
+            var zoomEl = document.querySelector('.dash-frame .screenshot-browser');
+            var ticking = false;
+            function scrollFx() {
+                ticking = false;
+                var vh = window.innerHeight;
+                if (grid) grid.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+                parEls.forEach(function (o) {
+                    var r = o.el.getBoundingClientRect();
+                    if (r.bottom < 0 || r.top > vh) return;
+                    var off = ((r.top + r.height / 2) - vh / 2) / vh;   // -0.5 .. 0.5
+                    o.el.style.transform =
+                        'translateY(' + (off * -40).toFixed(1) + 'px) ' +
+                        'rotateX(' + (off * 4).toFixed(2) + 'deg) ' +
+                        'rotateY(' + (off * o.side * 5).toFixed(2) + 'deg)';
+                });
+                if (zoomEl) {
+                    var rz = zoomEl.getBoundingClientRect();
+                    var offz = ((rz.top + rz.height / 2) - vh / 2) / vh;
+                    var p = Math.max(0, Math.min(1, offz * 2));          // ~1 entering, 0 centered
+                    zoomEl.style.transform =
+                        'scale(' + (1 - p * 0.16).toFixed(3) + ') ' +
+                        'rotateX(' + (offz * 4).toFixed(2) + 'deg)';
+                }
+            }
+            window.addEventListener('scroll', function () {
+                if (!ticking) { ticking = true; requestAnimationFrame(scrollFx); }
+            }, { passive: true });
+            window.addEventListener('resize', scrollFx, { passive: true });
+            scrollFx();
+        }
+    })();
     </script>
 </body>
 </html>

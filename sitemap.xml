@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://avocloud.net/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://avocloud.net/craftattack/</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://avocloud.net/craftattack/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://avocloud.net/craftattack/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://avocloud.net/craftattack/"/>
+  </url>
+  <url>
+    <loc>https://avocloud.net/craftattack/rules/</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://avocloud.net/craftattack/rules/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://avocloud.net/craftattack/rules/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://avocloud.net/craftattack/rules/"/>
+  </url>
+  <url>
+    <loc>https://avocloud.net/craftattack/aerlon/</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://avocloud.net/craftattack/aerlon/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://avocloud.net/craftattack/aerlon/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://avocloud.net/craftattack/aerlon/"/>
+  </url>
+  <url>
+    <loc>https://avocloud.net/craftattack/clans/</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://avocloud.net/craftattack/clans/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://avocloud.net/craftattack/clans/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://avocloud.net/craftattack/clans/"/>
+  </url>
+  <url>
+    <loc>https://avocloud.net/craftattack/features/</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://avocloud.net/craftattack/features/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://avocloud.net/craftattack/features/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://avocloud.net/craftattack/features/"/>
+  </url>
+  <url>
+    <loc>https://avocloud.net/craftattack/join/</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://avocloud.net/craftattack/join/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://avocloud.net/craftattack/join/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://avocloud.net/craftattack/join/"/>
+  </url>
+  <url>
+    <loc>https://avocloud.net/craftattack.html</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://avocloud.net/baxi/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://avocloud.net/baxi/invite/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://avocloud.net/edugrade/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://avocloud.net/edugrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://avocloud.net/edugrade/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://avocloud.net/edugrade/"/>
+  </url>
+  <url>
+    <loc>https://avocloud.net/discord/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://avocloud.net/pwgen/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://avocloud.net/qrgate/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://avocloud.net/fabi.html</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://avocloud.net/impressum.html</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>

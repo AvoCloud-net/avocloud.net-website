@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features — Craft Attack Community Server Season 2 | Avocloud.net</title>
+    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="../../assets/images/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
+    <meta name="description" content="Full feature list of the open Avocloud Craft Attack community server Season 2: clans, jobs, coin economy, opt-in PvP, custom world Aerlon, BlueMap, Java + Bedrock crossplay, voice chat, claims.">
+    <meta name="keywords" content="Craft Attack Features, CraftAttack Season 2 Features, Craft Attack Community Server, Minecraft Crossplay, Minecraft Voice Chat, Minecraft Clans, Minecraft Jobs, Minecraft Economy, BlueMap, Homestead Claims, Avocloud Craft Attack">
+    <meta name="author" content="Avocloud.net">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <link rel="canonical" href="https://avocloud.net/craftattack/features/">
+    <link rel="alternate" hreflang="en" href="https://avocloud.net/craftattack/features/">
+    <link rel="alternate" hreflang="de" href="https://avocloud.net/craftattack/features/?lang=de">
+    <link rel="alternate" hreflang="x-default" href="https://avocloud.net/craftattack/features/">
+    <meta property="og:title" content="Features — Craft Attack Community Server Season 2">
+    <meta property="og:description" content="All features of the open Craft Attack Season 2 server: clans, jobs, crossplay, voice chat, custom world Aerlon, BlueMap.">
+    <meta property="og:image" content="https://avocloud.net/assets/images/craftattack/ca-s2-4.png">
+    <meta property="og:url" content="https://avocloud.net/craftattack/features/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Avocloud.net">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Features — Craft Attack Community Server Season 2">
+    <meta name="twitter:description" content="All features of the open Craft Attack Season 2 server.">
+    <meta name="theme-color" content="#0B0B0B">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <script src="../../assets/js/theme.js"></script>
+    <style>
+        .sub-h2 { font-size: 1.5rem; font-weight: 700; margin: 2.5rem 0 0.75rem; }
+        .sub-h2:first-of-type { margin-top: 1rem; }
+        .feat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .feat-card { padding: 1.25rem; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); }
+        .feat-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .feat-card p { font-size: 0.93rem; opacity: 0.85; line-height: 1.55; }
+        .feat-card .badge-row { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+        .feat-card .b { display: inline-block; padding: 0.15rem 0.55rem; border-radius: 999px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.03em; background: rgba(var(--avo-primary-soft-rgb, 255,147,121),0.15); color: #c4b5fd; }
+        .feat-card .b.ret { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); }
+        code { background: rgba(255,255,255,0.06); padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.88em; }
+    
+.back-btn {
+  position: fixed;
+  top: 5rem;
+  left: 1rem;
+  z-index: 150;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem 0.5rem 0.75rem;
+  background: rgba(20,20,28,0.85);
+  border: 1px solid rgba(var(--avo-primary-soft-rgb, 255,147,121),0.35);
+  border-radius: 999px;
+  color: #c4b5fd;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, color 0.18s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+.back-btn:hover {
+  background: rgba(var(--avo-primary-soft-rgb, 255,147,121),0.18);
+  border-color: rgba(var(--avo-primary-soft-rgb, 255,147,121),0.7);
+  transform: translateX(-2px);
+  color: #f3f0ff;
+}
+.back-btn svg { width: 16px; height: 16px; }
+html:not(.dark) .back-btn {
+  background: rgba(255,255,255,0.85);
+  border-color: rgba(var(--avo-primary-rgb, 255,107,74),0.4);
+  color: var(--avo-primary, #C73D20);
+}
+html:not(.dark) .back-btn:hover {
+  background: rgba(var(--avo-primary-rgb, 255,107,74),0.12);
+  color: var(--avo-primary, #C73D20);
+}
+@media (max-width: 600px) {
+  .back-btn { top: auto; bottom: 1rem; left: 1rem; }
+}
+    </style>
+</head>
+
+<body>
+    <div id="gradientbar"></div>
+
+    <nav class="site-nav" id="site-nav">
+        <a class="avocloud-logo" href="/" aria-label="AVOCLOUD.NET">
+            <span class="avocloud-logo__slot">
+                <span class="avocloud-logo__icon">
+                    <svg viewBox="0 0 72 72" fill="none">
+                        <path d="M22 18 L12 18 L12 54 L22 54 M50 18 L60 18 L60 54 L50 54 M26 30 L33 36 L26 42" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" pathLength="200"/>
+                        <rect class="logo-cursor" x="40" y="28" width="4" height="16" rx="2"/>
+                    </svg>
+                </span>
+                <span class="avocloud-logo__av">AVO</span>
+            </span>
+            <span class="avocloud-logo__rest-wrap">
+                <span class="avocloud-logo__rest">CLOUD<span class="avocloud-logo__dot">.NET</span></span>
+            </span>
+        </a>
+        <div style="margin-left:auto;display:flex;gap:0.5rem;align-items:center;">
+            <button class="lang-toggle" id="lang-btn" onclick="toggleLang()" title="Auf Deutsch wechseln">DE</button>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" style="margin-left:0">
+                <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+            </button>
+        </div>
+    </nav>
+
+    <a href="/craftattack/" class="back-btn" title="Back to Craft Attack home" data-i18n-html="back.btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>Craft Attack</span>
+    </a>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-12" style="padding-top:6rem;">
+
+        <nav aria-label="Breadcrumb" style="font-size:0.85rem;opacity:0.7;margin-bottom:1.5rem;">
+            <a href="/" style="color:inherit;text-decoration:underline;">Avocloud.net</a> /
+            <a href="/craftattack/" style="color:inherit;text-decoration:underline;" data-i18n="bc.ca">Craft Attack</a> /
+            <span data-i18n="bc.features">Features</span>
+        </nav>
+
+        <h1 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.25rem);font-weight:800;line-height:1.15;margin-bottom:1rem;" data-i18n="h1">
+            Features — Craft Attack Community Server Season 2
+        </h1>
+
+        <p style="font-size:1.05rem;opacity:0.85;margin-bottom:1rem;" data-i18n-html="intro">
+            Full feature list of the <strong>open Avocloud Craft Attack community server</strong>, Season 2: The Ashes of Aerlon. Season 2 keeps everything that worked in Season 1 and adds new systems based on community feedback.
+        </p>
+
+        <h2 class="sub-h2" data-i18n="s2.h">New in Season 2</h2>
+
+        <div class="feat-grid" data-i18n-html="s2.grid">
+            <div class="feat-card">
+                <h3>Clan System</h3>
+                <p>Clans have their own chat (<code>/cc</code>), bank, home point, claim territory, and shared chest. Ally with other clans or declare war — both require mutual consent. Roles: Leader · Manager · Member. Founding: 5,000 Coins.</p>
+                <div class="badge-row"><span class="b">New in S2</span></div>
+            </div>
+            <div class="feat-card">
+                <h3>Coin Economy</h3>
+                <p>Start with 500 Coins. Earn more through mob kills, playtime bonuses, jobs, and trading. Coins fund claim expansion beyond the free 500 blocks².</p>
+                <div class="badge-row"><span class="b">New in S2</span></div>
+            </div>
+            <div class="feat-card">
+                <h3>Jobs System</h3>
+                <p>Pick one of four jobs and earn Coins through your normal playstyle: <strong>Hunter</strong> (slay mobs), <strong>Miner</strong> (mine ores), <strong>Farmer</strong> (harvest crops), <strong>Woodcutter</strong> (chop trees). Use <code>/jobs browse</code>. Only one job at a time.</p>
+                <div class="badge-row"><span class="b">New in S2</span><span class="b">JobsReborn</span></div>
+            </div>
+            <div class="feat-card">
+                <h3>PvP Toggle System</h3>
+                <p>Use <code>/pvp on</code> to enable. Disabling has a 24h cooldown. New players get 48h auto-protection. Spawn is always PvP-free.</p>
+                <div class="badge-row"><span class="b">New in S2</span><span class="b">PvPManager</span></div>
+            </div>
+            <div class="feat-card">
+                <h3>Custom World – Aerlon</h3>
+                <p>Dense forests with ancient stone arches, towering cliffs, overgrown plazas, forgotten settlements, dark underground chambers. Procedurally generated with a custom world generator, fully pre-generated for lag-free exploration. Live BlueMap web map.</p>
+                <div class="badge-row"><span class="b">New in S2</span><span class="b">BlueMap</span></div>
+            </div>
+            <div class="feat-card">
+                <h3>RP Status System</h3>
+                <p>Toggle with <code>/rp on</code>. Active RP players show <code>[RP]</code> in chat. Roleplay is always optional — nobody is forced.</p>
+                <div class="badge-row"><span class="b">New in S2</span></div>
+            </div>
+            <div class="feat-card">
+                <h3>Flexible Region Claims</h3>
+                <p><strong>Homestead</strong> replaces chunk-based claims. Define any region shape with 75+ permission flags. First 500 blocks² free, then costs Coins.</p>
+                <div class="badge-row"><span class="b">Upgraded in S2</span><span class="b">Homestead</span></div>
+            </div>
+        </div>
+
+        <h2 class="sub-h2" data-i18n="ret.h">Returning Features</h2>
+        <p style="opacity:0.85;" data-i18n="ret.intro">Everything that made Season 1 great is back.</p>
+
+        <div class="feat-grid" data-i18n-html="ret.grid">
+            <div class="feat-card">
+                <h3>Java &amp; Bedrock Crossplay</h3>
+                <p>Play together regardless of platform: Java or Bedrock (consoles, mobile, Windows 10/11). Geyser + Floodgate bridge both editions seamlessly.</p>
+                <div class="badge-row"><span class="b ret">Returning</span></div>
+            </div>
+            <div class="feat-card">
+                <h3>One-Time Elytra at Spawn</h3>
+                <p>Receive an Elytra at spawn to explore the world. Used once, then consumed. Keeps the start fair while still giving a special boost.</p>
+                <div class="badge-row"><span class="b ret">Returning</span></div>
+            </div>
+            <div class="feat-card">
+                <h3>Chest &amp; Block Protection</h3>
+                <p>Secure chests, doors, and Redstone with a simple right-click. Nobody accesses your containers without explicit permission.</p>
+                <div class="badge-row"><span class="b ret">Returning</span></div>
+            </div>
+            <div class="feat-card">
+                <h3>Voice Chat with 3D Audio</h3>
+                <p>Spatial voice chat in-game. Hear exactly which direction other players are speaking from. (Java Edition only.)</p>
+                <div class="badge-row"><span class="b ret">Returning</span></div>
+            </div>
+            <div class="feat-card">
+                <h3>Transparent Moderation</h3>
+                <p>CoreProtect logs all block actions. AntiCheat results in a public Discord channel. BlueMap web map lets everyone explore live.</p>
+                <div class="badge-row"><span class="b ret">Returning</span></div>
+            </div>
+            <div class="feat-card">
+                <h3>Whitelist System</h3>
+                <p>Whitelist via Discord account link. No application form — connect Discord and Minecraft via the Baxi bot to get auto-whitelisted.</p>
+                <div class="badge-row"><span class="b ret">Returning</span></div>
+            </div>
+        </div>
+
+        <p style="text-align:center;opacity:0.8;font-style:italic;margin:2rem 0;font-size:0.95rem;" data-i18n-html="docs">
+            For Bedrock join instructions and optional Java mods, check our <a href="https://cloud.avocloud.net/apps/collectives/p/oziR6xHsTfRzw6Y/CraftAttack-13-Community-4" target="_blank" style="color:var(--avo-primary-soft, #FF9379);">Documentation ↗</a>.
+        </p>
+
+        <h2 class="sub-h2" data-i18n="join.h">Join the Server</h2>
+        <p style="opacity:0.85;" data-i18n-html="join.b">
+            Server address: <code>craftattack.avocloud.net</code> · Free, no application form. Link Discord + Minecraft via the Baxi bot (<code>/mc link</code>) to be auto-whitelisted.
+        </p>
+        <p style="margin-top:1rem;">
+            <a href="/craftattack/join/" class="hero-btn" style="display:inline-flex;align-items:center;gap:0.45rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg><span data-i18n="join.btn">How to Join</span></a>
+        </p>
+
+        <nav aria-label="Other Craft Attack pages" style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.9rem;opacity:0.85;">
+            <strong style="display:block;margin-bottom:0.75rem;letter-spacing:0.05em;text-transform:uppercase;font-size:0.75rem;opacity:0.7;" data-i18n="more.h">More Craft Attack</strong>
+            <a href="/craftattack/" style="color:var(--avo-primary-soft, #FF9379);margin:0 0.6rem;" data-i18n="nav.home">Home</a> ·
+            <a href="/craftattack/aerlon/" style="color:var(--avo-primary-soft, #FF9379);margin:0 0.6rem;" data-i18n="nav.aerlon">Aerlon</a> ·
+            <a href="/craftattack/clans/" style="color:var(--avo-primary-soft, #FF9379);margin:0 0.6rem;" data-i18n="nav.clans">Clans &amp; Economy</a> ·
+            <a href="/craftattack/rules/" style="color:var(--avo-primary-soft, #FF9379);margin:0 0.6rem;" data-i18n="nav.rules">Server Rules</a> ·
+            <a href="/craftattack/join/" style="color:var(--avo-primary-soft, #FF9379);margin:0 0.6rem;" data-i18n="nav.join">How to Join</a>
+        </nav>
+
+    </main>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://avocloud.net/" },
+        { "@type": "ListItem", "position": 2, "name": "Craft Attack", "item": "https://avocloud.net/craftattack/" },
+        { "@type": "ListItem", "position": 3, "name": "Features", "item": "https://avocloud.net/craftattack/features/" }
+      ]
+    },
+    {
+      "@type": "Article",
+      "headline": "Features — Craft Attack Community Server Season 2",
+      "description": "Full feature list of the open Avocloud Craft Attack community server Season 2.",
+      "image": "https://avocloud.net/assets/images/craftattack/ca-s2-4.png",
+      "datePublished": "2026-05-14",
+      "dateModified": "2026-05-18",
+      "author": { "@type": "Organization", "name": "Avocloud.net" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Avocloud.net",
+        "logo": { "@type": "ImageObject", "url": "https://avocloud.net/logo.png" }
+      },
+      "mainEntityOfPage": "https://avocloud.net/craftattack/features/"
+    }
+  ]
+}
+    </script>
+
+    <script src="/assets/js/page-i18n.js"></script>
+    <script>
+    setupI18n({
+      en: {
+        'bc.ca': 'Craft Attack', 'bc.features': 'Features',
+        'h1': 'Features — Craft Attack Community Server Season 2',
+        'intro': 'Full feature list of the <strong>open Avocloud Craft Attack community server</strong>, Season 2: The Ashes of Aerlon. Season 2 keeps everything that worked in Season 1 and adds new systems based on community feedback.',
+        's2.h': 'New in Season 2',
+        's2.grid': '<div class="feat-card"><h3>Clan System</h3><p>Clans have their own chat (<code>/cc</code>), bank, home point, claim territory, and shared chest. Ally with other clans or declare war — both require mutual consent. Roles: Leader · Manager · Member. Founding: 5,000 Coins.</p><div class="badge-row"><span class="b">New in S2</span></div></div><div class="feat-card"><h3>Coin Economy</h3><p>Start with 500 Coins. Earn more through mob kills, playtime bonuses, jobs, and trading. Coins fund claim expansion beyond the free 500 blocks².</p><div class="badge-row"><span class="b">New in S2</span></div></div><div class="feat-card"><h3>Jobs System</h3><p>Pick one of four jobs and earn Coins through your normal playstyle: <strong>Hunter</strong> (slay mobs), <strong>Miner</strong> (mine ores), <strong>Farmer</strong> (harvest crops), <strong>Woodcutter</strong> (chop trees). Use <code>/jobs browse</code>. Only one job at a time.</p><div class="badge-row"><span class="b">New in S2</span><span class="b">JobsReborn</span></div></div><div class="feat-card"><h3>PvP Toggle System</h3><p>Use <code>/pvp on</code> to enable. Disabling has a 24h cooldown. New players get 48h auto-protection. Spawn is always PvP-free.</p><div class="badge-row"><span class="b">New in S2</span><span class="b">PvPManager</span></div></div><div class="feat-card"><h3>Custom World – Aerlon</h3><p>Dense forests with ancient stone arches, towering cliffs, overgrown plazas, forgotten settlements, dark underground chambers. Procedurally generated with a custom world generator, fully pre-generated for lag-free exploration. Live BlueMap web map.</p><div class="badge-row"><span class="b">New in S2</span><span class="b">BlueMap</span></div></div><div class="feat-card"><h3>RP Status System</h3><p>Toggle with <code>/rp on</code>. Active RP players show <code>[RP]</code> in chat. Roleplay is always optional — nobody is forced.</p><div class="badge-row"><span class="b">New in S2</span></div></div><div class="feat-card"><h3>Flexible Region Claims</h3><p><strong>Homestead</strong> replaces chunk-based claims. Define any region shape with 75+ permission flags. First 500 blocks² free, then costs Coins.</p><div class="badge-row"><span class="b">Upgraded in S2</span><span class="b">Homestead</span></div></div>',
+        'ret.h': 'Returning Features',
+        'ret.intro': 'Everything that made Season 1 great is back.',
+        'ret.grid': '<div class="feat-card"><h3>Java &amp; Bedrock Crossplay</h3><p>Play together regardless of platform: Java or Bedrock (consoles, mobile, Windows 10/11). Geyser + Floodgate bridge both editions seamlessly.</p><div class="badge-row"><span class="b ret">Returning</span></div></div><div class="feat-card"><h3>One-Time Elytra at Spawn</h3><p>Receive an Elytra at spawn to explore the world. Used once, then consumed. Keeps the start fair while still giving a special boost.</p><div class="badge-row"><span class="b ret">Returning</span></div></div><div class="feat-card"><h3>Chest &amp; Block Protection</h3><p>Secure chests, doors, and Redstone with a simple right-click. Nobody accesses your containers without explicit permission.</p><div class="badge-row"><span class="b ret">Returning</span></div></div><div class="feat-card"><h3>Voice Chat with 3D Audio</h3><p>Spatial voice chat in-game. Hear exactly which direction other players are speaking from. (Java Edition only.)</p><div class="badge-row"><span class="b ret">Returning</span></div></div><div class="feat-card"><h3>Transparent Moderation</h3><p>CoreProtect logs all block actions. AntiCheat results in a public Discord channel. BlueMap web map lets everyone explore live.</p><div class="badge-row"><span class="b ret">Returning</span></div></div><div class="feat-card"><h3>Whitelist System</h3><p>Whitelist via Discord account link. No application form — connect Discord and Minecraft via the Baxi bot to get auto-whitelisted.</p><div class="badge-row"><span class="b ret">Returning</span></div></div>',
+        'docs': 'For Bedrock join instructions and optional Java mods, check our <a href="https://cloud.avocloud.net/apps/collectives/p/oziR6xHsTfRzw6Y/CraftAttack-13-Community-4" target="_blank" style="color:var(--avo-primary-soft, #FF9379);">Documentation ↗</a>.',
+        'join.h': 'Join the Server',
+        'join.b': 'Server address: <code>craftattack.avocloud.net</code> · Free, no application form. Link Discord + Minecraft via the Baxi bot (<code>/mc link</code>) to be auto-whitelisted.',
+        'join.btn': 'How to Join',
+        'more.h': 'More Craft Attack',
+        'nav.home': 'Home', 'nav.aerlon': 'Aerlon', 'nav.clans': 'Clans & Economy', 'nav.rules': 'Server Rules', 'nav.join': 'How to Join'
+      },
+      de: {
+        'bc.ca': 'Craft Attack', 'bc.features': 'Features',
+        'h1': 'Features — Craft Attack Community Server Season 2',
+        'intro': 'Vollständige Feature-Liste des <strong>offenen Avocloud Craft Attack Community Servers</strong>, Season 2: Die Asche von Aerlon. Season 2 behält alles, was in Season 1 funktionierte, und ergänzt neue Systeme basierend auf Community-Feedback.',
+        's2.h': 'Neu in Season 2',
+        's2.grid': '<div class="feat-card"><h3>Clan-System</h3><p>Clans haben eigenen Chat (<code>/cc</code>), Bank, Heimpunkt, Claim-Gebiet und gemeinsame Truhe. Allianzen mit anderen Clans oder Kriege erklären — beides erfordert gegenseitiges Einverständnis. Rollen: Leader · Manager · Member. Gründung: 5.000 Coins.</p><div class="badge-row"><span class="b">Neu in S2</span></div></div><div class="feat-card"><h3>Münzwirtschaft</h3><p>Start mit 500 Coins. Weitere verdienen durch Mob-Kills, Spielzeit-Boni, Jobs und Handel. Coins finanzieren Claim-Erweiterung über die kostenlosen 500 Blöcke² hinaus.</p><div class="badge-row"><span class="b">Neu in S2</span></div></div><div class="feat-card"><h3>Jobs-System</h3><p>Wähle einen von vier Jobs und verdiene Coins durch deinen normalen Spielstil: <strong>Jäger</strong> (Mobs töten), <strong>Bergmann</strong> (Erze abbauen), <strong>Bauer</strong> (Ernten), <strong>Holzfäller</strong> (Bäume fällen). Mit <code>/jobs browse</code>. Nur ein Job gleichzeitig.</p><div class="badge-row"><span class="b">Neu in S2</span><span class="b">JobsReborn</span></div></div><div class="feat-card"><h3>PvP-Toggle-System</h3><p>Mit <code>/pvp on</code> aktivieren. Deaktivieren hat 24h Abklingzeit. Neue Spieler erhalten 48h Auto-Schutz. Spawn ist immer PvP-frei.</p><div class="badge-row"><span class="b">Neu in S2</span><span class="b">PvPManager</span></div></div><div class="feat-card"><h3>Custom World – Aerlon</h3><p>Dichte Wälder mit antiken Steinbögen, mächtige Klippen, verwachsene Plätze, vergessene Siedlungen, dunkle unterirdische Kammern. Prozedural generiert mit eigenem World-Generator, vollständig vorab generiert für lagfreies Erkunden. Live BlueMap Webkarte.</p><div class="badge-row"><span class="b">Neu in S2</span><span class="b">BlueMap</span></div></div><div class="feat-card"><h3>RP-Status-System</h3><p>Mit <code>/rp on</code> umschalten. Aktive RP-Spieler zeigen <code>[RP]</code> im Chat. Rollenspiel ist immer optional — niemand wird gezwungen.</p><div class="badge-row"><span class="b">Neu in S2</span></div></div><div class="feat-card"><h3>Flexible Region-Claims</h3><p><strong>Homestead</strong> ersetzt chunk-basierte Claims. Beliebige Gebietsformen mit 75+ Berechtigungsflags. Erste 500 Blöcke² kostenlos, danach Coins.</p><div class="badge-row"><span class="b">Aufgewertet in S2</span><span class="b">Homestead</span></div></div>',
+        'ret.h': 'Rückkehrer-Features',
+        'ret.intro': 'Alles, was Season 1 groß gemacht hat, ist zurück.',
+        'ret.grid': '<div class="feat-card"><h3>Java &amp; Bedrock Crossplay</h3><p>Gemeinsam spielen unabhängig von der Plattform: Java oder Bedrock (Konsolen, Mobil, Windows 10/11). Geyser + Floodgate verbinden beide Editionen nahtlos.</p><div class="badge-row"><span class="b ret">Rückkehrer</span></div></div><div class="feat-card"><h3>Einmalige Elytra beim Spawn</h3><p>Elytra beim Spawn zum Erkunden der Welt. Einmal verwendet, dann verbraucht. Hält den Start fair und gibt trotzdem einen besonderen Boost.</p><div class="badge-row"><span class="b ret">Rückkehrer</span></div></div><div class="feat-card"><h3>Truhen- &amp; Blockschutz</h3><p>Truhen, Türen und Redstone mit einem einfachen Rechtsklick schützen. Niemand greift ohne explizite Erlaubnis auf Container zu.</p><div class="badge-row"><span class="b ret">Rückkehrer</span></div></div><div class="feat-card"><h3>Sprachchat mit 3D-Audio</h3><p>Räumlicher Sprachchat im Spiel. Genau hören, aus welcher Richtung andere Spieler sprechen. (Nur Java Edition.)</p><div class="badge-row"><span class="b ret">Rückkehrer</span></div></div><div class="feat-card"><h3>Transparente Moderation</h3><p>CoreProtect loggt alle Blockaktionen. AntiCheat-Ergebnisse in öffentlichem Discord-Kanal. BlueMap-Webkarte lässt jeden die Welt live erkunden.</p><div class="badge-row"><span class="b ret">Rückkehrer</span></div></div><div class="feat-card"><h3>Whitelist-System</h3><p>Whitelist über Discord-Account-Verknüpfung. Kein Bewerbungsformular — Discord und Minecraft über Baxi-Bot verbinden für automatische Whitelist.</p><div class="badge-row"><span class="b ret">Rückkehrer</span></div></div>',
+        'docs': 'Für Bedrock-Beitritts-Anleitungen und optionale Java-Mods schau in unsere <a href="https://cloud.avocloud.net/apps/collectives/p/oziR6xHsTfRzw6Y/CraftAttack-13-Community-4" target="_blank" style="color:var(--avo-primary-soft, #FF9379);">Dokumentation ↗</a>.',
+        'join.h': 'Server beitreten',
+        'join.b': 'Serveradresse: <code>craftattack.avocloud.net</code> · Kostenlos, kein Bewerbungsformular. Verknüpfe Discord + Minecraft mit dem Baxi-Bot (<code>/mc link</code>) für automatische Whitelist.',
+        'join.btn': 'Beitreten',
+        'more.h': 'Mehr Craft Attack',
+        'nav.home': 'Startseite', 'nav.aerlon': 'Aerlon', 'nav.clans': 'Clans & Wirtschaft', 'nav.rules': 'Serverregeln', 'nav.join': 'Beitreten'
+      }
+    }, {
+      en: { title: 'Features — Craft Attack Community Server Season 2 | Avocloud.net', description: 'Full feature list of the open Avocloud Craft Attack community server Season 2: clans, jobs, coin economy, opt-in PvP, custom world Aerlon, BlueMap, Java + Bedrock crossplay, voice chat, claims.' },
+      de: { title: 'Features — Craft Attack Community Server Season 2 | Avocloud.net', description: 'Vollständige Feature-Liste des offenen Avocloud Craft Attack Community Servers Season 2: Clans, Jobs, Münzwirtschaft, opt-in PvP, Custom-World Aerlon, BlueMap, Java + Bedrock Crossplay, Sprachchat, Claims.' }
+    });
+    </script>
+</body>
+</html>

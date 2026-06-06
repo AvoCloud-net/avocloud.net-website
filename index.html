@@ -4,18 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avocloud.net</title>
-    <link rel="shortcut icon" href="./assets/images/logo.png" type="image/x-icon">
-    <meta name="description" content="Avocloud.net is an open-source software and discord bot development group.">
-    <meta name="keywords" content="Avocloud, software, discord bot, development, open source">
+    <title>Avocloud.net — Open-Source Discord Bots, Minecraft Plugins & Web Tools</title>
+    <link rel="icon" href="./assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="./favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="./assets/images/apple-touch-icon.png">
+    <meta name="description" content="Avocloud.net — open-source developer group from Austria & Germany. We build Discord bots (Baxi), Minecraft plugins (AvoFilter), an open Craft Attack community server, EduGrade, QrGate, PWGEN, and more. Free, MIT-licensed.">
+    <meta name="keywords" content="Avocloud, Avocloud.net, open source, Discord bot, Minecraft plugin, Baxi, AvoFilter, EduGrade, QrGate, PWGEN, SafeText, SkyFire, Craft Attack, CraftAttack, AvoLink, open-source software, MIT license, Discord moderation, Minecraft server, ticketing system, password generator, Notenverwaltung, Softwareentwicklung Österreich, Open Source Deutschland">
     <meta name="author" content="Avocloud.net">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <meta name="googlebot" content="index, follow">
     <link rel="canonical" href="https://avocloud.net/" />
-    <meta property="og:title" content="Avocloud.net">
-    <meta property="og:description" content="Avocloud.net is an open-source software and discord bot development group.">
-    <meta property="og:image" content="/assets/images/logo.png">
-    <meta property="og:url" content="https://avocloud.net">
+    <link rel="alternate" hreflang="en" href="https://avocloud.net/">
+    <link rel="alternate" hreflang="de" href="https://avocloud.net/?lang=de">
+    <link rel="alternate" hreflang="x-default" href="https://avocloud.net/">
+    <meta property="og:title" content="Avocloud.net — Open-Source Discord Bots, Minecraft Plugins & Web Tools">
+    <meta property="og:description" content="Open-source developer group from Austria & Germany. Discord bots (Baxi), Minecraft plugins (AvoFilter), open Craft Attack community, EduGrade, QrGate, PWGEN. Free, MIT-licensed.">
+    <meta property="og:image" content="https://avocloud.net/assets/images/logo.png">
+    <meta property="og:image:alt" content="Avocloud.net logo">
+    <meta property="og:url" content="https://avocloud.net/">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Avocloud.net">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Avocloud.net — Open-Source Discord Bots, Minecraft Plugins & Web Tools">
+    <meta name="twitter:description" content="Open-source dev group from Austria & Germany. Baxi, AvoFilter, EduGrade, QrGate, PWGEN, Craft Attack community. Free, MIT-licensed.">
+    <meta name="twitter:image" content="https://avocloud.net/assets/images/logo.png">
+    <meta name="theme-color" content="#0B0B0B">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -24,7 +39,7 @@
     <script src="./assets/js/theme.js"></script>
 </head>
 
-<body>
+<body data-ascii>
     <div id="gradientbar"></div>
 
     <!-- Nav -->
@@ -32,11 +47,12 @@
         <a class="avocloud-logo" href="/" aria-label="AVOCLOUD.NET">
             <span class="avocloud-logo__slot">
                 <span class="avocloud-logo__icon">
-                    <svg viewBox="0 0 100 75" fill="none">
-                        <path d="M 43 65 L 11 65 L 33 10 L 67 65 L 91 12"
-                            stroke="currentColor" stroke-width="8.5"
+                    <svg viewBox="0 0 72 72" fill="none">
+                        <path d="M22 18 L12 18 L12 54 L22 54 M50 18 L60 18 L60 54 L50 54 M26 30 L33 36 L26 42"
+                            stroke="currentColor" stroke-width="6"
                             stroke-linecap="round" stroke-linejoin="round"
                             pathLength="200"/>
+                        <rect class="logo-cursor" x="40" y="28" width="4" height="16" rx="2"/>
                     </svg>
                 </span>
                 <span class="avocloud-logo__av">AVO</span>
@@ -55,13 +71,15 @@
 
     <!-- Hero -->
     <section class="hero">
+        <canvas id="hero-ascii-canvas" aria-hidden="true"></canvas>
         <div class="hero-content">
             <p class="hero-eyebrow" data-i18n="hero.eyebrow">Open-source &middot; Since 2024</p>
             <div class="hero-wordmark-anim" id="hero-intro">
                 <span class="hi-slot">
                     <span class="hi-icon">
-                        <svg viewBox="0 0 100 75" fill="none" stroke="currentColor" stroke-width="8.5">
-                            <path class="hi-path" d="M 43 65 L 11 65 L 33 10 L 67 65 L 91 12" pathLength="200"/>
+                        <svg viewBox="0 0 72 72" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                            <path class="hi-path" d="M22 18 L12 18 L12 54 L22 54 M50 18 L60 18 L60 54 L50 54 M26 30 L33 36 L26 42" pathLength="200"/>
+                            <rect class="logo-cursor" x="40" y="28" width="4" height="16" rx="2"/>
                         </svg>
                     </span>
                     <span class="hi-av">AV</span>
@@ -114,10 +132,9 @@
             </div>
         </div>
         <button class="scroll-indicator">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                 style="width:28px;height:28px;stroke-linecap:round;stroke-linejoin:round">
-                <polyline points="6 9 12 15 18 9"/>
-            </svg>
+            <span class="scroll-ascii" aria-hidden="true">
+                <span>·</span><span>v</span><span>·</span>
+            </span>
         </button>
     </section>
 
@@ -180,7 +197,7 @@
 
                     <!-- Red_Wolf2467 - featured, 2 cols wide -->
                     <div class="card staff-card card-hover card-featured lg:col-span-2">
-                        <img src="./assets/images/red_wolf2467-banner.gif" class="staff-banner" alt="Banner von Redwolf" style="object-position: center 38%;"></img>
+                        <img src="./assets/images/red_wolf2467-banner.gif" class="staff-banner" alt="Banner von Redwolf" loading="lazy" decoding="async" width="800" height="200" style="object-position: center 38%;"></img>
                         <div class="staff-profile">
                             <img src="./assets/images/Red_Wolf2467.png" alt="Red_Wolf2467">
                         </div>
@@ -199,7 +216,7 @@
 
                     <!-- TFJ -->
                     <div class="card staff-card card-hover">
-                        <img src="./assets/images/tfj-banner.webp" class="staff-banner" alt="Banner von TFJ"></img>
+                        <img src="./assets/images/tfj-banner.webp" class="staff-banner" alt="Banner von TFJ" loading="lazy" decoding="async" width="400" height="200"></img>
                         <div class="staff-profile">
                             <img src="./assets/images/tfj.png" alt="TFJ">
                         </div>
@@ -216,7 +233,7 @@
 
                     <!-- The_Biest333 -->
                     <div class="card staff-card card-hover">
-                        <img src="./assets/images/the_biest333-banner.gif" class="staff-banner"></img>
+                        <img src="./assets/images/the_biest333-banner.gif" class="staff-banner" alt="Banner von The_Biest333" loading="lazy" decoding="async" width="400" height="200"></img>
                         <div class="staff-profile">
                             <img src="./assets/images/the_biest333.png" alt="The_Biest333">
                         </div>
@@ -233,7 +250,7 @@
 
                     <!-- LumpiFirefighter -->
                     <div class="card staff-card card-hover">
-                        <img src="./assets/images/lumpifirefighter-banner.gif" class="staff-banner" alt="Banner von LumpiFirefighter"></img>
+                        <img src="./assets/images/lumpifirefighter-banner.gif" class="staff-banner" alt="Banner von LumpiFirefighter" loading="lazy" decoding="async" width="400" height="200"></img>
                         <div class="staff-profile">
                             <img src="./assets/images/lumpifirefighter.gif" alt="LumpiFirefighter">
                         </div>
@@ -273,6 +290,33 @@
                 <div class="section-label" data-i18n="projects.label">PROJECTS</div>
                 <h2 class="text-2xl font-bold mb-8" data-i18n="projects.heading">Our Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                    <!-- Featured: Craft Attack Community Server -->
+                    <div class="card card-hover card-featured md:col-span-3">
+                        <header>
+                            <h3 class="font-semibold text-lg flex items-center gap-2">
+                                <svg class="lucide" viewBox="0 0 24 24">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                                </svg>
+                                Craft Attack Community Server
+                            </h3>
+                            <p class="text-muted text-sm" data-i18n="craftattack.desc">Open Craft Attack community Minecraft server — Season 2: The Ashes of Aerlon. Java + Bedrock crossplay, clans, jobs, BlueMap. Free, no application form.</p>
+                        </header>
+                        <footer>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="badge badge-secondary">Minecraft</span>
+                                <span class="badge badge-secondary">Survival</span>
+                                <span class="badge badge-secondary">Community</span>
+                                <span class="badge badge-secondary">Crossplay</span>
+                                <a href="https://avocloud.net/craftattack/" class="badge badge-outline">Craft Attack Community Server ↗</a>
+                                <a href="https://avocloud.net/craftattack/rules/" class="badge badge-outline">Rules ↗</a>
+                                <a href="https://avocloud.net/craftattack/aerlon/" class="badge badge-outline">Aerlon World ↗</a>
+                                <a href="https://avocloud.net/craftattack/clans/" class="badge badge-outline">Clans &amp; Economy ↗</a>
+                            </div>
+                        </footer>
+                    </div>
 
                     <!-- Row 1: Baxi (featured 2col) + PWGEN -->
                     <div class="card card-hover card-featured md:col-span-2">
@@ -490,7 +534,7 @@
                                 </svg>
                                 AvoLink
                             </h3>
-                            <p class="text-muted text-sm" data-i18n="avolink.desc">A link shortener and Linktree alternative. Create short, custom links and share all your profiles in one place.</p>
+                            <p class="text-muted text-sm" data-i18n="avolink.desc">AvoLink — a free link shortener and Linktree alternative. Create short branded URLs and a single profile page for all your social links.</p>
                         </header>
                         <footer>
                             <div class="flex flex-wrap gap-2">
@@ -514,7 +558,7 @@
                             <div class="flex items-center gap-4">
                                 <img src="./assets/images/cee.png" alt="Cee_1"
                                      class="w-14 h-14 rounded-full object-cover flex-shrink-0"
-                                     style="box-shadow: 0 0 0 2px rgba(147,51,234,0.35);">
+                                     style="box-shadow: 0 0 0 2px rgba(var(--avo-primary-rgb),0.35);">
                                 <div>
                                     <h3 class="font-semibold text-lg">Cee_1</h3>
                                     <p class="text-muted text-sm">Twitch Streamer</p>
@@ -544,7 +588,7 @@
                 <h2 class="text-2xl font-bold mb-8" data-i18n="contact.heading">Get In Touch</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                    <div class="card">
+                    <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
@@ -560,7 +604,7 @@
                         </section>
                     </div>
 
-                    <div class="card">
+                    <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
@@ -577,7 +621,7 @@
                         </section>
                     </div>
 
-                    <div class="card">
+                    <div class="card card-hover">
                         <header>
                             <h3 class="font-semibold flex items-center gap-2">
                                 <svg class="lucide" viewBox="0 0 24 24">
@@ -631,6 +675,7 @@
         'projects.label': 'PROJECTS',
         'projects.heading': 'Our Projects',
         'baxi.desc': 'A verified Discord bot with intelligent chat filter, global spammer database, and much more.',
+        'craftattack.desc': 'Open Craft Attack community Minecraft server — Season 2: The Ashes of Aerlon. Java + Bedrock crossplay, clans, jobs, BlueMap. Free, no application form.',
         'pwgen.desc': 'Generate secure, custom passwords quickly and easily.',
         'safetext.desc': 'API server scanning text for offensive language. Powers Baxi and AvoFilter.',
         'skyfire.desc': 'A MicroServer hosting service by us. Host your projects, websites, and status monitoring \u2014 from Python to Minecraft servers.',
@@ -673,6 +718,7 @@
         'projects.label': 'PROJEKTE',
         'projects.heading': 'Unsere Projekte',
         'baxi.desc': 'Ein verifizierter Discord-Bot mit intelligentem Chat-Filter, globaler Spammer-Datenbank und vielem mehr.',
+        'craftattack.desc': 'Offener Craft Attack Community Minecraft-Server — Season 2: Die Asche von Aerlon. Java + Bedrock Crossplay, Clans, Jobs, BlueMap. Kostenlos, kein Bewerbungsformular.',
         'pwgen.desc': 'Sichere, individuelle Passw\u00f6rter schnell und einfach generieren.',
         'safetext.desc': 'API-Server zur Erkennung anst\u00f6\u00dfiger Sprache. Betreibt Baxi und AvoFilter.',
         'skyfire.desc': 'Ein MicroServer-Hosting-Dienst von uns. Hoste deine Projekte, Websites und Status-Monitoring \u2014 von Python bis Minecraft-Servern.',
@@ -698,7 +744,33 @@
       }
     };
 
+    const _seoData = {
+      en: {
+        title: 'Avocloud.net — Open-Source Discord Bots, Minecraft Plugins & Web Tools',
+        description: 'Avocloud.net — open-source developer group from Austria & Germany. We build Discord bots (Baxi), Minecraft plugins (AvoFilter), an open Craft Attack community server, EduGrade, QrGate, PWGEN, and more. Free, MIT-licensed.'
+      },
+      de: {
+        title: 'Avocloud.net — Open-Source Discord-Bots, Minecraft-Plugins & Web-Tools',
+        description: 'Avocloud.net — Open-Source-Entwicklergruppe aus Österreich & Deutschland. Wir bauen Discord-Bots (Baxi), Minecraft-Plugins (AvoFilter), eine offene Craft Attack Community, EduGrade, QrGate, PWGEN und mehr. Kostenlos, MIT-Lizenz.'
+      }
+    };
+
+    function _setMeta(selector, attr, value) {
+      var el = document.querySelector(selector);
+      if (el) el.setAttribute(attr, value);
+    }
+
     function applyLang(lang) {
+      var seo = _seoData[lang] || _seoData.en;
+      document.title = seo.title;
+      _setMeta('meta[name="description"]', 'content', seo.description);
+      _setMeta('meta[property="og:title"]', 'content', seo.title);
+      _setMeta('meta[property="og:description"]', 'content', seo.description);
+      _setMeta('meta[property="og:locale"]', 'content', lang === 'de' ? 'de_DE' : 'en_US');
+      _setMeta('meta[property="og:locale:alternate"]', 'content', lang === 'de' ? 'en_US' : 'de_DE');
+      _setMeta('meta[name="twitter:title"]', 'content', seo.title);
+      _setMeta('meta[name="twitter:description"]', 'content', seo.description);
+
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var key = el.getAttribute('data-i18n');
         if (_i18nData[lang] && _i18nData[lang][key] !== undefined) {
@@ -726,11 +798,136 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      applyLang(localStorage.getItem('avo-lang') || 'en');
+      var urlLang = new URLSearchParams(location.search).get('lang');
+      var initial = (urlLang === 'de' || urlLang === 'en')
+        ? urlLang
+        : (localStorage.getItem('avo-lang') || 'en');
+      applyLang(initial);
       var count = document.querySelectorAll('#staff .staff-card').length;
       var el = document.getElementById('stat-members');
       if (el && count > 0) el.textContent = count;
     });
+    </script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://avocloud.net/#org",
+      "name": "Avocloud.net",
+      "alternateName": "Avocloud",
+      "url": "https://avocloud.net/",
+      "logo": "https://avocloud.net/assets/images/logo.png",
+      "image": "https://avocloud.net/assets/images/logo.png",
+      "foundingDate": "2024",
+      "description": "Open-source software development group from Austria and Germany. Builds Discord bots, Minecraft plugins, web utilities, and operates an open Craft Attack community Minecraft server.",
+      "areaServed": ["AT", "DE", "Worldwide"],
+      "knowsAbout": ["Discord bot development", "Minecraft plugin development", "Open source software", "Web development", "Server hosting", "AES-256 encryption"],
+      "sameAs": [
+        "https://github.com/AvoCloud-net",
+        "https://avocloud.net/discord/",
+        "https://avolink.net/"
+      ],
+      "owns": [
+        {
+          "@type": "WebSite",
+          "@id": "https://avolink.net/#website",
+          "url": "https://avolink.net/",
+          "name": "AvoLink",
+          "alternateName": ["AvoLink.net", "Avo Link"],
+          "description": "Free link shortener and Linktree alternative by Avocloud.net. Create short branded URLs and a single profile page for all your social links.",
+          "inLanguage": ["en", "de"],
+          "publisher": { "@id": "https://avocloud.net/#org" }
+        }
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "support",
+        "email": "support@avocloud.net",
+        "url": "https://avocloud.net/mail/"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://avocloud.net/#website",
+      "url": "https://avocloud.net/",
+      "name": "Avocloud.net",
+      "publisher": { "@id": "https://avocloud.net/#org" },
+      "inLanguage": ["en", "de"]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://avocloud.net/#webpage",
+      "url": "https://avocloud.net/",
+      "name": "Avocloud.net — Open-Source Discord Bots, Minecraft Plugins & Web Tools",
+      "isPartOf": { "@id": "https://avocloud.net/#website" },
+      "about": { "@id": "https://avocloud.net/#org" },
+      "inLanguage": "en",
+      "primaryImageOfPage": "https://avocloud.net/assets/images/logo.png"
+    },
+    {
+      "@type": "ItemList",
+      "name": "Avocloud.net projects",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Baxi", "url": "https://avocloud.net/baxi/", "description": "Verified Discord moderation bot with intelligent chat filter and global spammer database." },
+        { "@type": "ListItem", "position": 2, "name": "PWGEN", "url": "https://avocloud.net/pwgen/", "description": "Secure, customizable password generator." },
+        { "@type": "ListItem", "position": 3, "name": "SafeText", "url": "https://github.com/AvoCloud-net/SafeText", "description": "API server that scans text for offensive language. Powers Baxi and AvoFilter." },
+        { "@type": "ListItem", "position": 4, "name": "SkyFire", "url": "https://avocloud.net/skyfire/", "description": "MicroServer hosting service for projects, websites and Minecraft servers." },
+        { "@type": "ListItem", "position": 5, "name": "QrGate", "url": "https://avocloud.net/qrgate/", "description": "Open-source ticketing system with shop, PayPal, email delivery and QR check-in." },
+        { "@type": "ListItem", "position": 6, "name": "Ember", "url": "https://github.com/rwolf2467/ember", "description": "Instagram-like social media platform, now a public archive." },
+        { "@type": "ListItem", "position": 7, "name": "AvoFilter", "url": "https://modrinth.com/plugin/avofilter", "description": "Minecraft chat-filter plugin powered by SafeText." },
+        { "@type": "ListItem", "position": 8, "name": "EduGrade", "url": "https://avocloud.net/edugrade/", "description": "Free, GDPR-compliant grade management for teachers with AES-256-GCM encryption." },
+        { "@type": "ListItem", "position": 9, "name": "Craft Attack", "url": "https://avocloud.net/craftattack/", "description": "Open Craft Attack community Minecraft server — Season 2: The Ashes of Aerlon." },
+        { "@type": "ListItem", "position": 10, "name": "AvoLink", "url": "https://avolink.net/", "description": "Free link shortener and Linktree alternative — create short branded URLs and a single profile page for all your social links. By Avocloud.net." }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://avocloud.net/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Avocloud.net?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Avocloud.net is an open-source software development group from Austria and Germany, founded in 2024. We build Discord bots, Minecraft plugins, web utilities, and operate an open Craft Attack community Minecraft server. All our projects are MIT-licensed and freely available on GitHub."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are Avocloud projects free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. All our projects (Baxi, AvoFilter, EduGrade, QrGate, PWGEN, SafeText, the Craft Attack server, and more) are free to use. Source code is open source under the MIT license on GitHub."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I contact Avocloud.net?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Join our Discord at avocloud.net/discord, email support@avocloud.net, or open issues on our GitHub at github.com/AvoCloud-net."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Baxi Discord bot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Baxi is our verified Discord moderation bot with an intelligent chat filter, global spammer database, account-linking for the Craft Attack server, and many more features. Free and open source."
+          }
+        }
+      ]
+    }
+  ]
+}
     </script>
 </body>
 

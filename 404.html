@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 – Not Found | Avocloud.net</title>
+    <link rel="icon" href="./assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="./assets/images/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="./assets/images/apple-touch-icon.png">
+    <meta name="theme-color" content="#0B0B0B">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Syne:wght@800&display=swap" rel="stylesheet">
     <style>
@@ -14,8 +18,8 @@
             --text-primary: #e8e8ed;
             --text-secondary: #8a8a9a;
             --text-muted: #55556a;
-            --accent: #6c63ff;
-            --accent-glow: rgba(108, 99, 255, 0.15);
+            --accent: #FF6B4A;
+            --accent-glow: rgba(255,107,74, 0.15);
             --yellow: #ffc312;
             --yellow-glow: rgba(255, 195, 18, 0.12);
         }
@@ -29,15 +33,14 @@
             font-family: 'DM Sans', -apple-system, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
-        body::before {
-            content: '';
+        #hero-ascii-canvas {
             position: fixed;
             inset: 0;
-            background-image:
-                radial-gradient(circle at 50% 0%, var(--accent-glow) 0%, transparent 50%),
-                radial-gradient(circle at 20% 80%, var(--yellow-glow) 0%, transparent 40%);
-            pointer-events: none;
+            width: 100%;
+            height: 100%;
             z-index: 0;
+            pointer-events: none;
+            opacity: 0.3;
         }
         .header {
             position: relative;
@@ -187,7 +190,7 @@
             text-decoration: none;
         }
         .btn-primary:hover {
-            background: #5b52e0;
+            background: var(--avo-primary, #FF6B4A);
             transform: translateY(-1px);
             box-shadow: 0 4px 20px var(--accent-glow);
         }
@@ -232,15 +235,17 @@
     </style>
 </head>
 <body>
+    <canvas id="hero-ascii-canvas" data-palette="yellow" aria-hidden="true"></canvas>
     <div class="header">
         <a class="avocloud-logo" href="/" aria-label="AVOCLOUD.NET">
             <span class="avocloud-logo__slot">
                 <span class="avocloud-logo__icon">
-                    <svg viewBox="0 0 100 75" fill="none">
-                        <path d="M 43 65 L 11 65 L 33 10 L 67 65 L 91 12"
-                            stroke="currentColor" stroke-width="8.5"
+                    <svg viewBox="0 0 72 72" fill="none">
+                        <path d="M22 18 L12 18 L12 54 L22 54 M50 18 L60 18 L60 54 L50 54 M26 30 L33 36 L26 42"
+                            stroke="currentColor" stroke-width="6"
                             stroke-linecap="round" stroke-linejoin="round"
                             pathLength="200"/>
+                        <rect class="logo-cursor" x="40" y="28" width="4" height="16" rx="2" fill="#FF6B4A"/>
                     </svg>
                 </span>
                 <span class="avocloud-logo__av">AVO</span>

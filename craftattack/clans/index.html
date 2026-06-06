@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clans, Jobs &amp; Economy — Craft Attack Community Server | Avocloud.net</title>
+    <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="../../assets/images/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="../../assets/images/apple-touch-icon.png">
+    <meta name="description" content="Craft Attack Season 2 clan system, jobs, coin economy and Homestead claims on the open Avocloud community server. Found a clan, claim land, earn coins, trade and ally.">
+    <meta name="keywords" content="Craft Attack Clans, Craft Attack Clan System, CraftAttack Jobs, Craft Attack Wirtschaft, Craft Attack Economy, Craft Attack Claims, Craft Attack Homestead, Avocloud Craft Attack, Minecraft Clan Server, Craft Attack Coins">
+    <meta name="author" content="Avocloud.net">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <link rel="canonical" href="https://avocloud.net/craftattack/clans/">
+    <link rel="alternate" hreflang="en" href="https://avocloud.net/craftattack/clans/">
+    <link rel="alternate" hreflang="de" href="https://avocloud.net/craftattack/clans/?lang=de">
+    <link rel="alternate" hreflang="x-default" href="https://avocloud.net/craftattack/clans/">
+    <meta property="og:title" content="Clans, Jobs &amp; Economy — Craft Attack Community Server">
+    <meta property="og:description" content="Clan system, jobs, coin economy and claims on the open Craft Attack community server by Avocloud.">
+    <meta property="og:image" content="https://avocloud.net/assets/images/craftattack/ca-s2-4.png">
+    <meta property="og:url" content="https://avocloud.net/craftattack/clans/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Avocloud.net">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Clans, Jobs &amp; Economy — Craft Attack Server">
+    <meta name="twitter:description" content="Build clans, earn coins, claim land on the open Craft Attack community server.">
+    <meta name="theme-color" content="#0B0B0B">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <script src="../../assets/js/theme.js"></script>
+    <style>
+.back-btn {
+  position: fixed;
+  top: 5rem;
+  left: 1rem;
+  z-index: 150;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem 0.5rem 0.75rem;
+  background: rgba(20,20,28,0.85);
+  border: 1px solid rgba(var(--avo-primary-soft-rgb, 255,147,121),0.35);
+  border-radius: 999px;
+  color: #c4b5fd;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, color 0.18s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+.back-btn:hover { background: rgba(var(--avo-primary-soft-rgb, 255,147,121),0.18); border-color: rgba(var(--avo-primary-soft-rgb, 255,147,121),0.7); transform: translateX(-2px); color: #f3f0ff; }
+.back-btn svg { width: 16px; height: 16px; }
+html:not(.dark) .back-btn { background: rgba(255,255,255,0.85); border-color: rgba(var(--avo-primary-rgb, 255,107,74),0.4); color: var(--avo-primary, #C73D20); }
+html:not(.dark) .back-btn:hover { background: rgba(var(--avo-primary-rgb, 255,107,74),0.12); color: var(--avo-primary, #C73D20); }
+@media (max-width: 600px) { .back-btn { top: auto; bottom: 1rem; left: 1rem; } }
+    </style>
+</head>
+
+<body>
+    <div id="gradientbar"></div>
+
+    <nav class="site-nav" id="site-nav">
+        <a class="avocloud-logo" href="/" aria-label="AVOCLOUD.NET">
+            <span class="avocloud-logo__slot">
+                <span class="avocloud-logo__icon">
+                    <svg viewBox="0 0 72 72" fill="none">
+                        <path d="M22 18 L12 18 L12 54 L22 54 M50 18 L60 18 L60 54 L50 54 M26 30 L33 36 L26 42" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" pathLength="200"/>
+                        <rect class="logo-cursor" x="40" y="28" width="4" height="16" rx="2"/>
+                    </svg>
+                </span>
+                <span class="avocloud-logo__av">AVO</span>
+            </span>
+            <span class="avocloud-logo__rest-wrap">
+                <span class="avocloud-logo__rest">CLOUD<span class="avocloud-logo__dot">.NET</span></span>
+            </span>
+        </a>
+        <div style="margin-left:auto;display:flex;gap:0.5rem;align-items:center;">
+            <button class="lang-toggle" id="lang-btn" onclick="toggleLang()" title="Auf Deutsch wechseln">DE</button>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" style="margin-left:0">
+                <svg id="theme-icon" viewBox="0 0 24 24"></svg>
+            </button>
+        </div>
+    </nav>
+
+    <a href="/craftattack/" class="back-btn" title="Back to Craft Attack home" data-i18n-html="back.btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>Craft Attack</span>
+    </a>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-12" style="padding-top:6rem;">
+
+        <nav aria-label="Breadcrumb" style="font-size:0.85rem;opacity:0.7;margin-bottom:1.5rem;">
+            <a href="/" style="color:inherit;text-decoration:underline;">Avocloud.net</a> /
+            <a href="/craftattack/" style="color:inherit;text-decoration:underline;" data-i18n="bc.ca">Craft Attack</a> /
+            <span data-i18n="bc.clans">Clans, Jobs &amp; Economy</span>
+        </nav>
+
+        <h1 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.25rem);font-weight:800;line-height:1.15;margin-bottom:1rem;" data-i18n="h1">
+            Clans, Jobs &amp; Economy — Craft Attack Community Server
+        </h1>
+
+        <p style="font-size:1.05rem;opacity:0.85;margin-bottom:2rem;" data-i18n-html="intro">
+            The open <strong>Avocloud Craft Attack community server</strong> in <strong>Season 2 — The Ashes of Aerlon</strong> ships a full set of community systems: clans, jobs, a coin economy, flexible Homestead claims, and opt-in PvP. Everything here is free; coins are earned, not bought.
+        </p>
+
+        <section style="margin-bottom:2.5rem;">
+            <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:0.75rem;" data-i18n="clan.h">Clan System</h2>
+            <p style="opacity:0.85;" data-i18n-html="clan.b">
+                Found a clan, share a base, declare wars or forge alliances. Each clan gets its own chat (<code>/cc</code>), bank balance, home point, claim area, and shared chest. Roles: Leader · Manager · Member. Alliances and Clan Wars require mutual consent — wars are opt-in, auto-end after 7 days, do not allow base destruction, and grave protection still applies.
+            </p>
+        </section>
+
+        <section style="margin-bottom:2.5rem;">
+            <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:0.75rem;" data-i18n="coin.h">Coin Economy</h2>
+            <p style="opacity:0.85;" data-i18n-html="coin.b">
+                Every player starts with 500 coins. Earn more through mob kills, playtime bonuses, jobs, and trading with other players. Coins fund Homestead claim expansion beyond the free 500 blocks², clan founding, alliances, and player-driven shops.
+            </p>
+        </section>
+
+        <section style="margin-bottom:2.5rem;">
+            <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:0.75rem;" data-i18n="jobs.h">Jobs System</h2>
+            <p style="opacity:0.85;" data-i18n-html="jobs.b">
+                Pick one of four jobs and earn coins through your normal playstyle — mining, building, farming, hunting. Only one job at a time. Browse with <code>/jobs browse</code>. Jobs are entirely optional but the most reliable income stream for funding clan and claim growth.
+            </p>
+        </section>
+
+        <section style="margin-bottom:2.5rem;">
+            <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:0.75rem;" data-i18n="claims.h">Homestead Claims</h2>
+            <p style="opacity:0.85;" data-i18n-html="claims.b">
+                Flexible region claims, not just chunks — claim any shape with 75+ permission flags. First 500 blocks² are free; beyond that costs coins. Auto-unclaim only triggers when upkeep can't be paid (insufficient balance on <code>/money</code>). Default rule keeps some distance to neighboring claims; directly adjacent claims allowed only with explicit consent of the affected claim holder.
+            </p>
+        </section>
+
+        <section style="margin-bottom:2.5rem;">
+            <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:0.75rem;" data-i18n="pvp.h">Opt-in PvP</h2>
+            <p style="opacity:0.85;" data-i18n-html="pvp.b">
+                PvP is off by default. Enable with <code>/pvp on</code>; disabling has a 24h cooldown. New players are auto-protected for 48h. Spawn (500 block radius) is always PvP-free. Combat Tag locks logout/teleport/toggle for 15 seconds. Walling-in players where they can't free themselves is forbidden (see <a href="/craftattack/rules/" style="color:var(--avo-primary-soft, #FF9379);">Server Rules</a>).
+            </p>
+        </section>
+
+        <section>
+            <h2 style="font-size:1.5rem;font-weight:700;margin-bottom:0.75rem;" data-i18n="join.h">Join</h2>
+            <p style="opacity:0.85;" data-i18n-html="join.b">
+                Server address: <code>craftattack.avocloud.net</code> · Free, no application form. Link Discord + Minecraft via the Baxi bot using <code>/mc link</code> to get whitelisted automatically.
+            </p>
+            <p style="margin-top:1rem;">
+                <a href="/craftattack/" class="hero-btn" style="display:inline-flex;align-items:center;gap:0.45rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg><span data-i18n="join.btn">Craft Attack Community Server Home</span></a>
+            </p>
+        </section>
+
+        <nav aria-label="Other Craft Attack pages" style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.9rem;opacity:0.85;">
+            <strong style="display:block;margin-bottom:0.75rem;letter-spacing:0.05em;text-transform:uppercase;font-size:0.75rem;opacity:0.7;" data-i18n="more.h">More Craft Attack</strong>
+            <a href="/craftattack/" style="color:var(--avo-primary-soft, #FF9379);margin:0 0.6rem;" data-i18n="nav.home">Home</a> ·
+            <a href="/craftattack/aerlon/" style="color:var(--avo-primary-soft, #FF9379);margin:0 0.6rem;" data-i18n="nav.aerlon">Aerlon</a> ·
+            <a href="/craftattack/features/" style="color:var(--avo-primary-soft, #FF9379);margin:0 0.6rem;" data-i18n="nav.features">Features</a> ·
+            <a href="/craftattack/rules/" style="color:var(--avo-primary-soft, #FF9379);margin:0 0.6rem;" data-i18n="nav.rules">Server Rules</a> ·
+            <a href="/craftattack/join/" style="color:var(--avo-primary-soft, #FF9379);margin:0 0.6rem;" data-i18n="nav.join">How to Join</a>
+        </nav>
+
+    </main>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://avocloud.net/" },
+        { "@type": "ListItem", "position": 2, "name": "Craft Attack", "item": "https://avocloud.net/craftattack/" },
+        { "@type": "ListItem", "position": 3, "name": "Clans, Jobs & Economy", "item": "https://avocloud.net/craftattack/clans/" }
+      ]
+    },
+    {
+      "@type": "Article",
+      "headline": "Clans, Jobs & Economy — Craft Attack Community Server",
+      "description": "Clan system, jobs, coin economy and claims on the open Avocloud Craft Attack server, Season 2.",
+      "image": "https://avocloud.net/assets/images/craftattack/ca-s2-4.png",
+      "datePublished": "2026-05-14",
+      "dateModified": "2026-05-18",
+      "author": { "@type": "Organization", "name": "Avocloud.net" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Avocloud.net",
+        "logo": { "@type": "ImageObject", "url": "https://avocloud.net/logo.png" }
+      },
+      "mainEntityOfPage": "https://avocloud.net/craftattack/clans/"
+    }
+  ]
+}
+    </script>
+
+    <script src="/assets/js/page-i18n.js"></script>
+    <script>
+    setupI18n({
+      en: {
+        'bc.ca': 'Craft Attack', 'bc.clans': 'Clans, Jobs & Economy',
+        'h1': 'Clans, Jobs & Economy — Craft Attack Community Server',
+        'intro': 'The open <strong>Avocloud Craft Attack community server</strong> in <strong>Season 2 — The Ashes of Aerlon</strong> ships a full set of community systems: clans, jobs, a coin economy, flexible Homestead claims, and opt-in PvP. Everything here is free; coins are earned, not bought.',
+        'clan.h': 'Clan System',
+        'clan.b': 'Found a clan, share a base, declare wars or forge alliances. Each clan gets its own chat (<code>/cc</code>), bank balance, home point, claim area, and shared chest. Roles: Leader · Manager · Member. Alliances and Clan Wars require mutual consent — wars are opt-in, auto-end after 7 days, do not allow base destruction, and grave protection still applies.',
+        'coin.h': 'Coin Economy',
+        'coin.b': 'Every player starts with 500 coins. Earn more through mob kills, playtime bonuses, jobs, and trading with other players. Coins fund Homestead claim expansion beyond the free 500 blocks², clan founding, alliances, and player-driven shops.',
+        'jobs.h': 'Jobs System',
+        'jobs.b': 'Pick one of four jobs and earn coins through your normal playstyle — mining, building, farming, hunting. Only one job at a time. Browse with <code>/jobs browse</code>. Jobs are entirely optional but the most reliable income stream for funding clan and claim growth.',
+        'claims.h': 'Homestead Claims',
+        'claims.b': "Flexible region claims, not just chunks — claim any shape with 75+ permission flags. First 500 blocks² are free; beyond that costs coins. Auto-unclaim only triggers when upkeep can't be paid (insufficient balance on <code>/money</code>). Default rule keeps some distance to neighboring claims; directly adjacent claims allowed only with explicit consent of the affected claim holder.",
+        'pvp.h': 'Opt-in PvP',
+        'pvp.b': "PvP is off by default. Enable with <code>/pvp on</code>; disabling has a 24h cooldown. New players are auto-protected for 48h. Spawn (500 block radius) is always PvP-free. Combat Tag locks logout/teleport/toggle for 15 seconds. Walling-in players where they can't free themselves is forbidden (see <a href='/craftattack/rules/' style='color:var(--avo-primary-soft, #FF9379);'>Server Rules</a>).",
+        'join.h': 'Join',
+        'join.b': 'Server address: <code>craftattack.avocloud.net</code> · Free, no application form. Link Discord + Minecraft via the Baxi bot using <code>/mc link</code> to get whitelisted automatically.',
+        'join.btn': 'Craft Attack Community Server Home',
+        'more.h': 'More Craft Attack',
+        'nav.home': 'Home', 'nav.aerlon': 'Aerlon', 'nav.features': 'Features', 'nav.rules': 'Server Rules', 'nav.join': 'How to Join'
+      },
+      de: {
+        'bc.ca': 'Craft Attack', 'bc.clans': 'Clans, Jobs & Wirtschaft',
+        'h1': 'Clans, Jobs & Wirtschaft — Craft Attack Community Server',
+        'intro': 'Der offene <strong>Avocloud Craft Attack Community Server</strong> in <strong>Season 2 — Die Asche von Aerlon</strong> bringt ein volles Set an Community-Systemen: Clans, Jobs, Münzwirtschaft, flexible Homestead-Claims und opt-in PvP. Alles ist kostenlos; Coins werden verdient, nicht gekauft.',
+        'clan.h': 'Clan-System',
+        'clan.b': 'Gründe einen Clan, teilt euch eine Base, erklärt Kriege oder schließt Allianzen. Jeder Clan erhält eigenen Chat (<code>/cc</code>), Bankguthaben, Heimpunkt, Claim-Bereich und gemeinsame Truhe. Rollen: Leader · Manager · Member. Allianzen und Clan-Kriege erfordern gegenseitiges Einverständnis — Kriege sind opt-in, enden automatisch nach 7 Tagen, erlauben keine Base-Zerstörung und Grab-Schutz gilt weiter.',
+        'coin.h': 'Münzwirtschaft',
+        'coin.b': 'Jeder Spieler startet mit 500 Coins. Mehr verdienen durch Mob-Kills, Spielzeit-Boni, Jobs und Handel mit anderen Spielern. Coins finanzieren Homestead-Claim-Erweiterung über die kostenlosen 500 Blöcke² hinaus, Clan-Gründung, Allianzen und spielergetriebene Shops.',
+        'jobs.h': 'Jobs-System',
+        'jobs.b': 'Wähle einen von vier Jobs und verdiene Coins durch deinen normalen Spielstil — Bergbau, Bauen, Farmen, Jagen. Nur ein Job gleichzeitig. Durchsuchen mit <code>/jobs browse</code>. Jobs sind komplett optional, aber die zuverlässigste Einkommensquelle für Clan- und Claim-Wachstum.',
+        'claims.h': 'Homestead-Claims',
+        'claims.b': 'Flexible Region-Claims, nicht nur Chunks — beanspruche beliebige Formen mit 75+ Berechtigungs-Flags. Erste 500 Blöcke² kostenlos; darüber hinaus kosten Coins. Auto-Unclaim greift nur, wenn Unterhalt nicht bezahlt werden kann (zu wenig Guthaben auf <code>/money</code>). Standard-Regel hält etwas Abstand zu Nachbar-Claims; direkt angrenzende Claims nur mit ausdrücklicher Zustimmung des betroffenen Claim-Inhabers.',
+        'pvp.h': 'Opt-in PvP',
+        'pvp.b': "PvP ist standardmäßig aus. Mit <code>/pvp on</code> aktivieren; Deaktivieren hat 24h Abklingzeit. Neue Spieler sind 48h auto-geschützt. Spawn (500 Block Radius) immer PvP-frei. Combat Tag sperrt Logout/Teleport/Toggle für 15 Sek. Einbauen von Spielern, die sich nicht selbst befreien können, ist verboten (siehe <a href='/craftattack/rules/' style='color:var(--avo-primary-soft, #FF9379);'>Serverregeln</a>).",
+        'join.h': 'Beitreten',
+        'join.b': 'Serveradresse: <code>craftattack.avocloud.net</code> · Kostenlos, kein Bewerbungsformular. Verknüpfe Discord + Minecraft mit dem Baxi-Bot via <code>/mc link</code> für automatische Whitelist.',
+        'join.btn': 'Craft Attack Community Server Startseite',
+        'more.h': 'Mehr Craft Attack',
+        'nav.home': 'Startseite', 'nav.aerlon': 'Aerlon', 'nav.features': 'Features', 'nav.rules': 'Serverregeln', 'nav.join': 'Beitreten'
+      }
+    }, {
+      en: { title: 'Clans, Jobs & Economy — Craft Attack Community Server | Avocloud.net', description: 'Craft Attack Season 2 clan system, jobs, coin economy and Homestead claims on the open Avocloud community server. Found a clan, claim land, earn coins, trade and ally.' },
+      de: { title: 'Clans, Jobs & Wirtschaft — Craft Attack Community Server | Avocloud.net', description: 'Craft Attack Season 2 Clan-System, Jobs, Münzwirtschaft und Homestead-Claims auf dem offenen Avocloud Community Server. Gründe einen Clan, beanspruche Land, verdiene Coins, handle und verbünde dich.' }
+    });
+    </script>
+</body>
+</html>
