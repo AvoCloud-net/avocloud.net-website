@@ -37,6 +37,84 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.10-beta.2/dist/basecoat.cdn.min.css">
     <link rel="stylesheet" href="./assets/css/main.css">
     <script src="./assets/js/theme.js"></script>
+
+    <!-- ── Scoped scroll-motion layer (index only; additive, never touches shared assets) ── -->
+    <style id="avo-motion">
+        /* Scroll-reveal engine */
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: calc(var(--d, 0) * 70ms);
+            will-change: opacity, transform;
+        }
+        [data-reveal="scale"] { transform: scale(0.94); }
+        [data-reveal].is-visible { opacity: 1; transform: none; }
+
+        /* Hero parallax target */
+        .hero-content { will-change: transform, opacity; }
+
+        /* Aurora glow behind the projects section */
+        #projects { position: relative; }
+        #projects > .section-label,
+        #projects > h2,
+        #projects > .grid { position: relative; z-index: 1; }
+        .avo-aurora {
+            position: absolute;
+            inset: -10% 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .avo-aurora span {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.4;
+        }
+        .avo-aurora span:nth-child(1) {
+            width: 42vw; height: 42vw; left: -6%; top: 0;
+            background: radial-gradient(circle, rgba(var(--avo-primary-rgb, 255,107,74),0.28), transparent 70%);
+            animation: avo-aurora-a 22s ease-in-out infinite;
+        }
+        .avo-aurora span:nth-child(2) {
+            width: 34vw; height: 34vw; right: -6%; top: 38%;
+            background: radial-gradient(circle, rgba(var(--avo-primary-soft-rgb, 255,147,121),0.20), transparent 70%);
+            animation: avo-aurora-b 27s ease-in-out infinite;
+        }
+        .avo-aurora span:nth-child(3) {
+            width: 30vw; height: 30vw; left: 34%; bottom: -6%;
+            background: radial-gradient(circle, rgba(var(--avo-primary-rgb, 255,107,74),0.18), transparent 70%);
+            animation: avo-aurora-c 31s ease-in-out infinite;
+        }
+        html:not(.dark) .avo-aurora span { opacity: 0.22; }
+        @keyframes avo-aurora-a { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(8vw,6vh) scale(1.15); } }
+        @keyframes avo-aurora-b { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-7vw,-5vh) scale(1.1); } }
+        @keyframes avo-aurora-c { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(5vw,-7vh) scale(1.2); } }
+
+        /* Word-by-word headline reveal (replaces the h2 glitch-scramble) */
+        .word-reveal .wr {
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: top;
+            line-height: 1.08;
+        }
+        .word-reveal .wr > span {
+            display: inline-block;
+            transform: translateY(112%);
+            opacity: 0;
+            transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+        }
+        .word-reveal.words-in .wr > span { transform: none; opacity: 1; }
+        /* the universal `*{font-family:Quicksand}` rule would hit the inner spans — keep Syne */
+        .word-reveal .wr, .word-reveal .wr > span { font-family: 'Syne', sans-serif; }
+
+        @media (prefers-reduced-motion: reduce) {
+            [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+            .avo-aurora span { animation: none !important; }
+            .word-reveal .wr > span { transform: none !important; opacity: 1 !important; }
+        }
+    </style>
 </head>
 
 <body data-ascii>
@@ -807,6 +885,157 @@
       var el = document.getElementById('stat-members');
       if (el && count > 0) el.textContent = count;
     });
+    </script>
+
+    <!-- ── Scoped scroll-motion engine (reveal · count-up · hero parallax · aurora) ── -->
+    <script>
+    (function () {
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // ── Detach <main> h2 from main.js's glitch-scramble NOW (synchronous) ──
+        //    main.js captured these h2 nodes at parse-time and will .observe() them
+        //    at +120ms; cloning+replacing them synchronously leaves main.js with stale
+        //    refs, so the scramble never fires — freeing them for word-by-word reveal.
+        var mainEl = document.querySelector('main');
+        var wordHeads = mainEl ? [].slice.call(mainEl.querySelectorAll('h2')).map(function (el) {
+            var clone = el.cloneNode(true);
+            el.parentNode.replaceChild(clone, el);
+            return clone;
+        }) : [];
+
+        function init() {
+            // ── 0. Word-by-word headline reveal (runs after applyLang set the text) ──
+            function wrapWords(el) {
+                var text = el.textContent;
+                if (reduce) { el.classList.add('words-in'); return; }
+                el.textContent = '';
+                el.classList.add('word-reveal');
+                var i = 0;
+                text.split(/(\s+)/).forEach(function (w) {
+                    if (!w.trim()) { el.appendChild(document.createTextNode(w)); return; }
+                    var mask = document.createElement('span'); mask.className = 'wr';
+                    var inner = document.createElement('span'); inner.textContent = w;
+                    inner.style.transitionDelay = (i * 120) + 'ms';
+                    mask.appendChild(inner); el.appendChild(mask);
+                    i++;
+                });
+            }
+            if (wordHeads.length) {
+                wordHeads.forEach(wrapWords);
+                if ('IntersectionObserver' in window && !reduce) {
+                    var wObs = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (e) {
+                            if (e.isIntersecting) { e.target.classList.add('words-in'); wObs.unobserve(e.target); }
+                        });
+                    }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+                    wordHeads.forEach(function (el) { wObs.observe(el); });
+                } else {
+                    wordHeads.forEach(function (el) { el.classList.add('words-in'); });
+                }
+            }
+
+            // ── 1. Scroll-reveal: auto-tag content blocks, stagger, reveal once ──
+            function tag(sel, cap) {
+                var els = document.querySelectorAll(sel);
+                Array.prototype.forEach.call(els, function (el, i) {
+                    if (el.hasAttribute('data-reveal')) return;
+                    el.setAttribute('data-reveal', 'up');
+                    el.style.setProperty('--d', i % (cap || 6));
+                });
+            }
+            tag('#about .about-editorial > div', 2);
+            tag('#staff .staff-card', 6);
+            tag('#projects .card', 6);
+            tag('#cooperation .card', 1);
+            tag('#contact .card', 3);
+
+            var revealEls = document.querySelectorAll('[data-reveal]');
+            if (reduce || !('IntersectionObserver' in window)) {
+                Array.prototype.forEach.call(revealEls, function (el) { el.classList.add('is-visible'); });
+            } else {
+                var ro = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (e) {
+                        if (!e.isIntersecting) return;
+                        var el = e.target;
+                        ro.unobserve(el);
+                        el.classList.add('is-visible');
+                        // After reveal, drop the attribute so the existing .card-hover lift stays pristine
+                        var done = function () {
+                            el.removeAttribute('data-reveal');
+                            el.style.removeProperty('--d');
+                            el.removeEventListener('transitionend', done);
+                        };
+                        el.addEventListener('transitionend', done);
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+                Array.prototype.forEach.call(revealEls, function (el) { ro.observe(el); });
+            }
+
+            // ── 2. Count-up hero stats ──
+            function countEl(el, target, suffix) {
+                if (reduce) { el.textContent = target + (suffix || ''); return; }
+                var dur = 1100, t0 = null;
+                function frame(ts) {
+                    if (!t0) t0 = ts;
+                    var p = Math.min((ts - t0) / dur, 1);
+                    var eased = 1 - Math.pow(1 - p, 3);
+                    el.textContent = Math.round(target * eased) + (suffix || '');
+                    if (p < 1) requestAnimationFrame(frame);
+                }
+                requestAnimationFrame(frame);
+            }
+            var pills = document.querySelectorAll('.hero .stat-pill');
+            if (pills.length && 'IntersectionObserver' in window) {
+                var so = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (e) {
+                        if (!e.isIntersecting) return;
+                        so.unobserve(e.target);
+                        var num = e.target.querySelector('.stat-number');
+                        if (!num) return;
+                        var raw = num.textContent.trim();
+                        var m = raw.match(/^(\d+)(\D*)$/);
+                        if (m && raw !== '2024') countEl(num, parseInt(m[1], 10), m[2]);
+                    });
+                }, { threshold: 0.5 });
+                Array.prototype.forEach.call(pills, function (p) { so.observe(p); });
+            }
+
+            // ── 3. Hero parallax on scroll (preserves the fadeInUp entrance) ──
+            if (!reduce) {
+                var hc = document.querySelector('.hero-content');
+                if (hc) {
+                    var ticking = false;
+                    function fx() {
+                        ticking = false;
+                        var y = window.scrollY || window.pageYOffset;
+                        if (y <= 0) { hc.style.transform = ''; hc.style.opacity = ''; return; }
+                        var p = Math.min(y / window.innerHeight, 1);
+                        hc.style.transform = 'translateY(' + (p * 60) + 'px)';
+                        hc.style.opacity = String(Math.max(1 - p * 1.1, 0));
+                    }
+                    window.addEventListener('scroll', function () {
+                        if (!ticking) { ticking = true; requestAnimationFrame(fx); }
+                    }, { passive: true });
+                }
+            }
+
+            // ── 4. Aurora glow behind the projects section ──
+            var proj = document.getElementById('projects');
+            if (proj && !proj.querySelector('.avo-aurora')) {
+                var aur = document.createElement('div');
+                aur.className = 'avo-aurora';
+                aur.setAttribute('aria-hidden', 'true');
+                aur.innerHTML = '<span></span><span></span><span></span>';
+                proj.insertBefore(aur, proj.firstChild);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
     </script>
 
     <script type="application/ld+json">
