@@ -1,0 +1,166 @@
+---
+import '@/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  /** Skip the org/website/webpage/FAQ JSON-LD graph — only the homepage needs it. */
+  schema?: boolean;
+  noindex?: boolean;
+}
+
+// Defaults reproduce the previous hardcoded homepage values exactly.
+const {
+  title = 'Avocloud.net — Open-Source Discord Bots, Minecraft Plugins & Web Tools',
+  description = 'Avocloud.net — open-source developer group from Austria & Germany. We build Discord bots (Baxi), Minecraft plugins (AvoFilter), an open Craft Attack community server, EduGrade, QrGate, PWGEN, and more. Free, MIT-licensed.',
+  canonical = 'https://avocloud.net/',
+  schema: includeSchema = true,
+  noindex = false,
+} = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://avocloud.net/#org',
+      name: 'Avocloud.net',
+      alternateName: 'Avocloud',
+      url: 'https://avocloud.net/',
+      logo: 'https://avocloud.net/assets/images/logo.png',
+      image: 'https://avocloud.net/assets/images/logo.png',
+      foundingDate: '2024',
+      description:
+        'Open-source software development group from Austria and Germany. Builds Discord bots, Minecraft plugins, web utilities, and operates an open Craft Attack community Minecraft server.',
+      areaServed: ['AT', 'DE', 'Worldwide'],
+      knowsAbout: [
+        'Discord bot development', 'Minecraft plugin development', 'Open source software',
+        'Web development', 'Server hosting', 'AES-256 encryption',
+      ],
+      sameAs: ['https://github.com/AvoCloud-net', 'https://avocloud.net/discord/', 'https://avolink.net/'],
+      owns: [
+        {
+          '@type': 'WebSite',
+          '@id': 'https://avolink.net/#website',
+          url: 'https://avolink.net/',
+          name: 'AvoLink',
+          alternateName: ['AvoLink.net', 'Avo Link'],
+          description:
+            'Free link shortener and Linktree alternative by Avocloud.net. Create short branded URLs and a single profile page for all your social links.',
+          inLanguage: ['en', 'de'],
+          publisher: { '@id': 'https://avocloud.net/#org' },
+        },
+      ],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'support',
+        email: 'support@avocloud.net',
+        url: 'https://avocloud.net/mail/',
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://avocloud.net/#website',
+      url: 'https://avocloud.net/',
+      name: 'Avocloud.net',
+      publisher: { '@id': 'https://avocloud.net/#org' },
+      inLanguage: ['en', 'de'],
+    },
+    {
+      '@type': 'WebPage',
+      '@id': 'https://avocloud.net/#webpage',
+      url: 'https://avocloud.net/',
+      name: title,
+      isPartOf: { '@id': 'https://avocloud.net/#website' },
+      about: { '@id': 'https://avocloud.net/#org' },
+      inLanguage: 'en',
+      primaryImageOfPage: 'https://avocloud.net/assets/images/logo.png',
+    },
+    {
+      '@type': 'ItemList',
+      name: 'Avocloud.net projects',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Baxi', url: 'https://avocloud.net/baxi/', description: 'Verified Discord moderation bot with intelligent chat filter and global spammer database.' },
+        { '@type': 'ListItem', position: 2, name: 'PWGEN', url: 'https://avocloud.net/pwgen/', description: 'Secure, customizable password generator.' },
+        { '@type': 'ListItem', position: 3, name: 'SafeText', url: 'https://github.com/AvoCloud-net/SafeText', description: 'API server that scans text for offensive language. Powers Baxi and AvoFilter.' },
+        { '@type': 'ListItem', position: 4, name: 'SkyFire', url: 'https://avocloud.net/skyfire/', description: 'MicroServer hosting service for projects, websites and Minecraft servers.' },
+        { '@type': 'ListItem', position: 5, name: 'QrGate', url: 'https://avocloud.net/qrgate/', description: 'Open-source ticketing system with shop, PayPal, email delivery and QR check-in.' },
+        { '@type': 'ListItem', position: 6, name: 'Ember', url: 'https://github.com/rwolf2467/ember', description: 'Instagram-like social media platform, now a public archive.' },
+        { '@type': 'ListItem', position: 7, name: 'AvoFilter', url: 'https://modrinth.com/plugin/avofilter', description: 'Minecraft chat-filter plugin powered by SafeText.' },
+        { '@type': 'ListItem', position: 8, name: 'EduGrade', url: 'https://avocloud.net/edugrade/', description: 'Free, GDPR-compliant grade management for teachers with AES-256-GCM encryption.' },
+        { '@type': 'ListItem', position: 9, name: 'Craft Attack', url: 'https://avocloud.net/craftattack/', description: 'Open Craft Attack community Minecraft server — Season 2: The Ashes of Aerlon.' },
+        { '@type': 'ListItem', position: 10, name: 'AvoLink', url: 'https://avolink.net/', description: 'Free link shortener and Linktree alternative — create short branded URLs and a single profile page for all your social links. By Avocloud.net.' },
+      ],
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://avocloud.net/' }],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'What is Avocloud.net?', acceptedAnswer: { '@type': 'Answer', text: 'Avocloud.net is an open-source software development group from Austria and Germany, founded in 2024. We build Discord bots, Minecraft plugins, web utilities, and operate an open Craft Attack community Minecraft server. All our projects are MIT-licensed and freely available on GitHub.' } },
+        { '@type': 'Question', name: 'Are Avocloud projects free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. All our projects (Baxi, AvoFilter, EduGrade, QrGate, PWGEN, SafeText, the Craft Attack server, and more) are free to use. Source code is open source under the MIT license on GitHub.' } },
+        { '@type': 'Question', name: 'How can I contact Avocloud.net?', acceptedAnswer: { '@type': 'Answer', text: 'Join our Discord at avocloud.net/discord, email support@avocloud.net, or open issues on our GitHub at github.com/AvoCloud-net.' } },
+        { '@type': 'Question', name: 'What is the Baxi Discord bot?', acceptedAnswer: { '@type': 'Answer', text: 'Baxi is our verified Discord moderation bot with an intelligent chat filter, global spammer database, account-linking for the Craft Attack server, and many more features. Free and open source.' } },
+      ],
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png" />
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="Avocloud, Avocloud.net, open source, Discord bot, Minecraft plugin, Baxi, AvoFilter, EduGrade, QrGate, PWGEN, SafeText, SkyFire, Craft Attack, CraftAttack, AvoLink, open-source software, MIT license, Discord moderation, Minecraft server, ticketing system, password generator, Notenverwaltung, Softwareentwicklung Österreich, Open Source Deutschland"
+    />
+    <meta name="author" content="Avocloud.net" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
+    <meta name="googlebot" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={canonical} />
+    <link rel="alternate" hreflang="de" href={`${canonical}${canonical.includes('?') ? '&' : '?'}lang=de`} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://avocloud.net/assets/images/logo.png" />
+    <meta property="og:image:alt" content="Avocloud.net logo" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Avocloud.net" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="de_DE" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://avocloud.net/assets/images/logo.png" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {includeSchema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+    <!-- Arm scroll-reveal hiding before first paint (no FOUC). Skipped when JS
+         is off or the user prefers reduced motion → content stays visible. -->
+    <script is:inline>
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('gsap-ready');
+      }
+      // Always land on top on load/reload — stop the browser restoring
+      // whatever scroll position the tab had before (esp. w/ Lenis + pins).
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

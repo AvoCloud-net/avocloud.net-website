@@ -1,1 +1,16 @@
-impressum.html
+# build output
+dist/
+.astro/
+
+# deps
+node_modules/
+
+# stray local db
+ruvector.db
+
+# env
+.env
+.env.production
+
+# os
+.DS_Store

@@ -1,0 +1,157 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import CraftAttackApp from '@/components/CraftAttackApp.tsx';
+
+const links = [
+  { href: '/craftattack/aerlon/', label: 'Aerlon — The Custom World', desc: 'Lore, biomes, BlueMap, 15-image gallery of Aerlon.' },
+  { href: '/craftattack/features/', label: 'Features', desc: 'Season 2 systems plus all returning features. Crossplay, voice chat, BlueMap.' },
+  { href: '/craftattack/clans/', label: 'Clans, Jobs & Economy', desc: 'Clan system, coin economy, jobs, Homestead claims, opt-in PvP.' },
+  { href: '/craftattack/rules/', label: 'Server Rules v3.0', desc: 'All 10 rules, punishments, reporting workflow, server monitoring & logging.' },
+  { href: '/craftattack/join/', label: 'How to Join', desc: '3-step join guide, FAQ, Season 1 server backups archive.' },
+];
+---
+<Layout
+  title="Craft Attack Community Server — Open, Free | Avocloud.net"
+  description="Open Craft Attack community server — join the public CraftAttack Season 2 Minecraft server &quot;The Ashes of Aerlon&quot;. Java + Bedrock crossplay, clans, jobs, BlueMap. Free, no application form."
+  canonical="https://avocloud.net/craftattack/"
+  schema={false}
+>
+  <CraftAttackApp client:load>
+
+      <section class="section" id="what-is">
+        <div class="wrap">
+          <div class="section-label">WHAT IS CRAFT ATTACK?</div>
+          <h2 class="headline">What is Craft Attack?</h2>
+          <p style="color: var(--muted); margin-bottom: 1rem; max-width: 70ch;">
+            Craft Attack is a community Minecraft survival format originally popularized by German YouTubers and streamers. The Avocloud.net Craft Attack server is an <strong style="color: var(--fg);">open Craft Attack community</strong> — a public, free-to-join CraftAttack project where everyone can participate, not just invited content creators.
+          </p>
+          <p style="color: var(--muted); max-width: 70ch;">
+            Season 2 — <em>The Ashes of Aerlon</em> — runs on a custom-generated fantasy world with Java &amp; Bedrock crossplay, clans, jobs, an economy, opt-in PvP, voice chat, and a live BlueMap. Server address: <strong style="color: var(--fg);">craftattack.avocloud.net</strong>.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="timeline">
+        <div class="wrap">
+          <div class="section-label">TIMELINE</div>
+          <h2 class="headline">Season Timeline</h2>
+          <p style="color: var(--muted); margin-bottom: 2rem;">
+            Key dates for Season 2 – The Ashes of Aerlon. All times Europe/Vienna.
+          </p>
+          <div class="grid cols-3">
+            <div class="card" data-countdown="2026-05-14T17:30:00+02:00">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Season Start
+              </h3>
+              <p style="margin-bottom: 0.5rem;">14. Mai 2026 · 17:30</p>
+              <div class="countdown-display" aria-live="polite">
+                <div class="countdown-unit"><span class="countdown-value" data-days>—</span><span class="countdown-label">Tage</span></div>
+                <div class="countdown-unit"><span class="countdown-value" data-hours>—</span><span class="countdown-label">Std</span></div>
+                <div class="countdown-unit"><span class="countdown-value" data-minutes>—</span><span class="countdown-label">Min</span></div>
+                <div class="countdown-unit"><span class="countdown-value" data-seconds>—</span><span class="countdown-label">Sek</span></div>
+              </div>
+            </div>
+            <div class="card" data-countdown="2026-05-22T17:30:00+02:00">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                Nether opens
+              </h3>
+              <p style="margin-bottom: 0.5rem;">22. Mai 2026 · 17:30</p>
+              <div class="countdown-display" aria-live="polite">
+                <div class="countdown-unit"><span class="countdown-value" data-days>—</span><span class="countdown-label">Tage</span></div>
+                <div class="countdown-unit"><span class="countdown-value" data-hours>—</span><span class="countdown-label">Std</span></div>
+                <div class="countdown-unit"><span class="countdown-value" data-minutes>—</span><span class="countdown-label">Min</span></div>
+                <div class="countdown-unit"><span class="countdown-value" data-seconds>—</span><span class="countdown-label">Sek</span></div>
+              </div>
+            </div>
+            <div class="card" data-countdown="2026-06-05T17:30:00+02:00">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                End opens
+              </h3>
+              <p style="margin-bottom: 0.5rem;">5. Juni 2026 · 17:30</p>
+              <div class="countdown-display" aria-live="polite">
+                <div class="countdown-unit"><span class="countdown-value" data-days>—</span><span class="countdown-label">Tage</span></div>
+                <div class="countdown-unit"><span class="countdown-value" data-hours>—</span><span class="countdown-label">Std</span></div>
+                <div class="countdown-unit"><span class="countdown-value" data-minutes>—</span><span class="countdown-label">Min</span></div>
+                <div class="countdown-unit"><span class="countdown-value" data-seconds>—</span><span class="countdown-label">Sek</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="explore">
+        <div class="wrap">
+          <div class="section-label">EXPLORE THE SERVER</div>
+          <h2 class="headline">Explore the Craft Attack Community Server</h2>
+          <p style="color: var(--muted); margin-bottom: 2rem;">Everything about Season 2 is split across focused pages. Pick a topic.</p>
+          <div class="grid cols-2">
+            {links.map((l) => (
+              <a class="card" href={l.href}>
+                <span class="mk tl"></span><span class="mk br"></span>
+                <h3>{l.label}</h3>
+                <p>{l.desc}</p>
+              </a>
+            ))}
+          </div>
+          <div class="chips" style="margin-top: 2rem;">
+            {links.map((l) => (
+              <a class="chip link" href={l.href}>{l.label} ↗</a>
+            ))}
+          </div>
+        </div>
+      </section>
+  </CraftAttackApp>
+</Layout>
+
+<style>
+  /* Countdown cards reuse .card, just add live values */
+  #timeline .countdown-display { display: flex; align-items: baseline; justify-content: center; flex-wrap: nowrap; gap: 0.9rem; font-variant-numeric: tabular-nums; padding: 0.75rem 0 0.25rem; }
+  #timeline .countdown-unit { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; min-width: 0; }
+  #timeline .countdown-value { font-family: var(--font-mono); font-size: 1.75rem; font-weight: 700; line-height: 1; color: var(--coral-soft); letter-spacing: 0.02em; }
+  #timeline .countdown-label { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.5; margin-top: 0.45rem; }
+  #timeline .countdown-open { display: flex; align-items: center; justify-content: center; padding: 1.25rem 0 0.5rem; font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem; color: #22c55e; letter-spacing: 0.08em; text-transform: uppercase; }
+  #timeline .countdown-open::before { content: '> '; opacity: 0.55; margin-right: 0.25rem; }
+</style>
+
+<script>
+  (function () {
+    function tick() {
+      var now = Date.now();
+      document.querySelectorAll('[data-countdown]').forEach(function (card) {
+        var target = new Date(card.getAttribute('data-countdown')).getTime();
+        var diff = target - now;
+        var display = card.querySelector('.countdown-display');
+        if (diff <= 0) {
+          if (display) {
+            var open = document.createElement('div');
+            open.className = 'countdown-open';
+            open.textContent = 'Now Open';
+            display.replaceWith(open);
+          }
+          return;
+        }
+        var s = Math.floor(diff / 1000);
+        var d = Math.floor(s / 86400); s -= d * 86400;
+        var h = Math.floor(s / 3600); s -= h * 3600;
+        var m = Math.floor(s / 60); s -= m * 60;
+        var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+        var dEl = card.querySelector('[data-days]');
+        var hEl = card.querySelector('[data-hours]');
+        var mEl = card.querySelector('[data-minutes]');
+        var sEl = card.querySelector('[data-seconds]');
+        if (dEl) dEl.textContent = String(d);
+        if (hEl) hEl.textContent = pad(h);
+        if (mEl) mEl.textContent = pad(m);
+        if (sEl) sEl.textContent = pad(s);
+      });
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>

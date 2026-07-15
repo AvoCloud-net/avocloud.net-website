@@ -1,0 +1,327 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import BaxiApp from '@/components/BaxiApp.tsx';
+import BaxiFeatures from '@/components/BaxiFeatures.tsx';
+
+// Comparison data ported from the legacy assets/js/comparison.js (static now —
+// no client JS needed, Astro renders the table at build time).
+const STATUS = {
+  FREE: { symbol: '✓', cls: 'st-check', label: 'free' },
+  PREMIUM: { symbol: '★', cls: 'st-premium', label: 'premium only' },
+  PARTIAL: { symbol: '~', cls: 'st-partial', label: 'partial / limited' },
+  NONE: { symbol: '✗', cls: 'st-none', label: 'not available' },
+} as const;
+type StatusKey = keyof typeof STATUS;
+
+const bots = ['baxi', 'mee6', 'carl', 'dyno', 'probot'] as const;
+const botLabels: Record<(typeof bots)[number], string> = {
+  baxi: 'Baxi', mee6: 'MEE6', carl: 'Carl-bot', dyno: 'Dyno', probot: 'ProBot',
+};
+
+const compareRows: { feature: string; bold?: boolean; values: Record<(typeof bots)[number], { status: StatusKey; tip?: string }> }[] = [
+  { feature: 'Moderation (warn / kick / ban / timeout)', values: { baxi: { status: 'FREE' }, mee6: { status: 'PARTIAL', tip: 'Basic commands free; full auto-mod plugin is premium' }, carl: { status: 'FREE' }, dyno: { status: 'FREE' }, probot: { status: 'FREE' } } },
+  { feature: 'AI Chat Filter', values: { baxi: { status: 'FREE' }, mee6: { status: 'NONE' }, carl: { status: 'NONE' }, dyno: { status: 'NONE' }, probot: { status: 'NONE' } } },
+  { feature: 'Anti-Spam', values: { baxi: { status: 'FREE' }, mee6: { status: 'PREMIUM', tip: 'Premium only' }, carl: { status: 'FREE' }, dyno: { status: 'FREE' }, probot: { status: 'FREE' } } },
+  { feature: 'Auto-Slowmode', values: { baxi: { status: 'FREE' }, mee6: { status: 'NONE' }, carl: { status: 'NONE' }, dyno: { status: 'PREMIUM', tip: 'Premium only' }, probot: { status: 'NONE' } } },
+  { feature: 'Button / Reaction Roles', values: { baxi: { status: 'FREE' }, mee6: { status: 'PREMIUM', tip: 'Premium only' }, carl: { status: 'FREE' }, dyno: { status: 'PARTIAL', tip: '3 messages free, unlimited with premium' }, probot: { status: 'FREE' } } },
+  { feature: 'Verification System', values: { baxi: { status: 'FREE' }, mee6: { status: 'NONE' }, carl: { status: 'FREE' }, dyno: { status: 'PARTIAL' }, probot: { status: 'FREE' } } },
+  { feature: 'Ticket System', values: { baxi: { status: 'FREE' }, mee6: { status: 'PREMIUM', tip: 'Premium only' }, carl: { status: 'NONE' }, dyno: { status: 'NONE' }, probot: { status: 'NONE' } } },
+  { feature: 'Welcome Messages', values: { baxi: { status: 'FREE' }, mee6: { status: 'PARTIAL', tip: 'Basic text free; custom images/embeds premium' }, carl: { status: 'FREE' }, dyno: { status: 'FREE' }, probot: { status: 'FREE' } } },
+  { feature: 'Auto-Roles', values: { baxi: { status: 'FREE' }, mee6: { status: 'FREE' }, carl: { status: 'FREE' }, dyno: { status: 'FREE' }, probot: { status: 'FREE' } } },
+  { feature: 'Custom Commands', values: { baxi: { status: 'FREE' }, mee6: { status: 'PARTIAL', tip: 'Basic free; advanced automations premium' }, carl: { status: 'PARTIAL', tip: 'Tagscript free; advanced features limited' }, dyno: { status: 'FREE' }, probot: { status: 'FREE' } } },
+  { feature: 'Temp Voice Channels', values: { baxi: { status: 'FREE' }, mee6: { status: 'PREMIUM', tip: 'Premium only' }, carl: { status: 'NONE' }, dyno: { status: 'NONE' }, probot: { status: 'FREE' } } },
+  { feature: 'Live Tracking (Twitch, YouTube, TikTok)', values: { baxi: { status: 'FREE' }, mee6: { status: 'PREMIUM', tip: 'Premium only' }, carl: { status: 'PARTIAL', tip: 'Twitch: 5 channels free; no TikTok' }, dyno: { status: 'PREMIUM', tip: 'Premium only' }, probot: { status: 'PARTIAL', tip: 'YouTube notifications available; Twitch/TikTok limited' } } },
+  { feature: 'YouTube Video Alerts', values: { baxi: { status: 'FREE' }, mee6: { status: 'PREMIUM', tip: 'Premium only' }, carl: { status: 'NONE' }, dyno: { status: 'NONE' }, probot: { status: 'PARTIAL', tip: 'YouTube upload notifications available; limited channels' } } },
+  { feature: 'Network-wide Safety (Prism + Flagging)', values: { baxi: { status: 'FREE' }, mee6: { status: 'NONE' }, carl: { status: 'NONE' }, dyno: { status: 'NONE' }, probot: { status: 'NONE' } } },
+  { feature: 'Minigames', values: { baxi: { status: 'FREE' }, mee6: { status: 'NONE' }, carl: { status: 'NONE' }, dyno: { status: 'NONE' }, probot: { status: 'PARTIAL', tip: 'Some fun commands, no structured minigames' } } },
+  { feature: 'Suggestion System', values: { baxi: { status: 'FREE' }, mee6: { status: 'NONE' }, carl: { status: 'PARTIAL' }, dyno: { status: 'FREE' }, probot: { status: 'FREE' } } },
+  { feature: 'Poll System (2–10 answers, image upload, auto-close)', values: { baxi: { status: 'FREE' }, mee6: { status: 'PARTIAL', tip: 'Basic yes/no polls free; no image upload, no duration/auto-close' }, carl: { status: 'PARTIAL', tip: 'Reaction-based polls free; no image upload, no duration/auto-close' }, dyno: { status: 'PARTIAL', tip: 'Basic multiple-choice polls free; no image upload, no auto-close' }, probot: { status: 'PARTIAL', tip: 'Basic polls available; no image upload, no duration/auto-close' } } },
+  { feature: 'Giveaway', values: { baxi: { status: 'FREE' }, mee6: { status: 'PREMIUM', tip: 'Premium only' }, carl: { status: 'FREE' }, dyno: { status: 'FREE' }, probot: { status: 'PARTIAL', tip: 'Basic giveaway available; limited features' } } },
+  { feature: 'Sticky Messages', values: { baxi: { status: 'FREE' }, mee6: { status: 'NONE' }, carl: { status: 'NONE' }, dyno: { status: 'NONE' }, probot: { status: 'NONE' } } },
+  { feature: 'Leveling System', values: { baxi: { status: 'FREE' }, mee6: { status: 'PARTIAL', tip: 'Basic XP free; role rewards and custom messages premium' }, carl: { status: 'NONE' }, dyno: { status: 'NONE' }, probot: { status: 'FREE' } } },
+  { feature: 'Auto-Release (auto-publish news channels)', values: { baxi: { status: 'FREE' }, mee6: { status: 'NONE' }, carl: { status: 'FREE', tip: 'Autopublish available for news channels' }, dyno: { status: 'NONE' }, probot: { status: 'NONE' } } },
+  { feature: 'Music Player (YouTube, SoundCloud, Radio)', values: { baxi: { status: 'FREE' }, mee6: { status: 'PREMIUM', tip: 'Music plugin requires premium' }, carl: { status: 'NONE' }, dyno: { status: 'NONE' }, probot: { status: 'PARTIAL', tip: 'Limited music features' } } },
+  { feature: 'DiscordGate (Minecraft account linking)', values: { baxi: { status: 'FREE' }, mee6: { status: 'NONE' }, carl: { status: 'NONE' }, dyno: { status: 'NONE' }, probot: { status: 'NONE' } } },
+  { feature: 'Fully Free', bold: true, values: { baxi: { status: 'FREE' }, mee6: { status: 'NONE' }, carl: { status: 'PARTIAL' }, dyno: { status: 'PARTIAL' }, probot: { status: 'PARTIAL' } } },
+];
+
+const legend: StatusKey[] = ['FREE', 'PREMIUM', 'PARTIAL', 'NONE'];
+---
+
+<Layout
+  title="Baxi — Free Open-Source Discord Moderation Bot with Chat Filter & Global Spammer Database | Avocloud.net"
+  description="Baxi — free, verified, open-source Discord moderation bot. Intelligent AI chat filter (SafeText), global spammer database, raid protection, account-linking, logging. Free forever, MIT-licensed."
+  canonical="https://avocloud.net/baxi/"
+  schema={false}
+>
+  <BaxiApp client:load>
+
+      <!-- About -->
+      <section class="section" id="about">
+        <div class="wrap">
+          <div class="section-label">ABOUT BAXI</div>
+          <div class="grid cols-2">
+            <div>
+              <h2 class="headline" style="font-size:1.9rem;">Hi, meet Baxi.</h2>
+              <p style="color:var(--muted);margin-bottom:1rem;">
+                Baxi is a modern, privacy-focused Discord bot designed to make server management
+                <strong style="color:var(--fg);">safer, smarter, and easier</strong>. It combines powerful moderation
+                tools, an AI-powered chat filter, cross-server global chat, and much more — all configurable
+                through an easy-to-use web dashboard.
+              </p>
+              <p style="color:var(--muted);">
+                Baxi is part of the <strong style="color:var(--fg);">AvoCloud</strong> project, which focuses on
+                creating modern, privacy-friendly tools for Discord communities. Everything is open source
+                under the MIT license and freely available on GitHub.
+              </p>
+            </div>
+            <div>
+              <h3 style="font-family:var(--font-brand);font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.6rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Privacy by Design
+              </h3>
+              <p style="color:var(--muted);margin-bottom:1.5rem;">
+                Baxi stores only what your server actually needs — nothing more. Every feature is opt-in, and
+                no personal data or messages are retained beyond what's strictly required to operate the
+                feature you enabled.
+              </p>
+              <h3 style="font-family:var(--font-brand);font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.6rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                Open Source
+              </h3>
+              <p style="color:var(--muted);">
+                The full source code is on GitHub under the MIT license. Self-host it, audit it, contribute
+                to it — total transparency, no black boxes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Compare -->
+      <section class="section" id="compare">
+        <div class="wrap">
+          <div class="section-label">COMPARISON</div>
+          <h2 class="headline" style="font-size:1.9rem;">Why Baxi?</h2>
+          <p style="color:var(--muted);font-size:0.9rem;margin-bottom:2rem;">
+            Baxi is <strong style="color:var(--fg);">fully free</strong> — no features locked behind a paywall.
+            Here's how it stacks up against popular alternatives.
+          </p>
+
+          <div class="compare-scroll">
+            <table class="compare-table">
+              <colgroup>
+                <col />
+                {bots.map(() => <col />)}
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  {bots.map((b) => <th class={b === 'baxi' ? 'highlight' : ''}>{botLabels[b]}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {compareRows.map((row) => (
+                  <tr>
+                    <td style={row.bold ? 'font-weight:700;' : ''}>{row.feature}</td>
+                    {bots.map((b) => {
+                      const val = row.values[b];
+                      const cfg = STATUS[val.status];
+                      const title = val.tip ? `${botLabels[b]}: ${val.tip}` : `${botLabels[b]}: ${cfg.label}`;
+                      return (
+                        <td class={b === 'baxi' ? 'baxi-col' : 'center'} title={title}>
+                          <span class={cfg.cls}>{cfg.symbol}</span>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="compare-legend">
+            {legend.map((key) => (
+              <span><span class={STATUS[key].cls}>{STATUS[key].symbol}</span> {STATUS[key].label}</span>
+            ))}
+            <span style="opacity:0.7;font-style:italic;">Based on publicly available information — may change over time.</span>
+          </div>
+
+          <p style="font-size:0.9rem;font-weight:600;margin:2rem 0 1rem;">Baxi can replace</p>
+          <div class="grid cols-3">
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3 style="font-size:0.95rem;">MEE6 Premium</h3>
+              <p style="font-size:0.8rem;">Button Roles, Custom Commands, Auto-Mod — all free in Baxi.</p>
+            </div>
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3 style="font-size:0.95rem;">Verification Bots</h3>
+              <p style="font-size:0.8rem;">Button, CAPTCHA, and password verification built right in.</p>
+            </div>
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3 style="font-size:0.95rem;">Temp Voice Bots</h3>
+              <p style="font-size:0.8rem;">Automatic user-created voice channels without a dedicated bot.</p>
+            </div>
+          </div>
+          <div class="grid cols-3" style="margin-top:1rem;">
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3 style="font-size:0.95rem;">Multi-bot setups</h3>
+              <p style="font-size:0.8rem;">Replace MEE6 + Dyno + a role bot — Baxi covers it all in one.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <BaxiFeatures client:load />
+
+      <!-- Privacy -->
+      <section class="section" id="privacy">
+        <div class="wrap">
+          <div class="section-label">PRIVACY</div>
+          <h2 class="headline" style="font-size:1.9rem;">Your Data, Your Control</h2>
+          <div class="grid cols-2" style="align-items:start;">
+            <div>
+              <h3 style="font-family:var(--font-brand);font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.6rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Only what your server needs
+              </h3>
+              <p style="color:var(--muted);margin-bottom:1rem;">
+                Baxi follows a strict <strong style="color:var(--fg);">minimal data collection</strong> principle.
+                Every feature is opt-in — and when you enable one, only the data that feature actually requires
+                is stored. Nothing is collected in the background.
+              </p>
+              <p style="color:var(--muted);">
+                If you disable a feature, its data is no longer used. You are always in control of what Baxi
+                does in your server.
+              </p>
+            </div>
+            <div>
+              <div class="card" style="margin-bottom:1rem;">
+                <span class="mk tl"></span><span class="mk br"></span>
+                <h3 style="font-size:0.9rem;color:#4ade80;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+                  Stored (only if feature enabled)
+                </h3>
+                <p style="margin-bottom:0;">
+                  • Chat filter logs — only for removed messages<br />
+                  • Server configuration — your dashboard settings<br />
+                  • Global chat images — for cross-server delivery
+                </p>
+              </div>
+              <div class="card">
+                <span class="mk tl"></span><span class="mk br"></span>
+                <h3 style="font-size:0.9rem;color:#f87171;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  Never stored
+                </h3>
+                <p style="margin-bottom:0;">
+                  • Regular messages or chat history<br />
+                  • Personal data or user profiles<br />
+                  • Tracking or analytics data<br />
+                  • Private information of any kind
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Installation -->
+      <section class="section" id="installation">
+        <div class="wrap">
+          <div class="section-label">GET STARTED</div>
+          <h2 class="headline" style="font-size:1.9rem;">Installation &amp; Setup</h2>
+          <div class="grid cols-2">
+
+            <div class="card feature">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3 style="justify-content:space-between;">
+                <span style="display:flex;align-items:center;gap:0.55rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                  Official Hosted Bot
+                </span>
+                <span class="chip" style="font-size:0.6rem;">Recommended</span>
+              </h3>
+              <p>Get started in seconds — invite the bot and configure everything via the dashboard. No setup required.</p>
+              <div class="chips">
+                <a class="chip link" href="https://avocloud.net/baxi/invite/" target="_blank" rel="noreferrer">Invite Bot ↗</a>
+                <a class="chip link" href="https://baxi.avocloud.net/" target="_blank" rel="noreferrer">Dashboard ↗</a>
+              </div>
+            </div>
+
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Self-Hosting</h3>
+              <pre style="font-family:var(--font-mono);font-size:0.75rem;background:var(--bg-soft);border:1px solid var(--line);padding:0.75rem;margin-bottom:0.75rem;overflow-x:auto;">git clone https://github.com/AvoCloud-net/Baxi.git
+cd Baxi &amp;&amp; pip install -r requirements.txt
+python main.py</pre>
+              <p>Configure <code>config/auth.py</code> with your Bot Token before running.</p>
+              <div class="chips">
+                <a class="chip link" href="https://github.com/AvoCloud-net/Baxi" target="_blank" rel="noreferrer">GitHub ↗</a>
+                <span class="chip" style="opacity:0.6;">Global Chat: N/A</span>
+                <span class="chip" style="opacity:0.6;">AI Filter: self-host</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Support -->
+      <section class="section" id="support">
+        <div class="wrap">
+          <div class="section-label">SUPPORT</div>
+          <h2 class="headline" style="font-size:1.9rem;">Get Help</h2>
+          <div class="grid cols-3">
+
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Discord</h3>
+              <p>Join our server for support and updates:</p>
+              <a href="https://avocloud.net/discord/" target="_blank" rel="noreferrer" class="accent-link">avocloud.net/discord ↗</a>
+            </div>
+
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</h3>
+              <p>Report issues or contribute:</p>
+              <a href="https://github.com/AvoCloud-net/Baxi" target="_blank" rel="noreferrer" class="accent-link">github.com/AvoCloud-net/Baxi ↗</a>
+            </div>
+
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</h3>
+              <p>Send us an email:</p>
+              <a href="mailto:support@avocloud.net" class="accent-link">support@avocloud.net ↗</a>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+  </BaxiApp>
+</Layout>
+
+<style>
+  /* Comparison table — scoped to this page only, adapted from the legacy
+     assets/css/main.css .compare-table rules onto the blueprint token set. */
+  .compare-scroll { overflow-x: auto; border: 1px solid var(--line-strong); margin-bottom: 1rem; }
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-family: var(--font-mono); }
+  .compare-table thead tr { border-bottom: 1px solid var(--line-strong); }
+  .compare-table th { padding: 0.75rem 1rem; font-weight: 500; opacity: 0.6; min-width: 6rem; text-align: center; }
+  .compare-table th:first-child { text-align: left; min-width: 13rem; }
+  .compare-table th.highlight { color: var(--coral); background: rgba(var(--coral-rgb), 0.06); font-weight: 700; opacity: 1; }
+  .compare-table td { padding: 0.6rem 1rem; border-top: 1px solid var(--line); font-family: var(--font-body, inherit); }
+  .compare-table td.baxi-col { text-align: center; background: rgba(var(--coral-rgb), 0.04); }
+  .compare-table td.center { text-align: center; }
+  .compare-table tr:hover { background: rgba(var(--coral-rgb), 0.02); }
+  .st-check { color: #4ade80; font-weight: 700; }
+  .st-premium { color: #fbbf24; font-weight: 700; }
+  .st-partial { color: #fb923c; font-weight: 700; font-size: 1.15em; }
+  .st-none { opacity: 0.35; }
+  .compare-legend { display: flex; flex-wrap: wrap; gap: 1rem 2rem; font-size: 0.75rem; opacity: 0.7; margin-bottom: 2.5rem; font-family: var(--font-mono); }
+</style>

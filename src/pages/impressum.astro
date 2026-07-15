@@ -1,0 +1,95 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Shell from '@/components/Shell.tsx';
+---
+<Layout
+  title="Imprint – Avocloud.net"
+  description="Legal imprint of Avocloud.net."
+  canonical="https://avocloud.net/impressum"
+  schema={false}
+>
+  <Shell client:load>
+    <main class="section" id="impressum">
+      <div class="wrap">
+        <div class="section-label">IMPRINT</div>
+        <h1 class="headline" style="margin-bottom: 2rem;">Imprint</h1>
+
+        <div class="card" style="margin-bottom: 3rem;">
+          <span class="mk tl"></span><span class="mk br"></span>
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+            Our Imprint
+          </h3>
+
+          <h4 style="font-family: var(--font-mono); font-size: 0.85rem; margin: 1.25rem 0 0.5rem;">Information in accordance with § 5 TMG</h4>
+          <p>
+            <strong>Name:</strong> Fabian Murauer<br />
+            <strong>Address:</strong> Rablstraße 23a, 4.4<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4600 Wels, Österreich<br />
+            <strong>E-Mail:</strong>
+            <a href="mailto:redwolf2467@avocloud.net" class="accent-link">redwolf2467@avocloud.net</a>
+          </p>
+
+          <h4 style="font-family: var(--font-mono); font-size: 0.85rem; margin: 1.25rem 0 0.5rem;">Disclaimer</h4>
+          <p>
+            The contents of this website have been created with the utmost care. However, we cannot
+            guarantee the accuracy, completeness, or timeliness of the content.
+          </p>
+
+          <h4 style="font-family: var(--font-mono); font-size: 0.85rem; margin: 1.25rem 0 0.5rem;">Copyright</h4>
+          <p>
+            The content and works created by the site operators on these pages are subject to Austrian
+            copyright law. The reproduction, editing, distribution, and any form of utilization outside
+            the scope of copyright law require the written consent of the respective author or creator.
+          </p>
+        </div>
+
+        <div class="section-label">CONTACT</div>
+        <h2 class="headline" style="font-size: 1.75rem; margin-bottom: 2rem;">Get In Touch</h2>
+        <div class="grid cols-3">
+          <div class="card">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              Discord
+            </h3>
+            <p>Join our Discord server:</p>
+            <a href="https://avocloud.net/discord/" target="_blank" rel="noreferrer" class="accent-link">avocloud.net/discord ↗</a>
+          </div>
+
+          <div class="card">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Support
+            </h3>
+            <p>Send us an email:</p>
+            <a href="https://avocloud.net/mail/" class="accent-link">support@avocloud.net ↗</a>
+          </div>
+
+          <div class="card">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              Legal
+            </h3>
+            <p>Legal information:</p>
+            <a href="/impressum" class="accent-link">Imprint ↗</a><br />
+            <a href="/regulations/" class="accent-link">Regulations ↗</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </Shell>
+</Layout>

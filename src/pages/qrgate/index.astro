@@ -1,0 +1,252 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import QrgateApp from '@/components/QrgateApp.tsx';
+---
+<Layout
+  title="QrGate — Event Ticketing & QR Access Control | Avocloud.net"
+  description="QrGate — open-source event ticketing and QR access control. Sell tickets online and at the box office, scan QR codes at the door, send PDF tickets by email, and track live stats in the dashboard."
+  canonical="https://avocloud.net/qrgate/"
+  schema={false}
+>
+  <QrgateApp client:load>
+
+      <section class="section" id="about">
+        <div class="wrap">
+          <div class="section-label">ABOUT QRGATE</div>
+          <h2 class="headline">Everything you need to run event ticketing.</h2>
+          <div class="grid cols-2" style="align-items:start;">
+            <div>
+              <p>
+                QrGate is a complete web-based ticketing system for events of any size. Guests buy
+                tickets through a clean online shop, receive a PDF with a unique QR code, and get
+                scanned in at the door — no app required on either side.
+              </p>
+              <p>
+                Administrators get a live dashboard showing real-time ticket sales, revenue
+                estimates, and event statistics. Box office staff can sell tickets on-site. Door
+                staff use any smartphone to scan and validate QR codes instantly.
+              </p>
+            </div>
+            <div>
+              <div class="card feature" style="margin-bottom:1rem;">
+                <span class="mk tl"></span><span class="mk br"></span>
+                <h3>Active in production</h3>
+                <p>
+                  QrGate powers the ticketing for Helenenb&uuml;hne Sattledt — a parish theater
+                  group in Sattledt, Austria. Every season, ticket sales and door scanning run
+                  entirely through QrGate.
+                </p>
+                <div class="chips">
+                  <span class="chip">Theater</span>
+                  <span class="chip">Sattledt, Austria</span>
+                  <a class="chip link" href="https://helenenbuehne.at" target="_blank" rel="noreferrer">helenenbuehne.at ↗</a>
+                </div>
+              </div>
+              <div class="card">
+                <span class="mk tl"></span><span class="mk br"></span>
+                <h3>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  </svg>
+                  MIT License
+                </h3>
+                <p>Free to use, modify, and host yourself. Source code on GitHub — no subscriptions, no vendor lock-in.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="wrap">
+          <div class="section-label">FEATURES</div>
+          <h2 class="headline">What QrGate does for you.</h2>
+          <div class="grid cols-3">
+            <div class="card feature">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                Online Ticket Shop
+              </h3>
+              <p>Guests visit your event page, pick their tickets, and pay — all in a browser. No account required. Works on desktop and mobile.</p>
+            </div>
+
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+                </svg>
+                QR Code Check-In
+              </h3>
+              <p>Scan tickets at the door using any smartphone. Instant validation — valid, already used, or unknown.</p>
+            </div>
+
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                </svg>
+                Flexible Payment
+              </h3>
+              <p>Accept card payments via Stripe online, or handle cash sales at the box office — both managed in one system.</p>
+            </div>
+
+            <div class="card feature">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                Automatic PDF Tickets
+              </h3>
+              <p>After purchase, guests receive a PDF ticket with a unique QR code by email — automatically, no manual steps. Downloadable any time.</p>
+            </div>
+
+            <div class="card feature">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                Admin Dashboard
+              </h3>
+              <p>Live overview of sold and remaining tickets, revenue, and event stats. Manage dates, upload images, and configure your event — all in one place.</p>
+            </div>
+
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/>
+                </svg>
+                German &amp; English
+              </h3>
+              <p>Full interface available in German and English — for your guests and your team.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="how-it-works">
+        <div class="wrap">
+          <div class="section-label">HOW IT WORKS</div>
+          <h2 class="headline">From setup to sold-out.</h2>
+          <div class="grid cols-2">
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3><span class="mono" style="color:var(--coral);margin-right:0.5rem;">01</span>Create your event</h3>
+              <p>Set up your event in the admin panel — add dates, ticket prices, and event details.</p>
+            </div>
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3><span class="mono" style="color:var(--coral);margin-right:0.5rem;">02</span>Share the shop link</h3>
+              <p>Point your guests to the ticket shop URL. They pick their tickets, fill in their info, and pay.</p>
+            </div>
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3><span class="mono" style="color:var(--coral);margin-right:0.5rem;">03</span>Guests get their ticket</h3>
+              <p>A PDF ticket with a unique QR code lands in their inbox automatically right after purchase.</p>
+            </div>
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3><span class="mono" style="color:var(--coral);margin-right:0.5rem;">04</span>Scan at the door</h3>
+              <p>Door staff open the handheld interface on any phone and scan QR codes. Valid or invalid — instant answer.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="roles">
+        <div class="wrap">
+          <div class="section-label">USER ROLES</div>
+          <h2 class="headline">The right access for everyone.</h2>
+          <div class="grid cols-3">
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                Admin
+              </h3>
+              <div class="chips" style="margin-bottom:0.75rem;"><span class="chip">Full access</span></div>
+              <p>Manages the entire system: events, dates, ticket settings, revenue stats, and user access. Has access to all sections.</p>
+            </div>
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                Ticketflow
+              </h3>
+              <div class="chips" style="margin-bottom:0.75rem;"><span class="chip">Box office</span></div>
+              <p>For box office staff. Sells tickets on-site for cash or card. No access to admin settings or statistics.</p>
+            </div>
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+                </svg>
+                Handheld
+              </h3>
+              <div class="chips" style="margin-bottom:0.75rem;"><span class="chip">Door scanner</span></div>
+              <p>Mobile-optimized view for door staff. Scan QR codes and see immediate feedback — valid, already used, or not found. No other access.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="production">
+        <div class="wrap">
+          <div class="section-label">LIVE USE</div>
+          <h2 class="headline">Used in real productions.</h2>
+          <div class="card feature">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <p style="font-size:1.1rem;font-style:italic;line-height:1.7;color:var(--fg);">
+              &ldquo;QrGate handles our entire ticket workflow every season — from online sales to door scanning. It just works.&rdquo;
+            </p>
+            <p class="mono" style="margin-top:1rem;font-size:0.85rem;color:var(--muted);">
+              🎭 Helenenb&uuml;hne Sattledt &mdash; Parish theater group &middot; Sattledt, Austria
+            </p>
+            <div class="chips" style="margin-top:1.25rem;">
+              <span class="chip">Active production</span>
+              <span class="chip">Theater</span>
+              <a class="chip link" href="https://helenenbuehne.at" target="_blank" rel="noreferrer">helenenbuehne.at ↗</a>
+              <a class="chip link" href="https://github.com/rwolf2467/qr_gate" target="_blank" rel="noreferrer">QrGate on GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="get-started">
+        <div class="wrap" style="text-align:center;">
+          <div class="section-label">GET STARTED</div>
+          <h2 class="headline">Ready to run your event?</h2>
+          <p style="max-width:34rem;margin:0 auto 2rem;color:var(--muted);">
+            QrGate is free and open source. Self-host it for your event, contribute on GitHub, or reach out if you have questions.
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <a class="btn primary" href="https://github.com/rwolf2467/qr_gate" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" style="fill:currentColor;stroke:none;">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+              View on GitHub
+            </a>
+            <a class="btn" href="mailto:support@avocloud.net">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </section>
+  </QrgateApp>
+</Layout>

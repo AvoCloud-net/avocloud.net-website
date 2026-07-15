@@ -1,0 +1,49 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Shell from '@/components/Shell.tsx';
+---
+<Layout
+  title="404 – Not Found | Avocloud.net"
+  description="The page you're looking for doesn't exist or has been moved."
+  schema={false}
+>
+  <Shell client:load>
+    <main class="section" id="not-found">
+      <div class="wrap" style="max-width: 560px;">
+        <div class="section-label">ERROR</div>
+        <div class="card" style="text-align: center;">
+          <span class="mk tl"></span><span class="mk br"></span>
+          <p class="chips" style="justify-content: center; margin-bottom: 1.5rem;">
+            <span class="chip">HTTP 404</span>
+          </p>
+          <h1 class="headline" style="font-size: clamp(3rem, 8vw, 5rem); margin-bottom: 0.5rem;">404</h1>
+          <h2 style="font-family: var(--font-brand); font-weight: 700; font-size: 1.25rem; margin-bottom: 1rem;">
+            Page Not Found
+          </h2>
+          <p style="color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem;">
+            The page you're looking for doesn't exist or has been moved. It might have wandered off into the digital void.
+          </p>
+          <p style="color: var(--muted); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 2rem;">
+            The requested URL was not found on this server.
+          </p>
+          <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+            <a href="/" class="btn primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              Go Home
+            </a>
+            <button class="btn" onclick="history.back()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+              </svg>
+              Go Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </Shell>
+</Layout>
