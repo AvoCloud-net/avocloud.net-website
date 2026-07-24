@@ -7,6 +7,9 @@ interface Props {
   canonical?: string;
   /** Skip the org/website/webpage/FAQ JSON-LD graph — only the homepage needs it. */
   schema?: boolean;
+  /** Arm the load intro. Only pass this from a page that actually renders
+      <Intro> — see the head script below for why. */
+  intro?: boolean;
   noindex?: boolean;
 }
 
@@ -17,6 +20,7 @@ const {
   canonical = 'https://avocloud.net/',
   schema: includeSchema = true,
   noindex = false,
+  intro = false,
 } = Astro.props;
 
 const schema = {
@@ -150,9 +154,48 @@ const schema = {
     {includeSchema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
     <!-- Arm scroll-reveal hiding before first paint (no FOUC). Skipped when JS
          is off or the user prefers reduced motion → content stays visible. -->
-    <script is:inline>
+    <script is:inline define:vars={{ INTRO: intro }}>
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
         document.documentElement.classList.add('gsap-ready');
+        // Arm the load intro before first paint. Gated here (not in the
+        // component) so that with JS off or reduced motion the overlay is never
+        // displayed at all — nothing to remove, nothing to strand on.
+        //
+        // Runs on every load, not once per session: it is the brand's
+        // handshake.
+        //
+        // Opt-in per page, and it MUST stay that way. `html.intro` sets
+        // `overflow: hidden` and everything gated behind afterIntro() waits for
+        // the completion event — both of which only ever get undone by the
+        // <Intro> component. Arm it on a page that doesn't render <Intro> and
+        // that page is left permanently unscrollable with its entrance
+        // animations never firing.
+        if (INTRO) document.documentElement.classList.add('intro');
+
+        /* Arriving half of the page transition. The outgoing page leaves a
+           one-shot flag; consuming it here, before first paint, is what keeps
+           the curtain from flashing the new page underneath.
+
+           Deliberately flag-driven rather than unconditional: a visitor who
+           arrives from a bookmark, a search result or a fresh tab has no
+           outgoing page to continue from, and covering their first view for
+           half a second would be a loading screen we invented. Only a
+           navigation *from within the site* gets the curtain.
+
+           Skipped when the load intro is running — that already owns the
+           reveal, and two curtains for one navigation is one too many. */
+        try {
+          var pt = sessionStorage.getItem('avo:pt');
+          sessionStorage.removeItem('avo:pt');
+          // The flag carries a timestamp and is only honoured while fresh.
+          // Links into the legacy static pages are intercepted like any other
+          // same-origin link, but those pages never consume the flag — without
+          // an expiry it would sit there and make some later arrival play an
+          // uncovering animation that no outgoing page ever started.
+          if (pt && Date.now() - Number(pt) < 3000 && !INTRO) {
+            document.documentElement.classList.add('pt-in');
+          }
+        } catch (e) { /* storage blocked — just skip the effect */ }
       }
       // Always land on top on load/reload — stop the browser restoring
       // whatever scroll position the tab had before (esp. w/ Lenis + pins).
@@ -161,6 +204,66 @@ const schema = {
     </script>
   </head>
   <body>
+    <div class="page-curtain" aria-hidden="true"></div>
     <slot />
+
+    <script is:inline>
+      /* Page transitions — see .page-curtain in global.css for the motion.
+         Plain inline script, not an island: it has to be live on every page
+         before any React hydrates, and it needs no framework to toggle two
+         classes. */
+      (function () {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var html = document.documentElement;
+        var OUT_MS = 300;  // must match .pt-out's transition duration
+
+        /* Release the arriving curtain on the next frame. The rAF is what
+           guarantees the browser painted the covered state first, so the
+           transition has something to animate from; the timeout is the escape
+           hatch for a throttled or background tab, where rAF can stall for
+           seconds and would otherwise leave the page covered and unscrollable. */
+        if (html.classList.contains('pt-in')) {
+          var released = false;
+          var release = function () {
+            if (released) return;
+            released = true;
+            html.classList.add('pt-go');
+            setTimeout(function () { html.classList.remove('pt-in', 'pt-go'); }, 600);
+          };
+          requestAnimationFrame(function () { requestAnimationFrame(release); });
+          setTimeout(release, 200);
+        }
+
+        document.addEventListener('click', function (e) {
+          if (e.defaultPrevented || e.button !== 0) return;
+          // modifier clicks mean "open elsewhere" — never animate those, the
+          // current page isn't going anywhere
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+          var a = e.target.closest && e.target.closest('a[href]');
+          if (!a || a.target || a.hasAttribute('download')) return;
+
+          var url;
+          try { url = new URL(a.href); } catch (err) { return; }
+          if (url.origin !== location.origin) return;            // leaving the site
+          if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
+          // in-page anchor: no navigation happens, so there is nothing to cover
+          if (url.pathname === location.pathname && url.search === location.search) return;
+
+          e.preventDefault();
+          try { sessionStorage.setItem('avo:pt', String(Date.now())); } catch (err) { /* ignore */ }
+          html.classList.add('pt-out');
+          setTimeout(function () { location.href = a.href; }, OUT_MS);
+        });
+
+        /* Back/forward out of the bfcache restores the DOM exactly as it was
+           left — including a raised curtain — which would show the returning
+           visitor a blank screen. This is the bug in every "fade the body out
+           on click" recipe. */
+        window.addEventListener('pageshow', function (ev) {
+          if (ev.persisted) html.classList.remove('pt-out', 'pt-in', 'pt-go');
+        });
+      })();
+    </script>
   </body>
 </html>

@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { messages, seo, type Lang } from '@/data/content';
+import { gsap, Flip, EASE, DUR } from '@/lib/motion';
 
 function setMeta(sel: string, attr: string, val: string) {
   const el = document.querySelector(sel);
@@ -34,8 +35,37 @@ export function useLang() {
     setMeta('meta[name="twitter:description"]', 'content', s.description);
   }, [lang]);
 
+  /* German runs noticeably longer than English, so a language switch resizes
+     cards and reflows whole sections — the page used to jump. Flip records
+     the layout before React re-renders and animates every card from its old
+     box to its new one, so the switch reads as the layout adjusting rather
+     than snapping.
+
+     `useLayoutEffect` matters: the state has to be captured after React has
+     committed the new text but before the browser paints it, otherwise the
+     "before" snapshot is already the "after". */
+  const flipState = useRef<Flip.FlipState | null>(null);
+
+  useLayoutEffect(() => {
+    const state = flipState.current;
+    if (!state) return;
+    flipState.current = null;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    Flip.from(state, {
+      duration: DUR.ui,
+      ease: EASE.out,
+      // only position/size, no cross-fading of contents — the text changed,
+      // so morphing between the two strings would read as a glitch
+      simple: true,
+      absolute: false,
+    });
+  }, [lang]);
+
   const t = useCallback((key: string) => messages[lang][key] ?? key, [lang]);
-  const toggle = useCallback(() => setLang((l) => (l === 'en' ? 'de' : 'en')), []);
+  const toggle = useCallback(() => {
+    flipState.current = Flip.getState('.card, .proj-panel, .hero-stats, .chips');
+    setLang((l) => (l === 'en' ? 'de' : 'en'));
+  }, []);
 
   return { lang, t, toggle };
 }

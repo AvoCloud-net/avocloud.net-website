@@ -1,10 +1,6 @@
 import { useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
+import { gsap, useGSAP, EASE, afterIntro } from '@/lib/motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const DEFAULT_WORD = 'AVOCLOUD.NET';
 const DEFAULT_CORAL_FROM = 8; // ".NET" onward renders coral
@@ -113,26 +109,36 @@ export function Wordmark({
         return;
       }
       if (!geo) return;
-      const lines = wrap.querySelectorAll('.hw-line');
-      const circles = wrap.querySelectorAll('.hw-circ');
+      // Arrays, not live NodeLists, and only kept if non-empty. A word with no
+      // round letters (BAXI, FABIAN MURAUER pass `round={new Set()}`) has zero
+      // circles, and tweening an empty selection makes GSAP log
+      // "target not found" on every play.
+      const lines = [...wrap.querySelectorAll('.hw-line')];
+      const circles = [...wrap.querySelectorAll('.hw-circ')];
 
       gsap.set(fills, { clipPath: 'inset(100% 0 0 0)' });
       gsap.set(strokes, { opacity: 0, yPercent: 8 });
-      gsap.set(lines, { strokeDashoffset: 1, opacity: 0 });
-      gsap.set(circles, { opacity: 0, transformOrigin: '50% 50%' });
+      // Guides draw from their midpoint outward — a straightedge being laid
+      // down, rather than a line growing from one end. DrawSVGPlugin does the
+      // dash arithmetic that this used to hand-roll via pathLength + dashoffset.
+      gsap.set(lines, { drawSVG: '50% 50%', opacity: 0 });
+      // Circles keep their dashed CSS stroke (the inscribing-ring look), so
+      // they scale/fade in — DrawSVG would overwrite strokeDasharray and eat
+      // the dashes.
+      if (circles.length) gsap.set(circles, { opacity: 0, transformOrigin: '50% 50%' });
 
-      const tl = gsap.timeline({
-        delay: trigger === 'load' ? 0.15 : 0,
-        // lenient start: a footer sits near the page bottom, so its top may
-        // never reach a tight threshold like 82% at max scroll. 90% is always
-        // reachable while still holding the reveal until it's actually in view.
-        scrollTrigger: trigger === 'scroll' ? { trigger: wrap, start: 'top 90%', once: true } : undefined,
-      });
+      // `paused` for the scroll case — an IntersectionObserver starts it (below).
+      // Always paused. `load` is released by afterIntro (otherwise the whole
+      // CAD build plays out behind the intro curtain and is already finished
+      // when it lifts); `scroll` is released by the IntersectionObserver below.
+      const tl = gsap.timeline({ delay: trigger === 'load' ? 0.15 : 0, paused: true });
       tl.set(lines, { opacity: 1 })
-        .to(lines, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.inOut', stagger: 0.025 }, 0)
-        .fromTo(circles, { scale: 0.86 }, { opacity: 1, scale: 1, duration: 0.55, ease: 'power2.out', stagger: 0.06 }, 0.25)
-        .to(strokes, { opacity: 1, yPercent: 0, duration: 0.4, ease: 'power2.out', stagger: 0.045 }, 0.4)
-        .to(fills, { clipPath: 'inset(0% 0 0 0)', duration: 0.5, ease: 'power2.out', stagger: 0.055 }, 0.85)
+        .to(lines, { drawSVG: '0% 100%', duration: 0.7, ease: 'power2.inOut', stagger: 0.025 }, 0);
+      if (circles.length) {
+        tl.fromTo(circles, { scale: 0.86 }, { opacity: 1, scale: 1, duration: 0.55, ease: EASE.out, stagger: 0.06 }, 0.25);
+      }
+      tl.to(strokes, { opacity: 1, yPercent: 0, duration: 0.4, ease: EASE.out, stagger: 0.045 }, 0.4)
+        .to(fills, { clipPath: 'inset(0% 0 0 0)', duration: 0.5, ease: EASE.out, stagger: 0.055 }, 0.85)
         // flattened into one array of elements (not `[lines, circles]`, two
         // nested NodeLists) — the nested form intermittently made GSAP's
         // lazy tween-init throw internally, silently no-op'ing this fade
@@ -140,13 +146,40 @@ export function Wordmark({
         .to([...lines, ...circles], { opacity: 0, duration: 0.7, ease: 'power2.inOut' }, 1.7)
         .to(strokes, { opacity: 0, duration: 0.7, ease: 'power2.inOut' }, 1.7);
       if (timeScale !== 1) tl.timeScale(timeScale);
+      if (trigger === 'load') return afterIntro(() => tl.play());
 
-      // This ScrollTrigger is created late (after fonts + measure), by which
-      // point the pinned projects section has already added its pin-spacer and
-      // shifted the footer. Recompute trigger positions against final layout so
-      // the start isn't stale (otherwise it may sit past the document end and
-      // never fire). rAF waits for the freshly-rendered SVG to paint first.
-      if (trigger === 'scroll') requestAnimationFrame(() => ScrollTrigger.refresh());
+      /* IntersectionObserver, deliberately not ScrollTrigger.
+
+         ScrollTrigger resolves a start into an absolute scroll position at
+         creation time. This component can only build after the webfont loads
+         and the glyphs are measured, and by then the pinned projects section
+         has inserted a ~5800px pin-spacer that moves the footer down by that
+         much. The trigger kept the pre-pin number, so the reveal fired around
+         scrollY 5000 — mid-projects, roughly 4500px before the wordmark is on
+         screen at all. It played out completely into an empty viewport, which
+         is why it looked like there was no animation.
+
+         `refreshPriority` + a rAF `ScrollTrigger.refresh()` were both tried and
+         neither reliably caught the settled layout. An observer sidesteps the
+         whole class of problem: it reports actual visibility, so there is no
+         cached position to go stale, and no ordering to get wrong.
+
+         Thresholds are deliberately strict: the wordmark must be **75% visible
+         AND clear of the bottom 15% of the viewport** before the build starts.
+         At 15% it fired while the wordmark was still a sliver at the very
+         bottom edge, so most of the ~4s sequence played out below the fold and
+         the viewer arrived to a finished wordmark. rootMargin is what enforces
+         "properly on screen" rather than merely "technically intersecting". */
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((e) => e.isIntersecting)) return;
+          io.disconnect();
+          tl.play();
+        },
+        { threshold: 0.75, rootMargin: '0px 0px -15% 0px' },
+      );
+      io.observe(wrap);
+      return () => io.disconnect();
     },
     { scope: ref, dependencies: [geo, reduce] },
   );
@@ -164,7 +197,6 @@ export function Wordmark({
               y1={l.y1}
               x2={l.x2}
               y2={l.y2}
-              pathLength={1}
               vectorEffect="non-scaling-stroke"
             />
           ))}

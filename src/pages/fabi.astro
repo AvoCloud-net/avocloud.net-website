@@ -16,14 +16,14 @@ import FabiApp from '@/components/FabiApp.tsx';
           <div class="section-label">ABOUT ME</div>
           <div class="grid cols-2">
             <div>
-              <h2 class="headline" style="font-size:1.75rem;margin-bottom:1.25rem;">Hi, I'm Fabian.</h2>
-              <p style="color:var(--muted);margin-bottom:1rem;line-height:1.7;">
+              <h2 class="headline sub">Hi, I'm Fabian.</h2>
+              <p class="prose">
                 I'm a software developer from Wels, Austria with around five years of experience -
                 what started as tinkering around quickly grew into a real passion. I love building
                 things that actually get used and working on the kind of diverse projects that keep
                 things interesting.
               </p>
-              <p style="color:var(--muted);line-height:1.7;">
+              <p class="prose">
                 As the founder of Avocloud.net, I lead a small team that transforms creative ideas into
                 reality. What started as a hobby has evolved into a collaborative platform where we
                 experiment with software development, Discord bot creation, and various tech projects.
@@ -32,25 +32,25 @@ import FabiApp from '@/components/FabiApp.tsx';
               </p>
             </div>
             <div>
-              <h3 style="font-family:var(--font-brand);font-weight:600;font-size:1.05rem;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.6rem;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;flex-shrink:0;">
+              <h3 class="sub-h">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
                 </svg>
                 Tech Philosophy
               </h3>
-              <p style="color:var(--muted);margin-bottom:1.5rem;line-height:1.7;">
+              <p class="prose">
                 I'm a passionate Linux user - my main PC runs Linux exclusively (sorry Microsoft!).
                 I believe in self-hosting and maintaining control over my digital environment. From my
                 own private cloud infrastructure to self-hosted password managers and even my own VPN -
                 I prefer running everything on my own servers rather than relying on third-party providers.
               </p>
-              <h3 style="font-family:var(--font-brand);font-weight:600;font-size:1.05rem;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.6rem;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;flex-shrink:0;">
+              <h3 class="sub-h">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
                 </svg>
                 Education
               </h3>
-              <p style="color:var(--muted);line-height:1.7;">
+              <p class="prose">
                 Currently attending <strong>HTL Traun</strong>, where my curriculum covers
                 Medientechnik, network engineering, IT security, and database systems.
               </p>
@@ -63,47 +63,61 @@ import FabiApp from '@/components/FabiApp.tsx';
       <section class="section" id="timeline">
         <div class="wrap">
           <div class="section-label">JOURNEY</div>
-          <h2 class="headline" style="font-size:1.75rem;margin-bottom:1.5rem;">My Journey</h2>
-          <div class="card">
-            <span class="mk tl"></span><span class="mk br"></span>
-            <div style="display:flex;flex-direction:column;gap:1.5rem;">
-              <div>
-                <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--coral);text-transform:uppercase;margin-bottom:0.2rem;">2026</div>
-                <div style="font-family:var(--font-brand);font-weight:700;margin-bottom:0.25rem;">Paramedic Training · Red Cross</div>
-                <p style="margin:0;">Completing Sanitäter training with the Austrian Red Cross. Theoretical exam scheduled for late May 2026 - practical hours to follow.</p>
-              </div>
-              <div>
-                <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--coral);text-transform:uppercase;margin-bottom:0.2rem;">2025</div>
-                <div style="font-family:var(--font-brand);font-weight:700;margin-bottom:0.25rem;">EduGrade &amp; QrGate · JRK Helfer</div>
-                <p style="margin:0;">EduGrade released as an open-source Docker app for grade management. QrGate successfully deployed in production for Helenenbühne Sattledt events. Stepped up as helper/leader (Betreuer) at Jugendrotkreuz.</p>
-              </div>
-              <div>
-                <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--coral);text-transform:uppercase;margin-bottom:0.2rem;">2024</div>
-                <div style="font-family:var(--font-brand);font-weight:700;margin-bottom:0.25rem;">Avocloud.net Launch</div>
-                <p style="margin:0;">Officially launched Avocloud.net as a collaborative platform for open-source tools and infrastructure.</p>
-              </div>
-              <div>
-                <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--coral);text-transform:uppercase;margin-bottom:0.2rem;">2023</div>
-                <div style="font-family:var(--font-brand);font-weight:700;margin-bottom:0.25rem;">HTL Traun · Baxi Verified</div>
-                <p style="margin:0;">Started at HTL Traun (Medientechnik), covering network engineering, IT security, and database systems. Baxi became a verified Discord bot used in thousands of servers.</p>
-              </div>
-              <div>
-                <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--coral);text-transform:uppercase;margin-bottom:0.2rem;">2022</div>
-                <div style="font-family:var(--font-brand);font-weight:700;margin-bottom:0.25rem;">Helenenbühne Sattledt</div>
-                <p style="margin:0;">Took over full technical operations for the local theater group - sound, lighting, video production, and web infrastructure including email servers.</p>
-              </div>
-              <div>
-                <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--coral);text-transform:uppercase;margin-bottom:0.2rem;">2020</div>
-                <div style="font-family:var(--font-brand);font-weight:700;margin-bottom:0.25rem;">First Lines of Code</div>
-                <p style="margin:0;">Started programming with Python. What began as tinkering and curiosity quickly grew into a daily passion for building things that get used.</p>
-              </div>
-              <div>
-                <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--coral);text-transform:uppercase;margin-bottom:0.2rem;">2019</div>
-                <div style="font-family:var(--font-brand);font-weight:700;margin-bottom:0.25rem;">Joined JRK as Kid</div>
-                <p style="margin:0;">Joined the Austrian Youth Red Cross (Jugendrotkreuz) as a kid member.</p>
-              </div>
-            </div>
-          </div>
+          <h2 class="headline">My Journey</h2>
+          <!-- A measured rail with registration dots. The rail draws itself and
+               the dots strike in as the section arrives — see slot-motion.ts. -->
+          <ol class="timeline">
+            <span class="timeline-rail" aria-hidden="true"></span>
+
+            <li class="tl-item">
+              <span class="tl-dot" aria-hidden="true"></span>
+              <span class="tl-year">2026</span>
+              <div class="tl-title">Paramedic Training · Red Cross</div>
+              <p>Completing Sanitäter training with the Austrian Red Cross. Theoretical exam scheduled for late May 2026, practical hours to follow.</p>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-dot" aria-hidden="true"></span>
+              <span class="tl-year">2025</span>
+              <div class="tl-title">EduGrade &amp; QrGate · JRK Helfer</div>
+              <p>EduGrade released as an open-source Docker app for grade management. QrGate deployed in production for Helenenbühne Sattledt events. Stepped up as Betreuer at Jugendrotkreuz.</p>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-dot" aria-hidden="true"></span>
+              <span class="tl-year">2024</span>
+              <div class="tl-title">Avocloud.net Launch</div>
+              <p>Officially launched Avocloud.net as a collaborative platform for open-source tools and infrastructure.</p>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-dot" aria-hidden="true"></span>
+              <span class="tl-year">2023</span>
+              <div class="tl-title">HTL Traun · Baxi Verified</div>
+              <p>Started at HTL Traun (Medientechnik), covering network engineering, IT security, and database systems. Baxi became a verified Discord bot used in thousands of servers.</p>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-dot" aria-hidden="true"></span>
+              <span class="tl-year">2022</span>
+              <div class="tl-title">Helenenbühne Sattledt</div>
+              <p>Took over full technical operations for the local theater group: sound, lighting, video production, and web infrastructure including email servers.</p>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-dot" aria-hidden="true"></span>
+              <span class="tl-year">2020</span>
+              <div class="tl-title">First Lines of Code</div>
+              <p>Started programming with Python. What began as tinkering and curiosity quickly grew into a daily passion for building things that get used.</p>
+            </li>
+
+            <li class="tl-item">
+              <span class="tl-dot" aria-hidden="true"></span>
+              <span class="tl-year">2019</span>
+              <div class="tl-title">Joined JRK as Kid</div>
+              <p>Joined the Austrian Youth Red Cross (Jugendrotkreuz) as a kid member.</p>
+            </li>
+          </ol>
         </div>
       </section>
 
@@ -111,7 +125,7 @@ import FabiApp from '@/components/FabiApp.tsx';
       <section class="section" id="skills">
         <div class="wrap">
           <div class="section-label">SKILLS</div>
-          <h2 class="headline" style="font-size:1.75rem;margin-bottom:1.5rem;">My Skills</h2>
+          <h2 class="headline">My Skills</h2>
           <div class="grid cols-3">
             <div class="card">
               <span class="mk tl"></span><span class="mk br"></span>
@@ -160,7 +174,7 @@ import FabiApp from '@/components/FabiApp.tsx';
       <section class="section" id="projects">
         <div class="wrap">
           <div class="section-label">PROJECTS</div>
-          <h2 class="headline" style="font-size:1.75rem;margin-bottom:1.5rem;">My Projects</h2>
+          <h2 class="headline">My Projects</h2>
           <div class="grid cols-3">
 
             <div class="card span-2">
@@ -176,10 +190,10 @@ import FabiApp from '@/components/FabiApp.tsx';
                 <span class="chip">Security</span>
                 <span class="chip">Python</span>
                 <span class="chip">Open Source</span>
-                <a class="chip link" href="https://baxi.avocloud.net/" target="_blank" rel="noreferrer">Dashboard ↗</a>
-                <a class="chip link" href="https://avocloud.net/baxi/invite/" target="_blank" rel="noreferrer">Invite ↗</a>
-                <a class="chip link" href="https://avocloud.net/baxi/" target="_blank" rel="noreferrer">About ↗</a>
-                <a class="chip link" href="https://github.com/AvoCloud-net/Baxi" target="_blank" rel="noreferrer">GitHub ↗</a>
+                <a class="chip link" href="https://baxi.avocloud.net/" rel="noreferrer">Dashboard ↗</a>
+                <a class="chip link" href="/baxi/invite/">Invite ↗</a>
+                <a class="chip link" href="/baxi/">About ↗</a>
+                <a class="chip link" href="https://github.com/AvoCloud-net/Baxi" rel="noreferrer">GitHub ↗</a>
               </div>
             </div>
 
@@ -193,8 +207,8 @@ import FabiApp from '@/components/FabiApp.tsx';
               <div class="chips">
                 <span class="chip">Security</span>
                 <span class="chip">Open Source</span>
-                <a class="chip link" href="https://avocloud.net/pwgen/" target="_blank" rel="noreferrer">Website ↗</a>
-                <a class="chip link" href="https://github.com/AvoCloud-net/avocloud.net-website" target="_blank" rel="noreferrer">GitHub ↗</a>
+                <a class="chip link" href="/pwgen/">Website ↗</a>
+                <a class="chip link" href="https://github.com/AvoCloud-net/avocloud.net-website" rel="noreferrer">GitHub ↗</a>
               </div>
             </div>
 
@@ -209,7 +223,7 @@ import FabiApp from '@/components/FabiApp.tsx';
                 <span class="chip">Python</span>
                 <span class="chip">API</span>
                 <span class="chip">Open Source</span>
-                <a class="chip link" href="https://github.com/AvoCloud-net/SafeText" target="_blank" rel="noreferrer">GitHub ↗</a>
+                <a class="chip link" href="https://github.com/AvoCloud-net/SafeText" rel="noreferrer">GitHub ↗</a>
               </div>
             </div>
 
@@ -225,7 +239,7 @@ import FabiApp from '@/components/FabiApp.tsx';
                 <span class="chip">24/7</span>
                 <span class="chip">Gaming</span>
                 <span class="chip">Free or paid</span>
-                <a class="chip link" href="https://avocloud.net/skyfire/" target="_blank" rel="noreferrer">Website ↗</a>
+                <a class="chip link" href="/skyfire/">Website ↗</a>
               </div>
             </div>
 
@@ -241,7 +255,7 @@ import FabiApp from '@/components/FabiApp.tsx';
                 <span class="chip">Events</span>
                 <span class="chip">Ticketing</span>
                 <span class="chip">Open Source</span>
-                <a class="chip link" href="https://github.com/rwolf2467/qr_gate" target="_blank" rel="noreferrer">GitHub ↗</a>
+                <a class="chip link" href="https://github.com/rwolf2467/qr_gate" rel="noreferrer">GitHub ↗</a>
               </div>
             </div>
 
@@ -257,9 +271,9 @@ import FabiApp from '@/components/FabiApp.tsx';
                 <span class="chip">Education</span>
                 <span class="chip">Encrypted</span>
                 <span class="chip">Open Source</span>
-                <a class="chip link" href="https://github.com/rwolf2467/EduGrade" target="_blank" rel="noreferrer">GitHub ↗</a>
-                <a class="chip link" href="https://hub.docker.com/r/redwolf2467/edugrade" target="_blank" rel="noreferrer">Docker ↗</a>
-                <a class="chip link" href="https://avocloud.net/edugrade/" target="_blank" rel="noreferrer">About ↗</a>
+                <a class="chip link" href="https://github.com/rwolf2467/EduGrade" rel="noreferrer">GitHub ↗</a>
+                <a class="chip link" href="https://hub.docker.com/r/redwolf2467/edugrade" rel="noreferrer">Docker ↗</a>
+                <a class="chip link" href="/edugrade/">About ↗</a>
               </div>
             </div>
 
@@ -275,8 +289,8 @@ import FabiApp from '@/components/FabiApp.tsx';
                 <span class="chip">Ticketing</span>
                 <span class="chip">QrGate</span>
                 <span class="chip">Theater</span>
-                <a class="chip link" href="https://helenenbuehne.at" target="_blank" rel="noreferrer">Website ↗</a>
-                <a class="chip link" href="https://github.com/rwolf2467/qr_gate" target="_blank" rel="noreferrer">QrGate ↗</a>
+                <a class="chip link" href="https://helenenbuehne.at" rel="noreferrer">Website ↗</a>
+                <a class="chip link" href="https://github.com/rwolf2467/qr_gate" rel="noreferrer">QrGate ↗</a>
               </div>
             </div>
 
@@ -288,21 +302,21 @@ import FabiApp from '@/components/FabiApp.tsx';
       <section class="section" id="community">
         <div class="wrap">
           <div class="section-label">COMMUNITY</div>
-          <h2 class="headline" style="font-size:1.75rem;margin-bottom:1.5rem;">Beyond the Code</h2>
+          <h2 class="headline">Beyond the Code</h2>
 
-          <div class="card" style="margin-bottom:1rem;">
+          <div class="card mb">
             <span class="mk tl"></span><span class="mk br"></span>
             <h3>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 3.8"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>
               Helenenbühne Sattledt
             </h3>
             <p>Local theater group - I handle the full technical side, from stage to code.</p>
-            <div class="grid cols-2" style="margin-bottom:1.1rem;">
-              <ul style="list-style:disc;padding-left:1.2rem;color:var(--muted);font-size:0.9rem;line-height:1.8;">
+            <div class="grid cols-2 mb">
+              <ul class="bullets">
                 <li>Event technology: sound, video &amp; lighting</li>
                 <li>Website development &amp; maintenance</li>
               </ul>
-              <ul style="list-style:disc;padding-left:1.2rem;color:var(--muted);font-size:0.9rem;line-height:1.8;">
+              <ul class="bullets">
                 <li>Built and operate QrGate - their custom ticketing &amp; shop system</li>
                 <li>Email server management</li>
               </ul>
@@ -311,7 +325,7 @@ import FabiApp from '@/components/FabiApp.tsx';
               <span class="chip">Event Tech</span>
               <span class="chip">Theater</span>
               <span class="chip">Sound &amp; Light</span>
-              <a class="chip link" href="https://github.com/rwolf2467/qr_gate" target="_blank" rel="noreferrer">QrGate ↗</a>
+              <a class="chip link" href="https://github.com/rwolf2467/qr_gate" rel="noreferrer">QrGate ↗</a>
             </div>
           </div>
 
@@ -322,17 +336,17 @@ import FabiApp from '@/components/FabiApp.tsx';
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 RK – Rotes Kreuz
               </h3>
-              <h4 style="font-family:var(--font-mono);font-size:0.8rem;display:flex;align-items:center;gap:0.4rem;margin:0.75rem 0 0.35rem;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <h4 class="sub-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 JRK – Youth Red Cross
               </h4>
-              <p style="margin-bottom:0.75rem;">Volunteer at the Austrian Youth Red Cross - I help prepare and run youth sessions and look after the kids alongside other volunteers.</p>
-              <h4 style="font-family:var(--font-mono);font-size:0.8rem;display:flex;align-items:center;gap:0.4rem;margin:0.75rem 0 0.35rem;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              <p>Volunteer at the Austrian Youth Red Cross - I help prepare and run youth sessions and look after the kids alongside other volunteers.</p>
+              <h4 class="sub-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                 Paramedic Training
               </h4>
               <p>I am currently completing my paramedic (Sanitäter) training with the Red Cross. The theoretical exam is scheduled for late May 2026 - after that, many practical hours still lie ahead before completion.</p>
-              <div class="chips" style="margin-top:1.1rem;">
+              <div class="chips mt">
                 <span class="chip">First Aid</span>
                 <span class="chip">Youth Work</span>
                 <span class="chip">Paramedic (in training)</span>
@@ -360,7 +374,7 @@ import FabiApp from '@/components/FabiApp.tsx';
       <section class="section" id="setup">
         <div class="wrap">
           <div class="section-label">SETUP</div>
-          <h2 class="headline" style="font-size:1.75rem;margin-bottom:1.5rem;">My Setup</h2>
+          <h2 class="headline">My Setup</h2>
           <div class="grid cols-3">
 
             <div class="card span-2">
@@ -433,8 +447,8 @@ import FabiApp from '@/components/FabiApp.tsx';
       <section class="section" id="contact">
         <div class="wrap">
           <div class="section-label">CONTACT</div>
-          <h2 class="headline" style="font-size:1.75rem;margin-bottom:1.5rem;">Get in Touch</h2>
-          <div class="card" style="max-width:500px;">
+          <h2 class="headline">Get in Touch</h2>
+          <div class="card narrow">
             <span class="mk tl"></span><span class="mk br"></span>
             <p>Have a project idea, a question, or just want to say hi? Feel free to reach out.</p>
             <a href="mailto:fabian.murauer@avocloud.net" class="accent-link">fabian.murauer@avocloud.net ↗</a>

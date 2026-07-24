@@ -1,7 +1,9 @@
 /* ============================================================================
-   avocloud.net — blueprint redesign (Astro + React islands)
-   Monochrome CAD/blueprint aesthetic · coral accent · lightweight (no WebGL)
-   Motion (pin, reveal, parallax, magnetic, tilt, count-up) is driven by GSAP.
+   avocloud.net — blueprint design system (Astro + React islands)
+   Monochrome CAD/blueprint aesthetic · coral accent
+   Motion is GSAP only — tokens in src/lib/motion.ts, spec in BRANDING.md §5b.
+   A masked, desaturated WebGL dither runs full-bleed behind the hero and on
+   the hovered project panel; see §6 "Background & texture" for the limits.
    ========================================================================== */
 
 /* ---- Fonts ---------------------------------------------------------------- */
@@ -61,10 +63,6 @@
     --light-bg:      #e8ecef;   /* hard light-cut band */
     --light-fg:      #0a0a0a;
 
-    --iri: linear-gradient(120deg,
-        #ff6b4a 0%, #ff2e97 22%, #7a5cff 44%,
-        #16d6d0 66%, #7dff5c 84%, #ff6b4a 100%);
-
     --grid: 80px;
     --grid-fine: 40px;
     --grid-cross: 200px;
@@ -74,10 +72,40 @@
     --font-brand:   'Syne', 'Space Grotesk', sans-serif;
     --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
+    /* softened corners — see brand BRANDING.md §6 */
+    --radius: 6px;      /* controls: buttons, inputs, chips */
+    --radius-lg: 8px;   /* boxes: cards, panels */
+
     --maxw: 1180px;
-    --ease:        cubic-bezier(0.16, 1, 0.3, 1);  /* smooth out */
+
+    /* Motion — CSS mirror of src/lib/motion.ts (EASE / DUR). Same curves, same
+       four duration steps, so a CSS transition and a GSAP tween on the same
+       component agree. Change one, change both. See BRANDING.md §5b. */
+    --ease:        cubic-bezier(0.16, 1, 0.3, 1);  /* = EASE.out */
     --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* slight overshoot */
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* = EASE.inOut */
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* = EASE.spring, slight overshoot */
+
+    --dur-micro: 0.18s;  /* hover, border, colour, focus */
+    --dur-ui:    0.35s;  /* nav state, chips, toggles */
+    --dur-enter: 0.7s;   /* scroll entrances */
+
+    /* Glass — the surface treatment, promoted from a one-off on the nav to a
+       system primitive. See BRANDING.md §6.
+
+       Modelled on the nav bar, which is the reference: it reads as black, the
+       same as the page, and you only notice it is glass when the coral of the
+       shader drifts behind it. That is the whole effect — a DARK tint, not a
+       light one. A white tint turns every surface into a grey panel sitting on
+       the page, which is the opposite of the intent.
+       Blur stays low for the same reason: at 14px the texture behind was
+       smeared into a wash, so nothing recognisable moved through it. */
+    --glass-blur:   7px;
+    --glass-tint:   rgba(4,4,4,0.28);
+    --glass-tint-2: rgba(4,4,4,0.44);
+    /* 1px inner top edge — the hairline motif catching light. Kept subtle:
+       it defines the pane's edge, it should not outline it. */
+    --glass-edge:   rgba(255,255,255,0.10);
 }
 
 /* ---- Base ----------------------------------------------------------------- */
@@ -139,9 +167,284 @@ body::after {
 
 ::selection { background: rgba(var(--coral-rgb), 0.85); color: #000; }
 
+/* ---- Glass ----------------------------------------------------------------
+   One definition, applied to every surface that should read as glass. The
+   gradient runs top-light to bottom-dark so a panel looks lit from above, and
+   the inset box-shadow is a 1px top edge — the hairline motif catching light
+   rather than a border.
+
+   `backdrop-filter` is expensive, so this is deliberately NOT on everything:
+   it goes on surfaces that hold content, not on every small chip.
+
+   Without backdrop-filter support the tint alone reads as a flat translucent
+   panel, which is a correct-looking fallback rather than a broken one — so
+   this needs no @supports branch. */
+.glass,
+.btn, .card, .hero-stats, .proj-panel, .site-nav.scrolled, .nav-btn {
+    background-image: linear-gradient(to bottom, var(--glass-tint), var(--glass-tint-2));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.15);
+            backdrop-filter: blur(var(--glass-blur)) saturate(1.15);
+    box-shadow: inset 0 1px 0 var(--glass-edge);
+}
+
+/* The primary button is a solid coral fill — glass over it would mute the one
+   loud colour on the page, which is the opposite of what §3 asks for. It keeps
+   only the top edge. */
+.btn.primary {
+    background-image: none;
+    -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+}
+
+/* No opaque colour underneath. The dark gradient above IS the surface, and
+   anything solid behind it would block exactly what is supposed to show
+   through — the shader drifting past is the only reason you can tell these
+   are glass at all. */
+.card, .proj-panel, .hero-stats { background-color: transparent; }
+
+/* Project panels are the one glass surface that is *continuously* animated —
+   ten of them, scrubbed on transform and opacity for the whole pinned pass.
+   backdrop-filter cost scales with radius × area, and a moving element forces
+   its backdrop to re-rasterise every frame, so these run denser and softer:
+   less to sample, and the copy stays readable while the card is moving. */
+.proj-panel {
+    --glass-blur: 5px;
+    --glass-tint:   rgba(4,4,4,0.42);
+    --glass-tint-2: rgba(4,4,4,0.58);
+}
+
+/* ---- Corner radius -------------------------------------------------------
+   Controls 6px, boxes 8px; everything else stays sharp. Kept as one list
+   instead of a rule per component so the shape language is in one place.
+   True circles (.staff .avatar) and pills (.nav-btn.pill) override this by
+   specificity. -------------------------------------------------------------- */
+.btn, .nav-btn, .chip, .pwgen-input, .pwgen-output,
+input, textarea, select {
+    border-radius: var(--radius);
+}
+.card, .proj-panel, .hero-stats, .compare-scroll {
+    border-radius: var(--radius-lg);
+}
+
 /* Scroll-reveal: hide before GSAP arms them (class set by head script, only
    when motion is allowed). No JS / reduced-motion → class absent → visible. */
 html.gsap-ready [data-reveal] { opacity: 0; }
+
+/* ---- Subpage prose helpers ------------------------------------------------
+   The subpages used to carry their typography as inline `style=` on every
+   element, which meant a headline could not be restyled from the design
+   system and every paragraph re-declared its own colour and leading. These
+   are the four classes that replaced ~40 inline declarations on fabi. */
+.prose {
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 62ch;
+}
+.prose + .prose { margin-top: 1rem; }
+.sub-h + .prose { margin-bottom: 1.5rem; }
+
+/* a headline that sits inside a column rather than opening a section */
+h2.headline.sub {
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    margin-bottom: 1.25rem;
+}
+
+/* mono sub-heading inside a card */
+.sub-label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 1rem 0 0.4rem;
+}
+.sub-label svg { width: 16px; height: 16px; flex-shrink: 0; stroke: var(--coral); }
+
+.bullets {
+    list-style: disc;
+    padding-left: 1.2rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+.card .mt, .chips.mt { margin-top: 1.1rem; }
+.card.mb, .grid.mb { margin-bottom: 1rem; }
+.card.narrow { max-width: 500px; }
+
+/* ---- Timeline ------------------------------------------------------------
+   A measured rail with registration dots, not a list of paragraphs in a box.
+   Same drafting language as the rest: one hairline, coral marks on it, mono
+   figures. The rail draws itself and the dots strike in as the section
+   arrives (see slot-motion.ts). */
+.timeline {
+    position: relative;
+    padding-left: 2.25rem;
+}
+.timeline-rail {
+    position: absolute;
+    left: 5px;
+    top: 0.45rem;
+    bottom: 0.45rem;
+    width: 1px;
+    background: linear-gradient(var(--line-strong), var(--line) 85%, transparent);
+    transform-origin: top center;
+}
+.tl-item {
+    position: relative;
+    padding-bottom: 2.25rem;
+}
+.tl-item:last-child { padding-bottom: 0; }
+.tl-dot {
+    position: absolute;
+    left: -2.25rem;
+    top: 0.3rem;
+    width: 11px;
+    height: 11px;
+    border: 1px solid var(--coral);
+    border-radius: 50%;
+    background: var(--bg);
+}
+/* filled centre on the most recent entry — the "you are here" mark */
+.tl-item:first-child .tl-dot { background: var(--coral); box-shadow: 0 0 0 4px rgba(var(--coral-rgb), 0.14); }
+
+.tl-year {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    color: var(--coral);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+.tl-title {
+    font-family: var(--font-brand);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.35rem;
+}
+.tl-item p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    max-width: 62ch;
+    margin: 0;
+}
+
+/* ---- Ticker --------------------------------------------------------------
+   Full-bleed mono band between sections. Hairlines top and bottom so it reads
+   as a rule on the drawing rather than a banner stuck on top of it. */
+.ticker {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 0.85rem 0;
+    background: var(--bg-soft);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.ticker-track { display: flex; width: max-content; will-change: transform; }
+.ticker-row { display: flex; flex-shrink: 0; }
+.ticker-item {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    padding: 0 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+}
+/* coral separator between entries — the `//` motif again, at ticker scale */
+.ticker-item::after {
+    content: "//";
+    color: var(--coral);
+    margin-left: 1.6rem;
+    opacity: 0.65;
+}
+
+/* ---- Page-load intro ------------------------------------------------------
+   Hidden by default and only shown when the head script adds `html.intro`.
+   That script runs before first paint, and only when motion is allowed and the
+   sequence hasn't already played this session — so no-JS and reduced-motion
+   visitors never see an overlay that JS would then have to remove. An intro
+   that can strand someone on a black screen is a bug, not a brand moment. */
+.intro-overlay { display: none; }
+html.intro { overflow: hidden; }
+html.intro .intro-overlay {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--bg);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    will-change: transform;
+}
+.intro-stage { position: relative; display: grid; place-items: center; width: min(46vw, 320px); }
+.intro-frame { width: 100%; height: auto; stroke: var(--line-strong); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.intro-mark { position: absolute; width: 34%; height: auto; color: var(--fg); stroke: currentColor; }
+.intro-count {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---- Page transitions -----------------------------------------------------
+   One curtain, swept across two page loads: clicking a link raises it from the
+   bottom over the outgoing page, and the incoming page raises it the rest of
+   the way off the top. One edge, travelling in one direction, across a real
+   navigation — the same move as the intro curtain and the same sentence as
+   every other transition here.
+
+   Not CSS view transitions. They are the better mechanism on paper — no
+   click interception, no artificial delay, a real compositor snapshot — but
+   they could not be made to fire here, and a transition that works everywhere
+   beats a more elegant one that doesn't. Do not run both: each would animate
+   the same navigation and you would see the curtain twice.
+
+   The curtain is parked off-screen by default and only ever moved by script,
+   so with JS broken or absent it is an inert empty div. Nothing here can hide
+   the page — the failure mode of the common `body { opacity: 0 }` version of
+   this effect, where a script that never runs leaves a permanently blank
+   page. */
+.page-curtain {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;          /* under the load intro (9999), over everything else */
+    background: var(--bg);
+    transform: translateY(100%);
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* leaving: rises from the bottom edge, then the browser navigates */
+html.pt-out .page-curtain {
+    transform: translateY(0);
+    transition: transform 0.3s var(--ease-in-out);
+}
+
+/* arriving: armed before first paint so the page is never briefly visible
+   underneath, then released on the next frame and carried off the top */
+html.pt-in { overflow: hidden; }
+html.pt-in .page-curtain { transform: translateY(0); }
+html.pt-in.pt-go .page-curtain {
+    transform: translateY(-100%);
+    transition: transform 0.42s var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-curtain { display: none; }
+}
 
 :focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
 
@@ -160,17 +463,48 @@ html.gsap-ready [data-reveal] { opacity: 0; }
     margin-bottom: 1.4rem;
 }
 .section-label::before { content: "//"; color: var(--coral); }
-.section-label::after {
+/* Trailing rule. A real element (see Kicker in reveal.tsx), not ::after —
+   a pseudo-element can't be animated, which is why this line used to sit
+   there static while everything around it moved. */
+.kicker-rule {
+    width: clamp(2rem, 12vw, 8rem);
+    height: 1px;
+    background: var(--line-strong);
+    transform-origin: left center;
+    display: block;
+    flex-shrink: 0;
+}
+/* Legacy: plain .section-label markup that isn't a <Kicker> yet still gets
+   its rule, so nothing regresses while call sites migrate. */
+.section-label:not(:has(.kicker-rule))::after {
     content: "";
     width: clamp(2rem, 12vw, 8rem);
     height: 1px;
     background: var(--line-strong);
 }
 
+/* ---- SplitText line/word boxes (Reveal variant="text") -------------------
+   `mask: 'lines'` gives each line an overflow-hidden wrapper so words can
+   rise in from below the baseline without bleeding into the line above. */
+.r-line { display: block; }
+.r-word { display: inline-block; will-change: transform; }
+
 .section {
     padding: clamp(4rem, 10vw, 8rem) 0;
     position: relative;
     z-index: 1;
+}
+
+/* Stages carry the scrubbed choreography from stage.tsx — they are NOT forced
+   to full height. A 100vh floor per section was tried and reverted: sections
+   like contact and cooperation hold a headline and one row of cards, so the
+   screen-per-section rule padded them out with dead space and read worse than
+   the tighter rhythm it replaced. Sections size to their content; the motion
+   is what makes them feel alive, not the emptiness around them. */
+@media (min-width: 901px) {
+    /* the choreography animates transform + opacity on this element every
+       frame it's on screen — promote it once rather than per-tween */
+    .section.stage > .wrap { will-change: transform, opacity; }
 }
 
 h2.headline {
@@ -204,7 +538,8 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     padding: 1rem clamp(1rem, 4vw, 2.5rem);
     background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0));
     backdrop-filter: blur(6px);
-    transition: background 0.4s var(--ease), padding 0.4s var(--ease), border-color 0.4s var(--ease);
+    /* transition lives with the .hidden rule below, so all four properties are
+       declared in one place */
     border-bottom: 1px solid transparent;
 }
 .site-nav.scrolled {
@@ -212,6 +547,34 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     border-bottom-color: var(--line-faint);
     padding-top: 0.7rem;
     padding-bottom: 0.7rem;
+}
+/* Out of the way while reading downward, back on any upward intent. Only
+   `transform` moves, so this stays off the layout/paint path entirely. */
+.site-nav {
+    transform: translateY(0);
+    transition: background var(--dur-enter) var(--ease), padding var(--dur-enter) var(--ease),
+                border-color var(--dur-enter) var(--ease), transform var(--dur-ui) var(--ease);
+}
+.site-nav.hidden { transform: translateY(-105%); }
+
+/* ---- Read progress -------------------------------------------------------
+   Coral hairline pinned to the top edge, scrubbed 1:1 to document progress.
+   Sits above the nav so it stays visible when the nav slides away. */
+.read-progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    z-index: 110;
+    pointer-events: none;
+    background: var(--line-faint);
+}
+.read-progress span {
+    display: block;
+    height: 100%;
+    background: var(--coral);
+    transform: scaleX(0);
+    transform-origin: left center;
+    will-change: transform;
 }
 .nav-logo {
     display: flex;
@@ -315,29 +678,85 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 /* ============================================================================
    HERO
    ========================================================================== */
+/* Full-bleed. No frame, no radius, no side margins — the hero is the whole
+   viewport and the texture behind it runs edge to edge. Background stays
+   transparent so the fixed body grid (body::before/::after) reads straight
+   through it. Nav clearance is padding, not margin, so the shader can start
+   at y=0 and sit behind the nav too. */
 .hero {
     position: relative;
-    min-height: 85vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 6rem 1rem 4rem;
+    padding: 9rem 1rem 5rem;   /* top clears the fixed .site-nav (~69px) */
     overflow: hidden;
     z-index: 1;
+    background: transparent;
     margin: 0;
-    margin-top: 4.5rem; /* clear the fixed .site-nav (~69px); full-bleed below it on mobile */
 }
-@media (min-width: 768px) {
-    .hero {
-        /* scales with viewport instead of a fixed rem, so the gap reads as
-           intentional on 1280px laptops AND 2500px+ desktops alike */
-        margin: 3rem clamp(3rem, 8vw, 12rem);
-        margin-top: calc(4.5rem + 3rem);
-        margin-bottom: calc(4.5rem + 3rem); /* match margin-top so the card sits centered, not nav-heavy */
-    }
+
+/* Full-viewport texture. Still masked, but the clear zone is only what the
+   wordmark and CTAs actually occupy — outside that the dither is meant to be
+   seen. Two constraints hold regardless of how visible it gets (BRANDING.md
+   §6): the colour stays desaturated so it reads as texture rather than a
+   coral field, and the blueprint grid must remain legible through it. */
+.hero-shader {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.46;
+    /* NO mix-blend-mode. `screen` used to be here, and it silently broke every
+       glass surface in front of the shader: an element with mix-blend-mode
+       establishes its own backdrop root, and `backdrop-filter` on a sibling
+       cannot sample inside one. The buttons and the stat block had correct
+       glass the whole time with nothing to blur.
+
+       Nothing was lost by removing it — the canvas is black, and
+       screen(black, X) = X, so the blend was a no-op everywhere except over
+       the faint grid lines. Verified by toggling it live: the dither behind
+       the stat card goes from sharp to blurred the moment it comes off. */
+    /* Two masks intersected: the inverted radial clears the band the *type*
+       sits in, the linear fades the texture out before the hero's bottom edge
+       (without it the shader stops on a hard horizontal line where the next
+       section starts).
+
+       The clear zone covers the kicker, wordmark and claim only — it used to
+       extend past the stat block and the buttons too, and that turned out to
+       be why those looked like they had no glass: `backdrop-filter` blurs
+       what is *behind* an element, and behind them was masked-out pure black.
+       Blurring black gives black. Glass surfaces need texture behind them to
+       read as glass, so the texture now returns before they start. */
+    -webkit-mask-image:
+        radial-gradient(ellipse 46% 17% at 50% 42%, transparent 10%, #000 88%),
+        linear-gradient(to bottom, #000 62%, transparent 97%);
+            mask-image:
+        radial-gradient(ellipse 46% 17% at 50% 42%, transparent 10%, #000 88%),
+        linear-gradient(to bottom, #000 62%, transparent 97%);
+    -webkit-mask-composite: source-in;
+            mask-composite: intersect;
 }
+
+.hero-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 4vw, 1.5rem);
+}
+
+/* the kicker's trailing rule is decoration on a centred block — drop it here
+   so the eyebrow stays optically centred instead of hanging left. */
+.hero-kicker { margin-bottom: 1.8rem; }
+.hero-kicker::after { display: none; }
+
+.hero-footnote { justify-content: center; margin-top: 2rem; }
 
 /* hero content sits above the Dithering shader layer (z-index:0) */
 .hero-claim, .hero-stats, .hero-links { position: relative; z-index: 1; }
@@ -356,15 +775,14 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 }
 .hero-wordmark .dot { color: var(--coral); }
 
-@keyframes iri-shift {
-    0%,100% { background-position: 0% 50%; }
-    50%     { background-position: 100% 50%; }
-}
-
 /* ---- Wordmark: CAD construction reveal (alche-style, on load) — still used in the footer */
 .hw { position: relative; display: inline-block; }
 .hw-ch { position: relative; display: inline-block; }
-.hw-fill { display: inline-block; position: relative; z-index: 1; }
+/* `pre` so a space in a multi-word wordmark ("FABIAN MURAUER") survives: each
+   character is its own inline-block, and an inline-block holding nothing but
+   whitespace collapses to zero width — the two words ran together. Keeps the
+   real space character in textContent, unlike swapping in an &nbsp;. */
+.hw-fill { display: inline-block; position: relative; z-index: 1; white-space: pre; }
 .hw-ch.coral .hw-fill { color: var(--coral); }
 
 /* outline layer — glyph comes from a pseudo-element so it is NOT counted as
@@ -376,7 +794,7 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     -webkit-text-stroke: 1.2px rgba(255,255,255,0.55);
     pointer-events: none;
 }
-.hw-stroke::before { content: attr(data-ch); }
+.hw-stroke::before { content: attr(data-ch); white-space: pre; }
 .hw-ch.coral .hw-stroke { -webkit-text-stroke-color: rgba(var(--coral-rgb),0.7); }
 
 /* construction guides — an SVG sized 1:1 to the wordmark box, with geometry
@@ -389,7 +807,9 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     z-index: 0;
     pointer-events: none;
 }
-.hw-line { stroke: rgba(255,255,255,0.30); stroke-width: 1; opacity: 0; stroke-dasharray: 1; }
+/* dasharray is DrawSVGPlugin's to write — the old `stroke-dasharray: 1` here
+   was part of the hand-rolled pathLength=1 draw this now replaces. */
+.hw-line { stroke: rgba(255,255,255,0.30); stroke-width: 1; opacity: 0; }
 .hw-line.coral { stroke: rgba(var(--coral-rgb),0.5); }
 .hw-circ { fill: none; stroke: rgba(255,255,255,0.26); stroke-width: 1.2; stroke-dasharray: 4 5; opacity: 0; }
 .hw-circ.coral { stroke: rgba(var(--coral-rgb),0.55); }
@@ -415,9 +835,7 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     justify-content: center;
     margin-bottom: 2rem;
     border: 1px solid var(--line);
-    background: rgba(var(--coral-rgb), 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* glass comes from the shared primitive above */
 }
 .stat {
     padding: 0.9rem 1.6rem;
@@ -447,28 +865,59 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     transition: border-color 0.2s, background 0.2s, color 0.2s;
     will-change: transform;
 }
-.btn svg { width: 1.1em; height: 1.1em; position: relative; z-index: 1; }
+.btn svg { width: 1.1em; height: 1.1em; display: block; }
 .btn > span, .btn { z-index: 1; }
-.hero-links svg { width: 1.1em; height: 1.1em; flex-shrink: 0; }
-.btn:hover { border-color: var(--coral); background: rgba(var(--coral-rgb),0.08); }
-.btn.primary { background: var(--coral); border-color: var(--coral); color: #000; }
-.btn.primary:hover { background: var(--coral-soft); border-color: var(--coral-soft); }
 
-.scroll-hint {
-    position: absolute;
-    bottom: 1.4rem; left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
+/* Icon steps forward with the wipe. */
+.btn-icon {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    transition: transform var(--dur-ui) var(--ease);
 }
-.scroll-hint .bar { width: 1px; height: 30px; background: linear-gradient(var(--coral), transparent); animation: hint 1.8s ease-in-out infinite; }
-@keyframes hint { 0%,100% { opacity: 0.3; transform: scaleY(0.6); } 50% { opacity: 1; transform: scaleY(1); } }
+.btn:hover .btn-icon { transform: translateX(2px); }
+
+/* Label roll — two stacked copies in a clipped box. `1em` tall with the label
+   line-height pinned to it, so the box can't grow with descenders and leave
+   the outgoing copy visible at the bottom edge. */
+.btn-label {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    overflow: hidden;
+    height: 1em;
+    line-height: 1;
+    vertical-align: bottom;
+}
+.btn-label-in,
+.btn-label-out {
+    display: block;
+    line-height: 1;
+    transition: transform var(--dur-ui) var(--ease);
+}
+.btn-label-out { position: absolute; inset: 0; transform: translateY(100%); }
+.btn:hover .btn-label-in { transform: translateY(-100%); }
+.btn:hover .btn-label-out { transform: translateY(0); }
+.hero-links svg { width: 1.1em; height: 1.1em; flex-shrink: 0; }
+/* Ghost buttons fill from the left on hover instead of cross-fading a
+   background colour — a wipe, matching the draw/strike language everywhere
+   else. The pseudo-element sits under the label (which is z-index 1). */
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(var(--coral-rgb), 0.10);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--dur-ui) var(--ease);
+    z-index: 0;
+}
+.btn:hover { border-color: var(--coral); }
+.btn:hover::before { transform: scaleX(1); }
+.btn.primary { background: var(--coral); border-color: var(--coral); color: #000; }
+.btn.primary::before { background: rgba(255,255,255,0.22); }
+.btn.primary:hover { border-color: var(--coral-soft); }
+
 
 /* ============================================================================
    ABOUT
@@ -501,6 +950,13 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     position: relative;
     z-index: 2;
     padding: clamp(4rem, 10vw, 7rem) 0;
+    /* The band clips its own decoration (`overflow: hidden` below), so it needs
+       a floor tall enough for the blueprint mark plus its parallax travel.
+       Content alone left it at ~428px, shorter than the 440px mark. */
+    min-height: 30rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     overflow: hidden;
 }
 .mission .wrap { position: relative; }
@@ -516,26 +972,32 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 }
 .mission .big .mark { background: #000; color: var(--light-bg); }
 .mission .big .coral { color: var(--coral); }
+/* Coral glow behind the blueprint diagram — replaces the retired rainbow
+   `--iri` foil. One brand color, faint, on the light band (see BRANDING.md
+   §3: coral is a spark, not a fill — this stays under 0.2 alpha). */
 .mission .foil {
     position: absolute;
-    right: -4%; top: 58%;
+    right: -2%; top: 58%;
     transform: translateY(-50%);
-    width: 44%;
+    width: 42%;
     aspect-ratio: 1;
-    background: var(--iri);
-    background-size: 200% 200%;
-    filter: blur(2px) saturate(1.2);
-    mix-blend-mode: multiply;
-    opacity: 0.5;
-    border-radius: 50%;
-    animation: iri-shift 12s ease-in-out infinite;
+    background: radial-gradient(circle at 50% 50%,
+        rgba(var(--coral-rgb), 0.18) 0%,
+        rgba(var(--coral-rgb), 0.07) 45%,
+        transparent 72%);
+    filter: blur(6px);
     pointer-events: none;
 }
+/* The mark is square (72x72 viewBox), so its `width` is also its height, and it
+   has to stay under the band's height or `overflow: hidden` clips it in every
+   position. It used to cap at 440px inside a ~428px band — taller than its own
+   container. Capped at 340px here, against the band's guaranteed 30rem
+   min-height above, which leaves room for the parallax travel on top. */
 .mission .giant-mark {
     position: absolute;
-    right: 5%; top: 58%;
+    right: 5%; top: 50%;
     transform: translateY(-50%);
-    width: clamp(200px, 34vw, 440px);
+    width: clamp(160px, 26vw, 340px);
     height: auto;
     stroke: rgba(0,0,0,0.14);
     fill: none;
@@ -554,7 +1016,8 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 
 .card {
     position: relative;
-    background: var(--panel);
+    /* background-color set by the glass block; `background` shorthand here
+       would blow away the gradient it layers on top */
     border: 1px solid var(--line);
     padding: 1.5rem;
     transition: border-color 0.25s, background 0.25s;
@@ -574,11 +1037,22 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 }
 .card:hover { border-color: var(--line-strong); }
 .card:hover::before { opacity: 1; }
-/* corner crosshair markers */
-.card > .mk { position: absolute; width: 8px; height: 8px; opacity: 0; transition: opacity 0.25s; z-index: 2; }
-.card:hover > .mk { opacity: 1; }
-.card > .mk.tl { top: 6px; left: 6px; border-top: 1px solid var(--coral); border-left: 1px solid var(--coral); }
-.card > .mk.br { bottom: 6px; right: 6px; border-bottom: 1px solid var(--coral); border-right: 1px solid var(--coral); }
+/* Corner crosshair markers. They scale out of their own corner rather than
+   just fading — a CAD registration mark being struck, which is the whole
+   point of the motif (BRANDING.md §6). */
+.card > .mk {
+    position: absolute; width: 8px; height: 8px; z-index: 2;
+    opacity: 0;
+    transform: scale(0.2);
+    transition: opacity var(--dur-micro) var(--ease), transform var(--dur-ui) var(--ease-spring);
+}
+.card:hover > .mk { opacity: 1; transform: scale(1); }
+/* Concentric with the card's corner: inset 4px inside an 8px radius means the
+   mark's own bend is 8 - 4 = 4px. Leave it square and it visibly cuts across
+   the rounded corner it's supposed to trace. Origin sits in the corner the
+   mark traces, so it grows outward along both of its own arms. */
+.card > .mk.tl { top: 4px; left: 4px; border-top: 1px solid var(--coral); border-left: 1px solid var(--coral); border-top-left-radius: 4px; transform-origin: top left; }
+.card > .mk.br { bottom: 4px; right: 4px; border-bottom: 1px solid var(--coral); border-right: 1px solid var(--coral); border-bottom-right-radius: 4px; transform-origin: bottom right; }
 
 .card h3 {
     font-family: var(--font-display);
@@ -589,7 +1063,15 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 }
 .card h3 svg { width: 20px; height: 20px; stroke: var(--coral); fill: none; stroke-width: 1.6; flex-shrink: 0; }
 .card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.1rem; }
-.card.feature { background: linear-gradient(180deg, rgba(var(--coral-rgb),0.06), var(--panel) 60%); }
+/* Layered ON the glass, not instead of it. This used the `background`
+   shorthand, which replaced the glass gradient outright — six feature cards on
+   qrgate and baxi were flat while every other card was glass. Two
+   background-image layers: the coral hint paints over the glass tint. */
+.card.feature {
+    background-image:
+        linear-gradient(180deg, rgba(var(--coral-rgb),0.10), transparent 62%),
+        linear-gradient(to bottom, var(--glass-tint), var(--glass-tint-2));
+}
 
 /* mono chips + links */
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -670,7 +1152,6 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     flex: 0 0 auto;
     width: min(82vw, 560px);
     height: min(72vh, 560px);
-    background: var(--panel);
     border: 1px solid var(--line);
     padding: clamp(1.4rem, 2.5vw, 2.2rem);
     display: flex;
@@ -691,13 +1172,24 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     pointer-events: none;
     z-index: 0;
 }
+/* Every panel is scrubbed on transform + opacity for its whole pass through
+   the pin, so promote them once up front rather than letting the compositor
+   re-decide each frame. This is the one place on the site where a permanent
+   `will-change` is correct: the property is genuinely always animating while
+   the section is on screen. */
+.proj-panel { will-change: transform, opacity; }
 .proj-panel.clickable { cursor: pointer; }
-.proj-panel:hover { border-color: var(--coral); background: #0c0a09; }
+.proj-panel:hover { border-color: var(--coral); background-color: rgba(18,12,10,0.6); }
 .proj-panel:hover::before { opacity: 1; }
-.proj-panel > .mk { position: absolute; width: 10px; height: 10px; opacity: 0; transition: opacity 0.3s; z-index: 3; }
-.proj-panel:hover > .mk { opacity: 1; }
-.proj-panel > .mk.tl { top: 8px; left: 8px; border-top: 1px solid var(--coral); border-left: 1px solid var(--coral); }
-.proj-panel > .mk.br { bottom: 8px; right: 8px; border-bottom: 1px solid var(--coral); border-right: 1px solid var(--coral); }
+.proj-panel > .mk {
+    position: absolute; width: 10px; height: 10px; z-index: 3;
+    opacity: 0;
+    transform: scale(0.2);
+    transition: opacity var(--dur-micro) var(--ease), transform var(--dur-ui) var(--ease-spring);
+}
+.proj-panel:hover > .mk { opacity: 1; transform: scale(1); }
+.proj-panel > .mk.tl { top: 4px; left: 4px; border-top: 1px solid var(--coral); border-left: 1px solid var(--coral); border-top-left-radius: 4px; transform-origin: top left; }
+.proj-panel > .mk.br { bottom: 4px; right: 4px; border-bottom: 1px solid var(--coral); border-right: 1px solid var(--coral); border-bottom-right-radius: 4px; transform-origin: bottom right; }
 
 /* Dithering shader background, same motif as the hero — mounts on first
    hover, fades in/out with the card's hover state. */
@@ -707,7 +1199,8 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     z-index: 0;
     pointer-events: none;
     opacity: 0;
-    mix-blend-mode: screen;
+    /* no mix-blend-mode — see .hero-shader: it establishes a backdrop root and
+       would stop the panel's own glass from sampling this texture. */
     transition: opacity 0.5s var(--ease);
 }
 .pp-shader-on { opacity: 0.5; }
@@ -782,17 +1275,50 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
    CONTACT
    ========================================================================== */
 .contact-card h3 svg { stroke: var(--coral); }
-.accent-link { color: var(--coral); font-family: var(--font-mono); font-size: 0.85rem; transition: opacity 0.2s; }
-.accent-link:hover { opacity: 0.7; }
+/* Underline draws in from the left rather than the whole link dimming — same
+   gesture as the nav links and the `// kicker` rule, so the one "a line is
+   being struck" motif covers every link on the site. */
+.accent-link {
+    color: var(--coral);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    position: relative;
+    display: inline-block;
+    transition: color var(--dur-micro) var(--ease);
+}
+.accent-link::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -3px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--dur-ui) var(--ease);
+}
+.accent-link:hover { color: var(--coral-soft); }
+.accent-link:hover::after { transform: scaleX(1); }
 
 /* ============================================================================
    FOOTER — giant wordmark
    ========================================================================== */
+/* The footer is a closing frame, not a strip of small print. It gets real
+   height for two reasons: the wordmark reveal is the brand signature and needs
+   room to land, and the reveal only fires once the wordmark is properly on
+   screen — which needs scroll runway to exist below it. Previously the footer
+   was ~300px at the document end, so the wordmark entered the viewport a few
+   pixels before the page ran out of scroll. */
 .site-footer {
     position: relative;
     z-index: 1;
     border-top: 1px solid var(--line);
-    padding-top: clamp(3rem, 8vw, 6rem);
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(2.5rem, 6vh, 5rem);
+    padding: clamp(5rem, 12vh, 9rem) 1rem clamp(3rem, 7vh, 5rem);
     overflow: hidden;
     text-align: center;
 }
@@ -828,7 +1354,7 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     font-size: 0.75rem;
     letter-spacing: 0.08em;
     color: var(--muted);
-    padding: 2rem 1rem 3rem;
+    padding: 0 1rem;   /* the footer's own flex gap does the spacing now */
 }
 .footer-meta a { transition: color 0.2s; }
 .footer-meta a:hover { color: var(--fg); }
