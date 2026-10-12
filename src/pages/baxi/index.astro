@@ -49,8 +49,8 @@ const legend: StatusKey[] = ['FREE', 'PREMIUM', 'PARTIAL', 'NONE'];
 ---
 
 <Layout
-  title="Baxi — Free Open-Source Discord Moderation Bot with Chat Filter & Global Spammer Database | Avocloud.net"
-  description="Baxi — free, verified, open-source Discord moderation bot. Intelligent AI chat filter (SafeText), global spammer database, raid protection, account-linking, logging. Free forever, MIT-licensed."
+  title="Baxi | Discord Moderation Bot with Chat Filter & Global Spammer Database | Avocloud.net"
+  description="Baxi is a verified Discord moderation bot by Avocloud.net: AI chat filter (SafeText), global spammer database, raid protection, account linking and logging, configured from a web dashboard."
   canonical="https://avocloud.net/baxi/"
   schema={false}
 >
@@ -70,9 +70,9 @@ const legend: StatusKey[] = ['FREE', 'PREMIUM', 'PARTIAL', 'NONE'];
                 through an easy-to-use web dashboard.
               </p>
               <p style="color:var(--muted);">
-                Baxi is part of the <strong style="color:var(--fg);">AvoCloud</strong> project, which focuses on
-                creating modern, privacy-friendly tools for Discord communities. Everything is open source
-                under the MIT license and freely available on GitHub.
+                Baxi is developed and operated by <strong style="color:var(--fg);">Avocloud.net</strong>, a software
+                company in Wels, Austria. We build privacy-friendly tools for Discord communities and run
+                the bot on our own infrastructure.
               </p>
             </div>
             <div>
@@ -87,11 +87,11 @@ const legend: StatusKey[] = ['FREE', 'PREMIUM', 'PARTIAL', 'NONE'];
               </p>
               <h3 style="font-family:var(--font-brand);font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;margin-bottom:0.6rem;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                Open Source
+                Run by us
               </h3>
               <p style="color:var(--muted);">
-                The full source code is on GitHub under the MIT license. Self-host it, audit it, contribute
-                to it — total transparency, no black boxes.
+                Baxi is hosted and maintained by Avocloud.net. Updates, fixes and support come from one
+                team, and you configure everything in the dashboard.
               </p>
             </div>
           </div>
@@ -237,33 +237,18 @@ const legend: StatusKey[] = ['FREE', 'PREMIUM', 'PARTIAL', 'NONE'];
           <h2 class="headline" style="font-size:1.9rem;">Installation &amp; Setup</h2>
           <div class="grid cols-2">
 
-            <div class="card feature">
+            <div class="card feature span-2">
               <span class="mk tl"></span><span class="mk br"></span>
               <h3 style="justify-content:space-between;">
                 <span style="display:flex;align-items:center;gap:0.55rem;">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                   Official Hosted Bot
                 </span>
-                <span class="chip" style="font-size:0.6rem;">Recommended</span>
               </h3>
               <p>Get started in seconds — invite the bot and configure everything via the dashboard. No setup required.</p>
               <div class="chips">
                 <a class="chip link" href="/baxi/invite/">Invite Bot ↗</a>
                 <a class="chip link" href="https://baxi.avocloud.net/" rel="noreferrer">Dashboard ↗</a>
-              </div>
-            </div>
-
-            <div class="card">
-              <span class="mk tl"></span><span class="mk br"></span>
-              <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Self-Hosting</h3>
-              <pre style="font-family:var(--font-mono);font-size:0.75rem;background:var(--bg-soft);border:1px solid var(--line);padding:0.75rem;margin-bottom:0.75rem;overflow-x:auto;">git clone https://github.com/AvoCloud-net/Baxi.git
-cd Baxi &amp;&amp; pip install -r requirements.txt
-python main.py</pre>
-              <p>Configure <code>config/auth.py</code> with your Bot Token before running.</p>
-              <div class="chips">
-                <a class="chip link" href="https://github.com/AvoCloud-net/Baxi" rel="noreferrer">GitHub ↗</a>
-                <span class="chip" style="opacity:0.6;">Global Chat: N/A</span>
-                <span class="chip" style="opacity:0.6;">AI Filter: self-host</span>
               </div>
             </div>
 
@@ -276,20 +261,13 @@ python main.py</pre>
         <div class="wrap">
           <div class="section-label">SUPPORT</div>
           <h2 class="headline" style="font-size:1.9rem;">Get Help</h2>
-          <div class="grid cols-3">
+          <div class="grid cols-2">
 
             <div class="card">
               <span class="mk tl"></span><span class="mk br"></span>
               <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Discord</h3>
               <p>Join our server for support and updates:</p>
               <a href="/discord/" class="accent-link">avocloud.net/discord ↗</a>
-            </div>
-
-            <div class="card">
-              <span class="mk tl"></span><span class="mk br"></span>
-              <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</h3>
-              <p>Report issues or contribute:</p>
-              <a href="https://github.com/AvoCloud-net/Baxi" rel="noreferrer" class="accent-link">github.com/AvoCloud-net/Baxi ↗</a>
             </div>
 
             <div class="card">

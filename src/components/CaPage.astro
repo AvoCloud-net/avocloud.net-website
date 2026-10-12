@@ -1,0 +1,51 @@
+---
+/* Shared frame for the Craft Attack article subpages (aerlon, features,
+   clans, rules, join).
+
+   All five used to be standalone files in public/ with their own copy of the
+   nav, the breadcrumb and the sibling list — and a <link> to
+   assets/css/main.css, which does not exist in this repo. They rendered on
+   CDN Tailwind alone. This puts them on the site's own design system and
+   leaves one copy of the furniture. */
+interface Props {
+  /** own href, so it can be dropped from the sibling list */
+  current: string;
+  /** breadcrumb leaf + sibling-list label */
+  title: string;
+}
+const { current, title } = Astro.props;
+
+const pages = [
+  { href: '/craftattack/', label: 'Overview' },
+  { href: '/craftattack/aerlon/', label: 'Aerlon' },
+  { href: '/craftattack/features/', label: 'Features' },
+  { href: '/craftattack/clans/', label: 'Clans & Economy' },
+  { href: '/craftattack/rules/', label: 'Server Rules' },
+  { href: '/craftattack/join/', label: 'How to Join' },
+];
+---
+
+<section class="section" id="ca-article">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Avocloud.net</a>
+      <span aria-hidden="true">/</span>
+      <a href="/craftattack/">Craft Attack</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{title}</span>
+    </nav>
+
+    <slot />
+
+    <nav class="ca-siblings" aria-label="More Craft Attack pages">
+      <div class="section-label">MORE CRAFT ATTACK</div>
+      <div class="chips">
+        {pages
+          .filter((p) => p.href !== current)
+          .map((p) => (
+            <a class="chip link" href={p.href}>{p.label}</a>
+          ))}
+      </div>
+    </nav>
+  </div>
+</section>

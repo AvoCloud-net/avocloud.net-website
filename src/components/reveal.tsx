@@ -1,4 +1,4 @@
-import { createElement, useRef } from 'react';
+import { createElement, Fragment, useRef } from 'react';
 import { gsap, ScrollTrigger, SplitText, useGSAP, EASE, DUR, STAG, STAG_MAX, START } from '@/lib/motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
@@ -25,7 +25,7 @@ type Variant = 'block' | 'text' | 'stagger';
 
 type RevealProps = {
   children?: React.ReactNode;
-  as?: 'div' | 'section' | 'article' | 'h1' | 'h2' | 'h3' | 'p' | 'span' | 'li';
+  as?: 'div' | 'section' | 'article' | 'h1' | 'h2' | 'h3' | 'p' | 'span' | 'li' | 'ul' | 'dl';
   variant?: Variant;
   delay?: number;
   y?: number;
@@ -42,6 +42,17 @@ export function Reveal({
 }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  /* The text variant cuts the element into per-word spans, and React keeps
+     writing into the text node it created — which SplitText has removed. So on
+     a language switch the new string landed in a detached node and every split
+     headline stayed in the language it was first rendered in. Keying on the
+     text remounts the element instead, and the effect below re-splits it. */
+  const textKey =
+    variant === 'text'
+      ? typeof children === 'string'
+        ? children
+        : dangerouslySetInnerHTML?.__html ?? ''
+      : '';
 
   useGSAP(
     () => {
@@ -138,16 +149,20 @@ export function Reveal({
         },
       );
     },
-    { scope: ref, dependencies: [reduce, variant] },
+    { scope: ref, dependencies: [reduce, variant, textKey] },
   );
 
-  return createElement(as, {
-    ref,
-    id,
-    className,
-    'data-reveal': '',
-    ...(dangerouslySetInnerHTML ? { dangerouslySetInnerHTML } : { children }),
-  });
+  return createElement(
+    Fragment,
+    { key: textKey },
+    createElement(as, {
+      ref,
+      id,
+      className,
+      'data-reveal': '',
+      ...(dangerouslySetInnerHTML ? { dangerouslySetInnerHTML } : { children }),
+    }),
+  );
 }
 
 /* ---------------------------------------------------------------------------

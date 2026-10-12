@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { gsap, useGSAP, EASE, afterIntro } from '@/lib/motion';
+import { gsap, useGSAP, EASE } from '@/lib/motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const DEFAULT_WORD = 'AVOCLOUD.NET';
@@ -128,9 +128,8 @@ export function Wordmark({
       if (circles.length) gsap.set(circles, { opacity: 0, transformOrigin: '50% 50%' });
 
       // `paused` for the scroll case — an IntersectionObserver starts it (below).
-      // Always paused. `load` is released by afterIntro (otherwise the whole
-      // CAD build plays out behind the intro curtain and is already finished
-      // when it lifts); `scroll` is released by the IntersectionObserver below.
+      // Always paused. `load` plays right away; `scroll` is released by the
+      // IntersectionObserver below.
       const tl = gsap.timeline({ delay: trigger === 'load' ? 0.15 : 0, paused: true });
       tl.set(lines, { opacity: 1 })
         .to(lines, { drawSVG: '0% 100%', duration: 0.7, ease: 'power2.inOut', stagger: 0.025 }, 0);
@@ -146,7 +145,10 @@ export function Wordmark({
         .to([...lines, ...circles], { opacity: 0, duration: 0.7, ease: 'power2.inOut' }, 1.7)
         .to(strokes, { opacity: 0, duration: 0.7, ease: 'power2.inOut' }, 1.7);
       if (timeScale !== 1) tl.timeScale(timeScale);
-      if (trigger === 'load') return afterIntro(() => tl.play());
+      if (trigger === 'load') {
+        tl.play();
+        return;
+      }
 
       /* IntersectionObserver, deliberately not ScrollTrigger.
 

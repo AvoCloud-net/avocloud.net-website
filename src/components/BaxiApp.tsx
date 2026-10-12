@@ -6,7 +6,7 @@ import { Nav, Footer } from "./Site";
 import { useSlotMotion } from "./slot-motion";
 import { Btn } from "./Btn";
 import { CountUp } from "./motion";
-import { GithubIcon, DiscordIcon } from "./icons";
+import { DiscordIcon } from "./icons";
 import { HeroShell } from "./HeroShell";
 
 const InviteIcon = () => (
@@ -54,13 +54,13 @@ export default function BaxiApp({ children }: { children: ReactNode }) {
     <>
       <Nav active="" t={t} lang={lang} toggle={toggle} base="/" />
 
-      <main ref={slot}>
+      <main id="main" tabIndex={-1} ref={slot}>
         <HeroShell
           id="hero"
           word="BAXI"
           coralFrom={4}
           round={new Set()}
-          kicker="Discord Bot · Verified · Open Source"
+          kicker="Discord Bot · Verified"
           claim="A modern, privacy-focused Discord moderation bot."
           stats={
             <>
@@ -69,8 +69,8 @@ export default function BaxiApp({ children }: { children: ReactNode }) {
                 <span className="l">Features</span>
               </div>
               <div className="stat">
-                <span className="n">MIT</span>
-                <span className="l">License</span>
+                <span className="n">AT</span>
+                <span className="l">Made in</span>
               </div>
               <div className="stat">
                 <span className="n">✓</span>
@@ -93,13 +93,6 @@ export default function BaxiApp({ children }: { children: ReactNode }) {
                 icon={<DashboardIcon />}
               >
                 Dashboard
-              </Btn>
-              <Btn
-                href="https://github.com/AvoCloud-net/Baxi"
-                rel="noreferrer"
-                icon={<GithubIcon />}
-              >
-                GitHub
               </Btn>
               <Btn
                 href="/discord/"

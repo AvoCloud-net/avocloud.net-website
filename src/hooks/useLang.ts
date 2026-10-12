@@ -9,19 +9,29 @@ function setMeta(sel: string, attr: string, val: string) {
 
 /* Client-side language state. Default 'en' matches the server-rendered HTML
    (so hydration is stable + EN content is what crawlers see); the client then
-   upgrades to ?lang / localStorage preference and keeps <head> meta in sync. */
-export function useLang() {
+   upgrades to ?lang / localStorage preference and keeps <head> meta in sync.
+
+   `enabled` is off by default and only the homepage turns it on, because the
+   homepage is the only page whose copy exists in both languages (content.ts);
+   every subpage is English-only markup. On a subpage the hook used to still
+   read the stored preference and then stamp `<html lang="de">` plus the
+   *homepage's* German title and description over that page's own — a visitor
+   who had once picked DE got every subpage mislabelled and re-titled. Off, it
+   is an English-only accessor: same shape, no DOM writes, no-op toggle. */
+export function useLang(enabled = false) {
   const [lang, setLang] = useState<Lang>('en');
 
   useEffect(() => {
+    if (!enabled) return;
     const url = new URLSearchParams(window.location.search).get('lang');
     const stored = localStorage.getItem('avo-lang');
     const initial: Lang =
       url === 'de' || url === 'en' ? url : stored === 'de' || stored === 'en' ? stored : 'en';
     if (initial !== 'en') setLang(initial);
-  }, []);
+  }, [enabled]);
 
   useEffect(() => {
+    if (!enabled) return;
     document.documentElement.lang = lang;
     localStorage.setItem('avo-lang', lang);
     const s = seo[lang];
@@ -33,7 +43,7 @@ export function useLang() {
     setMeta('meta[property="og:locale:alternate"]', 'content', lang === 'de' ? 'en_US' : 'de_DE');
     setMeta('meta[name="twitter:title"]', 'content', s.title);
     setMeta('meta[name="twitter:description"]', 'content', s.description);
-  }, [lang]);
+  }, [lang, enabled]);
 
   /* German runs noticeably longer than English, so a language switch resizes
      cards and reflows whole sections — the page used to jump. Flip records

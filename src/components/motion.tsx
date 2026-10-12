@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { gsap, ScrollTrigger, Observer, useGSAP, EASE, DUR, START, afterIntro } from '@/lib/motion';
+import { gsap, ScrollTrigger, Observer, useGSAP, EASE, DUR, START } from '@/lib/motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 /* ---------------------------------------------------------------------------
@@ -98,10 +98,12 @@ export function CountUp({ value, suffix = '', className }: { value: number; suff
       // trigger sits exactly on that boundary — so the count was zeroed and
       // then left there, permanently reading "0+ / 0 / 0".
       //
-      // Visible now → run it (after the load intro, so it isn't spent behind
-      // the curtain). Below the fold → wait for the scroll.
+      // Visible now → run it. Below the fold → wait for the scroll.
       const box = el.getBoundingClientRect();
-      if (box.top < window.innerHeight && box.bottom > 0) return afterIntro(run);
+      if (box.top < window.innerHeight && box.bottom > 0) {
+        run();
+        return;
+      }
 
       const st = ScrollTrigger.create({ trigger: el, start: START.reveal, once: true, onEnter: run });
       return () => st.kill();

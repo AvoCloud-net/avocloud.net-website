@@ -1,138 +1,162 @@
 /* ----------------------------------------------------------------------------
-   Content + i18n for the avocloud.net redesign.
+   Content + i18n for avocloud.net.
    Default render language is EN (ships in the static HTML for SEO); the client
-   toggles to DE. Ported 1:1 from the original inline _i18nData.
+   toggles to DE. Keep both languages at parity (BRANDING.md, Voice).
    -------------------------------------------------------------------------- */
 
 export type Lang = 'en' | 'de';
 
 export const messages: Record<Lang, Record<string, string>> = {
   en: {
-    'hero.eyebrow': 'Open-source · Since 2024',
-    'hero.claim': 'A small crew building open-source tools',
-    'about.label': 'ABOUT US',
-    'about.heading': "Hi, we're Avocloud.",
+    'hero.eyebrow': 'Software · Austria',
+    'hero.claim': 'Software for communities, events and education',
+    'about.label': 'ABOUT',
+    'about.heading': 'Software, built in Austria.',
     'about.intro':
-      "Hey, we're Avocloud.net — a small crew of developers and moderators from Austria and Germany who like to build things in their spare time. Since 2024, what started as a handful of hobby projects has grown into an ongoing playground where we experiment, break stuff, learn, and ship software we actually find useful.",
+      'Avocloud.net develops and operates software from Wels, Austria: moderation for Discord communities, ticketing for events and grade management for teachers.',
     'about.body2':
-      "Our work spans Discord moderation tools, Minecraft plugins, web utilities, and our own hosting infrastructure. Everything we build is open source under the MIT license and freely available on GitHub — whether it's a suggested feature or something we cooked up on the spot, we just want to make useful things and share them.",
-    'about.opensource.heading': 'Open Source',
-    'about.opensource.body':
-      "Every project we ship is open source under the MIT license and freely available on GitHub. We believe in transparency and community-driven development — if something we built helps you, that's more than enough reason to keep going.",
-    'about.community.heading': 'Community',
-    'about.community.body':
-      'Join our Discord server to follow along, suggest features, report bugs, or just hang out. We’re always happy to hear from people who find our tools useful.',
+      'We write the code, run the infrastructure and look after every product after launch. Alongside our own products we build websites and web applications, for example for a parish theater group that sells its tickets through our system.',
+    'about.build.heading': 'Built and run by us',
+    'about.build.body':
+      'Our own code on our own infrastructure. No resold platform behind the product, and one team to talk to when something needs fixing.',
+    'about.privacy.heading': 'Privacy by default',
+    'about.privacy.body':
+      'Products store only what a feature needs. Grade data in EduGrade is encrypted with AES-256-GCM, and our own sites run no tracking.',
+    'about.fact.seat': 'Based in',
+    'about.fact.since': 'Since',
+    'about.fact.products': 'Products',
+    'about.fact.tracking': 'Tracking',
+    'about.fact.none': 'None',
+    'mission.p1.h': 'Written in-house',
+    'mission.p1.b': 'Our own code, written by one team.',
+    'mission.p2.h': 'Run on our servers',
+    'mission.p2.b': 'Our own infrastructure, no resold platform behind it.',
+    'mission.p3.h': 'Maintained after launch',
+    'mission.p3.b': 'We look after every product once it is live.',
     'mission.label': 'MISSION',
     'mission.big':
-      'Everything we build is <span class="mark">open source</span> — <span class="coral">free, forever</span>.',
-    'team.label': 'THE TEAM',
-    'team.heading': 'About our Team',
-    'team.rwolf.desc': 'Owner of Avocloud.net, Python / Java developer and server manager.',
-    'team.tfj.desc': 'Administrator at Avocloud.net and organizer of several independent projects.',
-    'team.mod.desc': 'Moderator in Avocloud.net Minecraft projects.',
-    'projects.label': 'PROJECTS',
-    'projects.heading': 'Our Projects',
-    'baxi.desc': 'A verified Discord bot with intelligent chat filter, global spammer database, and much more.',
+      'Software that <span class="mark">just runs</span>. <span class="coral">Built and maintained in Austria.</span>',
+    'projects.label': 'PRODUCTS',
+    'projects.heading': 'Our Products',
+    'projects.lede': 'Everything here is built and run by us. Scroll through, one product at a time.',
+    'projects.open': 'Learn more',
+    'projects.features': 'Features',
+    'projects.facts': 'Facts',
+    'baxi.desc': 'A verified Discord bot with an intelligent chat filter, a global spammer database, and a web dashboard.',
     'craftattack.desc':
-      'Open Craft Attack community Minecraft server — Season 2: The Ashes of Aerlon. Java + Bedrock crossplay, clans, jobs, BlueMap. Free, no application form.',
-    'safetext.desc': 'API server scanning text for offensive language. Powers Baxi and AvoFilter.',
-    'skyfire.desc':
-      'A MicroServer hosting service by us. Host your projects, websites, and status monitoring — from Python to Minecraft servers.',
+      'Our community Minecraft server. Season 2: The Ashes of Aerlon. Java and Bedrock crossplay, clans, jobs, BlueMap. Free to join, no application form.',
+    'discordgate.desc': 'A Minecraft plugin that requires Discord account linking before players can join. Works with Baxi, Bedrock and Velocity.',
     'qrgate.desc':
-      'A full-featured ticketing system with integrated shop, PayPal payment, automated email delivery, and QR code check-in.',
-    'ember.desc': 'Our own Instagram-like social media. Now a <span class="mark">public archive</span>.',
-    'avofilter.desc':
-      "A Minecraft plugin powered by SafeText that checks and blocks inappropriate messages in your server's chat.",
+      'Event ticketing with a built-in shop, PayPal payment, automatic email delivery and QR code check-in.',
     'edugrade.desc':
-      'A secure web app for educators to manage student grades, classes, and performance tracking — with AES-256-GCM encryption and built-in analytics.',
+      'A web app for teachers to manage classes, grades and attendance, with AES-256-GCM encryption and built-in analytics.',
     'helene.desc':
-      'Website and ticketing system for the parish theater group in Sattledt, Austria. We built and maintain their website and operate QrGate as their custom ticketing & shop solution.',
+      'Client project. Website and ticketing for the parish theater group in Sattledt, Austria. We built and maintain the site and run QrGate as their ticketing and shop system.',
     'avolink.desc':
-      'A link shortener and Linktree alternative. Create short, custom links and share all your profiles in one place.',
+      'A link shortener and Linktree alternative. Short, custom links and all your profiles in one place.',
     'collab.label': 'COLLABORATIONS',
     'collab.heading': 'Our Collaborations',
-    'cee.desc': 'A streamer on Twitch with a nice, friendly community.',
+    'cee.desc': 'Twitch streamer we work with — family-friendly streams and the community around them.',
     'support.label': 'SUPPORT US',
     'support.heading': 'Buy Us A Coffee',
+    'support.body':
+      'Everything we run costs server time. If our tools are useful to you, a coffee helps keep them online.',
+    'finale.label': 'Final scene',
+    'finale.1': 'We write the code.',
+    'finale.2': 'We run the servers.',
+    'finale.3': 'We keep it running.',
+    'finale.sub': 'Software from Wels, Austria',
+    'finale.est': 'Est.',
     'contact.label': 'CONTACT',
     'contact.heading': 'Get In Touch',
-    'contact.discord.text': 'Join our Discord server:',
-    'contact.support.text': 'Send us an email:',
+    'contact.mail.text': 'Questions, offers, support:',
+    'contact.discord.text': 'Community and quick answers:',
     'contact.legal.text': 'Legal information:',
-    'stat.projects': 'Projects',
-    'stat.members': 'Members',
+    'stat.products': 'Products',
+    'stat.based': 'Based in',
     'stat.founded': 'Founded',
-    'footer.text': 'Avocloud.net — An open-source software development group',
   },
   de: {
-    'hero.eyebrow': 'Open-Source · Seit 2024',
-    'hero.claim': 'Ein kleines Team baut Open-Source-Tools',
+    'hero.eyebrow': 'Software · Österreich',
+    'hero.claim': 'Software für Communities, Events und Bildung',
     'about.label': 'ÜBER UNS',
-    'about.heading': 'Hallo, wir sind Avocloud.',
+    'about.heading': 'Software aus Österreich.',
     'about.intro':
-      'Hey, wir sind Avocloud.net — ein kleines Team aus Entwicklern und Moderatoren aus Österreich und Deutschland, das in seiner Freizeit gerne Dinge baut. Seit 2024 ist aus einigen Hobby-Projekten ein laufendes Spielfeld geworden, auf dem wir experimentieren, Fehler machen, lernen und Software veröffentlichen, die wir selbst nützlich finden.',
+      'Avocloud.net entwickelt und betreibt Software aus Wels, Österreich: Moderation für Discord-Communities, Ticketing für Veranstaltungen und Notenverwaltung für Lehrkräfte.',
     'about.body2':
-      'Unsere Arbeit umfasst Discord-Moderationstools, Minecraft-Plugins, Web-Utilities und unsere eigene Hosting-Infrastruktur. Alles, was wir bauen, ist Open Source unter der MIT-Lizenz und frei auf GitHub verfügbar — ob vorgeschlagenes Feature oder spontane Idee, wir wollen nützliche Dinge bauen und teilen.',
-    'about.opensource.heading': 'Open Source',
-    'about.opensource.body':
-      'Jedes Projekt, das wir veröffentlichen, ist Open Source unter der MIT-Lizenz und frei auf GitHub verfügbar. Wir glauben an Transparenz und community-getriebene Entwicklung — wenn etwas, das wir gebaut haben, jemandem hilft, ist das Grund genug weiterzumachen.',
-    'about.community.heading': 'Community',
-    'about.community.body':
-      'Tritt unserem Discord-Server bei, um mitzuverfolgen, Features vorzuschlagen, Bugs zu melden oder einfach abzuhängen. Wir freuen uns immer über Menschen, die unsere Tools nützlich finden.',
+      'Wir schreiben den Code, betreiben die Infrastruktur und betreuen jedes Produkt nach dem Start. Neben den eigenen Produkten entwickeln wir Websites und Webanwendungen, zum Beispiel für eine Pfarrtheatergruppe, die ihre Tickets über unser System verkauft.',
+    'about.build.heading': 'Von uns gebaut und betrieben',
+    'about.build.body':
+      'Eigener Code auf eigener Infrastruktur. Keine zugekaufte Plattform hinter dem Produkt, und ein Ansprechpartner, wenn etwas repariert werden muss.',
+    'about.privacy.heading': 'Datenschutz als Standard',
+    'about.privacy.body':
+      'Unsere Produkte speichern nur, was eine Funktion braucht. Notendaten in EduGrade sind mit AES-256-GCM verschlüsselt, und auf unseren eigenen Seiten läuft kein Tracking.',
+    'about.fact.seat': 'Sitz',
+    'about.fact.since': 'Seit',
+    'about.fact.products': 'Produkte',
+    'about.fact.tracking': 'Tracking',
+    'about.fact.none': 'Keines',
+    'mission.p1.h': 'Selbst geschrieben',
+    'mission.p1.b': 'Eigener Code, geschrieben von einem Team.',
+    'mission.p2.h': 'Auf eigenen Servern',
+    'mission.p2.b': 'Eigene Infrastruktur, keine zugekaufte Plattform dahinter.',
+    'mission.p3.h': 'Betreut nach dem Start',
+    'mission.p3.b': 'Wir kümmern uns um jedes Produkt, sobald es live ist.',
     'mission.label': 'MISSION',
     'mission.big':
-      'Alles, was wir bauen, ist <span class="mark">Open Source</span> — <span class="coral">kostenlos, für immer</span>.',
-    'team.label': 'DAS TEAM',
-    'team.heading': 'Unser Team',
-    'team.rwolf.desc': 'Inhaber von Avocloud.net, Python/Java-Entwickler und Server-Administrator.',
-    'team.tfj.desc': 'Administrator bei Avocloud.net und Organisator mehrerer eigener Projekte.',
-    'team.mod.desc': 'Moderator in den Avocloud.net Minecraft-Projekten.',
-    'projects.label': 'PROJEKTE',
-    'projects.heading': 'Unsere Projekte',
-    'baxi.desc': 'Ein verifizierter Discord-Bot mit intelligentem Chat-Filter, globaler Spammer-Datenbank und vielem mehr.',
+      'Software, die <span class="mark">einfach läuft</span>. <span class="coral">Gebaut und betreut in Österreich.</span>',
+    'projects.label': 'PRODUKTE',
+    'projects.heading': 'Unsere Produkte',
+    'projects.lede': 'Alles hier ist von uns gebaut und betrieben. Scroll dich durch, ein Produkt nach dem anderen.',
+    'projects.open': 'Mehr erfahren',
+    'projects.features': 'Funktionen',
+    'projects.facts': 'Fakten',
+    'baxi.desc': 'Ein verifizierter Discord-Bot mit intelligentem Chat-Filter, globaler Spammer-Datenbank und Web-Dashboard.',
     'craftattack.desc':
-      'Offener Craft Attack Community Minecraft-Server — Season 2: Die Asche von Aerlon. Java + Bedrock Crossplay, Clans, Jobs, BlueMap. Kostenlos, kein Bewerbungsformular.',
-    'safetext.desc': 'API-Server zur Erkennung anstößiger Sprache. Betreibt Baxi und AvoFilter.',
-    'skyfire.desc':
-      'Ein MicroServer-Hosting-Dienst von uns. Hoste deine Projekte, Websites und Status-Monitoring — von Python bis Minecraft-Servern.',
+      'Unser Community-Minecraft-Server. Season 2: Die Asche von Aerlon. Java und Bedrock Crossplay, Clans, Jobs, BlueMap. Kostenlos beitreten, kein Bewerbungsformular.',
+    'discordgate.desc': 'Ein Minecraft-Plugin, das vor dem Beitritt eine Verknüpfung mit Discord verlangt. Funktioniert mit Baxi, Bedrock und Velocity.',
     'qrgate.desc':
-      'Ein vollständiges Ticketing-System mit integriertem Shop, PayPal-Zahlung, automatisiertem E-Mail-Versand und QR-Code-Check-in.',
-    'ember.desc': 'Unser eigenes Instagram-ähnliches soziales Netzwerk. Jetzt <span class="mark">öffentliches Archiv</span>.',
-    'avofilter.desc':
-      'Ein Minecraft-Plugin auf Basis von SafeText, das unangemessene Nachrichten im Server-Chat erkennt und blockiert.',
+      'Ticketing für Veranstaltungen mit integriertem Shop, PayPal-Zahlung, automatischem E-Mail-Versand und QR-Code-Check-in.',
     'edugrade.desc':
-      'Eine sichere Web-App für Lehrkräfte zur Notenverwaltung — AES-256-GCM-verschlüsselt mit integrierter Analyse.',
+      'Eine Web-App für Lehrkräfte zur Verwaltung von Klassen, Noten und Anwesenheit, AES-256-GCM-verschlüsselt und mit integrierter Analyse.',
     'helene.desc':
-      'Website und Ticketing-System für die Pfarrtheatergruppe in Sattledt, Österreich. Wir haben ihre Website erstellt und betreiben QrGate als hauseigenes Ticketing- & Shop-System.',
+      'Kundenprojekt. Website und Ticketing für die Pfarrtheatergruppe in Sattledt, Österreich. Wir haben die Seite erstellt, betreuen sie und betreiben QrGate als Ticketing- und Shop-System.',
     'avolink.desc':
-      'Ein Link-Shortener und Linktree-Alternative. Erstelle kurze, individuelle Links und teile alle deine Profile an einem Ort.',
+      'Ein Link-Shortener und Linktree-Alternative. Kurze, individuelle Links und alle Profile an einem Ort.',
     'collab.label': 'KOOPERATIONEN',
     'collab.heading': 'Unsere Kooperationen',
-    'cee.desc': 'Ein Streamer auf Twitch mit einer netten, freundlichen Community.',
+    'cee.desc': 'Twitch-Streamer, mit dem wir zusammenarbeiten — familienfreundliche Streams und die Community drumherum.',
     'support.label': 'UNTERSTÜTZE UNS',
     'support.heading': 'Spendier uns einen Kaffee',
+    'support.body':
+      'Alles, was wir betreiben, kostet Serverzeit. Wenn dir unsere Tools etwas bringen, hält ein Kaffee sie online.',
+    'finale.label': 'Schlussszene',
+    'finale.1': 'Wir schreiben den Code.',
+    'finale.2': 'Wir betreiben die Server.',
+    'finale.3': 'Wir bleiben dran.',
+    'finale.sub': 'Software aus Wels, Österreich',
+    'finale.est': 'Seit',
     'contact.label': 'KONTAKT',
     'contact.heading': 'Kontakt aufnehmen',
-    'contact.discord.text': 'Tritt unserem Discord-Server bei:',
-    'contact.support.text': 'Schreib uns eine E-Mail:',
+    'contact.mail.text': 'Fragen, Anfragen, Support:',
+    'contact.discord.text': 'Community und schnelle Antworten:',
     'contact.legal.text': 'Rechtliche Informationen:',
-    'stat.projects': 'Projekte',
-    'stat.members': 'Mitglieder',
+    'stat.products': 'Produkte',
+    'stat.based': 'Sitz',
     'stat.founded': 'Gegründet',
-    'footer.text': 'Avocloud.net — Eine Open-Source-Softwareentwicklungsgruppe',
   },
 };
 
 export const seo: Record<Lang, { title: string; description: string }> = {
   en: {
-    title: 'Avocloud.net — Open-Source Discord Bots, Minecraft Plugins & Web Tools',
+    title: 'Avocloud.net | Software from Austria',
     description:
-      'Avocloud.net — open-source developer group from Austria & Germany. We build Discord bots (Baxi), Minecraft plugins (AvoFilter), an open Craft Attack community server, EduGrade, QrGate, PWGEN, and more. Free, MIT-licensed.',
+      'Avocloud.net develops software in Wels, Austria. Discord moderation (Baxi), event ticketing (QrGate), grade management (EduGrade) and web development.',
   },
   de: {
-    title: 'Avocloud.net — Open-Source Discord-Bots, Minecraft-Plugins & Web-Tools',
+    title: 'Avocloud.net | Software aus Österreich',
     description:
-      'Avocloud.net — Open-Source-Entwicklergruppe aus Österreich & Deutschland. Wir bauen Discord-Bots (Baxi), Minecraft-Plugins (AvoFilter), eine offene Craft Attack Community, EduGrade, QrGate, PWGEN und mehr. Kostenlos, MIT-Lizenz.',
+      'Avocloud.net entwickelt Software in Wels, Österreich. Discord-Moderation (Baxi), Ticketing (QrGate), Notenverwaltung (EduGrade) und Webentwicklung.',
   },
 };
 
@@ -140,6 +164,15 @@ export type Chip = { label: string; href?: string };
 export type IconKey =
   | 'cube' | 'chat' | 'shield' | 'server' | 'qr'
   | 'globe' | 'layers' | 'cap' | 'ticket' | 'link';
+
+/* The pixel texture behind each fullscreen project card — the hero's dither,
+   with its own shape and tint per product so the stack reads as six scenes,
+   not one background repeated. Tints stay dark and desaturated (BRANDING.md
+   §6: texture, not a colour field); coral remains the only loud colour. */
+export type ProjectTone = {
+  shape: 'simplex' | 'warp' | 'dots' | 'wave' | 'ripple' | 'swirl' | 'sphere';
+  color: string;
+};
 
 export type Project = {
   num: string;
@@ -149,11 +182,55 @@ export type Project = {
   descHtml?: boolean;
   chips: Chip[];
   ghost: string;
+  tone: ProjectTone;
 };
 
 export const projects: Project[] = [
   {
-    num: '01', name: 'Craft Attack Community Server', icon: 'cube', descKey: 'craftattack.desc', ghost: 'CRAFT',
+    num: '01', name: 'Baxi', icon: 'chat', descKey: 'baxi.desc', ghost: 'BAXI',
+    tone: { shape: 'swirl', color: '#4a4e8e' },
+    chips: [
+      { label: 'Discord' }, { label: 'Moderation' }, { label: 'Security' },
+      { label: 'Dashboard ↗', href: 'https://baxi.avocloud.net/' },
+      { label: 'Invite ↗', href: '/baxi/invite/' },
+      { label: 'About ↗', href: '/baxi/' },
+    ],
+  },
+  {
+    num: '02', name: 'QrGate', icon: 'qr', descKey: 'qrgate.desc', ghost: 'QRGATE',
+    tone: { shape: 'dots', color: '#2e6676' },
+    chips: [
+      { label: 'Events' }, { label: 'Ticketing' }, { label: 'QR check-in' },
+      { label: 'About ↗', href: '/qrgate/' },
+    ],
+  },
+  {
+    num: '03', name: 'EduGrade', icon: 'cap', descKey: 'edugrade.desc', ghost: 'EDUGRADE',
+    tone: { shape: 'wave', color: '#3d6a4e' },
+    chips: [
+      { label: 'Education' }, { label: 'Encrypted' }, { label: 'GDPR' },
+      { label: 'About ↗', href: '/edugrade/' },
+    ],
+  },
+  {
+    num: '04', name: 'DiscordGate', icon: 'shield', descKey: 'discordgate.desc', ghost: 'DISCORDGATE',
+    tone: { shape: 'sphere', color: '#5b4886' },
+    chips: [
+      { label: 'Minecraft' }, { label: 'Discord' }, { label: 'Paper' }, { label: 'Velocity' },
+      { label: 'Modrinth ↗', href: 'https://modrinth.com/plugin/discordgate' },
+    ],
+  },
+  {
+    num: '05', name: 'AvoLink', icon: 'link', descKey: 'avolink.desc', ghost: 'AVOLINK',
+    tone: { shape: 'simplex', color: '#76663a' },
+    chips: [
+      { label: 'Web' }, { label: 'Links' },
+      { label: 'Website ↗', href: 'https://avolink.net' },
+    ],
+  },
+  {
+    num: '06', name: 'Craft Attack', icon: 'cube', descKey: 'craftattack.desc', ghost: 'CRAFT',
+    tone: { shape: 'ripple', color: '#8a3b22' },
     chips: [
       { label: 'Minecraft' }, { label: 'Survival' }, { label: 'Community' }, { label: 'Crossplay' },
       { label: 'Server ↗', href: '/craftattack/' },
@@ -162,146 +239,140 @@ export const projects: Project[] = [
       { label: 'Clans & Economy ↗', href: '/craftattack/clans/' },
     ],
   },
-  {
-    num: '02', name: 'Baxi', icon: 'chat', descKey: 'baxi.desc', ghost: 'BAXI',
-    chips: [
-      { label: 'Discord' }, { label: 'Moderation' }, { label: 'Security' }, { label: 'Python' }, { label: 'Open Source' },
-      { label: 'Dashboard ↗', href: 'https://baxi.avocloud.net/' },
-      { label: 'Invite ↗', href: '/baxi/invite/' },
-      { label: 'About ↗', href: '/baxi/' },
-      { label: 'GitHub ↗', href: 'https://github.com/AvoCloud-net/Baxi' },
-    ],
-  },
-  {
-    num: '03', name: 'SafeText', icon: 'shield', descKey: 'safetext.desc', ghost: 'SAFETEXT',
-    chips: [
-      { label: 'Python' }, { label: 'API' }, { label: 'Open Source' },
-      { label: 'GitHub ↗', href: 'https://github.com/AvoCloud-net/SafeText' },
-    ],
-  },
-  {
-    num: '04', name: 'SkyFire', icon: 'server', descKey: 'skyfire.desc', ghost: 'SKYFIRE',
-    chips: [
-      { label: 'Server' }, { label: '24/7' }, { label: 'Gaming' }, { label: 'Free or paid' },
-      { label: 'Website ↗', href: '/skyfire/' },
-    ],
-  },
-  {
-    num: '05', name: 'QrGate', icon: 'qr', descKey: 'qrgate.desc', ghost: 'QRGATE',
-    chips: [
-      { label: 'Python' }, { label: 'Events' }, { label: 'Ticketing' }, { label: 'Open Source' },
-      { label: 'About ↗', href: '/qrgate/' },
-      { label: 'GitHub ↗', href: 'https://github.com/rwolf2467/qr_gate' },
-    ],
-  },
-  {
-    num: '06', name: 'Ember', icon: 'globe', descKey: 'ember.desc', descHtml: true, ghost: 'EMBER',
-    chips: [
-      { label: 'Website' }, { label: 'Open Source' },
-      { label: 'GitHub ↗', href: 'https://github.com/rwolf2467/ember' },
-    ],
-  },
-  {
-    num: '07', name: 'AvoFilter', icon: 'layers', descKey: 'avofilter.desc', ghost: 'AVOFILTER',
-    chips: [
-      { label: 'Minecraft' }, { label: 'Security' }, { label: 'Open Source' },
-      { label: 'Modrinth ↗', href: 'https://modrinth.com/plugin/avofilter' },
-      { label: 'GitHub ↗', href: 'https://github.com/AvoCloud-net/AvoFilter' },
-    ],
-  },
-  {
-    num: '08', name: 'EduGrade', icon: 'cap', descKey: 'edugrade.desc', ghost: 'EDUGRADE',
-    chips: [
-      { label: 'Python' }, { label: 'Education' }, { label: 'Encrypted' }, { label: 'Open Source' },
-      { label: 'GitHub ↗', href: 'https://github.com/rwolf2467/EduGrade' },
-      { label: 'Docker ↗', href: 'https://hub.docker.com/r/redwolf2467/edugrade' },
-      { label: 'About ↗', href: '/edugrade/' },
-    ],
-  },
-  {
-    num: '09', name: 'Helenenbühne Sattledt', icon: 'ticket', descKey: 'helene.desc', ghost: 'HELENE',
-    chips: [
-      { label: 'Website' }, { label: 'Ticketing' }, { label: 'QrGate' }, { label: 'Theater' },
-      { label: 'Website ↗', href: 'https://helenenbuehne.at' },
-      { label: 'QrGate ↗', href: 'https://github.com/rwolf2467/qr_gate' },
-    ],
-  },
-  {
-    num: '10', name: 'AvoLink', icon: 'link', descKey: 'avolink.desc', ghost: 'AVOLINK',
-    chips: [
-      { label: 'Web' }, { label: 'Open Source' },
-      { label: 'Website ↗', href: 'https://avolink.net' },
-    ],
-  },
 ];
 
-export type Staff = {
-  name: string;
-  descKey: string;
-  banner?: string;      // image src
-  bannerColor?: string; // solid fallback
-  bannerPos?: string;
-  avatar: string;
-  chips: Chip[];
-  wide?: boolean;
+/* ---- Product scene details ------------------------------------------------
+   What fills the right-hand spec panel on each fullscreen product scene. Every
+   line is taken from the product's own page (/baxi/, /qrgate/, /edugrade/,
+   /craftattack/) or its listing — nothing here is a claim those pages don't
+   already make. Keyed by the descKey prefix ('baxi.desc' → 'baxi'). */
+export type ProjectDetail = { features: string[]; facts: [string, string][] };
+
+export const projectDetails: Record<Lang, Record<string, ProjectDetail>> = {
+  en: {
+    baxi: {
+      features: [
+        'Three-layer chat filter: rules, AI classification, phishing links',
+        'Network-wide trust scoring and a shared spammer database',
+        'Tickets, polls, giveaways, leveling and more',
+        'Everything configured in the web dashboard',
+      ],
+      facts: [['Platform', 'Discord'], ['Setup', 'Web dashboard'], ['Modules', '27']],
+    },
+    qrgate: {
+      features: [
+        'Online ticket shop, no customer account needed',
+        'PDF ticket with a unique QR code, sent by email',
+        'Door check-in with any smartphone',
+        'Live dashboard for sales, revenue and remaining tickets',
+      ],
+      facts: [['Platform', 'Web, no app'], ['Roles', 'Admin · Box office · Door'], ['Status', 'In production']],
+    },
+    edugrade: {
+      features: [
+        'Classes and students, with CSV import',
+        'Weighted grades, averages calculated automatically',
+        'Attendance tracking with automatic warnings',
+        'Grades shared with students via PIN link',
+      ],
+      facts: [['Platform', 'Web, any device'], ['Encryption', 'AES-256-GCM'], ['Privacy', 'GDPR compliant']],
+    },
+    discordgate: {
+      features: [
+        'Players link their Discord account before they can join',
+        'Works together with Baxi',
+        'Supports Bedrock players',
+        'Runs on Paper and Velocity',
+      ],
+      facts: [['Platform', 'Minecraft'], ['Server', 'Paper · Velocity'], ['Download', 'Modrinth']],
+    },
+    avolink: {
+      features: [
+        'Short, custom links',
+        'All your profiles on one page',
+        'A Linktree alternative',
+      ],
+      facts: [['Platform', 'Web'], ['Address', 'avolink.net']],
+    },
+    craftattack: {
+      features: [
+        'Java and Bedrock crossplay',
+        'Clans, jobs and an economy',
+        'Live BlueMap, voice chat, opt-in PvP',
+        'Free to join, no application form',
+      ],
+      facts: [['Season', '2 · The Ashes of Aerlon'], ['Edition', 'Java + Bedrock'], ['Address', 'craftattack.avocloud.net']],
+    },
+  },
+  de: {
+    baxi: {
+      features: [
+        'Chat-Filter in drei Stufen: Regeln, KI-Klassifizierung, Phishing-Links',
+        'Netzwerkweites Trust-Scoring und gemeinsame Spammer-Datenbank',
+        'Tickets, Umfragen, Giveaways, Leveling und mehr',
+        'Alles im Web-Dashboard eingestellt',
+      ],
+      facts: [['Plattform', 'Discord'], ['Setup', 'Web-Dashboard'], ['Module', '27']],
+    },
+    qrgate: {
+      features: [
+        'Online-Ticketshop, ohne Kundenkonto',
+        'PDF-Ticket mit eigenem QR-Code per E-Mail',
+        'Einlass-Check mit jedem Smartphone',
+        'Live-Dashboard für Verkäufe, Umsatz und Restkarten',
+      ],
+      facts: [['Plattform', 'Web, keine App'], ['Rollen', 'Admin · Kasse · Einlass'], ['Status', 'Im Einsatz']],
+    },
+    edugrade: {
+      features: [
+        'Klassen und Schüler, mit CSV-Import',
+        'Gewichtete Noten, Durchschnitt automatisch berechnet',
+        'Anwesenheit mit automatischer Warnung',
+        'Noten per PIN-Link mit Schülern teilen',
+      ],
+      facts: [['Plattform', 'Web, jedes Gerät'], ['Verschlüsselung', 'AES-256-GCM'], ['Datenschutz', 'DSGVO-konform']],
+    },
+    discordgate: {
+      features: [
+        'Spieler verknüpfen Discord, bevor sie beitreten können',
+        'Arbeitet mit Baxi zusammen',
+        'Unterstützt Bedrock-Spieler',
+        'Läuft auf Paper und Velocity',
+      ],
+      facts: [['Plattform', 'Minecraft'], ['Server', 'Paper · Velocity'], ['Download', 'Modrinth']],
+    },
+    avolink: {
+      features: [
+        'Kurze, individuelle Links',
+        'Alle Profile auf einer Seite',
+        'Eine Linktree-Alternative',
+      ],
+      facts: [['Plattform', 'Web'], ['Adresse', 'avolink.net']],
+    },
+    craftattack: {
+      features: [
+        'Java und Bedrock Crossplay',
+        'Clans, Jobs und eine Wirtschaft',
+        'Live-BlueMap, Voice-Chat, PvP freiwillig',
+        'Kostenlos, kein Bewerbungsformular',
+      ],
+      facts: [['Season', '2 · Die Asche von Aerlon'], ['Edition', 'Java + Bedrock'], ['Adresse', 'craftattack.avocloud.net']],
+    },
+  },
 };
 
-export const team: Staff[] = [
-  {
-    name: 'Red_Wolf2467 // Fabian', descKey: 'team.rwolf.desc', wide: true,
-    banner: '/assets/images/red_wolf2467-banner.gif', bannerPos: 'center 38%',
-    avatar: '/assets/images/Red_Wolf2467.png',
-    chips: [
-      { label: 'Developer' }, { label: 'System Admin' }, { label: 'Networking' },
-      { label: 'GitHub ↗', href: 'https://github.com/rwolf2467' },
-      { label: 'E-Mail ↗', href: 'mailto:redwolf2467@avocloud.net' },
-    ],
-  },
-  {
-    name: 'TFJ', descKey: 'team.tfj.desc',
-    banner: '/assets/images/tfj-banner.webp', avatar: '/assets/images/tfj.png',
-    chips: [
-      { label: 'Admin' }, { label: 'Developer' },
-      { label: 'E-Mail ↗', href: 'mailto:tfj@avocloud.net' },
-    ],
-  },
-  {
-    name: 'The_Biest333', descKey: 'team.mod.desc',
-    banner: '/assets/images/the_biest333-banner.gif', avatar: '/assets/images/the_biest333.png',
-    chips: [
-      { label: 'Minecraft Team' }, { label: 'Moderation' },
-      { label: 'E-Mail ↗', href: 'mailto:the_biest333@avocloud.net' },
-    ],
-  },
-  {
-    name: 'LumpiFirefighter', descKey: 'team.mod.desc',
-    banner: '/assets/images/lumpifirefighter-banner.gif', avatar: '/assets/images/lumpifirefighter.gif',
-    chips: [
-      { label: 'Minecraft Team' }, { label: 'Moderation' },
-      { label: 'E-Mail ↗', href: 'mailto:lumpifirefighter@avocloud.net' },
-    ],
-  },
-  {
-    name: 'FirePheonix', descKey: 'team.mod.desc',
-    bannerColor: '#6f130b', avatar: '/assets/images/firepheonix.png',
-    chips: [
-      { label: 'Minecraft Team' }, { label: 'Moderation' },
-      { label: 'E-Mail ↗', href: 'mailto:firepheonix@avocloud.net' },
-    ],
-  },
-];
+/* The one value in the footer that has to be maintained by hand. */
+export const COPYRIGHT_YEAR = '2026';
 
 export const navLinks = [
   { href: '#about', label: 'About' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#staff', label: 'Team' },
+  { href: '#projects', label: 'Products' },
   { href: '#contact', label: 'Contact' },
 ];
 
 export const tabs = [
   { href: '#top', label: 'Top' },
   { href: '#about', label: 'About' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#staff', label: 'Team' },
+  { href: '#projects', label: 'Products' },
   { href: '#contact', label: 'Contact' },
 ];

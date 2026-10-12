@@ -2,22 +2,60 @@
 import Layout from '@/layouts/Layout.astro';
 import Shell from '@/components/Shell.tsx';
 import PwGen from '@/components/PwGen.tsx';
+
+const url = 'https://avocloud.net/pwgen/';
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'PWGEN — Avocloud Password Generator',
+  url,
+  applicationCategory: 'SecurityApplication',
+  operatingSystem: 'Any (browser)',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  description:
+    'Free browser-based password generator. Passwords are generated locally with the Web Crypto API and never leave the device.',
+  publisher: { '@id': 'https://avocloud.net/#org' },
+};
 ---
+
 <Layout
-  title="Password Generator – Avocloud.net"
-  description="Generate strong and secure passwords with Avocloud.net's free password generator – fast, customizable, and easy to use."
-  canonical="https://avocloud.net/pwgen/"
+  title="PWGEN — Free Password Generator | Avocloud.net"
+  description="Generate strong passwords in your browser. Uses the Web Crypto API, runs entirely on your device, sends nothing to a server. Free to use."
+  canonical={url}
   schema={false}
+  jsonld={jsonld}
 >
   <Shell client:load>
-    <main class="section" id="pwgen">
+    <section class="section" id="pwgen">
       <div class="wrap" style="max-width: 640px;">
-        <h2 class="headline">Generate your secure password</h2>
-        <p style="color: var(--muted); margin-top: -1.5rem; margin-bottom: 2.5rem;">
-          Strong, customizable passwords in seconds &ndash; fast, easy &amp; safe.
+        <div class="section-label">PWGEN</div>
+        <!-- Was a level-2 heading, with no level-1 heading anywhere on the page. -->
+        <h1 class="headline" style="margin-bottom: 0.9rem;">Generate a secure password</h1>
+        <p class="prose" style="margin-bottom: 2.5rem;">
+          Pick a length and a character set. Nothing is sent anywhere — the password is generated
+          in your browser and never leaves this device.
         </p>
+
         <PwGen client:load />
+
+        <div class="note" style="margin-top: 2.5rem;">
+          <p>
+            <strong>How the randomness works.</strong> Characters are drawn from
+            <code>crypto.getRandomValues()</code>, the browser's cryptographic random source, using
+            rejection sampling so every character in the set is equally likely. No
+            <code>Math.random()</code>, no server round-trip, no logging.
+          </p>
+        </div>
+
+        <div class="ca-siblings">
+          <div class="section-label">MORE TOOLS</div>
+          <div class="chips">
+            <a class="chip link" href="/qrgate/">QrGate — ticketing</a>
+            <a class="chip link" href="/baxi/">Baxi — Discord bot</a>
+            <a class="chip link" href="/#projects">All projects</a>
+          </div>
+        </div>
       </div>
-    </main>
+    </section>
   </Shell>
 </Layout>

@@ -1,5 +1,8 @@
 import { useRef, type RefObject } from 'react';
 import { gsap, useGSAP, EASE } from '@/lib/motion';
+import { useRecede } from './curtain';
+import { SideDither } from './SideDither';
+import type { ProjectTone } from '@/data/content';
 
 /* ---------------------------------------------------------------------------
    useStage — continuous, scroll-scrubbed choreography for a full-height
@@ -103,15 +106,29 @@ export function useStage(ref: RefObject<HTMLElement | null>, opts: StageOpts = {
   );
 }
 
+const NO_REF = { current: null };
+
 /* Convenience wrapper for the common case: a full-height section whose
    `.wrap` gets the choreography. */
 export function Stage({
-  id, className = '', children, noExit,
-}: { id?: string; className?: string; children: React.ReactNode; noExit?: boolean }) {
+  id, className = '', children, noExit, recede, dither,
+}: {
+  id?: string;
+  className?: string;
+  children: React.ReactNode;
+  noExit?: boolean;
+  /** step back while the next (opaque) section slides over — see curtain.ts.
+      Replaces the exit phase, so it implies noExit. */
+  recede?: boolean;
+  /** a dither strip along one edge of the section */
+  dither?: { side: 'left' | 'right'; tone: ProjectTone; variant?: 'orb' | 'plate' | 'arc'; top?: number };
+}) {
   const ref = useRef<HTMLElement>(null);
-  useStage(ref, { noExit });
+  useStage(ref, { noExit: noExit || recede });
+  useRecede(recede ? ref : NO_REF);
   return (
-    <section className={`section stage ${className}`} id={id} ref={ref}>
+    <section className={`section stage ${recede ? 'recede ' : ''}${className}`} id={id} ref={ref}>
+      {dither && <SideDither {...dither} />}
       <div className="wrap">{children}</div>
     </section>
   );

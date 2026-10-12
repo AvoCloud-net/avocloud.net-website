@@ -1,24 +1,22 @@
-import { useRef, useState, Suspense, lazy } from "react";
+import { useRef, useState } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import {
   gsap,
   ScrollTrigger,
-  Draggable,
+  SplitText,
   useGSAP,
   EASE,
   DUR,
   STAG,
-  START,
   PRIORITY,
 } from "@/lib/motion";
 import {
   navLinks,
   tabs,
   projects,
-  team,
-  type Chip,
-  type Project,
+  COPYRIGHT_YEAR,
 } from "@/data/content";
+import { company } from "@/data/company";
 import { useLang } from "@/hooks/useLang";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
@@ -27,86 +25,98 @@ import { Btn } from "./Btn";
 import { Magnetic, CountUp } from "./motion";
 import { Wordmark } from "./Wordmark";
 import { HeroShell } from "./HeroShell";
-import { Stage, useStage } from "./stage";
-import { Intro } from "./Intro";
+import { Stage } from "./stage";
 import { Ticker } from "./Ticker";
-
-const Dithering = lazy(() =>
-  import("@paper-design/shaders-react").then((mod) => ({
-    default: mod.Dithering,
-  })),
-);
+import { Chips } from "./Chips";
+import { ProjectStack } from "./ProjectStack";
+import { useRecede } from "./curtain";
+import { registerSnap } from "@/lib/snap";
+import { Finale } from "./Finale";
 
 import {
   ProjectIcon,
   IconChat,
   IconLayers,
+  IconShield,
+  IconHeart,
   IconMail,
   IconFile,
-  GithubIcon,
   DiscordIcon,
   MailStroke,
   BrandMark,
 } from "./icons";
 
-const SECTION_IDS = ["top", "about", "projects", "staff", "contact"];
+const SECTION_IDS = ["top", "about", "projects", "contact"];
 
-/* Ticker copy. Terse declaratives in the brand voice (§7) — what we make and
+/* Screen-high segments the scroll snap rests on (lib/snap.ts). The project
+   stack and the finale register their own, finer zones — one per card and
+   per sentence — so they are not listed here. */
+const SNAP_SEGMENTS = [".seg-hero", "#about", "#mission", ".seg-collab", "#support", "#contact", ".site-footer"];
+
+/* Each segment rests at its top; one taller than the screen (a phone, a long
+   card grid) is a range from its top to its bottom edge, read freely.
+   Passive ScrollTriggers rather than offsetTop: their start/end are already
+   corrected for the pin spacers above, and recomputed on every refresh.
+   Created after every section (this hook lives in the root, whose effects run
+   last) and refreshed after the pins for the same reason. */
+function useSegmentSnap() {
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const sts = SNAP_SEGMENTS.flatMap((sel) => {
+        const el = document.querySelector(sel);
+        return el
+          ? [ScrollTrigger.create({ trigger: el, start: "top top", end: "bottom bottom", refreshPriority: PRIORITY.nav })]
+          : [];
+      });
+      const unsnap = registerSnap(() =>
+        sts.map((st) => [st.start, Math.max(st.start, st.end)] as [number, number]),
+      );
+      return () => {
+        unsnap();
+        sts.forEach((st) => st.kill());
+      };
+    });
+    return () => mm.revert();
+  });
+}
+
+/* Ticker copy. Terse declaratives in the brand voice — what we make and
    who we are, not a slogan. Untranslated on purpose: these are product and
    category nouns that read the same in both languages. */
 const TICKER = [
-  "OPEN SOURCE",
+  "SOFTWARE FROM AUSTRIA",
   "DISCORD BOTS",
-  "MINECRAFT PLUGINS",
-  "WEB TOOLS",
-  "MIT LICENSED",
+  "EVENT TICKETING",
+  "GRADE MANAGEMENT",
+  "WEB DEVELOPMENT",
   "SINCE 2024",
-  "AUSTRIA & GERMANY",
   "TOOLS THAT JUST RUN",
 ];
-
-/* Small helper: render a chip list (static + link chips). */
-function Chips({ items }: { items: Chip[] }) {
-  return (
-    <div className="chips">
-      {items.map((c, i) =>
-        c.href ? (
-          <a
-            key={i}
-            href={c.href}
-            // own pages keep the referrer; only outbound links drop it
-            rel={c.href.startsWith('/') ? undefined : 'noreferrer'}
-            className="chip link"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {c.label}
-          </a>
-        ) : (
-          <span key={i} className="chip">
-            {c.label}
-          </span>
-        ),
-      )}
-    </div>
-  );
-}
 
 /* ---- NAV ---------------------------------------------------------------- */
 // `base` prefixes the in-page section links ('#about' etc.) — homepage uses
 // '' (plain anchors), subpages pass '/' so the nav routes back to the
 // homepage's sections ('/#about') instead of scrolling nowhere on the spot.
+//
+// `i18n` gates the DE/EN switch. Only the homepage's copy lives in
+// content.ts with both languages; every subpage is written in English in its
+// own markup. Showing the switch there gave a control that changed the label
+// on itself and nothing else — worse than not offering the choice.
 export function Nav({
   active,
   t,
   lang,
   toggle,
   base = "",
+  i18n = false,
 }: {
   active: string;
   t: (k: string) => string;
   lang: string;
   toggle: () => void;
   base?: string;
+  i18n?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -210,36 +220,26 @@ export function Nav({
             {l.label}
           </a>
         ))}
-        {/* mobile-only: the GitHub pill lives in nav-actions on desktop, but at
-            <=900px nav-actions no longer gets pushed right (nav-links' auto
-            margin vanishes with it), so it crowded the logo and its hit-area
-            overlapped the hamburger. Give it a proper spot in the dropdown. */}
-        <a
-          href="https://github.com/AvoCloud-net"
-          rel="noreferrer"
-          className="nav-links-github"
-          onClick={() => setOpen(false)}
-        >
-          GitHub ↗
-        </a>
       </div>
 
       <div className="nav-actions">
-        <Magnetic
-          className="nav-btn"
-          onClick={toggle}
-          strength={0.25}
-          title={lang === "en" ? "Auf Deutsch wechseln" : "Switch to English"}
-        >
-          {lang === "en" ? "DE" : "EN"}
-        </Magnetic>
-        <Magnetic
+        {i18n && (
+          <Magnetic
+            className="nav-btn"
+            onClick={toggle}
+            strength={0.25}
+            aria-label={lang === "en" ? "Auf Deutsch wechseln" : "Switch to English"}
+            title={lang === "en" ? "Auf Deutsch wechseln" : "Switch to English"}
+          >
+            {lang === "en" ? "DE" : "EN"}
+          </Magnetic>
+        )}
+<Magnetic
           className="nav-btn pill"
-          href="https://github.com/AvoCloud-net"
-          rel="noreferrer"
+          href={`${base}#contact`}
           strength={0.25}
         >
-          GitHub ↗
+          {lang === "en" ? "Contact" : "Kontakt"}
         </Magnetic>
       </div>
 
@@ -307,19 +307,44 @@ function ScrollTabs({ active }: { active: string }) {
       start: "top center",
       end: "bottom center",
       toggleClass: { targets: nav, className: "on-light" },
+      // These are created before the section pins further down the page
+      // (this component mounts first), so they have to be re-measured after
+      // the pins have inserted their scroll distance, not before.
+      refreshPriority: PRIORITY.nav,
     });
-    return () => st.kill();
+    // Out of the way over the two fullscreen set pieces, where the rail would
+    // sit on top of the big type.
+    const away = ["#projects", "#finale"].map((trigger) =>
+      ScrollTrigger.create({
+        trigger,
+        start: "top 60%",
+        end: "bottom 40%",
+        toggleClass: { targets: nav, className: "is-away" },
+        refreshPriority: PRIORITY.nav,
+      }),
+    );
+    return () => {
+      st.kill();
+      away.forEach((a) => a.kill());
+    };
   });
 
   return (
     <nav className="scroll-tabs" aria-hidden="true" ref={ref}>
-      {tabs.map((tab) => (
+      {tabs.map((tab, i) => (
         <a
           key={tab.href}
           href={tab.href}
+          /* aria-hidden AND focusable was the worst of both: assistive tech
+             never sees these links, but a keyboard still lands on them, so
+             tabbing walked through five stops that announce nothing. They
+             duplicate the main nav exactly, so they stay hidden and leave the
+             tab order rather than being read out twice. */
+          tabIndex={-1}
           className={`#${active}` === tab.href ? "active" : undefined}
         >
           <span className="tick" />
+          <span className="idx">{String(i + 1).padStart(2, "0")}</span>
           <span className="lbl">{tab.label}</span>
         </a>
       ))}
@@ -329,6 +354,7 @@ function ScrollTabs({ active }: { active: string }) {
 
 /* ---- HERO --------------------------------------------------------------- */
 function Hero({ t }: { t: (k: string) => string }) {
+  const products = projects.length;
   return (
     <HeroShell
       id="top"
@@ -337,37 +363,26 @@ function Hero({ t }: { t: (k: string) => string }) {
       stats={
         <>
           <div className="stat">
-            <CountUp className="n" value={8} suffix="+" />
-            <span className="l">{t("stat.projects")}</span>
+            <CountUp className="n" value={products} />
+            <span className="l">{t("stat.products")}</span>
           </div>
           <div className="stat">
-            <CountUp className="n" value={team.length} />
-            <span className="l">{t("stat.members")}</span>
+            <span className="n">{company.countryCode}</span>
+            <span className="l">{t("stat.based")}</span>
           </div>
           <div className="stat">
-            <CountUp className="n" value={2024} />
+            <CountUp className="n" value={company.founded} />
             <span className="l">{t("stat.founded")}</span>
           </div>
         </>
       }
       links={
         <>
-          <Btn
-            href="https://github.com/AvoCloud-net"
-            rel="noreferrer"
-            icon={<GithubIcon />}
-            primary
-          >
-            GitHub
+          <Btn href="#projects" primary>
+            {t("projects.heading")}
           </Btn>
-          <Btn
-            href="/discord/"
-            icon={<DiscordIcon />}
-          >
-            Discord
-          </Btn>
-          <Btn href="/mail/" icon={<MailStroke />}>
-            Support
+          <Btn href="#contact" icon={<MailStroke />}>
+            {t("contact.heading")}
           </Btn>
         </>
       }
@@ -378,7 +393,7 @@ function Hero({ t }: { t: (k: string) => string }) {
 /* ---- ABOUT -------------------------------------------------------------- */
 function About({ t }: { t: (k: string) => string }) {
   return (
-    <Stage id="about">
+    <Stage id="about" recede dither={{ side: "right", variant: "orb", top: 38, tone: { shape: "sphere", color: "#c0654a" } }}>
       <Kicker>{t("about.label")}</Kicker>
       {/* data-depth separates the two columns slightly as the section travels,
           so it reads with thickness instead of one flat plane sliding past */}
@@ -395,23 +410,46 @@ function About({ t }: { t: (k: string) => string }) {
         {/* data-depth has to sit on a plain element — Reveal only forwards the
             props it knows about, so putting it on the component silently
             dropped it and the column never separated. */}
+        {/* Two cards rather than two bare icon+heading+paragraph stacks. That
+            pattern was the one place on the page with no blueprint vocabulary
+            on it at all — no frame, no registration marks — so it read as
+            generic filler next to every other section. */}
         <div data-depth="0.4">
-          <Reveal delay={0.14}>
-            <h3 className="sub-h">
-              <IconLayers />
-              <span>{t("about.opensource.heading")}</span>
-            </h3>
-            <p style={{ color: "var(--muted)" }}>
-              {t("about.opensource.body")}
-            </p>
-            <h3 className="sub-h">
-              <IconChat />
-              <span>{t("about.community.heading")}</span>
-            </h3>
-            <p style={{ color: "var(--muted)" }}>{t("about.community.body")}</p>
+          <Reveal variant="stagger" delay={0.14}>
+            <article className="card">
+              <span className="mk tl" />
+              <span className="mk br" />
+              <h3>
+                <IconLayers />
+                {t("about.build.heading")}
+              </h3>
+              <p>{t("about.build.body")}</p>
+            </article>
+            <article className="card mt">
+              <span className="mk tl" />
+              <span className="mk br" />
+              <h3>
+                <IconShield />
+                {t("about.privacy.heading")}
+              </h3>
+              <p>{t("about.privacy.body")}</p>
+            </article>
           </Reveal>
         </div>
       </div>
+      <Reveal as="dl" className="about-facts" variant="stagger" delay={0.2}>
+        {[
+          [t("about.fact.seat"), `${company.city}, ${company.countryCode}`],
+          [t("about.fact.since"), String(company.founded)],
+          [t("about.fact.products"), String(projects.length).padStart(2, "0")],
+          [t("about.fact.tracking"), t("about.fact.none")],
+        ].map(([k, v]) => (
+          <div key={k}>
+            <dt>{k}</dt>
+            <dd>{v}</dd>
+          </div>
+        ))}
+      </Reveal>
     </Stage>
   );
 }
@@ -488,12 +526,84 @@ function Mission({ t }: { t: (k: string) => string }) {
           { opacity: 0, duration: DUR.enter, ease: EASE.out },
           "-=0.5",
         );
+
+      // The band arrives as an inset window and opens to full bleed. Done by
+      // "top center", which is where ScrollTabs flips to dark labels — the
+      // band is edge to edge by the time the tabs sit over it.
+      gsap.fromTo(
+        ref.current,
+        { clipPath: "inset(0% 6% 0% 6% round 8px)" },
+        {
+          clipPath: "inset(0% 0% 0% 0% round 0px)",
+          ease: EASE.none,
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top bottom",
+            end: "top center",
+            scrub: true,
+          },
+        },
+      );
     },
     { scope: ref, dependencies: [reduce] },
   );
 
+  // steps back while the project stack slides over it
+  useRecede(ref);
+
+  /* The statement is read, not revealed: it sits dimmed and lights up word by
+     word as the band scrolls through, so the eye is pulled along the sentence
+     at scroll speed. Words inside the `.mark` highlight light up as one unit —
+     its black plate can't dim with the words, so the plate itself carries the
+     opacity. Separate from the hook above because it re-runs per language. */
+  const bigRef = useRef<HTMLParagraphElement>(null);
+  const big = t("mission.big");
+  useGSAP(
+    () => {
+      const el = bigRef.current;
+      if (!el || reduce) return;
+      const split = SplitText.create(el, {
+        type: "words",
+        wordsClass: "lit-word",
+        autoSplit: true,
+        aria: "auto",
+        onSplit: (self) => {
+          const units = [
+            ...new Set(
+              (self.words as HTMLElement[]).map(
+                (w) => w.closest<HTMLElement>(".mark") ?? w,
+              ),
+            ),
+          ];
+          // Played, not scrubbed. The page snaps, so the band is read from a
+          // fixed rest position — a scrubbed reveal that only completes once
+          // the text has travelled up the screen never finished there. It
+          // starts as the band comes in and runs at its own pace; scrolling
+          // back out above the trigger rewinds it.
+          return gsap.fromTo(
+            units,
+            { opacity: 0.15 },
+            {
+              opacity: 1,
+              ease: EASE.out,
+              duration: 0.5,
+              stagger: 0.09,
+              scrollTrigger: {
+                trigger: el,
+                start: "top 85%",
+                toggleActions: "play none none reverse",
+              },
+            },
+          );
+        },
+      });
+      return () => split.revert();
+    },
+    { scope: bigRef, dependencies: [reduce, big] },
+  );
+
   return (
-    <section className="mission" id="mission" ref={ref}>
+    <section className="mission recede" id="mission" ref={ref}>
       <svg
         className="giant-mark"
         viewBox="0 0 72 72"
@@ -531,432 +641,21 @@ function Mission({ t }: { t: (k: string) => string }) {
       <span className="foil" />
       <div className="wrap">
         <Kicker>{t("mission.label")}</Kicker>
-        <Reveal
-          as="p"
+        {/* keyed by the string: a language switch mounts a fresh <p> instead
+            of React writing new HTML into one SplitText has already cut up */}
+        <p
+          key={big}
+          ref={bigRef}
           className="big"
-          variant="text"
-          delay={0.08}
-          dangerouslySetInnerHTML={{ __html: t("mission.big") }}
+          dangerouslySetInnerHTML={{ __html: big }}
         />
-      </div>
-    </section>
-  );
-}
-
-/* ---- PROJECTS — pinned horizontal-scroll showcase (GSAP ScrollTrigger) --- */
-function Projects({ t }: { t: (k: string) => string }) {
-  const reduce = useReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const barRef = useRef<HTMLSpanElement>(null);
-  // Which card owns the shader. Held here, not per-card: each panel used to
-  // mount its own Dithering on first hover and keep it forever, so hovering
-  // the whole track left ~10 live WebGL contexts (plus the hero's) against a
-  // browser limit around 16. One at a time is all a hover effect ever needs.
-  const [hovered, setHovered] = useState<string | null>(null);
-
-  useGSAP(
-    () => {
-      if (reduce) return;
-      const mm = gsap.matchMedia();
-      // Desktop only: pin the section, pan the track horizontally as we scroll.
-      mm.add("(min-width: 901px)", () => {
-        const track = trackRef.current!;
-        const distance = () =>
-          Math.max(0, track.scrollWidth - window.innerWidth);
-
-        const panels = gsap.utils.toArray<HTMLElement>(".proj-panel", track);
-
-        /* Settle at both ends of the pin.
-
-           Handing off from vertical to horizontal is a direction change, and
-           doing it in the same frame the pin engages is what made it feel like
-           a jolt: forward motion stopped dead and sideways motion started at
-           full rate simultaneously, with a pin-spacer being inserted in
-           between. Holding the track still for a beat at each end separates
-           those events — the pin engages while nothing is moving sideways yet,
-           and releases after the sideways motion has already stopped.
-
-           Fractions of the pan distance, so the settle scales with the track
-           instead of being a magic pixel count. ~7% in, ~5% out is roughly a
-           quarter-screen each: enough for the eye to register a pause, small
-           enough not to feel like the page has stalled. */
-        const LEAD = 0.07;
-        const TAIL = 0.05;
-
-        const pan = gsap.timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: () => "+=" + distance() * (1 + LEAD + TAIL),
-            pin: true,
-            // Lenis already smooths the raw scroll input, so an extra scrub
-            // lag on top of it (was 1) made the pan visibly trail behind /
-            // snap at the pin's start & end. scrub:true ties the pan 1:1 to
-            // Lenis' already-smoothed position instead of double-smoothing.
-            scrub: true,
-            // Kills the little jump/kick when the pin engages by nudging the
-            // pin-spacer into place a touch early instead of on the exact frame.
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              if (barRef.current)
-                gsap.set(barRef.current, { scaleX: self.progress });
-            },
-          },
-        });
-
-        // ease:"none" throughout — the card triggers below read their position
-        // off this timeline via containerAnimation, and any easing here breaks
-        // the 1:1 mapping between scroll position and horizontal position.
-        pan
-          .to(track, { x: 0, duration: LEAD, ease: "none" })
-          .to(track, { x: () => -distance(), duration: 1, ease: "none" })
-          .to(track, { x: () => -distance(), duration: TAIL, ease: "none" });
-
-        /* Drag the track directly, with a throw.
-
-           The showcase is pinned horizontal scroll, which only responds to
-           vertical wheel/trackpad input. That leaves the most obvious gesture
-           — grab a card and pull — doing nothing, and on a trackpad a
-           horizontal swipe over a horizontal-looking row is a very reasonable
-           thing to try.
-
-           Draggable doesn't move the track itself (the pan tween owns that
-           transform and would fight it). It converts drag distance into scroll
-           position, so drag and wheel drive the exact same thing and the
-           progress bar, card focus and pin all stay consistent. InertiaPlugin
-           gives the release a throw instead of a dead stop. */
-        const proxy = document.createElement('div');
-        const st = pan.scrollTrigger!;
-        let startScroll = 0;
-
-        const drag = Draggable.create(proxy, {
-          type: 'x',
-          trigger: track,
-          inertia: true,
-          allowNativeTouchScrolling: false,
-          cursor: 'grab',
-          activeCursor: 'grabbing',
-          onPressInit() {
-            startScroll = st.scroll();
-            gsap.set(proxy, { x: 0 });
-          },
-          onDrag() {
-            st.scroll(startScroll - this.x);
-          },
-          onThrowUpdate() {
-            st.scroll(startScroll - this.x);
-          },
-        })[0];
-
-        // Depth of field, not a transition. Each card is continuously scrubbed
-        // across its whole pass through the viewport: it comes forward as it
-        // approaches centre, sits fully resolved while it IS the card you're
-        // reading, then recedes again. So the track always has exactly one card
-        // in focus, and scrolling always moves every card on screen.
-        //
-        // This replaces a one-shot fade-in plus a velocity skew. The skew was
-        // the wrong idiom — leaning type is a fashion effect, and this system
-        // is a drafting table: things come into focus, they don't tilt.
-        //
-        // Opacity + scale only, deliberately NO filter: blur(). Blur is the
-        // most expensive property to animate, and running it scrubbed on ten
-        // cards at once cost frames exactly where the pin engages — which is a
-        // large part of why the vertical→horizontal handoff felt choppy. Scale
-        // and opacity composite on the GPU and read as depth on their own.
-        panels.forEach((panel) => {
-          const thru = {
-            trigger: panel,
-            containerAnimation: pan,
-            scrub: true,
-          } as const;
-
-          // approach → focus
-          gsap.fromTo(
-            panel,
-            { opacity: 0.25, scale: 0.9 },
-            {
-              opacity: 1,
-              scale: 1,
-              ease: EASE.out,
-              scrollTrigger: {
-                ...thru,
-                start: "left right",
-                end: "center center",
-              },
-            },
-          );
-          // focus → recede
-          gsap.fromTo(
-            panel,
-            { opacity: 1, scale: 1 },
-            {
-              opacity: 0.25,
-              scale: 0.9,
-              ease: EASE.inOut,
-              scrollTrigger: {
-                ...thru,
-                start: "center center",
-                end: "right left",
-              },
-            },
-          );
-
-          // Contents assemble once, on their own clock — a card that builds
-          // itself reads as a card; a card whose contents scrub reads as a glitch.
-          gsap
-            .timeline({
-              scrollTrigger: {
-                trigger: panel,
-                containerAnimation: pan,
-                start: "left 80%",
-                once: true,
-              },
-            })
-            .from(panel.querySelector(".pp-num"), {
-              opacity: 0,
-              x: -10,
-              duration: DUR.ui,
-              ease: EASE.out,
-            })
-            .from(
-              panel.querySelectorAll(".pp-icon svg *"),
-              {
-                drawSVG: "0%",
-                duration: DUR.enter,
-                ease: EASE.out,
-                stagger: STAG.card,
-              },
-              0,
-            )
-            .from(
-              panel.querySelectorAll(".chip"),
-              {
-                opacity: 0,
-                y: 10,
-                duration: DUR.ui,
-                ease: EASE.spring,
-                stagger: STAG.card,
-              },
-              "-=0.35",
-            );
-        });
-
-        return () => drag.kill();
-      });
-    },
-    { scope: sectionRef, dependencies: [reduce] },
-  );
-
-  return (
-    <section
-      className={`proj-h${reduce ? " no-pin" : ""}`}
-      id="projects"
-      ref={sectionRef}
-    >
-      <div className="proj-track" ref={trackRef}>
-        <div className="proj-intro">
-          <Kicker>{t("projects.label")}</Kicker>
-          <Reveal as="h2" className="proj-intro-title" variant="text">
-            {t("projects.heading")}
-          </Reveal>
-          <div className="proj-scroll-cue" aria-hidden="true">
-            <span>SCROLL</span>
-            {/* direction flips via CSS (arrow.css ::before) — desktop pins
-                  horizontal (→), mobile falls back to plain vertical (↓);
-                  reduced-motion also gets the vertical fallback either way */}
-            <span className="arrow" />
-          </div>
-        </div>
-
-        {projects.map((p) => (
-          <ProjectPanel
-            key={p.num}
-            p={p}
-            t={t}
-            active={hovered === p.num}
-            onHover={setHovered}
-          />
-        ))}
-      </div>
-
-      {!reduce && (
-        <div className="proj-progress" aria-hidden="true">
-          <span className="proj-progress-bar" ref={barRef} />
-        </div>
-      )}
-    </section>
-  );
-}
-
-/* Single project card. The shader lives on whichever card is hovered right
-   now (see Projects' `hovered` state) — one WebGL context for the whole
-   track instead of one per card accumulating as you scroll past them. */
-function ProjectPanel({
-  p,
-  t,
-  active,
-  onHover,
-}: {
-  p: Project;
-  t: (k: string) => string;
-  active: boolean;
-  onHover: (num: string | null) => void;
-}) {
-  // primary link the whole card opens: About > Website > first link chip
-  const primary =
-    p.chips.find((c) => c.href && /^About/i.test(c.label)) ||
-    p.chips.find((c) => c.href && /^Website/i.test(c.label)) ||
-    p.chips.find((c) => c.href);
-  const rest = primary ? p.chips.filter((c) => c !== primary) : p.chips;
-  // Same tab. This used to be window.open(..., "_blank"), which is how the
-  // whole project showcase — the main route from the homepage into a subpage —
-  // was spawning tabs instead of navigating, so no page transition could ever
-  // run on the click people actually make.
-  const open = primary?.href ? () => { window.location.href = primary.href!; } : undefined;
-
-  return (
-    <article
-      className={`proj-panel${open ? " clickable" : ""}`}
-      onClick={open}
-      role={open ? "link" : undefined}
-      tabIndex={open ? 0 : undefined}
-      aria-label={open ? `${p.name} — open` : undefined}
-      onMouseEnter={() => onHover(p.num)}
-      onMouseLeave={() => onHover(null)}
-      onKeyDown={
-        open
-          ? (e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                open();
-              }
-            }
-          : undefined
-      }
-    >
-      <span className="mk tl" />
-      <span className="mk br" />
-      {active && (
-        <Suspense fallback={null}>
-          <div className="pp-shader pp-shader-on" aria-hidden="true">
-            <Dithering
-              colorBack="#00000000"
-              colorFront="#5c3226"
-              shape="warp"
-              type="4x4"
-              speed={0.45}
-              className="size-full"
-              minPixelRatio={1}
-            />
-          </div>
-        </Suspense>
-      )}
-      <header className="pp-top">
-        <span className="pp-num">{p.num}</span>
-        <span className="pp-icon">
-          <ProjectIcon icon={p.icon} />
-        </span>
-      </header>
-      <div className="pp-body">
-        <h3 className="pp-name">{p.name}</h3>
-        {p.descHtml ? (
-          <p
-            className="pp-desc"
-            dangerouslySetInnerHTML={{ __html: t(p.descKey) }}
-          />
-        ) : (
-          <p className="pp-desc">{t(p.descKey)}</p>
-        )}
-      </div>
-      <Chips items={rest} />
-    </article>
-  );
-}
-
-/* ---- TEAM --------------------------------------------------------------- */
-function Team({ t }: { t: (k: string) => string }) {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLElement>(null);
-
-  // Banners drift inside their own frame as the grid passes — the cards read
-  // as windows rather than flat tiles. `objectPosition` is already used by
-  // some members to frame their banner, so this scales the image and moves it
-  // with yPercent instead, which composites and leaves that framing intact.
-  useGSAP(
-    () => {
-      if (reduce) return;
-      gsap.utils
-        .toArray<HTMLElement>(".staff .banner", ref.current!)
-        .forEach((b) => {
-          gsap.fromTo(
-            b,
-            { yPercent: -8, scale: 1.16 },
-            {
-              yPercent: 8,
-              scale: 1.16,
-              ease: EASE.none,
-              scrollTrigger: {
-                trigger: b.closest(".staff")!,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            },
-          );
-        });
-    },
-    { scope: ref, dependencies: [reduce] },
-  );
-
-  useStage(ref);
-
-  return (
-    <section className="section stage" id="staff" ref={ref}>
-      <div className="wrap">
-        <div data-depth="1.5">
-          <Kicker>{t("team.label")}</Kicker>
-          <Reveal as="h2" className="headline" variant="text">
-            {t("team.heading")}
-          </Reveal>
-        </div>
-        {/* One trigger with an internal stagger, not one per card — the grid
-            used to build a ScrollTrigger for every member plus a hand-computed
-            index delay. BRANDING.md §5b calls for the group form. */}
-        <Reveal className="team-grid" variant="stagger" y={22}>
-          {team.map((s) => (
-            <article
-              className={`card staff${s.wide ? " span-2" : ""}`}
-              key={s.name}
-            >
-              <span className="mk tl" />
-              <span className="mk br" />
-              {s.banner ? (
-                <img
-                  src={s.banner}
-                  className="banner"
-                  alt={`Banner ${s.name}`}
-                  loading="lazy"
-                  style={
-                    s.bannerPos ? { objectPosition: s.bannerPos } : undefined
-                  }
-                />
-              ) : (
-                <div className="banner" style={{ background: s.bannerColor }} />
-              )}
-              <img
-                src={s.avatar}
-                className="avatar"
-                alt={s.name}
-                loading="lazy"
-              />
-              <div className="body">
-                <h3>{s.name}</h3>
-                <p>{t(s.descKey)}</p>
-                <Chips items={s.chips} />
-              </div>
-            </article>
+        <Reveal as="ul" className="mission-points" variant="stagger" delay={0.1}>
+          {[1, 2, 3].map((n) => (
+            <li key={n}>
+              <span className="mp-n">{String(n).padStart(2, "0")}</span>
+              <b>{t(`mission.p${n}.h`)}</b>
+              <span>{t(`mission.p${n}.b`)}</span>
+            </li>
           ))}
         </Reveal>
       </div>
@@ -967,40 +666,28 @@ function Team({ t }: { t: (k: string) => string }) {
 /* ---- COLLABORATIONS ----------------------------------------------------- */
 function Collab({ t }: { t: (k: string) => string }) {
   return (
-    <Stage id="cooperation">
+    <Stage id="cooperation" dither={{ side: "left", variant: "arc", top: 55, tone: { shape: "wave", color: "#4aa3b8" } }}>
       <div data-depth="1.5">
         <Kicker>{t("collab.label")}</Kicker>
         <Reveal as="h2" className="headline" variant="text">
           {t("collab.heading")}
         </Reveal>
       </div>
-      <div style={{ maxWidth: 480 }}>
-        <Reveal as="article" className="card" y={22}>
+
+      <Reveal className="grid cols-2" variant="stagger">
+        <article className="card">
           <span className="mk tl" />
           <span className="mk br" />
           <h3 style={{ gap: "0.9rem" }}>
             <img
-              src="/assets/images/cee.png"
-              alt="Cee_1"
-              style={{
-                width: 52,
-                height: 52,
-                borderRadius: "50%",
-                objectFit: "cover",
-                outline: "1px solid rgba(var(--coral-rgb),0.4)",
-              }}
+              className="avatar sm"
+              src="/assets/images/cee.webp"
+              alt=""
+              width={52}
+              height={52}
             />
             Cee_1{" "}
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.7rem",
-                color: "var(--muted)",
-                fontWeight: 400,
-              }}
-            >
-              Twitch Streamer
-            </span>
+            <span className="role">Twitch Streamer</span>
           </h3>
           <p>{t("cee.desc")}</p>
           <Chips
@@ -1008,22 +695,31 @@ function Collab({ t }: { t: (k: string) => string }) {
               { label: "Twitch" },
               { label: "Community" },
               { label: "Family friendly" },
-              {
-                label: "Twitch ↗",
-                href: "/link/cee/twitch.html",
-              },
-              {
-                label: "YouTube ↗",
-                href: "/link/cee/yt.html",
-              },
-              {
-                label: "Discord ↗",
-                href: "/link/cee/discord.html",
-              },
+              { label: "Twitch \u2197", href: "/link/cee/twitch.html" },
+              { label: "YouTube \u2197", href: "/link/cee/yt.html" },
+              { label: "Discord \u2197", href: "/link/cee/discord.html" },
             ]}
           />
-        </Reveal>
-      </div>
+        </article>
+        <article className="card">
+          <span className="mk tl" />
+          <span className="mk br" />
+          <h3>
+            <ProjectIcon icon="ticket" />
+            Helenenbühne Sattledt{" "}
+            <span className="role">Parish theater group</span>
+          </h3>
+          <p>{t("helene.desc")}</p>
+          <Chips
+            items={[
+              { label: "Client project" },
+              { label: "Website" },
+              { label: "Ticketing" },
+              { label: "Website \u2197", href: "https://helenenbuehne.at" },
+            ]}
+          />
+        </article>
+      </Reveal>
     </Stage>
   );
 }
@@ -1031,24 +727,35 @@ function Collab({ t }: { t: (k: string) => string }) {
 /* ---- SUPPORT (Ko-fi) ---------------------------------------------------- */
 function Support({ t }: { t: (k: string) => string }) {
   return (
-    <Stage id="support">
+    <Stage id="support" recede dither={{ side: "right", variant: "arc", top: 40, tone: { shape: "ripple", color: "#b89a4a" } }}>
       <div data-depth="1.5">
         <Kicker>{t("support.label")}</Kicker>
         <Reveal as="h2" className="headline" variant="text">
           {t("support.heading")}
         </Reveal>
       </div>
-      <div style={{ maxWidth: 420 }}>
-        <Reveal delay={0.05}>
+
+      <Reveal className="grid cols-2" variant="stagger">
+        <article className="card kofi-card">
+          <span className="mk tl" />
+          <span className="mk br" />
+          <h3>
+            <IconHeart />
+            Ko-fi
+          </h3>
+          <p>{t("support.body")}</p>
+          {/* Ko-fi paints its own light UI and it is cross-origin, so it cannot
+              be themed. Framed as a deliberate inset inside the card. */}
           <iframe
             id="kofiframe"
+            className="kofi-embed"
             src="https://ko-fi.com/avocloudnet/?hidefeed=true&widget=true&embed=true&preview=true"
-            style={{ border: "none", width: "100%", padding: 4, background: "#f9f9f9", borderRadius: 12 }}
-            height={712}
-            title="avocloudnet"
+            height={640}
+            loading="lazy"
+            title="Support Avocloud.net on Ko-fi"
           />
-        </Reveal>
-      </div>
+        </article>
+      </Reveal>
     </Stage>
   );
 }
@@ -1056,15 +763,27 @@ function Support({ t }: { t: (k: string) => string }) {
 /* ---- CONTACT ------------------------------------------------------------ */
 function Contact({ t }: { t: (k: string) => string }) {
   return (
-    <Stage id="contact">
+    <Stage id="contact" dither={{ side: "left", variant: "orb", top: 60, tone: { shape: "swirl", color: "#6a70d0" } }}>
       <div data-depth="1.5">
         <Kicker>{t("contact.label")}</Kicker>
         <Reveal as="h2" className="headline" variant="text">
           {t("contact.heading")}
         </Reveal>
       </div>
-      {/* one trigger for the row, stagger inside — see Team above */}
+      {/* one trigger for the row, stagger inside */}
       <Reveal className="grid cols-3" variant="stagger">
+        <article className="card contact-card">
+          <span className="mk tl" />
+          <span className="mk br" />
+          <h3>
+            <IconMail />
+            E-Mail
+          </h3>
+          <p>{t("contact.mail.text")}</p>
+          <a href="/mail/" className="accent-link">
+            {company.supportEmail} ↗
+          </a>
+        </article>
         <article className="card contact-card">
           <span className="mk tl" />
           <span className="mk br" />
@@ -1073,23 +792,8 @@ function Contact({ t }: { t: (k: string) => string }) {
             Discord
           </h3>
           <p>{t("contact.discord.text")}</p>
-          <a
-            href="/discord/"
-            className="accent-link"
-          >
+          <a href="/discord/" className="accent-link">
             avocloud.net/discord ↗
-          </a>
-        </article>
-        <article className="card contact-card">
-          <span className="mk tl" />
-          <span className="mk br" />
-          <h3>
-            <IconMail />
-            Support
-          </h3>
-          <p>{t("contact.support.text")}</p>
-          <a href="/mail/" className="accent-link">
-            support@avocloud.net ↗
           </a>
         </article>
         <article className="card contact-card">
@@ -1100,7 +804,7 @@ function Contact({ t }: { t: (k: string) => string }) {
             Legal
           </h3>
           <p>{t("contact.legal.text")}</p>
-          <a href="/impressum" className="accent-link">
+          <a href="/impressum/" className="accent-link">
             Imprint ↗
           </a>
           <br />
@@ -1123,24 +827,16 @@ export function Footer({ t }: { t: (k: string) => string }) {
         trigger="scroll"
         timeScale={0.6}
       />
-      <div className="footer-meta">
-        <span>{t("footer.text")}</span>
-        <span className="sep">·</span>
-        <a
-          href="https://github.com/AvoCloud-net"
-          rel="noreferrer"
-        >
-          GitHub
-        </a>
-        <a
-          href="/discord/"
-        >
-          Discord
-        </a>
-        <a href="/impressum">Imprint</a>
+
+      {/* One plain line under the wordmark — no frame, no box. */}
+      <div className="footer-row">
+        <span className="footer-copy">
+          &copy; {COPYRIGHT_YEAR} {company.brand}. All rights reserved.
+        </span>
+        <a href="/mail/">Contact</a>
+        <a href="/discord/">Discord</a>
+        <a href="/impressum/">Imprint</a>
         <a href="/regulations/">Regulations</a>
-        <span className="sep">·</span>
-        <span>©2025 Avocloud.net</span>
       </div>
     </footer>
   );
@@ -1149,25 +845,36 @@ export function Footer({ t }: { t: (k: string) => string }) {
 /* ---- ROOT --------------------------------------------------------------- */
 export default function Site() {
   useSmoothScroll();
-  const { lang, t, toggle } = useLang();
+  const { lang, t, toggle } = useLang(true);
   const active = useActiveSection(SECTION_IDS);
+  useSegmentSnap();
 
   return (
     <>
-      <Intro />
-      <Nav active={active} t={t} lang={lang} toggle={toggle} />
+      <Nav active={active} t={t} lang={lang} toggle={toggle} i18n />
       <ReadProgress />
       <ScrollTabs active={active} />
-      <Hero t={t} />
-      <Ticker items={TICKER} />
-      <About t={t} />
-      <Mission t={t} />
-      <Projects t={t} />
-      <Ticker items={TICKER} />
-      <Team t={t} />
-      <Collab t={t} />
-      <Support t={t} />
-      <Contact t={t} />
+      {/* The one landmark the homepage was missing — subpages get theirs from
+          Shell. It is also the skip link's target (see Layout.astro). */}
+      <main id="main" className="snap-page" tabIndex={-1}>
+        {/* The tickers live inside a segment, not between two: every segment
+            fills the screen exactly, and a strip between them would leave the
+            snap a choice of hiding it or showing it with a 49px misfit. */}
+        <div className="seg seg-hero">
+          <Hero t={t} />
+          <Ticker items={TICKER} />
+        </div>
+        <About t={t} />
+        <Mission t={t} />
+        <ProjectStack t={t} lang={lang} />
+        <div className="seg seg-collab">
+          <Ticker items={TICKER} />
+          <Collab t={t} />
+        </div>
+        <Support t={t} />
+        <Finale t={t} />
+        <Contact t={t} />
+      </main>
       <Footer t={t} />
     </>
   );

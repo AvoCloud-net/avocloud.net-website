@@ -1,0 +1,173 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Shell from '@/components/Shell.tsx';
+import CaPage from '@/components/CaPage.astro';
+
+const url = 'https://avocloud.net/craftattack/aerlon/';
+
+/* One entry per screenshot. `id` drives the CSS-only lightbox (`:target`), so
+   the whole gallery works with JavaScript off — the legacy page needed an
+   openLightbox() script for the same thing. */
+const shots = [
+  { n: 1, alt: 'The overgrown ruins of Aerlon — Craft Attack Season 2', cap: 'The overgrown ruins of Aerlon' },
+  { n: 3, alt: 'The vast mountain ranges of Aerlon — Craft Attack Season 2', cap: 'The vast mountain ranges of Aerlon' },
+  { n: 4, alt: 'Ancient columns in an overgrown plaza of Aerlon — Craft Attack', cap: 'Ancient columns stand in an overgrown plaza' },
+  { n: 7, alt: 'A forgotten settlement of Aerlon behind weathered gates — Craft Attack', cap: 'A forgotten settlement behind a weathered wooden gate' },
+  { n: 5, alt: 'Ancient ruins deep underground in Aerlon — Craft Attack', cap: 'Ancient ruins deep underground' },
+  { n: 8, alt: 'Glowing underground structures in Aerlon — Craft Attack', cap: 'Ancient underground structures glowing in the dark' },
+  { n: 9, alt: 'Aerial view of Aerlon with floating towers — Craft Attack', cap: 'Aerial view of Aerlon with floating towers and red-leafed forests' },
+  { n: 10, alt: "Bird's-eye view of Aerlon island in misty ocean — Craft Attack", cap: 'Birds-eye view of the Aerlon island surrounded by misty ocean' },
+  { n: 11, alt: 'Floating islands above misty Aerlon ruins at sunrise — Craft Attack', cap: 'Floating islands above misty ruins of Aerlon at sunrise' },
+  { n: 12, alt: 'Floating islands over a misty river valley in Aerlon — Craft Attack', cap: 'Floating islands over a misty river valley in Aerlon' },
+  { n: 13, alt: 'Red-leafed trees reflected in a golden Aerlon lake — Craft Attack', cap: 'Red-leafed trees reflected in a golden misty lake at dawn' },
+  { n: 14, alt: 'Ancient pyramid in Aerlon desert at sunset — Craft Attack', cap: 'Ancient pyramid rising from the desert sands of Aerlon at sunset' },
+  { n: 15, alt: 'Nether portal in crimson wastes — Craft Attack Aerlon', cap: 'Nether portal glowing purple in the misty crimson wastes' },
+  { n: 16, alt: 'End city among purple auroras — Craft Attack Aerlon End', cap: 'End city floating among purple auroras and starlight' },
+  { n: 17, alt: 'Glowing End ruins around a singularity — Craft Attack Aerlon', cap: 'Glowing End ruins surrounding a singularity in deep space' },
+];
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://avocloud.net/' },
+        { '@type': 'ListItem', position: 2, name: 'Craft Attack', item: 'https://avocloud.net/craftattack/' },
+        { '@type': 'ListItem', position: 3, name: 'Aerlon', item: url },
+      ],
+    },
+    {
+      '@type': 'Article',
+      headline: 'Aerlon — The Custom World of Craft Attack Season 2',
+      description:
+        'Aerlon is the custom-generated fantasy world of Craft Attack Season 2 on the open Avocloud community server.',
+      image: shots.map((s) => `https://avocloud.net/assets/images/craftattack/ca-s2-${s.n}.webp`),
+      mainEntityOfPage: url,
+      author: { '@type': 'Organization', name: 'Avocloud.net', url: 'https://avocloud.net/' },
+      publisher: { '@id': 'https://avocloud.net/#org' },
+    },
+  ],
+};
+---
+
+<Layout
+  title="Aerlon — The Custom World of Craft Attack Season 2 | Avocloud.net"
+  description="Aerlon is the custom-generated fantasy world of Craft Attack Season 2 on the open Avocloud community server: overgrown ruins, floating islands, ancient plazas. 15 screenshots, live BlueMap."
+  canonical={url}
+  schema={false}
+  ogImage="https://avocloud.net/assets/images/craftattack/ca-s2-9.webp"
+  ogImageAlt="Aerial view of Aerlon with floating towers — Craft Attack Season 2"
+  jsonld={jsonld}
+>
+  <Shell client:load>
+    <CaPage current="/craftattack/aerlon/" title="Aerlon">
+      <div class="article">
+        <div class="section-label">CRAFT ATTACK SEASON 2</div>
+        <h1 class="headline">Aerlon — the custom world</h1>
+
+        <p class="lede">
+          <strong>Aerlon</strong> is the procedurally generated fantasy world that hosts
+          <strong>Craft Attack Season 2 — The Ashes of Aerlon</strong> on the open Avocloud Craft
+          Attack community server. Overgrown ruins, towering cliffs, ancient plazas, floating
+          islands, and forgotten settlements form a single connected map, fully pre-generated for
+          lag-free exploration from day one.
+        </p>
+
+        <div class="note">
+          <p>
+            „Aerlon was once a great kingdom, powerful, radiant, full of magic and life.<br />
+            Now new travelers come to the land."
+          </p>
+        </div>
+
+        <h2>A world reborn from ash</h2>
+        <p>
+          Aerlon was once a great kingdom — powerful, radiant, full of magic and life. What exactly
+          happened, nobody remembers. Only ash remained: overgrown ruins, silent forests, forgotten
+          paths. Now new travelers come to the land. Not as heroes or heirs, simply as the first to
+          return. Some seek treasure. Some seek a new beginning.
+          <strong>The land is open. What you make of it is up to you.</strong>
+        </p>
+
+        <h2>Custom world</h2>
+        <p>
+          Aerlon stretches across dense forests where stone arches of an older age still loom
+          between the trees, over vast arid plains backed by towering cliffs, through overgrown
+          plazas lined with ancient columns, past forgotten settlements behind weathered wooden
+          gates, and down into dark underground chambers where old structures still stand.
+        </p>
+
+        <h2>Our goal</h2>
+        <p>
+          Build a world together, as a community. Whether you're a streamer, a YouTuber, or just
+          someone who wants to have fun and explore: everyone is welcome. No gates, no elites. Just
+          people who want to create something together.
+        </p>
+
+        <h2>World gallery</h2>
+        <p>Click any image to enlarge. 15 screenshots from across Aerlon — Overworld, Nether, End.</p>
+
+        <div class="gallery">
+          {shots.map((s) => (
+            <a href={`#shot-${s.n}`} aria-label={`Enlarge: ${s.cap}`}>
+              <img src={`/assets/images/craftattack/ca-s2-${s.n}.webp`} alt={s.alt} loading="lazy" width="440" height="320" />
+            </a>
+          ))}
+        </div>
+
+        <h2>Biomes &amp; landmarks</h2>
+        <ul>
+          <li><strong>Overgrown Ruins</strong> — stone arches from an older era between dense trees</li>
+          <li><strong>Cliffs &amp; Plains</strong> — vast barren plains before towering cliff faces</li>
+          <li><strong>Ancient Plazas</strong> — overgrown squares with old columns and forgotten architecture</li>
+          <li><strong>Forgotten Settlements</strong> — abandoned villages behind weathered wooden gates</li>
+          <li><strong>Underground Chambers</strong> — dark subterranean structures still standing in deep caves</li>
+          <li><strong>Floating Islands</strong> — drifting landmasses with red-leafed forests above misty valleys</li>
+          <li><strong>Desert Pyramids</strong> — ancient pyramids in the sands at sunset</li>
+          <li><strong>Nether</strong> — crimson wastes (opens May 22, 2026)</li>
+          <li><strong>End</strong> — End cities and glowing ruins (opens June 5, 2026)</li>
+        </ul>
+
+        <h2>Live BlueMap web map</h2>
+        <p>
+          Explore the entire Aerlon world from your browser via the live <strong>BlueMap web map</strong>.
+          See the terrain, find points of interest, scout for your next base — without ever logging
+          in. Updates in real time as players shape the world.
+        </p>
+
+        <h2>Technical details</h2>
+        <ul>
+          <li>Procedurally generated with a custom world generator</li>
+          <li>Fully pre-generated → no chunk-loading lag during exploration</li>
+          <li>Java + Bedrock crossplay via Geyser and Floodgate</li>
+          <li>Single connected world, no resets during the season</li>
+          <li>CoreProtect logging for full block history</li>
+        </ul>
+
+        <h2>Join the server</h2>
+        <p>
+          Server address: <code>craftattack.avocloud.net</code> · Free, no application form. Link
+          Discord + Minecraft via the Baxi bot (<code>/mc link</code>) to be auto-whitelisted.
+        </p>
+        <p class="mt">
+          <a class="btn primary" href="/craftattack/join/">How to join</a>
+        </p>
+      </div>
+    </CaPage>
+  </Shell>
+
+  {/* Lightbox targets live OUTSIDE <Shell>. Shell's <main> is transformed by
+      useSlotMotion, and a transformed ancestor makes `position: fixed`
+      resolve against that element instead of the viewport — the overlay came
+      out clipped and offset. Out here the only ancestor is <body>. */}
+  {shots.map((s) => (
+    <figure class="lightbox" id={`shot-${s.n}`}>
+      <a class="lb-close" href="#ca-article" aria-label="Close">CLOSE ✕</a>
+      <div>
+        <img src={`/assets/images/craftattack/ca-s2-${s.n}.webp`} alt={s.alt} />
+        <figcaption>{s.cap}</figcaption>
+      </div>
+    </figure>
+  ))}
+</Layout>

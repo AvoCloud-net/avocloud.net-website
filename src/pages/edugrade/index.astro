@@ -1,0 +1,231 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import EduGradeApp from '@/components/EduGradeApp.tsx';
+
+const url = 'https://avocloud.net/edugrade/';
+
+/* Screenshots ship in a light and a dark variant. This site is dark-only, so
+   only the dark set is referenced — the light files stay for the app itself. */
+const features = [
+  {
+    label: 'Klassen & Schuljahre',
+    heading: 'Klassen anlegen in Sekunden.',
+    body: 'Klassen anlegen, Schüler einzeln oder per CSV importieren. Mehrere Schuljahre parallel verwalten.',
+    chips: ['Klassen', 'CSV-Import'],
+    shot: 'classes',
+    alt: 'EduGrade — Klassen und Schüler verwalten',
+  },
+  {
+    label: 'Noten mit Gewichtung',
+    heading: 'Noten, die sich selbst rechnen.',
+    body: 'Kategorien, Plus/Minus-System und individuelle Gewichtung. Der Durchschnitt wird automatisch berechnet.',
+    chips: ['Gewichtung', 'Plus/Minus'],
+    shot: 'grades',
+    alt: 'EduGrade — Noten mit Gewichtung erfassen',
+  },
+  {
+    label: 'Anwesenheits-Tracking',
+    heading: 'Anwesenheit immer im Blick.',
+    body: 'Abwesenheiten schnell erfassen. Automatische Warnung bei Unterschreitung der Mindestpräsenz.',
+    chips: ['Abwesenheiten', 'Warnungen'],
+    shot: 'attendance',
+    alt: 'EduGrade — Anwesenheit tracken mit Warnungen',
+  },
+  {
+    label: 'Sicher & verschlüsselt',
+    heading: 'Daten teilen, Ende zu Ende geschützt.',
+    body: 'Schüler erhalten ihre Noten per individuellem PIN über einen zeitbegrenzten Link. Alle Daten sind mit AES-256-GCM verschlüsselt — Zero-Knowledge, niemand außer Ihnen kann sie lesen.',
+    chips: ['6-stelliger PIN', 'Zeitbegrenzt', 'AES-256-GCM', 'Zero-Knowledge', 'DSGVO'],
+    shot: 'share',
+    alt: 'EduGrade — Noten sicher per PIN teilen',
+  },
+];
+
+const steps = [
+  { title: 'Account erstellen', body: 'Legen Sie Ihren Account auf edugrade.at an.' },
+  { title: 'Klasse anlegen', body: 'Klasse, Schuljahr und Fächer einrichten. Schüler einzeln oder per CSV-Liste importieren.' },
+  { title: 'Noten eintragen', body: 'Noten, Kategorien und Gewichtungen festlegen. Der Durchschnitt wird automatisch berechnet.' },
+  { title: 'Berichte exportieren', body: 'PDF-Berichte pro Schüler oder ganze Klasse exportieren — fertig für den Unterricht.' },
+];
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'EduGrade',
+  url,
+  applicationCategory: 'EducationalApplication',
+  operatingSystem: 'Any (browser)',
+  inLanguage: 'de',
+  description:
+    'Notenverwaltung für Lehrkräfte und Schulen. Klassen, Noten, Anwesenheit und PDF-Berichte im Browser — AES-256-GCM-verschlüsselt und DSGVO-konform.',
+  author: { '@id': 'https://avocloud.net/#org' },
+  publisher: { '@id': 'https://avocloud.net/#org' },
+  image: 'https://avocloud.net/assets/images/edugrade/edugrade-dashboard-dark.webp',
+};
+---
+
+<Layout
+  title="EduGrade — Notenverwaltung für Lehrkräfte und Schulen | Avocloud.net"
+  description="EduGrade ist die Notenverwaltung für Lehrkräfte und Schulen: Klassen, Noten, Anwesenheit und PDF-Berichte im Browser. AES-256-GCM-verschlüsselt, DSGVO-konform, ohne Download."
+  canonical={url}
+  schema={false}
+  ogImage="https://avocloud.net/edugrade/edugrade-banner.png"
+  ogImageAlt="EduGrade — Notenverwaltung für Lehrkräfte und Schulen"
+  jsonld={jsonld}
+  lang="de"
+>
+  <EduGradeApp client:load>
+    <section class="section" id="preview">
+      <div class="wrap">
+        <div class="article">
+          <div class="section-label">DASHBOARD</div>
+          <h2 class="headline">Alles im Blick, auf einen Blick.</h2>
+          <p class="lede">
+            Das Dashboard zeigt alle wichtigen Kennzahlen Ihrer Klassen auf einer Seite.
+          </p>
+          {/* Not loading="lazy". These sit inside <main>, which useSlotMotion
+              keeps under a GSAP transform, and Chrome's lazy-load distance
+              check then never fires for them — verified: all five stayed at
+              naturalWidth 0 however far you scrolled, and flipping them to
+              eager loaded every one instantly. Five files, ~290 KB total;
+              fetchpriority keeps them queued behind the hero instead. */}
+          <figure class="shot">
+            <img
+              src="/assets/images/edugrade/edugrade-dashboard-dark.webp"
+              alt="EduGrade Dashboard — digitale Notenverwaltung für Lehrkräfte"
+              width="1100"
+              height="688"
+              fetchpriority="low"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="article">
+          <div class="section-label">FUNKTIONEN</div>
+          <h2 class="headline">Was EduGrade kann</h2>
+        </div>
+
+        {features.map((f) => (
+          <div class="feature-row">
+            <div class="article">
+              <div class="section-label">{f.label}</div>
+              <h3 class="headline sub">{f.heading}</h3>
+              <p>{f.body}</p>
+              <div class="chips mt">
+                {f.chips.map((c) => <span class="chip">{c}</span>)}
+              </div>
+            </div>
+            <figure class="shot">
+              <img
+                src={`/assets/images/edugrade/edugrade-${f.shot}-dark.webp`}
+                alt={f.alt}
+                width="1100"
+                height="688"
+                fetchpriority="low"
+                decoding="async"
+              />
+            </figure>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" id="start">
+      <div class="wrap">
+        <div class="article">
+          <div class="section-label">EINSTIEG</div>
+          <h2 class="headline">In vier Schritten startklar.</h2>
+          <p class="lede">Keine Installation, kein IT-Aufwand. Öffnen und loslegen.</p>
+
+          <ol class="numbered">
+            {steps.map((s) => (
+              <li>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="vertrauen">
+      <div class="wrap">
+        <div class="article">
+          <div class="section-label">VERTRAUEN</div>
+          <h2 class="headline">Ihre Daten bleiben Ihre Daten.</h2>
+          <p class="lede">
+            Keine Werbung, keine Weitergabe von Daten. Entwickelt und
+            betrieben von Avocloud.net in Österreich.
+          </p>
+        </div>
+
+        <div class="grid cols-2">
+          <article class="card">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3>Lizenzen für Schulen</h3>
+            <p>
+              EduGrade wird als Lizenz an Schulen und Bildungseinrichtungen vergeben. Schreiben Sie
+              uns für ein Angebot oder eine Testmöglichkeit.
+            </p>
+            <p>© 2026 Avocloud.net. Alle Rechte vorbehalten.</p>
+            <div class="chips mt">
+              <span class="chip">Schullizenz</span>
+              <span class="chip">DSGVO-konform</span>
+              <a class="chip link" href="mailto:support@avocloud.net?subject=EduGrade%20Schullizenz">Lizenz anfragen ↗</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3>Fragen zum Einsatz an Ihrer Schule?</h3>
+            <p>
+              Datenschutz, Ablauf, Anpassungen: Schreiben Sie uns, wir antworten direkt.
+            </p>
+            <p class="mono" style="font-size:0.78rem;">
+              <a href="mailto:support@avocloud.net" class="accent-link">support@avocloud.net</a>
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="links">
+      <div class="wrap">
+        <div class="article">
+          <div class="section-label">LINKS</div>
+          <h2 class="headline">Bereit, EduGrade auszuprobieren?</h2>
+          <p class="lede">
+            Sehen Sie sich EduGrade an oder fragen Sie nach einer Schullizenz.
+          </p>
+        </div>
+
+        <div class="grid cols-3">
+          <article class="card">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3>EduGrade App</h3>
+            <p>Direkt zur gehosteten Version — kein Download, sofort bereit.</p>
+            <a class="accent-link" href="https://edugrade.at" target="_blank" rel="noopener">edugrade.at ↗</a>
+          </article>
+          <article class="card">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3>Dokumentation</h3>
+            <p>Von der Einrichtung bis zu den einzelnen Features.</p>
+            <a class="accent-link" href="https://edugrade.at/docs/" target="_blank" rel="noopener">edugrade.at/docs ↗</a>
+          </article>
+          <article class="card">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3>Status</h3>
+            <p>Verfügbarkeit der App prüfen.</p>
+            <a class="accent-link" href="https://status.avocloud.net" target="_blank" rel="noopener">status.avocloud.net ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </EduGradeApp>
+</Layout>

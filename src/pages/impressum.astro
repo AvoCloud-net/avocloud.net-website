@@ -1,15 +1,27 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Shell from '@/components/Shell.tsx';
+import { company, legalName } from '@/data/company';
+
+// Optional register lines — rendered only when filled in src/data/company.ts.
+const registry = [
+  ['Legal form', company.legalForm],
+  ['Business purpose', company.businessPurpose],
+  ['UID', company.uid],
+  ['Company register no.', company.firmenbuchNr],
+  ['Register court', company.firmenbuchGericht],
+  ['Trade authority', company.gewerbebehoerde],
+  ['Chamber', company.kammer],
+].filter(([, v]) => v);
 ---
 <Layout
   title="Imprint – Avocloud.net"
-  description="Legal imprint of Avocloud.net."
-  canonical="https://avocloud.net/impressum"
+  description="Legal imprint of Avocloud.net and edugrade.at."
+  canonical="https://avocloud.net/impressum/"
   schema={false}
 >
   <Shell client:load>
-    <main class="section" id="impressum">
+    <section class="section" id="impressum">
       <div class="wrap">
         <div class="section-label">IMPRINT</div>
         <h1 class="headline" style="margin-bottom: 2rem;">Imprint</h1>
@@ -24,13 +36,21 @@ import Shell from '@/components/Shell.tsx';
             Our Imprint
           </h3>
 
-          <h4 style="font-family: var(--font-mono); font-size: 0.85rem; margin: 1.25rem 0 0.5rem;">Information in accordance with § 5 TMG</h4>
+          <p>This imprint applies to <strong>avocloud.net</strong> as well as <strong>edugrade.at</strong>.</p>
+
+          <h4 style="font-family: var(--font-mono); font-size: 0.85rem; margin: 1.25rem 0 0.5rem;">Information in accordance with § 5 ECG and § 25 MedienG</h4>
           <p>
-            <strong>Name:</strong> Fabian Murauer<br />
-            <strong>Address:</strong> Rablstraße 23a, 4.4<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4600 Wels, Österreich<br />
+            {company.legalName
+              ? <><strong>Company:</strong> {legalName} ({company.brand})<br /><strong>Owner:</strong> {company.owner}<br /></>
+              : <><strong>Name:</strong> {company.owner}<br /></>}
+            <strong>Address:</strong> {company.street}, {company.postalCode} {company.city}, {company.country}<br />
             <strong>E-Mail:</strong>
-            <a href="mailto:redwolf2467@avocloud.net" class="accent-link">redwolf2467@avocloud.net</a>
+            <a href={`mailto:${company.email}`} class="accent-link">{company.email}</a>
+            {registry.map(([label, value]) => (<><br /><strong>{label}:</strong> {value}</>))}
+          </p>
+          <p>
+            Medieninhaber and Herausgeber: {legalName}, {company.city}. Editorial line: information
+            about the products and services of {company.brand}.
           </p>
 
           <h4 style="font-family: var(--font-mono); font-size: 0.85rem; margin: 1.25rem 0 0.5rem;">Disclaimer</h4>
@@ -85,11 +105,11 @@ import Shell from '@/components/Shell.tsx';
               Legal
             </h3>
             <p>Legal information:</p>
-            <a href="/impressum" class="accent-link">Imprint ↗</a><br />
+            <a href="/impressum/" class="accent-link">Imprint ↗</a><br />
             <a href="/regulations/" class="accent-link">Regulations ↗</a>
           </div>
         </div>
       </div>
-    </main>
+    </section>
   </Shell>
 </Layout>

@@ -21,7 +21,7 @@ export default function Shell({ children }: { children: ReactNode }) {
           bare fragment there was nothing to hold the ref, so the pages using
           this shell (regulations, pwgen, 404, impressum) got no motion at all
           while the ones with their own <main> did. */}
-      <main ref={slot}>{children}</main>
+      <main id="main" tabIndex={-1} ref={slot}>{children}</main>
       <Footer t={t} />
     </>
   );

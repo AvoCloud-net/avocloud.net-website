@@ -13,6 +13,30 @@ interface Strength {
   className: string;
 }
 
+/* Uniform random index in [0, max) from the platform CSPRNG.
+
+   This used to be `Math.floor(Math.random() * n)`. Math.random() is not a
+   CSPRNG — V8 runs xorshift128+ and its internal state can be recovered from a
+   modest run of outputs, which means the generated passwords were predictable
+   in principle. For a password generator that is the whole ballgame.
+
+   The rejection loop matters as much as the source: taking a raw 32-bit value
+   modulo `max` biases every index below (2^32 % max) upward, so the low
+   characters of the charset would be drawn slightly more often. Discarding the
+   short tail of the range keeps the distribution flat. It retries with
+   probability < 2^-22 for any charset this page can build, so it is not a
+   practical loop. */
+function randomIndex(max: number): number {
+  const limit = Math.floor(0xffffffff / max) * max;
+  const buf = new Uint32Array(1);
+  let v: number;
+  do {
+    crypto.getRandomValues(buf);
+    v = buf[0];
+  } while (v >= limit);
+  return v % max;
+}
+
 function getStrength(pw: string): Strength {
   let score = 0;
   if (/[a-z]/.test(pw)) score++;
@@ -82,7 +106,7 @@ export default function PwGen() {
 
     let raw = '';
     for (let i = 0; i < len; i++) {
-      raw += charset[Math.floor(Math.random() * charset.length)];
+      raw += charset[randomIndex(charset.length)];
     }
 
     const formatted = len > 5 ? raw.match(/.{1,5}/g)!.join('-') : raw;

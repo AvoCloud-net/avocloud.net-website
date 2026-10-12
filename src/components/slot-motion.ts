@@ -1,5 +1,5 @@
 import { useRef, type RefObject } from 'react';
-import { gsap, SplitText, useGSAP, EASE, DUR, STAG, STAG_MAX, START } from '@/lib/motion';
+import { gsap, ScrollTrigger, SplitText, useGSAP, EASE, DUR, STAG, STAG_MAX, START } from '@/lib/motion';
 
 /* ---------------------------------------------------------------------------
    useSlotMotion — gives the motion system to server-rendered slot content.
@@ -21,6 +21,16 @@ import { gsap, SplitText, useGSAP, EASE, DUR, STAG, STAG_MAX, START } from '@/li
      h2.headline        → SplitText line/word build
      .card, .chip       → grouped stagger, one trigger per group
 --------------------------------------------------------------------------- */
+/* Above-the-fold elements have no scroll event to wait for: `clamp()` pins
+   their start to 0 and at scrollY 0 the trigger sits exactly on that boundary
+   and never fires, leaving them at opacity 0 until the first scroll. So
+   anything already on screen plays immediately, with no ScrollTrigger. */
+function revealTrigger(el: HTMLElement, start: string): ScrollTrigger.Vars | undefined {
+  const box = el.getBoundingClientRect();
+  if (box.top < window.innerHeight && box.bottom > 0) return undefined;
+  return { trigger: el, start, once: true };
+}
+
 export function useSlotMotion(ref: RefObject<HTMLElement | null>) {
   useGSAP(
     () => {
@@ -42,7 +52,7 @@ export function useSlotMotion(ref: RefObject<HTMLElement | null>) {
           rule.setAttribute('aria-hidden', 'true');
           label.appendChild(rule);
           gsap
-            .timeline({ scrollTrigger: { trigger: label, start: START.reveal, once: true } })
+            .timeline({ scrollTrigger: revealTrigger(label, START.reveal) })
             .from(label, { opacity: 0, x: -8, duration: DUR.ui, ease: EASE.out })
             .from(rule, { scaleX: 0, duration: DUR.ui, ease: EASE.out }, '-=0.15');
         });
@@ -63,7 +73,7 @@ export function useSlotMotion(ref: RefObject<HTMLElement | null>) {
                 duration: DUR.enter,
                 ease: EASE.out,
                 stagger: STAG.word,
-                scrollTrigger: { trigger: h, start: START.reveal, once: true },
+                scrollTrigger: revealTrigger(h, START.reveal),
               }),
           });
           splits.push(split);
@@ -83,7 +93,7 @@ export function useSlotMotion(ref: RefObject<HTMLElement | null>) {
             duration: DUR.enter,
             ease: EASE.out,
             stagger: { each: STAG.card, amount: Math.min(cards.length * STAG.card, STAG_MAX) },
-            scrollTrigger: { trigger: group, start: START.reveal, once: true },
+            scrollTrigger: revealTrigger(group, START.reveal),
           });
         });
 
@@ -92,7 +102,7 @@ export function useSlotMotion(ref: RefObject<HTMLElement | null>) {
           const rail = tl.querySelector('.timeline-rail');
           const items = gsap.utils.toArray<HTMLElement>('.tl-item', tl);
           const seq = gsap.timeline({
-            scrollTrigger: { trigger: tl, start: START.early, once: true },
+            scrollTrigger: revealTrigger(tl, START.early),
           });
           if (rail) seq.from(rail, { scaleY: 0, duration: 0.9, ease: EASE.out });
           const dots = items.map((i) => i.querySelector('.tl-dot')).filter(Boolean);

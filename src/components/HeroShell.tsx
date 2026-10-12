@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-import { useRef, useState, Suspense, lazy } from 'react';
+import { useRef, useState, useEffect, Suspense, lazy } from 'react';
 import { Wordmark } from './Wordmark';
-import { gsap, useGSAP, SIGNATURE_TIMESCALE, EASE, DUR, STAG, afterIntro } from '@/lib/motion';
+import { gsap, useGSAP, SIGNATURE_TIMESCALE, EASE, DUR, STAG } from '@/lib/motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 /* The claim decodes in like a terminal settling on its output — the brand
@@ -20,19 +20,16 @@ function Claim({ children }: { children: ReactNode }) {
     () => {
       const el = ref.current;
       if (!el || reduce || !text) return;
-      // held behind the intro curtain like the rest of the hero entrance
-      return afterIntro(() =>
-        gsap.fromTo(
-          el,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            duration: DUR.ui,
-            ease: EASE.out,
-            delay: 0.35,
-            scrambleText: { text, chars: 'upperCase', speed: 0.5, revealDelay: 0.15 },
-          },
-        ),
+      gsap.fromTo(
+        el,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: DUR.ui,
+          ease: EASE.out,
+          delay: 0.35,
+          scrambleText: { text, chars: 'upperCase', speed: 0.5, revealDelay: 0.15 },
+        },
       );
     },
     { scope: ref, dependencies: [reduce, text] },
@@ -86,6 +83,28 @@ export function HeroShell({
   const [hovered, setHovered] = useState(false);
   const ref = useRef<HTMLElement>(null);
 
+  /* The shader kept animating a ~3.8 megapixel fragment shader for the entire
+     visit, including the ten-thousand-odd pixels of page where the hero is
+     nowhere near the viewport. ShaderMount pauses itself when the *tab* is
+     hidden, but knows nothing about scroll position.
+
+     `speed: 0` is the library's own off switch — it stops the rAF loop
+     outright rather than idling it (see ShaderMount.setSpeed). So the hero
+     costs nothing once you scroll past it, and picks up again on the way
+     back. The rootMargin restarts it just before it comes back into view, so
+     the texture is already moving when it arrives. */
+  const [onScreen, setOnScreen] = useState(true);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setOnScreen(entry.isIntersecting),
+      { rootMargin: '300px' },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   /* One timeline for the whole hero entrance, sequenced with labels.
      Previously each block was a separate scroll-triggered Reveal with a
      hand-tuned `delay` — which chained animations by delay instead of
@@ -104,8 +123,7 @@ export function HeroShell({
       const mm = gsap.matchMedia();
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         const q = gsap.utils.selector(ref);
-        // paused until the load intro lifts — otherwise the whole entrance
-        // plays out behind the curtain and lands finished
+        // built paused and played at the end, once every step is queued
         const tl = gsap.timeline({ paused: true, defaults: { ease: EASE.out, duration: DUR.enter } });
 
         // `media`, `stats` and `footnote` are optional props, so on any given
@@ -125,7 +143,24 @@ export function HeroShell({
         at('.hero-stats .stat', { opacity: 0, y: 16, stagger: STAG.card }, 'afterMark');
         at('.hero-links > *', { opacity: 0, y: 16, stagger: STAG.card }, 'afterMark+=0.12');
         at('.hero-footnote > *', { opacity: 0, y: 10, stagger: STAG.card, duration: DUR.ui }, 'afterMark+=0.28');
-        return afterIntro(() => tl.play());
+
+        // Scroll-out: the type lifts away and fades while the texture behind it
+        // pushes in slightly, so leaving the hero reads as a camera move rather
+        // than the page sliding up. On the container and the shader wrapper —
+        // neither is touched by the entrance above, so the two never fight.
+        const out = { trigger: ref.current, start: 'top top', end: 'bottom top', scrub: true };
+        gsap.to(q('.hero-inner'), {
+          y: -56,
+          opacity: 0,
+          ease: EASE.none,
+          scrollTrigger: { ...out, end: '55% top' },
+        });
+        // .hero-zoom, not .hero-shader: the shader sits inside a Suspense
+        // boundary that hydrates late, and an inline style written into it
+        // before then trips React's hydration check.
+        gsap.fromTo(q('.hero-zoom'), { scale: 1 }, { scale: 1.08, ease: EASE.none, scrollTrigger: out });
+
+        tl.play();
       });
       return () => mm.revert();
     },
@@ -144,19 +179,21 @@ export function HeroShell({
           the band the wordmark and CTAs occupy; everywhere else the dither is
           meant to be seen. colorFront stays a desaturated rust so it reads as
           texture and not as a coral field — see BRANDING.md §6. */}
-      <Suspense fallback={null}>
-        <div className="hero-shader" aria-hidden="true">
-          <Dithering
-            colorBack="#00000000"
-            colorFront="#7a4534"
-            shape="warp"
-            type="4x4"
-            speed={hovered ? 0.4 : 0.18}
-            className="size-full"
-            minPixelRatio={1}
-          />
-        </div>
-      </Suspense>
+      <div className="hero-zoom" aria-hidden="true">
+        <Suspense fallback={null}>
+          <div className="hero-shader">
+            <Dithering
+              colorBack="#00000000"
+              colorFront="#7a4534"
+              shape="warp"
+              type="4x4"
+              speed={onScreen ? (hovered ? 0.4 : 0.18) : 0}
+              className="size-full"
+              minPixelRatio={1}
+            />
+          </div>
+        </Suspense>
+      </div>
 
       {/* Plain elements — the entrance is the timeline above, so nothing here
           is pre-hidden by `data-reveal`. Without JS the hero renders complete

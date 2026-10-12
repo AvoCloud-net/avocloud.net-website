@@ -1,0 +1,171 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Shell from '@/components/Shell.tsx';
+import CaPage from '@/components/CaPage.astro';
+
+const url = 'https://avocloud.net/craftattack/join/';
+
+const faq = [
+  {
+    q: 'Do I need a paid Minecraft account?',
+    a: 'Yes — a legitimate Minecraft Java or Bedrock account. No cracked clients.',
+  },
+  {
+    q: 'Can I play on console / mobile?',
+    a: 'Yes. Bedrock Edition supports Windows 10/11, Xbox, PlayStation, Switch, iOS, Android.',
+  },
+  {
+    q: 'Is there an application form?',
+    a: 'No. Linking Discord + Minecraft via Baxi is all you need.',
+  },
+  {
+    q: 'Can I get banned for the wrong mod?',
+    a: 'See <a class="accent-link" href="/craftattack/rules/">Server Rules</a> — performance mods (Sodium, Iris, OptiFine), shaders, and surface minimaps are fine. X-Ray, cave-mode minimaps, entity radar, killaura etc. are banned.',
+  },
+];
+
+const backups = [
+  { name: 'CraftAttack 1', size: '~17 GB', href: '/backups/craftattack1.tar.gz' },
+  { name: 'CraftAttack 1.2', size: '~9 GB', href: '/backups/craftattack1.2.tar.gz' },
+];
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://avocloud.net/' },
+        { '@type': 'ListItem', position: 2, name: 'Craft Attack', item: 'https://avocloud.net/craftattack/' },
+        { '@type': 'ListItem', position: 3, name: 'How to Join', item: url },
+      ],
+    },
+    {
+      '@type': 'HowTo',
+      name: 'How to join the Avocloud Craft Attack community server',
+      description:
+        'Join the open Craft Attack Season 2 Minecraft server in four steps — no application form, no fee.',
+      step: [
+        { '@type': 'HowToStep', position: 1, name: 'Join the Avocloud Discord', text: 'Open avocloud.net/discord and join the server.' },
+        { '@type': 'HowToStep', position: 2, name: 'Connect in Minecraft', text: 'Connect to craftattack.avocloud.net. The server shows a one-time link code — copy it.' },
+        { '@type': 'HowToStep', position: 3, name: 'Run /mc link in Discord', text: 'Use the Baxi bot command /mc link and paste the code from step 2.' },
+        { '@type': 'HowToStep', position: 4, name: 'Reconnect', text: 'Reconnect to craftattack.avocloud.net — you are whitelisted.' },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a.replace(/<[^>]+>/g, '') },
+      })),
+    },
+  ],
+};
+---
+
+<Layout
+  title="How to Join — Craft Attack Community Server | Avocloud.net"
+  description="Step-by-step guide to join the open Avocloud Craft Attack community server, Season 2: The Ashes of Aerlon. Java + Bedrock crossplay, free, no application form."
+  canonical={url}
+  schema={false}
+  ogImage="https://avocloud.net/assets/images/craftattack/ca-s2-4.webp"
+  ogImageAlt="Craft Attack Season 2 — ancient columns in an overgrown plaza of Aerlon"
+  jsonld={jsonld}
+>
+  <Shell client:load>
+    <CaPage current="/craftattack/join/" title="How to Join">
+      <div class="article">
+        <div class="section-label">CRAFT ATTACK SEASON 2</div>
+        <h1 class="headline">How to join</h1>
+
+        <p class="lede">
+          Step-by-step guide to join the <strong>open Avocloud Craft Attack community server</strong>,
+          Season 2: The Ashes of Aerlon. No application form. No fee. No closed cast.
+        </p>
+
+        <div class="note">
+          <p>
+            <strong>Season start:</strong> Thursday, May 14, 2026 — 17:30 Europe/Vienna.<br />
+            <strong>Server address:</strong> <code>craftattack.avocloud.net</code><br />
+            <strong>Editions:</strong> Minecraft Java + Bedrock (crossplay)<br />
+            <strong>Cost:</strong> Free
+          </p>
+        </div>
+
+        <h2>Join in 4 steps</h2>
+        <ol class="numbered">
+          <li>
+            <h3>Join the Avocloud Discord</h3>
+            <p>
+              Open <a class="accent-link" href="/discord/">avocloud.net/discord ↗</a> in your
+              browser and join the server.
+            </p>
+          </li>
+          <li>
+            <h3>Connect to <code>craftattack.avocloud.net</code> in Minecraft</h3>
+            <p>
+              First connection won't let you in yet — instead the server shows a one-time link code.
+              Copy it. Works for Java and Bedrock.
+            </p>
+          </li>
+          <li>
+            <h3>Run <code>/mc link &lt;code&gt;</code> in Discord with Baxi</h3>
+            <p>
+              In our Discord, use the Baxi bot command <code>/mc link</code> and paste the code from
+              step 2. Baxi will reply with a confirmation message once the link is registered.
+            </p>
+          </li>
+          <li>
+            <h3>Reconnect to the server</h3>
+            <p>
+              After Baxi confirms, reconnect to <code>craftattack.avocloud.net</code>. You are now
+              whitelisted and inside. That's it.
+            </p>
+          </li>
+        </ol>
+
+        <h2>Bedrock &amp; mods documentation</h2>
+        <p>
+          For Bedrock-specific join instructions (port, Geyser/Floodgate notes) and a list of
+          allowed optional Java mods, check our docs:
+        </p>
+        <p class="mt">
+          <a
+            class="btn"
+            href="https://cloud.avocloud.net/apps/collectives/p/oziR6xHsTfRzw6Y/CraftAttack-13-Community-4"
+            target="_blank"
+            rel="noopener">Documentation ↗</a>
+        </p>
+
+        <h2>FAQ</h2>
+        {faq.map((f) => (
+          <>
+            <h3>{f.q}</h3>
+            <p set:html={f.a}></p>
+          </>
+        ))}
+
+        <h2>Season 1 server backups archive</h2>
+        <p>
+          Season 1 is complete. Full, ready-to-run backups of the original CraftAttack Season 1
+          server. Download, extract, and launch directly — perfect for private testing, archiving,
+          or self-hosting.
+        </p>
+        <div class="grid cols-2">
+          {backups.map((b) => (
+            <article class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>{b.name}</h3>
+              <p>Complete server backup: world data, plugins, configs, scripts. Just extract and run.</p>
+              <p class="mono" style="font-size:0.78rem;">File size: {b.size}</p>
+              <div class="chips mt">
+                <a class="btn" href={b.href}>Download</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </CaPage>
+  </Shell>
+</Layout>

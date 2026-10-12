@@ -5,7 +5,6 @@ import { useLang } from "@/hooks/useLang";
 import { Nav, Footer } from "./Site";
 import { useSlotMotion } from "./slot-motion";
 import { Btn } from "./Btn";
-import { GithubIcon } from "./icons";
 import { HeroShell } from "./HeroShell";
 
 const photoRingStyle: React.CSSProperties = {
@@ -60,7 +59,7 @@ export default function FabiApp({ children }: { children: ReactNode }) {
     <>
       <Nav active="" t={t} lang={lang} toggle={toggle} base="/" />
 
-      <main ref={slot}>
+      <main id="main" tabIndex={-1} ref={slot}>
         <HeroShell
           id="intro"
           word="FABIAN MURAUER"
@@ -69,7 +68,7 @@ export default function FabiApp({ children }: { children: ReactNode }) {
           media={
             <div style={photoRingStyle}>
               <img
-                src="/assets/images/fabian2.jpg"
+                src="/assets/images/fabian2.webp"
                 alt="Fabian Murauer"
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
@@ -97,20 +96,6 @@ export default function FabiApp({ children }: { children: ReactNode }) {
           }
           links={
             <>
-              <Btn
-                href="https://github.com/rwolf2467"
-                rel="noreferrer"
-                icon={<GithubIcon />}
-              >
-                rwolf2467
-              </Btn>
-              <Btn
-                href="https://github.com/AvoCloud-net"
-                rel="noreferrer"
-                icon={<GithubIcon />}
-              >
-                AvoCloud-net
-              </Btn>
               <Btn
                 href="https://www.instagram.com/red_wolf2467/"
                 rel="noreferrer"

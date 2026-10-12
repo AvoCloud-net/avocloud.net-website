@@ -6,26 +6,42 @@
    the hovered project panel; see §6 "Background & texture" for the limits.
    ========================================================================== */
 
-/* ---- Fonts ---------------------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap');
+/* ---- Fonts ---------------------------------------------------------------
+   The faces come from the kit: `avocloud.tokens.css` (below) imports
+   cdn.avocloud.net/avocloud-ui-fonts, self-hosted. Nothing is requested from
+   Google, which matters for GDPR as much as for speed. */
+
+/* ---- The brand kit -------------------------------------------------------
+   `avocloud.tokens.css` is a SYMLINK to ../../brand/tokens/avocloud.tokens.css —
+   the kit's token layer, not a copy. It defines ONLY `--avo-*` custom properties
+   (no components, no rules), so importing it cannot touch anything here; the site
+   opts in token by token in :root below.
+
+   The point is that a value has ONE source. Where a token below reads
+   `var(--avo-…)`, changing it in the kit changes it here. Where it still holds
+   a literal, the two systems genuinely disagree and the disagreement is named
+   at that line — see CONFORMANCE.md.
+
+   CAVEAT: the target lives outside this repo (~/Nextcloud/avocloud/brand) and
+   the brand directory is not itself versioned, so a clone of this repo alone
+   has a dangling symlink and the build fails at the @import. If that becomes a
+   problem, the fix is to publish the brand kit as a package and depend on it —
+   not to paste a copy back in here, which is the exact duplication this
+   replaced. */
+@import "./avocloud.tokens.css";
 
 /* ---- Tailwind (scoped to shadcn-style components only; rest of the site is hand-written CSS) ---- */
 @import "tailwindcss";
 
-/* Bridge shadcn's utility tokens onto this site's existing palette (see :root below) */
-@theme inline {
-  --color-background: var(--bg);
-  --color-foreground: var(--fg);
-  --color-card: var(--bg-soft);
-  --color-card-foreground: var(--fg);
-  --color-primary: var(--coral);
-  --color-primary-foreground: #050505;
-  --color-muted: var(--panel);
-  --color-muted-foreground: var(--muted-2);
-  --color-border: var(--line-strong);
-  --color-ring: var(--coral);
-}
+/* shadcn was removed on 2026-09-16 — `components.json` pointed at
+   `@/components/ui` and `@/lib/utils`, neither of which ever existed, and there
+   were no Radix dependencies, so nothing could be generated into the project.
+   The `@theme inline` bridge that sat here mapped 10 `--color-*` tokens for it
+   and no markup ever used one. Tailwind itself stays: PwGen and the QrGate page
+   use its utilities.
 
+   If shadcn is ever wanted, theme it with `brand/tokens/avocloud.base.css`
+   rather than a hand-written bridge — see BRANDING.md §12.1. */
 /* ---- Reset ----------------------------------------------------------------
    Wrapped in Tailwind's own `base` layer: unlayered rules always beat layered
    ones regardless of specificity, so left plain this reset silently nullified
@@ -44,51 +60,72 @@
 
 /* ---- Tokens --------------------------------------------------------------- */
 :root {
-    --bg:            #000000;
-    --bg-soft:       #060606;
-    --panel:         #0a0a0a;
-    --fg:            #ffffff;
-    --muted:         #7e7e7e;
-    --muted-2:       #bbbbbb;
+    --bg:            var(--avo-canvas);
+    --bg-soft:       var(--avo-canvas-soft);
+    --panel:         var(--avo-surface);
+    --fg:            var(--avo-text);
+    --muted:         var(--avo-text-muted);
+    --muted-2:       var(--avo-text-muted-2);
 
+    /* DIVERGENT — the kit is heavier: --avo-line is rgba(255,255,255,0.16) and
+       --avo-line-strong is 0.38. These are the site's own measured values and
+       they are what every hairline, card edge and table rule on the page is
+       tuned to. Not aliased until the two are reconciled deliberately; the row
+       is in CONFORMANCE.md. */
     --line:          rgba(255,255,255,0.10);
     --line-strong:   rgba(255,255,255,0.18);
-    --line-faint:    rgba(255,255,255,0.05);
+    --line-faint:    rgba(255,255,255,0.05);   /* the kit has no line-faint */
 
-    --coral:         #ff6b4a;
-    --coral-rgb:     255,107,74;
-    --coral-soft:    #ff9379;
+    --coral:         var(--avo-primary);
+    --coral-rgb:     var(--avo-coral-rgb);
+    --coral-soft:    var(--avo-coral-300);
+    /* DIVERGENT — the kit's coral-700 is #C73D20, a darker, redder step than
+       this #bf5037. CONFORMANCE.md. */
     --coral-dark:    #bf5037;
 
-    --light-bg:      #e8ecef;   /* hard light-cut band */
+    /* The light cut band. The kit carries these inside `.avo-band` rather than
+       as tokens, so there is nothing to alias to. */
+    --light-bg:      #e8ecef;
     --light-fg:      #0a0a0a;
 
-    --grid: 80px;
-    --grid-fine: 40px;
-    --grid-cross: 200px;
+    --grid: 80px;                        /* site-only: the coarse layer */
+    --grid-fine:  var(--avo-grid-fine);
+    --grid-cross: var(--avo-grid-cross);
 
-    --font-display: 'Space Grotesk', system-ui, sans-serif;
-    --font-massive: 'Anton', 'Space Grotesk', sans-serif;
-    --font-brand:   'Syne', 'Space Grotesk', sans-serif;
-    --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+    /* `--font-display` here means the BODY face. The kit's --avo-font-display
+       means the display face (Syne) — same word, opposite meaning, so this
+       aliases --avo-font-body deliberately. */
+    --font-display: var(--avo-font-body);
+    --font-massive: var(--avo-font-massive);
+    --font-brand:   var(--avo-font-brand);
+    --font-mono:    var(--avo-font-mono);
 
-    /* softened corners — see brand BRANDING.md §6 */
-    --radius: 6px;      /* controls: buttons, inputs, chips */
-    --radius-lg: 8px;   /* boxes: cards, panels */
+    --radius:    var(--avo-radius);      /* controls: buttons, inputs, chips */
+    --radius-lg: var(--avo-radius-lg);   /* boxes: cards, panels */
 
-    --maxw: 1180px;
+    --maxw: var(--avo-maxw);
 
     /* Motion — CSS mirror of src/lib/motion.ts (EASE / DUR). Same curves, same
        four duration steps, so a CSS transition and a GSAP tween on the same
        component agree. Change one, change both. See BRANDING.md §5b. */
-    --ease:        cubic-bezier(0.16, 1, 0.3, 1);  /* = EASE.out */
-    --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+    --ease:        var(--avo-ease-out);          /* = EASE.out */
+    --ease-out:    var(--avo-ease-out);
     --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* = EASE.inOut */
     --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* = EASE.spring, slight overshoot */
 
-    --dur-micro: 0.18s;  /* hover, border, colour, focus */
-    --dur-ui:    0.35s;  /* nav state, chips, toggles */
-    --dur-enter: 0.7s;   /* scroll entrances */
+    /* NOTHING TRANSITIONS A COLOUR PROPERTY — BRANDING.md §6.9.
+       Not color, not background-color, not border-color, not box-shadow, not
+       outline-color. Measured in Chromium: a transition on a colour property
+       WEDGES that property whenever its value arrives through a custom
+       property that changed on an ancestor. Add a theme class at runtime and
+       every element already on the page keeps its old colour while new ones
+       render correctly — no error, nothing to grep for. These durations drive
+       geometry and opacity only; a colour change is a hard cut, which §5
+       wanted anyway. Sites marked `no colour transition — §6.9` below are
+       where one used to be. */
+    --dur-micro: var(--avo-dur-micro);  /* hover, border, focus */
+    --dur-ui:    var(--avo-dur-ui);     /* nav state, chips, toggles */
+    --dur-enter: var(--avo-dur-enter);  /* scroll entrances */
 
     /* Glass — the surface treatment, promoted from a one-off on the nav to a
        system primitive. See BRANDING.md §6.
@@ -100,12 +137,81 @@
        the page, which is the opposite of the intent.
        Blur stays low for the same reason: at 14px the texture behind was
        smeared into a wash, so nothing recognisable moved through it. */
-    --glass-blur:   7px;
-    --glass-tint:   rgba(4,4,4,0.28);
-    --glass-tint-2: rgba(4,4,4,0.44);
+    --glass-blur:   var(--avo-glass-blur);
+    --glass-tint:   var(--avo-glass-tint);
+    --glass-tint-2: var(--avo-glass-tint-2);
     /* 1px inner top edge — the hairline motif catching light. Kept subtle:
        it defines the pane's edge, it should not outline it. */
-    --glass-edge:   rgba(255,255,255,0.10);
+    --glass-edge:   var(--avo-glass-edge);
+
+    /* ---- Spacing scale ------------------------------------------------------
+       There was none: every section, card and panel picked its own padding,
+       which is why the vertical rhythm drifted from section to section. Static
+       steps climb in 0.25rem, then 0.5rem, then larger jumps — fine control
+       where things sit close together, coarse where they don't. The fluid
+       tokens below are the handful of values that genuinely need to breathe
+       with the viewport; each replaces a clamp() that was repeated by hand.
+
+       NOT ALIASED TO THE KIT, on purpose. Steps 1–6 are identical to
+       `--avo-space-1..6`, but the kit has no 2.5rem step, so from 7 upward the
+       two scales are off by one: --space-7 is 40px here and 48px there, and so
+       on to the top. Aliasing half a scale is worse than aliasing none of it —
+       it would silently move every margin above 2rem. CONFORMANCE.md. */
+    --space-1:  0.25rem;
+    --space-2:  0.5rem;
+    --space-3:  0.75rem;
+    --space-4:  1rem;
+    --space-5:  1.5rem;
+    --space-6:  2rem;
+    --space-7:  2.5rem;
+    --space-8:  3rem;
+    --space-9:  4rem;
+    --space-10: 6rem;
+    --space-11: 8rem;
+
+    --gutter:        clamp(1rem, 4vw, 2.5rem);      /* page edge → content */
+    --space-section: clamp(4rem, 10vw, 8rem);       /* between sections */
+    --space-block:   clamp(3rem, 7vw, 5.5rem);      /* between blocks inside one */
+    --space-panel:   clamp(1.5rem, 2.5vw, 2.25rem); /* large-surface padding */
+
+    /* ---- Type scale ---------------------------------------------------------
+       Static steps sit on a minor third (×1.2) — the ratio the existing sizes
+       were already clustered around, so the scale tightens them without
+       visibly moving any. `--text-sm` is a deliberate half step: body copy in
+       a card has to sit between the mono labels and the headings, and a full
+       step either side reads too small or too loud.
+
+       The fluid display steps are named rather than derived; they are driven
+       by layout (a headline has to fit its column), not by the ratio. */
+    --text-micro:   var(--avo-text-micro);  /* side rail */
+    --text-2xs:     var(--avo-text-2xs);    /* mono labels, chips, nav controls */
+    --text-xs:      var(--avo-text-xs);     /* buttons, mono meta */
+    --text-sm:      var(--avo-text-sm);     /* card body */
+    --text-base:    var(--avo-text-base);
+    --text-md:      var(--avo-text-md);     /* card headings */
+    --text-lead:    var(--avo-text-lead);   /* claims, ledes */
+    --text-lg:      var(--avo-text-lg);     /* in-column headings */
+    --text-display: var(--avo-text-display);/* section headlines */
+
+    /* ---- Surfaces -----------------------------------------------------------
+       Three levels instead of one. Before this, every box was the same 1px
+       --line border on the same glass, so a card that mattered looked exactly
+       like one that didn't.
+         recessed  sunk into the page: notes, screenshot frames. No glass.
+         flush     the default card.
+         raised    feature cards, and any card being hovered or focused. */
+    --surface-recessed: var(--bg-soft);
+    --edge-recessed:    var(--line-faint);
+    --edge-flush:       var(--line);
+    --edge-raised:      var(--line-strong);
+    --glass-edge-raised: var(--avo-glass-edge-raised);
+
+    /* Registration marks at rest. They used to be opacity 0 until hover —
+       invisible on touch, invisible to keyboard users, and invisible to anyone
+       who never happened to point at a card. A drafting sheet has its
+       registration marks all the time; they don't appear when you touch it. */
+    --mk-rest-opacity: var(--avo-mk-rest-opacity);
+    --mk-rest-scale:   var(--avo-mk-rest-scale);
 }
 
 /* ---- Base ----------------------------------------------------------------- */
@@ -137,33 +243,52 @@ html {
 body::before {
     content: "";
     position: fixed;
-    inset: 0;
+    /* One tile of bleed top and bottom so the drift transform below never
+       exposes an edge. */
+    top: calc(-1 * var(--grid-fine));
+    bottom: calc(-1 * var(--grid-fine));
+    left: 0;
+    right: 0;
     z-index: 0;
     pointer-events: none;
     background-image:
         linear-gradient(var(--line-faint) 1px, transparent 1px),
         linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
     background-size: var(--grid-fine) var(--grid-fine);
-    background-position: 0 var(--grid-shift-fine-y, 0px);
-    -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 40%, #000 55%, transparent 100%);
-            mask-image: radial-gradient(ellipse 100% 80% at 50% 40%, #000 55%, transparent 100%);
+    /* The drift is a transform, NOT background-position. This layer is fixed,
+       full-viewport and masked; animating background-position on it repainted
+       the whole viewport — mask included — on every single scroll frame, twice
+       over (see body::after), which is what made scrolling drag. A transform is
+       handled by the compositor and costs no repaint at all. The JS wraps the
+       value modulo the tile size, so the offset stays inside one tile and the
+       repeating background makes it visually identical. */
+    transform: translate3d(0, var(--grid-shift-fine-y, 0px), 0);
+    will-change: transform;
+    /* Mask in viewport units, offset by the bleed, so growing the box above
+       does not move the vignette. */
+    -webkit-mask-image: radial-gradient(ellipse 100vw 80vh at 50vw calc(40vh + var(--grid-fine)), #000 55%, transparent 100%);
+            mask-image: radial-gradient(ellipse 100vw 80vh at 50vw calc(40vh + var(--grid-fine)), #000 55%, transparent 100%);
 }
 /* crosshair (+) markers — sparser, independent grid, drifts faster than the
    fine grid above. */
 body::after {
     content: "";
     position: fixed;
-    inset: 0;
+    top: calc(-1 * var(--grid-cross));
+    bottom: calc(-1 * var(--grid-cross));
+    left: 0;
+    right: 0;
     z-index: 0;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cpath d='M100 93v14M93 100h14' stroke='rgba(255,255,255,0.16)' stroke-width='1'/%3E%3C/svg%3E");
     background-size: var(--grid-cross) var(--grid-cross);
-    background-position: 0 var(--grid-shift-cross-y, 0px);
-    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, #000 45%, transparent 100%);
-            mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, #000 45%, transparent 100%);
+    transform: translate3d(0, var(--grid-shift-cross-y, 0px), 0);
+    will-change: transform;
+    -webkit-mask-image: radial-gradient(ellipse 90vw 70vh at 50vw calc(40vh + var(--grid-cross)), #000 45%, transparent 100%);
+            mask-image: radial-gradient(ellipse 90vw 70vh at 50vw calc(40vh + var(--grid-cross)), #000 45%, transparent 100%);
 }
 
-.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2.5rem); position: relative; z-index: 1; }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); position: relative; z-index: 1; }
 
 ::selection { background: rgba(var(--coral-rgb), 0.85); color: #000; }
 
@@ -217,8 +342,7 @@ body::after {
 /* ---- Corner radius -------------------------------------------------------
    Controls 6px, boxes 8px; everything else stays sharp. Kept as one list
    instead of a rule per component so the shape language is in one place.
-   True circles (.staff .avatar) and pills (.nav-btn.pill) override this by
-   specificity. -------------------------------------------------------------- */
+   Pills (.nav-btn.pill) override this by specificity. -------------------------------------------------------------- */
 .btn, .nav-btn, .chip, .pwgen-input, .pwgen-output,
 input, textarea, select {
     border-radius: var(--radius);
@@ -245,8 +369,9 @@ html.gsap-ready [data-reveal] { opacity: 0; }
 .sub-h + .prose { margin-bottom: 1.5rem; }
 
 /* a headline that sits inside a column rather than opening a section */
+h1.headline.sub,
 h2.headline.sub {
-    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    font-size: var(--text-lg);
     margin-bottom: 1.25rem;
 }
 
@@ -269,7 +394,7 @@ h2.headline.sub {
     font-size: 0.9rem;
     line-height: 1.8;
 }
-.card .mt, .chips.mt { margin-top: 1.1rem; }
+.card .mt, .chips.mt, .card.mt { margin-top: var(--space-4); }
 .card.mb, .grid.mb { margin-bottom: 1rem; }
 .card.narrow { max-width: 500px; }
 
@@ -368,42 +493,11 @@ h2.headline.sub {
     opacity: 0.65;
 }
 
-/* ---- Page-load intro ------------------------------------------------------
-   Hidden by default and only shown when the head script adds `html.intro`.
-   That script runs before first paint, and only when motion is allowed and the
-   sequence hasn't already played this session — so no-JS and reduced-motion
-   visitors never see an overlay that JS would then have to remove. An intro
-   that can strand someone on a black screen is a bug, not a brand moment. */
-.intro-overlay { display: none; }
-html.intro { overflow: hidden; }
-html.intro .intro-overlay {
-    display: flex;
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: var(--bg);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2.5rem;
-    will-change: transform;
-}
-.intro-stage { position: relative; display: grid; place-items: center; width: min(46vw, 320px); }
-.intro-frame { width: 100%; height: auto; stroke: var(--line-strong); stroke-width: 1; vector-effect: non-scaling-stroke; }
-.intro-mark { position: absolute; width: 34%; height: auto; color: var(--fg); stroke: currentColor; }
-.intro-count {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.32em;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-}
-
 /* ---- Page transitions -----------------------------------------------------
    One curtain, swept across two page loads: clicking a link raises it from the
    bottom over the outgoing page, and the incoming page raises it the rest of
    the way off the top. One edge, travelling in one direction, across a real
-   navigation — the same move as the intro curtain and the same sentence as
+   navigation — the same sentence as
    every other transition here.
 
    Not CSS view transitions. They are the better mechanism on paper — no
@@ -420,7 +514,7 @@ html.intro .intro-overlay {
 .page-curtain {
     position: fixed;
     inset: 0;
-    z-index: 9998;          /* under the load intro (9999), over everything else */
+    z-index: 9998;          /* over everything else */
     background: var(--bg);
     transform: translateY(100%);
     pointer-events: none;
@@ -446,6 +540,26 @@ html.pt-in.pt-go .page-curtain {
     .page-curtain { display: none; }
 }
 
+/* Skip link. Off-screen until focused rather than display:none — a hidden
+   element is not reachable by Tab, which is the entire point of it. */
+.skip-link {
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 10000;
+    transform: translateY(-120%);
+    padding: 0.7rem 1.1rem;
+    background: var(--bg);
+    border: 1px solid var(--coral);
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg);
+    transition: transform var(--dur-ui) var(--ease);
+}
+.skip-link:focus-visible { transform: translateY(0.5rem) translateX(0.5rem); }
+
 :focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
 
 /* ---- Mono label + section heading ---------------------------------------- */
@@ -453,14 +567,14 @@ html.pt-in.pt-go .page-curtain {
 
 .section-label {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     color: var(--muted);
     text-transform: uppercase;
     display: inline-flex;
     align-items: center;
     gap: 0.6em;
-    margin-bottom: 1.4rem;
+    margin-bottom: var(--space-5);
 }
 .section-label::before { content: "//"; color: var(--coral); }
 /* Trailing rule. A real element (see Kicker in reveal.tsx), not ::after —
@@ -490,31 +604,108 @@ html.pt-in.pt-go .page-curtain {
 .r-word { display: inline-block; will-change: transform; }
 
 .section {
-    padding: clamp(4rem, 10vw, 8rem) 0;
+    padding: var(--space-section) 0;
     position: relative;
     z-index: 1;
 }
 
-/* Stages carry the scrubbed choreography from stage.tsx — they are NOT forced
-   to full height. A 100vh floor per section was tried and reverted: sections
-   like contact and cooperation hold a headline and one row of cards, so the
-   screen-per-section rule padded them out with dead space and read worse than
-   the tighter rhythm it replaced. Sections size to their content; the motion
-   is what makes them feel alive, not the emptiness around them. */
+.side-dither {
+    --d: clamp(220px, 24vw, 380px);
+    position: absolute;
+    width: var(--d);
+    height: var(--d);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.85;
+    transform: translateY(-50%);
+}
+.side-dither.left  { left: 0; }
+.side-dither.right { right: 0; }
+/* orb: a sphere cropped by the screen edge, soft rim */
+.side-dither.orb { border-radius: 50%; -webkit-mask-image: radial-gradient(circle, #000 52%, transparent 71%); mask-image: radial-gradient(circle, #000 52%, transparent 71%); }
+.side-dither.orb.left  { transform: translate(-42%, -50%); }
+.side-dither.orb.right { transform: translate(42%, -50%); }
+/* plate: a framed panel, inset from the edge, dither fading toward the copy */
+.side-dither.plate {
+    width: calc(var(--d) * 0.7);
+    height: calc(var(--d) * 1.05);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    opacity: 0.8;
+}
+.side-dither.plate.left  { left: var(--gutter); }
+.side-dither.plate.right { right: var(--gutter); }
+.side-dither.plate > .mk { position: absolute; width: 10px; height: 10px; z-index: 1; }
+.side-dither.plate > .mk.tl { top: 6px; left: 6px; border-top: 1px solid var(--coral); border-left: 1px solid var(--coral); }
+.side-dither.plate > .mk.br { bottom: 6px; right: 6px; border-bottom: 1px solid var(--coral); border-right: 1px solid var(--coral); }
+/* arc: a ring, half off screen, fading at both of its edges */
+.side-dither.arc { --d: clamp(300px, 32vw, 520px); -webkit-mask-image: radial-gradient(circle, transparent 34%, #000 46%, #000 56%, transparent 68%); mask-image: radial-gradient(circle, transparent 34%, #000 46%, #000 56%, transparent 68%); }
+.side-dither.arc.left  { transform: translate(-45%, -50%); }
+.side-dither.arc.right { transform: translate(45%, -50%); }
+@media (max-width: 900px) { .side-dither { --d: 46vw; opacity: 0.6; } .side-dither.plate { display: none; } }
+
+/* ---- Screen-high segments -------------------------------------------------
+   The homepage snaps (useSmoothScroll + lib/snap.ts): when scrolling stops
+   between two segments it glides to one of them, so every segment has to
+   fill the screen exactly — a section shorter than the viewport would leave
+   the next one half in view at rest.
+
+   This reverses an earlier call. A 100vh floor was once tried and dropped
+   for padding short sections (contact, cooperation) with dead space; with
+   the snap, a screen per segment is the unit the page is read in, so the
+   content is centred in its screen instead of sitting at the top of it.
+
+   svh, not vh: on a phone vh is the height with the address bar hidden, so a
+   100vh segment overhangs the visible screen whenever the bar is showing.
+   Taller content still grows the segment — the snap treats it as a range.
+
+   Homepage only (`main.snap-page`): the subpages share Stage and the footer
+   but don't snap, and keep their content-height rhythm. */
+.snap-page .section.stage,
+.snap-page .mission,
+.snap-page .seg,
+.snap-page ~ .site-footer {
+    min-height: 100vh;
+    min-height: 100svh;
+}
+.snap-page .section.stage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/* a flex column item with auto side margins shrinks to its content */
+.snap-page .section.stage > .wrap { width: 100%; }
+/* hero + ticker / ticker + cooperation share one screen: the section takes
+   whatever the strip leaves */
+.seg {
+    display: flex;
+    flex-direction: column;
+}
+/* specific enough to beat the 100svh floor above for the section inside */
+.snap-page .seg > .hero,
+.snap-page .seg > .section.stage {
+    flex: 1 0 auto;
+    min-height: 0;
+}
 @media (min-width: 901px) {
     /* the choreography animates transform + opacity on this element every
        frame it's on screen — promote it once rather than per-tween */
     .section.stage > .wrap { will-change: transform, opacity; }
 }
 
+/* h1 on the article subpages, h2 everywhere a section opens under the
+   wordmark h1 — same treatment either way. */
+h1.headline,
 h2.headline {
     font-family: var(--font-brand);
     font-weight: 700;
-    font-size: clamp(1.9rem, 5vw, 3.2rem);
+    font-size: var(--text-display);
     line-height: 1.05;
     letter-spacing: -0.02em;
-    margin-bottom: 2.5rem;
+    margin-bottom: var(--space-7);
 }
+h1.headline .thin,
 h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 
 .eyebrow {
@@ -535,7 +726,7 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1rem clamp(1rem, 4vw, 2.5rem);
+    padding: var(--space-4) var(--gutter);
     background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0));
     backdrop-filter: blur(6px);
     /* transition lives with the .hidden rule below, so all four properties are
@@ -552,10 +743,23 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
    `transform` moves, so this stays off the layout/paint path entirely. */
 .site-nav {
     transform: translateY(0);
-    transition: background var(--dur-enter) var(--ease), padding var(--dur-enter) var(--ease),
-                border-color var(--dur-enter) var(--ease), transform var(--dur-ui) var(--ease);
+    /* no colour transition — §6.9 */
+    transition: padding var(--dur-enter) var(--ease), transform var(--dur-ui) var(--ease);
 }
 .site-nav.hidden { transform: translateY(-105%); }
+
+/* Desktop: logo and actions are different widths, so auto margins put the
+   links off-centre by half the difference. Equal outer columns centre them on
+   the screen. The toggle button is display:none here, so it takes no cell. */
+@media (min-width: 901px) {
+    .site-nav {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+    }
+    .site-nav > .nav-logo { justify-self: start; }
+    .site-nav > .nav-actions { justify-self: end; }
+    .site-nav > .nav-links { margin: 0; }
+}
 
 /* ---- Read progress -------------------------------------------------------
    Coral hairline pinned to the top edge, scrubbed 1:1 to document progress.
@@ -600,7 +804,7 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     letter-spacing: 0.12em;
     text-transform: uppercase;
 }
-.nav-links a { color: var(--muted-2); transition: color 0.2s; position: relative; }
+.nav-links a { color: var(--muted-2); position: relative; }   /* no colour transition — §6.9 */
 .nav-links a::after {
     content: "";
     position: absolute;
@@ -619,27 +823,30 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 .nav-actions { display: flex; gap: 0.5rem; align-items: center; }
 .nav-btn {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--text-2xs);
     letter-spacing: 0.12em;
     padding: 0.5rem 0.85rem;
     border: 1px solid var(--line-strong);
     color: var(--muted-2);
-    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    /* no colour transition — §6.9 */
     text-transform: uppercase;
     white-space: nowrap;
     will-change: transform;
 }
 .nav-btn:hover { border-color: var(--coral); color: var(--fg); }
+.nav-btn:active { border-color: var(--coral); background: rgba(var(--coral-rgb), 0.14); }
 .nav-btn.pill { border-radius: 999px; }
 
 .nav-toggle { display: none; }
 
-/* mobile-only GitHub entry inside the dropdown, see nav-links-github in Site.tsx */
-.nav-links-github { display: none; }
-
 /* ============================================================================
    VERTICAL SECTION TABS
    ========================================================================== */
+/* Dimension chain. This was a scrollspy tab list — a stack of ticks that
+   happened to sit on the left edge. A drawing measures along a chain: one
+   extension line, a tick at every station, the stations numbered, and an
+   arrowhead on the dimension actually being called out. Same information,
+   read as part of the drawing instead of as website furniture. */
 .scroll-tabs {
     position: fixed;
     left: clamp(0.6rem, 2vw, 1.4rem);
@@ -648,32 +855,82 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     z-index: 90;
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
+    gap: var(--space-3);
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: var(--text-micro);
     letter-spacing: 0.16em;
 }
+/* The extension line the stations are measured along. Inset by half a row so
+   it starts and ends ON the first and last tick, not past them. */
+.scroll-tabs::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.35rem;
+    bottom: 0.35rem;
+    width: 1px;
+    background: var(--line);
+}
 .scroll-tabs a {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: var(--space-2);
     color: var(--muted);
     text-transform: uppercase;
-    transition: color 0.25s;
+    /* no colour transition — §6.9 */
 }
-.scroll-tabs a .tick { width: 14px; height: 1px; background: var(--line-strong); transition: width 0.35s var(--ease-spring), background 0.25s; }
-.scroll-tabs a .lbl { opacity: 0; transform: translateX(-4px); transition: opacity 0.25s, transform 0.25s var(--ease); }
+.scroll-tabs a .tick {
+    width: 10px; height: 1px;
+    background: var(--line-strong);
+    flex-shrink: 0;
+    transition: width var(--dur-ui) var(--ease-spring);
+}
+/* Terminators: the two ends of a dimension chain are drawn longer. Costs no
+   extra markup — the first and last station already exist. */
+.scroll-tabs a:first-child .tick,
+.scroll-tabs a:last-child .tick { width: 16px; }
+/* The station number is the dimension value, so it is always legible; the
+   name is the annotation and only appears when you go looking for it. */
+.scroll-tabs a .idx {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    /* no colour transition — §6.9 */
+}
+.scroll-tabs a .lbl {
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity var(--dur-ui) var(--ease), transform var(--dur-ui) var(--ease);
+}
 .scroll-tabs a:hover .lbl { opacity: 1; transform: none; }
 .scroll-tabs a:hover .tick { width: 20px; }
 .scroll-tabs a.active { color: var(--fg); }
 .scroll-tabs a.active .tick { width: 26px; background: var(--coral); }
+.scroll-tabs a.active .idx { color: var(--coral); }
 .scroll-tabs a.active .lbl { opacity: 1; transform: none; }
+/* Arrowhead on the station being called out, sitting on the extension line. */
+.scroll-tabs a.active::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    width: 0; height: 0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-left: 5px solid var(--coral);
+}
 
-/* Over a light band (mission section passes under the fixed tabs) — flip to
-   dark text so it stays legible. Active tab keeps coral (readable on both). */
+/* Over a light band (mission section passes under the fixed chain) — flip to
+   dark so it stays legible. Active station keeps coral (readable on both). */
+.scroll-tabs.on-light::before { background: rgba(0,0,0,0.18); }
+/* Cleared out of the way over the project stack and the finale — the type is
+   full-width there and the rail would sit on top of it. */
+.scroll-tabs { transition: opacity var(--dur-ui) var(--ease); }
+.scroll-tabs.is-away { opacity: 0; pointer-events: none; }
 .scroll-tabs.on-light a { color: rgba(0,0,0,0.45); }
 .scroll-tabs.on-light a .tick { background: rgba(0,0,0,0.3); }
+.scroll-tabs.on-light a .idx { color: rgba(0,0,0,0.45); }
 .scroll-tabs.on-light a.active { color: #111; }
+.scroll-tabs.on-light a.active .idx { color: var(--coral-dark); }
 
 /* ============================================================================
    HERO
@@ -703,6 +960,12 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
    seen. Two constraints hold regardless of how visible it gets (BRANDING.md
    §6): the colour stays desaturated so it reads as texture rather than a
    coral field, and the blueprint grid must remain legible through it. */
+.hero-zoom {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
 .hero-shader {
     position: absolute;
     inset: 0;
@@ -817,7 +1080,7 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 /* scramble/decode claim */
 .hero-claim {
     font-family: var(--font-mono);
-    font-size: clamp(0.95rem, 2.4vw, 1.25rem);
+    font-size: var(--text-lead);
     color: var(--muted-2);
     letter-spacing: 0.02em;
     max-width: 42ch;
@@ -845,7 +1108,7 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     gap: 0.2rem;
 }
 .stat:last-child { border-right: 0; }
-.stat .n { font-family: var(--font-massive); font-size: 1.7rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat .n { font-family: var(--font-massive); font-weight: 700; font-size: 1.7rem; line-height: 1; font-variant-numeric: tabular-nums; }
 .stat .l { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
 
 /* hero cta buttons */
@@ -856,13 +1119,13 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     align-items: center;
     gap: 0.55rem;
     font-family: var(--font-mono);
-    font-size: 0.82rem;
+    font-size: var(--text-xs);
     letter-spacing: 0.06em;
     padding: 0.7rem 1.2rem;
     border: 1px solid var(--line-strong);
     color: var(--fg);
     overflow: hidden;
-    transition: border-color 0.2s, background 0.2s, color 0.2s;
+    /* no colour transition — §6.9 */
     will-change: transform;
 }
 .btn svg { width: 1.1em; height: 1.1em; display: block; }
@@ -917,6 +1180,16 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 .btn.primary { background: var(--coral); border-color: var(--coral); color: #000; }
 .btn.primary::before { background: rgba(255,255,255,0.22); }
 .btn.primary:hover { border-color: var(--coral-soft); }
+/* Press. Magnetic already scales a hydrated button to 0.96 via GSAP, so this
+   deliberately leaves `transform` alone — GSAP owns it on .btn, and a CSS
+   transform here would fight the inline one. What it adds is for everything
+   Magnetic doesn't reach: the raw `<a class="btn">` in .astro pages, anything
+   before hydration, and reduced-motion visitors, where Magnetic is off and a
+   press used to produce no feedback at all. The wipe snaps fully in with no
+   transition — a press should read as instant. */
+.btn:active::before { transform: scaleX(1); background: rgba(var(--coral-rgb), 0.2); transition-duration: 0s; }
+.btn.primary:active { filter: brightness(0.9); }
+.btn:focus-visible::before { transform: scaleX(1); }
 
 
 /* ============================================================================
@@ -949,10 +1222,10 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     color: var(--light-fg);
     position: relative;
     z-index: 2;
-    padding: clamp(4rem, 10vw, 7rem) 0;
+    padding: var(--space-section) 0;
     /* The band clips its own decoration (`overflow: hidden` below), so it needs
-       a floor tall enough for the blueprint mark plus its parallax travel.
-       Content alone left it at ~428px, shorter than the 440px mark. */
+       a floor tall enough for the blueprint mark plus its parallax travel —
+       a full screen on the homepage (see "Screen-high segments"). */
     min-height: 30rem;
     display: flex;
     flex-direction: column;
@@ -1005,10 +1278,90 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     z-index: 0;
 }
 
+
+/* ---- Screen-filling About / Mission ---------------------------------------
+   Both are a full screen on the homepage (snap), so the type scales with it
+   instead of sitting small in the middle of a lot of empty space. */
+.snap-page #about .headline {
+    font-size: clamp(2.6rem, 6.4vw, 6.25rem);
+    line-height: 1;
+    max-width: 11ch;
+}
+.snap-page #about .about-grid p { font-size: clamp(1rem, 1.3vw, 1.3rem); line-height: 1.55; }
+.snap-page #about .card { padding: clamp(1.25rem, 2.2vw, 2rem); }
+.snap-page #about .card h3 { font-size: clamp(1.1rem, 1.5vw, 1.5rem); }
+.snap-page #about .card p { font-size: clamp(0.9rem, 1.05vw, 1.05rem); }
+
+.about-facts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    margin-top: clamp(2.5rem, 8vh, 6rem);
+    border-top: 1px solid var(--line-strong);
+}
+.about-facts > div { padding-top: var(--space-4); }
+.about-facts dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+}
+.about-facts dd {
+    margin: 0;
+    font-family: var(--font-brand);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.4vw, 3.25rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.snap-page .mission .big {
+    font-size: clamp(2.4rem, 7.2vw, 7.5rem);
+    line-height: 1.02;
+    max-width: 14ch;
+}
+.mission-points {
+    list-style: none;
+    margin: clamp(2.5rem, 9vh, 6rem) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+.mission-points li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-top: var(--space-4);
+    max-width: 28ch;
+    color: #444;
+}
+.mission-points .mp-n {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.22em;
+    color: var(--coral);
+}
+.mission-points b {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.05rem, 1.5vw, 1.4rem);
+    color: var(--light-fg);
+}
+@media (max-width: 900px) {
+    .about-facts { grid-template-columns: repeat(2, 1fr); }
+    .mission-points { grid-template-columns: 1fr; gap: var(--space-3); }
+}
+
 /* ============================================================================
-   CARDS (team / contact / collab)
+   CARDS (about / contact / collab)
    ========================================================================== */
-.grid { display: grid; gap: 1rem; }
+.grid { display: grid; gap: var(--space-4); }
 .cols-3 { grid-template-columns: repeat(3, 1fr); }
 .cols-2 { grid-template-columns: repeat(2, 1fr); }
 .span-2 { grid-column: span 2; }
@@ -1018,35 +1371,30 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     position: relative;
     /* background-color set by the glass block; `background` shorthand here
        would blow away the gradient it layers on top */
-    border: 1px solid var(--line);
-    padding: 1.5rem;
-    transition: border-color 0.25s, background 0.25s;
+    border: 1px solid var(--edge-flush);
+    padding: var(--space-5);
+    /* no colour transition — §6.9 */
     overflow: hidden;
     height: 100%;
 }
-.card::before {  /* faint blueprint scan on hover */
-    content: "";
-    position: absolute; inset: 0;
-    background:
-        linear-gradient(var(--line-faint) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
-    background-size: 22px 22px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
+/* Raised on hover AND on focus-within, so a keyboard user tabbing to a link
+   inside a card sees the same lift a pointer user does. */
+.card:hover,
+.card:focus-within {
+    border-color: var(--edge-raised);
+    box-shadow: inset 0 1px 0 var(--glass-edge-raised);
 }
-.card:hover { border-color: var(--line-strong); }
-.card:hover::before { opacity: 1; }
 /* Corner crosshair markers. They scale out of their own corner rather than
    just fading — a CAD registration mark being struck, which is the whole
    point of the motif (BRANDING.md §6). */
 .card > .mk {
     position: absolute; width: 8px; height: 8px; z-index: 2;
-    opacity: 0;
-    transform: scale(0.2);
+    opacity: var(--mk-rest-opacity);
+    transform: scale(var(--mk-rest-scale));
     transition: opacity var(--dur-micro) var(--ease), transform var(--dur-ui) var(--ease-spring);
 }
-.card:hover > .mk { opacity: 1; transform: scale(1); }
+.card:hover > .mk,
+.card:focus-within > .mk { opacity: 1; transform: scale(1); }
 /* Concentric with the card's corner: inset 4px inside an 8px radius means the
    mark's own bend is 8 - 4 = 4px. Leave it square and it visibly cuts across
    the rounded corner it's supposed to trace. Origin sits in the corner the
@@ -1057,12 +1405,12 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 .card h3 {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 1.15rem;
+    font-size: var(--text-md);
     display: flex; align-items: center; gap: 0.55rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: var(--space-2);
 }
 .card h3 svg { width: 20px; height: 20px; stroke: var(--coral); fill: none; stroke-width: 1.6; flex-shrink: 0; }
-.card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.1rem; }
+.card p { color: var(--muted); font-size: var(--text-sm); margin-bottom: var(--space-4); }
 /* Layered ON the glass, not instead of it. This used the `background`
    shorthand, which replaced the glass gradient outright — six feature cards on
    qrgate and baxi were flat while every other card was glass. Two
@@ -1071,24 +1419,30 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     background-image:
         linear-gradient(180deg, rgba(var(--coral-rgb),0.10), transparent 62%),
         linear-gradient(to bottom, var(--glass-tint), var(--glass-tint-2));
+    border-color: var(--edge-raised);
+    box-shadow: inset 0 1px 0 var(--glass-edge-raised);
 }
 
 /* mono chips + links */
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .chip {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: var(--text-2xs);
     letter-spacing: 0.04em;
     padding: 0.28rem 0.55rem;
     border: 1px solid var(--line);
     color: var(--muted-2);
     white-space: nowrap;
-    transition: border-color 0.2s, color 0.2s, transform 0.2s var(--ease-spring);
+    /* no colour transition — §6.9 */
+    transition: transform var(--dur-micro) var(--ease-spring);
 }
 .chip::before { content: "["; color: var(--coral); margin-right: 0.15em; opacity: 0.7; }
 .chip::after  { content: "]"; color: var(--coral); margin-left: 0.15em; opacity: 0.7; }
 .chip.link { color: var(--fg); }
 .chip.link:hover { border-color: var(--coral); transform: translateY(-2px); }
+/* Chips are CSS-animated only, so here the press can use transform: it lands
+   back from the hover lift, which reads as the chip being pushed in. */
+.chip.link:active { transform: translateY(0); color: var(--coral); }
 
 /* ============================================================================
    PROJECTS — pinned horizontal-scroll showcase
@@ -1127,7 +1481,7 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     align-items: center;
     gap: 0.8rem;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     color: var(--muted);
     text-transform: uppercase;
@@ -1152,25 +1506,13 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     flex: 0 0 auto;
     width: min(82vw, 560px);
     height: min(72vh, 560px);
-    border: 1px solid var(--line);
-    padding: clamp(1.4rem, 2.5vw, 2.2rem);
+    border: 1px solid var(--edge-flush);
+    padding: var(--space-panel);
     display: flex;
     flex-direction: column;
     gap: 1rem;
     overflow: hidden;                        /* one ghost per card, clipped cleanly */
-    transition: border-color 0.3s, background 0.3s;
-}
-.proj-panel::before {  /* faint blueprint scan on hover */
-    content: "";
-    position: absolute; inset: 0;
-    background:
-        linear-gradient(var(--line-faint) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
-    background-size: 26px 26px;
-    opacity: 0;
-    transition: opacity 0.35s;
-    pointer-events: none;
-    z-index: 0;
+    /* no colour transition — §6.9 */
 }
 /* Every panel is scrubbed on transform + opacity for its whole pass through
    the pin, so promote them once up front rather than letting the compositor
@@ -1180,14 +1522,16 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 .proj-panel { will-change: transform, opacity; }
 .proj-panel.clickable { cursor: pointer; }
 .proj-panel:hover { border-color: var(--coral); background-color: rgba(18,12,10,0.6); }
-.proj-panel:hover::before { opacity: 1; }
+/* transform belongs to the pin scrub — press is colour only */
+.proj-panel.clickable:active { border-color: var(--coral-soft); background-color: rgba(30,17,12,0.72); }
 .proj-panel > .mk {
     position: absolute; width: 10px; height: 10px; z-index: 3;
-    opacity: 0;
-    transform: scale(0.2);
+    opacity: var(--mk-rest-opacity);
+    transform: scale(var(--mk-rest-scale));
     transition: opacity var(--dur-micro) var(--ease), transform var(--dur-ui) var(--ease-spring);
 }
-.proj-panel:hover > .mk { opacity: 1; transform: scale(1); }
+.proj-panel:hover > .mk,
+.proj-panel:focus-within > .mk { opacity: 1; transform: scale(1); }
 .proj-panel > .mk.tl { top: 4px; left: 4px; border-top: 1px solid var(--coral); border-left: 1px solid var(--coral); border-top-left-radius: 4px; transform-origin: top left; }
 .proj-panel > .mk.br { bottom: 4px; right: 4px; border-bottom: 1px solid var(--coral); border-right: 1px solid var(--coral); border-bottom-right-radius: 4px; transform-origin: bottom right; }
 
@@ -1236,40 +1580,17 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 
 /* vertical fallback: small screens (CSS) and reduced-motion (.no-pin) */
 @media (max-width: 900px) {
-    .proj-h { padding: clamp(3rem,10vw,5rem) 0; }
-    .proj-track { flex-direction: column; height: auto; transform: none !important; gap: 1rem; padding: 0 clamp(1rem,4vw,2.5rem); align-items: stretch; }
+    .proj-h { padding: var(--space-block) 0; }
+    .proj-track { flex-direction: column; height: auto; transform: none !important; gap: 1rem; padding: 0 var(--gutter); align-items: stretch; }
     .proj-intro { width: 100%; padding: 0 0 1rem; margin-right: 0; }
     .proj-panel { width: 100%; height: auto; min-height: 300px; }
     .proj-progress { display: none; }
 }
-.proj-h.no-pin { overflow: visible; padding: clamp(3rem,10vw,5rem) 0; }
-.proj-h.no-pin .proj-track { flex-direction: column; height: auto; transform: none; gap: 1rem; padding: 0 clamp(1rem,4vw,2.5rem); align-items: stretch; }
+.proj-h.no-pin { overflow: visible; padding: var(--space-block) 0; }
+.proj-h.no-pin .proj-track { flex-direction: column; height: auto; transform: none; gap: 1rem; padding: 0 var(--gutter); align-items: stretch; }
 .proj-h.no-pin .proj-intro { width: 100%; margin-right: 0; padding: 0 0 1rem; }
 .proj-h.no-pin .proj-panel { width: 100%; height: auto; min-height: 300px; }
 .proj-h.no-pin .proj-progress { display: none; }
-
-/* ============================================================================
-   TEAM
-   ========================================================================== */
-.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-.staff { padding: 0; }
-.staff .banner { height: 120px; width: 100%; object-fit: cover; filter: grayscale(0.4) contrast(1.05); transition: filter 0.4s var(--ease); }
-.staff:hover .banner { filter: grayscale(0) contrast(1); }
-.staff .avatar {
-    width: 68px; height: 68px; border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--bg);
-    outline: 1px solid var(--line-strong);
-    margin: -34px auto 0;
-    position: relative; z-index: 2;
-    background: var(--panel);
-    transition: outline-color 0.3s;
-}
-.staff:hover .avatar { outline-color: var(--coral); }
-.staff .body { padding: 0.8rem 1.3rem 1.5rem; text-align: center; }
-.staff .body h3 { justify-content: center; font-size: 1.05rem; margin-bottom: 0.4rem; }
-.staff .body p { font-size: 0.85rem; margin-bottom: 0.9rem; }
-.staff .chips { justify-content: center; }
 
 /* ============================================================================
    CONTACT
@@ -1284,7 +1605,7 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     font-size: 0.85rem;
     position: relative;
     display: inline-block;
-    transition: color var(--dur-micro) var(--ease);
+    /* no colour transition — §6.9 */
 }
 .accent-link::after {
     content: "";
@@ -1318,7 +1639,7 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     align-items: center;
     justify-content: center;
     gap: clamp(2.5rem, 6vh, 5rem);
-    padding: clamp(5rem, 12vh, 9rem) 1rem clamp(3rem, 7vh, 5rem);
+    padding: clamp(5rem, 12vh, 9rem) var(--gutter) clamp(3rem, 7vh, 5rem);
     overflow: hidden;
     text-align: center;
 }
@@ -1347,18 +1668,564 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     pointer-events: none;
     z-index: -1;
 }
-.footer-meta {
-    display: flex; flex-wrap: wrap; gap: 1.4rem;
-    justify-content: center; align-items: center;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    padding: 0 1rem;   /* the footer's own flex gap does the spacing now */
+/* ============================================================================
+   SCENE CHANGES — useRecede (curtain.ts) + the project stack
+   A receding scene dims through `--shade` on an overlay, set by GSAP. The
+   overlay inherits the radius the scene takes on as it steps back.
+   ========================================================================== */
+.recede::after,
+.ps-scene::after,
+.ps-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    background: #000;
+    opacity: var(--shade, 0);
+    border-radius: inherit;
+    pointer-events: none;
 }
-.footer-meta a { transition: color 0.2s; }
-.footer-meta a:hover { color: var(--fg); }
-.footer-meta .sep { color: var(--line-strong); }
+.recede { will-change: transform; }
+
+/* ============================================================================
+   PROJECT STACK — fullscreen product scenes (ProjectStack.tsx)
+   Base rules: scenes in normal flow, one screen each (phones, reduced
+   motion, no JS). Desktop with motion: one pinned viewport, scenes stacked
+   on top of each other and slid in by the timeline.
+   ========================================================================== */
+.proj-stack {
+    position: relative;
+    z-index: 3;            /* slides over the receding mission band */
+}
+.ps-view { position: relative; }
+.ps-frame { position: relative; }
+
+.ps-scene {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    overflow: hidden;
+    background: var(--bg);
+    display: flex;
+}
+@media (min-width: 901px) {
+    html.gsap-ready .ps-view { height: 100vh; }
+    html.gsap-ready .ps-frame {
+        height: 100%;
+        overflow: hidden;
+        will-change: transform;
+    }
+    html.gsap-ready .ps-scene {
+        position: absolute;
+        inset: 0;
+        min-height: 0;
+    }
+    /* hidden until the timeline focuses them in — set here too so nothing
+       flashes before hydration */
+    html.gsap-ready .ps-scene + .ps-scene { opacity: 0; visibility: hidden; }
+    /* layers the focus pull blurs and moves */
+    html.gsap-ready .ps-inner > *,
+    html.gsap-ready .ps-bg { will-change: transform, opacity, filter; }
+}
+
+/* the intro scene carries the blueprint grid itself — it is opaque, so the
+   fixed body grid can't show through it */
+.ps-intro {
+    background-color: var(--bg);
+    background-image:
+        linear-gradient(var(--line-faint) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
+    background-size: var(--grid-fine) var(--grid-fine);
+}
+
+.ps-bg {
+    position: absolute;
+    inset: 0;
+    will-change: transform;
+}
+.ps-shader {
+    position: absolute;
+    inset: 0;
+    opacity: 0.55;
+}
+/* legibility: the copy sits bottom-left, so the texture fades out under it
+   instead of being masked to a hard hole */
+.ps-card .ps-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.45) 45%, transparent 75%),
+        linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 45%);
+}
+
+.ps-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: clamp(6rem, 12vh, 8rem) var(--gutter) clamp(4.5rem, 10vh, 6.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-6);
+}
+
+/* ---- intro ---- */
+.ps-intro .ps-inner { justify-content: center; max-width: 1560px; }
+.ps-intro-title {
+    font-family: var(--font-brand);
+    font-weight: 800;
+    /* Capped by what fits the longest word: the line mask clips anything
+       wider, which is how PRODUCTS lost its S on a wide screen. Same 1.25em
+       per glyph as .ps-name. */
+    font-size: min(clamp(2.6rem, 8vw, 7.5rem), calc((min(100vw, 1560px) - 2 * var(--gutter)) / (var(--len, 8) * 1.25)));
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0.2rem 0 var(--space-5);
+}
+.ps-intro-lede {
+    color: var(--muted);
+    font-size: var(--text-lead);
+    max-width: 38ch;
+}
+.ps-index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: var(--space-4);
+}
+.ps-index b { color: var(--coral); font-weight: 400; margin-right: 0.7em; }
+
+/* ---- product card ----
+   Desktop: two columns over the full screen width — name, copy and actions
+   on the left, the spec panel (features + facts) on the right, both sitting
+   on the bottom edge with the texture open above them. The old single
+   column held to --maxw left most of a wide screen empty. */
+.ps-card .ps-inner {
+    --spec-w: clamp(300px, 27vw, 430px);
+    --col-gap: clamp(2rem, 4vw, 5rem);
+    /* width the name may use: the left column */
+    --name-w: calc(min(100vw, 1560px) - 2 * var(--gutter) - var(--spec-w) - var(--col-gap));
+    max-width: 1560px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--spec-w);
+    grid-template-rows: auto 1fr;
+    column-gap: var(--col-gap);
+    row-gap: var(--space-6);
+}
+.ps-card .ps-top { grid-column: 1 / -1; }
+.ps-card .ps-body { grid-column: 1; align-self: end; }
+.ps-card .ps-spec { grid-column: 2; align-self: end; }
+
+.ps-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ps-num {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.18em;
+    color: var(--coral);
+}
+.ps-of { color: var(--muted); }
+.ps-icon svg { width: 36px; height: 36px; stroke: var(--fg); fill: none; stroke-width: 1.4; }
+.ps-body { min-width: 0; }
+.ps-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.4rem;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+.ps-tags span::before { content: "// "; color: var(--coral); }
+.ps-name {
+    font-family: var(--font-brand);
+    font-weight: 800;
+    /* the smaller of the display size and what fits the longest word on one
+       line. 1.25em per glyph: measured up to ~1.2em for wide uppercase Syne
+       (EDUGRADE), plus a little air before the screen edge */
+    font-size: min(clamp(2.8rem, 9vw, 9rem), calc(var(--name-w, 100vw) / (var(--len, 6) * 1.25)));
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-5);
+    overflow-wrap: normal;
+    word-break: keep-all;
+}
+.ps-desc {
+    color: rgba(255,255,255,0.78);
+    font-size: var(--text-lead);
+    line-height: 1.5;
+    max-width: 44ch;
+    margin-bottom: var(--space-6);
+}
+.ps-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+}
+.ps-actions .chips { margin: 0; }
+
+/* Chapter number: huge, in the open upper half of the scene where the texture
+   is — it gives that half a subject without covering the dither.
+   Mono, solid, faint. It used to be Syne 800 with a text-stroke outline, and
+   Syne's glyphs are built from overlapping contours: a stroke draws every
+   overlap, so the 4 came apart into loose rectangles and triangles. A solid
+   fill never shows contours, and the mono face matches the "04 / 06" readout
+   it echoes. */
+.ps-ghost {
+    position: absolute;
+    z-index: 0;
+    top: clamp(8.5rem, 20vh, 14rem);
+    left: var(--gutter);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: clamp(6rem, 26vh, 20rem);
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    font-variant-numeric: tabular-nums;
+    color: rgba(255,255,255,0.09);
+    pointer-events: none;
+    user-select: none;
+}
+.ps-card .ps-body,
+.ps-card .ps-spec { position: relative; z-index: 1; }
+
+/* Spec panel — a glass sheet, the one boxed element on the scene. */
+.ps-spec {
+    position: relative;
+    padding: var(--space-5);
+    border: 1px solid var(--edge-flush);
+    border-radius: var(--radius-lg);
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, var(--glass-tint), var(--glass-tint-2));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.15);
+            backdrop-filter: blur(var(--glass-blur)) saturate(1.15);
+    box-shadow: inset 0 1px 0 var(--glass-edge);
+}
+.ps-spec-head {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--line);
+}
+.ps-spec-head span:first-child::before { content: "// "; color: var(--coral); }
+.ps-feats { list-style: none; }
+.ps-feats li {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr;
+    align-items: baseline;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line-faint);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    color: rgba(255,255,255,0.86);
+}
+.ps-feat-n {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.12em;
+    color: var(--coral);
+}
+.ps-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+}
+.ps-facts dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+}
+.ps-facts dd {
+    font-size: var(--text-sm);
+    color: var(--fg);
+    overflow-wrap: anywhere;
+}
+
+/* registration marks in the screen corners — the card frame without a box */
+.ps-card > .mk {
+    position: absolute;
+    z-index: 2;
+    width: 14px;
+    height: 14px;
+}
+.ps-card > .mk.tl { top: var(--gutter); left: var(--gutter); border-top: 1px solid var(--coral); border-left: 1px solid var(--coral); }
+.ps-card > .mk.br { bottom: var(--gutter); right: var(--gutter); border-bottom: 1px solid var(--coral); border-right: 1px solid var(--coral); }
+
+/* readout: section label, counter, progress hairline — same as the finale */
+.ps-meta { display: none; }
+@media (min-width: 901px) {
+    html.gsap-ready .ps-meta {
+        position: absolute;
+        left: calc(var(--gutter) + 2rem);
+        right: calc(var(--gutter) + 2rem);
+        bottom: clamp(1.25rem, 4vh, 2.5rem);
+        z-index: 30;
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted);
+        pointer-events: none;
+    }
+}
+.ps-label::before { content: "// "; color: var(--coral); }
+.ps-count { margin-left: auto; font-variant-numeric: tabular-nums; }
+.ps-progress {
+    position: relative;
+    width: clamp(4rem, 14vw, 10rem);
+    height: 1px;
+    background: var(--line-strong);
+    overflow: hidden;
+}
+.ps-progress span {
+    position: absolute;
+    inset: 0;
+    background: var(--coral);
+    transform: scaleX(0);
+    transform-origin: left;
+}
+/* ---- phones ----
+   One column. `.ps-body` dissolves (display: contents) so its children and
+   the spec panel share one flex column and can be reordered: copy, then the
+   features, then the buttons last, where the thumb is. The top row takes the
+   free space, so everything else sits on the bottom edge under the texture.
+   Sticky stacking is switched on only with motion allowed — see
+   ProjectStack.tsx; reduced motion keeps plain flow. */
+@media (max-width: 900px) {
+    html.gsap-ready .ps-scene {
+        position: sticky;
+        top: 0;
+        will-change: transform;
+    }
+    .ps-card .ps-inner {
+        --name-w: calc(100vw - 2 * var(--gutter));
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+        padding: 5.5rem var(--gutter) 2.25rem;
+    }
+    .ps-card .ps-top { margin-bottom: auto; }
+    .ps-card .ps-body { display: contents; }
+    .ps-tags { margin: 0; gap: 0.3rem 1rem; }
+    .ps-name { font-size: min(clamp(2.4rem, 14vw, 4.5rem), calc(var(--name-w) / (var(--len, 6) * 1.25))); margin: 0; }
+    .ps-desc { font-size: var(--text-base); margin: 0; }
+    /* lighter on a phone: no glass (seven backdrop blurs on a sticky stack
+       is real cost on a phone GPU), no facts — the features carry it */
+    .ps-spec {
+        order: 1;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: none;
+        -webkit-backdrop-filter: none;
+                backdrop-filter: none;
+        box-shadow: none;
+    }
+    .ps-spec-head { display: none; }
+    .ps-feats { border-top: 1px solid var(--line); }
+    .ps-feats li { padding: 0.45rem 0; grid-template-columns: 2rem 1fr; font-size: var(--text-xs); }
+    .ps-facts { display: none; }
+    .ps-actions { order: 2; }
+    .ps-card .ps-bg::after {
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.1) 70%, transparent 100%);
+    }
+    .ps-card > .mk { display: none; }
+    .ps-ghost { display: none; }
+}
+
+/* ============================================================================
+   FINALE — closing title sequence (Finale.tsx)
+   Base rules are the static fallback (no JS / reduced motion): a normal
+   section with every line stacked over the frame. `html.gsap-ready` turns it
+   into the 420vh scrubbed sequence — armed before first paint by the head
+   script, so hydration never changes the page height under ScrollTrigger.
+   ========================================================================== */
+.finale {
+    position: relative;
+    z-index: 3;            /* slides over the receding support section */
+}
+html.gsap-ready .finale { height: 640vh; }
+
+.finale-stage {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+html.gsap-ready .finale-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+}
+
+/* The picture. Opaque, so the fixed body grid shows only in the margin while
+   the inset window is still opening. */
+.finale-frame {
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    overflow: hidden;
+}
+html.gsap-ready .finale-frame { clip-path: inset(4% 6% 4% 6% round 8px); }
+.finale-bg {
+    position: absolute;
+    inset: 0;
+    will-change: transform;
+}
+html.gsap-ready .finale-bg { transform: scale(1.14); }
+.finale-shader {
+    position: absolute;
+    inset: 0;
+    opacity: 0.3;
+    /* same rule as .hero-shader: the type's band stays clear, texture around it */
+    -webkit-mask-image: radial-gradient(ellipse 62% 34% at 50% 50%, transparent 20%, #000 95%);
+            mask-image: radial-gradient(ellipse 62% 34% at 50% 50%, transparent 20%, #000 95%);
+}
+.finale-vignette {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 60% 40% at 50% 62%, rgba(var(--coral-rgb), 0.08), transparent 70%),
+        linear-gradient(to bottom, var(--bg) 0%, transparent 18%, transparent 82%, var(--bg) 100%);
+    pointer-events: none;
+}
+
+.finale-copy {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-section) var(--gutter);
+    text-align: center;
+}
+/* One cell, every line in it — each sentence stands alone at the centre. */
+html.gsap-ready .finale-copy {
+    display: grid;
+    /* minmax(0, …): the name starts with very wide tracking and is nowrap —
+       an auto track would grow to fit it and push every line off-centre. It
+       overflows its cell evenly on both sides instead, and the stage clips. */
+    grid-template-columns: minmax(0, 1fr);
+    place-items: center;
+    width: 100%;
+    padding: 0 var(--gutter);
+}
+html.gsap-ready .finale-copy > * { grid-area: 1 / 1; }
+
+.finale-line {
+    font-family: var(--font-brand);
+    font-weight: 800;
+    font-size: clamp(1.6rem, 7vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    max-width: 14ch;
+    color: var(--fg);
+    will-change: filter, transform, opacity;
+}
+.finale-credit {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+}
+.finale-name {
+    font-family: var(--font-brand);
+    font-weight: 800;
+    font-size: clamp(1.7rem, 6.2vw, 6.5rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--fg);
+    will-change: filter, transform, opacity;
+}
+.finale-name .dot { color: var(--coral); }
+.finale-rule {
+    display: block;
+    width: min(28rem, 60vw);
+    height: 1px;
+    background: var(--coral);
+    transform-origin: 50% 50%;   /* draws from the centre out */
+}
+.finale-sub {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+html.gsap-ready .finale-line,
+html.gsap-ready .finale-name,
+html.gsap-ready .finale-sub { opacity: 0; }
+html.gsap-ready .finale-rule { transform: scaleX(0); }
+
+/* Readout along the bottom edge: scene label, counter, progress hairline. */
+.finale-meta { display: none; }
+html.gsap-ready .finale-meta {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: clamp(1.25rem, 4vh, 2.5rem);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+.finale-label::before { content: "// "; color: var(--coral); }
+.finale-count { margin-left: auto; font-variant-numeric: tabular-nums; }
+.finale-progress {
+    position: relative;
+    width: clamp(4rem, 14vw, 10rem);
+    height: 1px;
+    background: var(--line-strong);
+    overflow: hidden;
+}
+.finale-progress span {
+    position: absolute;
+    inset: 0;
+    background: var(--coral);
+    transform: scaleX(0);
+    transform-origin: left;
+}
 
 /* ============================================================================
    Responsive
@@ -1376,9 +2243,8 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
         border-top: 1px solid var(--line);
         padding: 0.5rem 0;
     }
-    .nav-links.open a { padding: 0.8rem clamp(1rem,4vw,2.5rem); border-bottom: 1px solid var(--line-faint); }
+    .nav-links.open a { padding: 0.8rem var(--gutter); border-bottom: 1px solid var(--line-faint); }
     .nav-links.open a::after { display: none; }
-    .nav-links-github { display: block; color: var(--coral); }
     .nav-toggle { display: flex; flex-direction: column; gap: 4px; padding: 0.4rem; }
     .nav-toggle span { width: 22px; height: 2px; background: var(--fg); transition: transform 0.3s, opacity 0.3s; }
     .nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
@@ -1386,12 +2252,12 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     .nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
     /* nav-links' auto-margin (which spaces the row on desktop) is gone once
        nav-links is display:none — without this, nav-actions crowds the logo
-       and the GitHub pill's hit-area used to overlap the hamburger. */
+       and the pill's hit-area used to overlap the hamburger. */
     .nav-actions { margin-left: auto; }
     .nav-actions .nav-btn.pill { display: none; }
     .scroll-tabs { display: none; }
     .about-grid { grid-template-columns: 1fr; }
-    .cols-3, .cols-2, .team-grid { grid-template-columns: 1fr; }
+    .cols-3, .cols-2 { grid-template-columns: 1fr; }
     .span-2, .span-3 { grid-column: span 1; }
     .mission .giant-mark, .mission .foil { display: none; }
 }
@@ -1411,3 +2277,270 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; scroll-behavior: auto; transition-duration: 0.01ms !important; }
 }
+
+/* ---- Craft Attack article subpages ----------------------------------------
+   Migrated out of the standalone files under public/craftattack/, which
+   shipped their own
+   nav, their own inline styles and a <link> to assets/css/main.css — a file
+   that does not exist in this repo, so those pages were rendering on CDN
+   Tailwind alone. Everything below reuses the existing tokens; there is no
+   second palette here. */
+
+.crumbs {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: var(--space-6);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+.crumbs a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line); }
+.crumbs a:hover { color: var(--coral); border-bottom-color: var(--coral); }
+.crumbs [aria-current] { color: var(--fg); }
+
+.ca-siblings {
+    margin-top: 4rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--line);
+}
+.ca-siblings .section-label { margin-bottom: 0.9rem; }
+
+/* Long-form body copy for these pages. `.prose` caps at 62ch, which is right
+   for a column beside something else; these pages are a single column and the
+   measure is the whole layout, so they get their own slightly wider cap. */
+.article h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 2.75rem 0 0.9rem;
+}
+.article h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.article p, .article li { color: var(--muted); line-height: 1.75; max-width: 72ch; }
+.article p + p { margin-top: 0.9rem; }
+.article strong { color: var(--fg); font-weight: 600; }
+.article ul { list-style: disc; padding-left: 1.2rem; margin: 0.75rem 0; }
+.article li + li { margin-top: 0.35rem; }
+.article code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    padding: 0.1em 0.35em;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--coral-soft);
+}
+.article .lede { font-size: var(--text-lead); color: var(--muted-2); }
+
+/* Pull-out note. One border, one accent edge — no filled callout boxes. */
+.note {
+    border: 1px solid var(--edge-recessed);
+    border-left: 2px solid var(--coral);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-5);
+    margin: var(--space-6) 0;
+    background: var(--surface-recessed);
+}
+.note p { max-width: none; }
+
+/* Numbered rule / step lists. The number is the CAD registration mark's
+   sibling: mono, coral, outside the text column. */
+.numbered { list-style: none; padding: 0; counter-reset: n; }
+.numbered > li {
+    counter-increment: n;
+    position: relative;
+    padding-left: 3rem;
+    margin-top: 2rem;
+}
+.numbered > li::before {
+    content: counter(n, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--coral);
+}
+.numbered .punish {
+    display: block;
+    margin-top: 0.7rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.7;
+    color: var(--muted);
+    border-top: 1px solid var(--line-faint);
+    padding-top: 0.6rem;
+}
+
+/* Screenshot gallery + a CSS-only lightbox. `:target` rather than a script:
+   the overlay is a link away and back, it survives with JS off, and it costs
+   nothing to hydrate. */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+.gallery a {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    line-height: 0;
+    /* no colour transition — §6.9 */
+}
+.gallery a:hover, .gallery a:focus-visible { border-color: var(--coral); }
+.gallery img { width: 100%; height: 160px; object-fit: cover; display: block; }
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9997;
+    display: none;
+    place-items: center;
+    padding: 2rem;
+    /* <figure> carries a UA margin of 1em 40px; with `inset: 0` that shrinks
+       the box instead of being ignored, so the scrim missed the edges. */
+    margin: 0;
+    background: rgba(0, 0, 0, 0.92);
+}
+.lightbox:target { display: grid; }
+/* The grid item, not the image, is what needs bounding — `max-width: 100%` on
+   an image inside a content-sized box resolves against the box the image is
+   sizing, which never constrains anything. */
+.lightbox > div { max-width: min(1100px, 100%); }
+.lightbox img { max-width: 100%; max-height: 82vh; object-fit: contain; }
+.lightbox figcaption {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 0.9rem;
+}
+.lightbox .lb-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--fg);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 0.45rem 0.8rem;
+    text-decoration: none;
+}
+.lightbox .lb-close:hover { border-color: var(--coral); color: var(--coral); }
+
+@media (max-width: 600px) {
+    .gallery { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    .gallery img { height: 110px; }
+}
+
+/* Inline role/qualifier after a name inside a card heading. Replaces four
+   inline style properties that were repeated per use site. */
+.role {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+}
+
+/* Avatar utility — one rule, one size modifier. */
+.avatar {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    object-fit: cover;
+    outline: 1px solid var(--line-strong);
+    background: var(--panel);
+    flex-shrink: 0;
+}
+.avatar.sm { width: 52px; height: 52px; outline-color: rgba(var(--coral-rgb), 0.4); }
+
+/* Ko-fi embed. The widget is cross-origin and paints its own light UI, so it
+   cannot be themed — it gets framed as a deliberate inset instead. */
+.kofi-card { display: flex; flex-direction: column; }
+.kofi-embed {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    width: 100%;
+    margin-top: 1.1rem;
+    color-scheme: light;
+    background: #fff;
+}
+
+/* ---- Product screenshots + alternating feature rows ----------------------
+   Used by /edugrade/. The browser-chrome mock the legacy page drew (three
+   traffic-light dots and a fake URL bar) is deliberately not reproduced —
+   it is skeuomorphism from a different design language, and this system
+   frames things with a hairline and registration marks instead. */
+.shot {
+    margin: 1.75rem 0 0;
+    border: 1px solid var(--edge-recessed);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface-recessed);
+    line-height: 0;
+}
+.shot img { width: 100%; height: auto; display: block; }
+
+.feature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: center;
+    margin-top: var(--space-block);
+}
+/* Alternate which side the screenshot sits on, so the eye zig-zags down the
+   page rather than running down one rail. */
+.feature-row:nth-child(even) > .article { order: 2; }
+.feature-row .shot { margin-top: 0; }
+
+@media (max-width: 860px) {
+    .feature-row { grid-template-columns: 1fr; }
+    .feature-row:nth-child(even) > .article { order: 0; }
+}
+
+/* ---- Drafting cursor -----------------------------------------------------
+   A crosshair over the drawing surfaces — a drafting cursor on a drafting
+   sheet. Only on the surface itself: text inside keeps the I-beam so selecting
+   copy still looks like selecting copy, and links/buttons keep the pointer
+   (UA default and the global button rule). Clickable project panels keep
+   `pointer` via their own, more specific rule. */
+.card, .proj-panel { cursor: crosshair; }
+.card :where(p, h3, h4, li, code, span, blockquote),
+.proj-panel :where(p, h3, h4, li, code, span) { cursor: auto; }
+.card :where(a, button), .proj-panel :where(a, button) { cursor: pointer; }
+
+/* ---- Footer row -----------------------------------------------------------
+   One line under the wordmark: copyright first, then the links. No border, no
+   box — the wordmark above it is the whole statement, and a framed panel under
+   it was competing with that rather than closing it. Left-aligned inside the
+   page measure while the wordmark stays centred. */
+.footer-row {
+    width: 100%;
+    max-width: var(--maxw);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-align: left;
+}
+.footer-row a {
+    color: var(--muted-2);
+    /* no colour transition — §6.9 */
+}
+.footer-row a:hover { color: var(--coral); }

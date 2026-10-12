@@ -19,9 +19,9 @@ export default function CraftAttackApp({ children }: { children: ReactNode }) {
     <>
       <Nav active="" t={t} lang={lang} toggle={toggle} base="/" />
 
-      <main>
+      <main id="main" tabIndex={-1}>
         <section className="ca-hero" id="hero">
-          <video autoPlay muted loop playsInline preload="auto" poster="/assets/images/craftattack/ca-s2-4.png" aria-label="Craft Attack Season 2 — Aerlon world trailer">
+          <video autoPlay muted loop playsInline preload="auto" poster="/assets/images/craftattack/ca-s2-4.webp" aria-label="Craft Attack Season 2 — Aerlon world trailer">
             <source src="/craftattack/craftattack.webm" type="video/webm" />
           </video>
           <div className="ca-hero-overlay" />

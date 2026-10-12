@@ -1,0 +1,171 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Shell from '@/components/Shell.tsx';
+import CaPage from '@/components/CaPage.astro';
+
+const url = 'https://avocloud.net/craftattack/features/';
+
+const newInS2 = [
+  {
+    title: 'Clan System',
+    body: 'Clans have their own chat (<code>/cc</code>), bank, home point, claim territory, and shared chest. Ally with other clans or declare war — both require mutual consent. Roles: Leader · Manager · Member. Founding: 5,000 Coins.',
+    tags: ['New in S2'],
+  },
+  {
+    title: 'Coin Economy',
+    body: 'Start with 500 Coins. Earn more through mob kills, playtime bonuses, jobs, and trading. Coins fund claim expansion beyond the free 500 blocks².',
+    tags: ['New in S2'],
+  },
+  {
+    title: 'Jobs System',
+    body: 'Pick one of four jobs and earn Coins through your normal playstyle: <strong>Hunter</strong> (slay mobs), <strong>Miner</strong> (mine ores), <strong>Farmer</strong> (harvest crops), <strong>Woodcutter</strong> (chop trees). Use <code>/jobs browse</code>. Only one job at a time.',
+    tags: ['New in S2', 'JobsReborn'],
+  },
+  {
+    title: 'PvP Toggle System',
+    body: 'Use <code>/pvp on</code> to enable. Disabling has a 24h cooldown. New players get 48h auto-protection. Spawn is always PvP-free.',
+    tags: ['New in S2', 'PvPManager'],
+  },
+  {
+    title: 'Custom World — Aerlon',
+    body: 'Dense forests with ancient stone arches, towering cliffs, overgrown plazas, forgotten settlements, dark underground chambers. Procedurally generated with a custom world generator, fully pre-generated for lag-free exploration. Live BlueMap web map.',
+    tags: ['New in S2', 'BlueMap'],
+  },
+  {
+    title: 'RP Status System',
+    body: 'Toggle with <code>/rp on</code>. Active RP players show <code>[RP]</code> in chat. Roleplay is always optional — nobody is forced.',
+    tags: ['New in S2'],
+  },
+  {
+    title: 'Flexible Region Claims',
+    body: '<strong>Homestead</strong> replaces chunk-based claims. Define any region shape with 75+ permission flags. First 500 blocks² free, then costs Coins.',
+    tags: ['Upgraded in S2', 'Homestead'],
+  },
+];
+
+const returning = [
+  {
+    title: 'Java & Bedrock Crossplay',
+    body: 'Play together regardless of platform: Java or Bedrock (consoles, mobile, Windows 10/11). Geyser + Floodgate bridge both editions seamlessly.',
+    tags: ['Returning'],
+  },
+  {
+    title: 'One-Time Elytra at Spawn',
+    body: 'Receive an Elytra at spawn to explore the world. Used once, then consumed. Keeps the start fair while still giving a special boost.',
+    tags: ['Returning'],
+  },
+  {
+    title: 'Chest & Block Protection',
+    body: 'Secure chests, doors, and Redstone with a simple right-click. Nobody accesses your containers without explicit permission.',
+    tags: ['Returning'],
+  },
+  {
+    title: 'Voice Chat with 3D Audio',
+    body: 'Spatial voice chat in-game. Hear exactly which direction other players are speaking from. (Java Edition only.)',
+    tags: ['Returning'],
+  },
+  {
+    title: 'Transparent Moderation',
+    body: 'CoreProtect logs all block actions. AntiCheat results in a public Discord channel. BlueMap web map lets everyone explore live.',
+    tags: ['Returning'],
+  },
+  {
+    title: 'Whitelist System',
+    body: 'Whitelist via Discord account link. No application form — connect Discord and Minecraft via the Baxi bot to get auto-whitelisted.',
+    tags: ['Returning'],
+  },
+];
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://avocloud.net/' },
+        { '@type': 'ListItem', position: 2, name: 'Craft Attack', item: 'https://avocloud.net/craftattack/' },
+        { '@type': 'ListItem', position: 3, name: 'Features', item: url },
+      ],
+    },
+    {
+      '@type': 'Article',
+      headline: 'Features — Craft Attack Community Server Season 2',
+      description:
+        'Full feature list of the open Avocloud Craft Attack community server, Season 2: The Ashes of Aerlon.',
+      image: 'https://avocloud.net/assets/images/craftattack/ca-s2-4.webp',
+      mainEntityOfPage: url,
+      author: { '@type': 'Organization', name: 'Avocloud.net', url: 'https://avocloud.net/' },
+      publisher: { '@id': 'https://avocloud.net/#org' },
+    },
+  ],
+};
+---
+
+<Layout
+  title="Features — Craft Attack Community Server Season 2 | Avocloud.net"
+  description="Full feature list of the open Avocloud Craft Attack community server, Season 2: clans, jobs, coin economy, opt-in PvP, Homestead claims, crossplay, voice chat, BlueMap."
+  canonical={url}
+  schema={false}
+  ogImage="https://avocloud.net/assets/images/craftattack/ca-s2-4.webp"
+  ogImageAlt="Craft Attack Season 2 — ancient columns in an overgrown plaza of Aerlon"
+  jsonld={jsonld}
+>
+  <Shell client:load>
+    <CaPage current="/craftattack/features/" title="Features">
+      <div class="article">
+        <div class="section-label">CRAFT ATTACK SEASON 2</div>
+        <h1 class="headline">Features</h1>
+
+        <p class="lede">
+          Full feature list of the <strong>open Avocloud Craft Attack community server</strong>,
+          Season 2: The Ashes of Aerlon. Season 2 keeps everything that worked in Season 1 and adds
+          new systems based on community feedback.
+        </p>
+
+        <h2>New in Season 2</h2>
+        <div class="grid cols-2">
+          {newInS2.map((f) => (
+            <article class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>{f.title}</h3>
+              <p set:html={f.body}></p>
+              <div class="chips mt">
+                {f.tags.map((tag) => <span class="chip">{tag}</span>)}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <h2>Returning features</h2>
+        <p>Everything that made Season 1 great is back.</p>
+        <div class="grid cols-2">
+          {returning.map((f) => (
+            <article class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>{f.title}</h3>
+              <p set:html={f.body}></p>
+              <div class="chips mt">
+                {f.tags.map((tag) => <span class="chip">{tag}</span>)}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <h2>Join the server</h2>
+        <p>
+          Server address: <code>craftattack.avocloud.net</code> · Free, no application form. Link
+          Discord + Minecraft via the Baxi bot (<code>/mc link</code>) to be auto-whitelisted. For
+          Bedrock join instructions and optional Java mods, check our
+          <a
+            class="accent-link"
+            href="https://cloud.avocloud.net/apps/collectives/p/oziR6xHsTfRzw6Y/CraftAttack-13-Community-4"
+            target="_blank"
+            rel="noopener">documentation ↗</a>.
+        </p>
+        <p class="mt">
+          <a class="btn primary" href="/craftattack/join/">How to join</a>
+        </p>
+      </div>
+    </CaPage>
+  </Shell>
+</Layout>

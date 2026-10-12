@@ -1,5 +1,6 @@
 ---
 import '@/styles/global.css';
+import { company, legalName } from '@/data/company';
 
 interface Props {
   title?: string;
@@ -7,20 +8,38 @@ interface Props {
   canonical?: string;
   /** Skip the org/website/webpage/FAQ JSON-LD graph — only the homepage needs it. */
   schema?: boolean;
-  /** Arm the load intro. Only pass this from a page that actually renders
-      <Intro> — see the head script below for why. */
-  intro?: boolean;
+  /** Page-specific structured data (Article, BreadcrumbList, ...) for pages
+      that carry their own instead of the site-wide graph. */
+  jsonld?: unknown;
+  /** Social preview image (absolute URL). Defaults to the site logo; pages
+      with a real visual of their own should pass it, or every share of every
+      page looks identical in a timeline. */
+  ogImage?: string;
+  ogImageAlt?: string;
+  /** Document language. The site is English; /edugrade/ is written in German
+      for German-speaking teachers and has to say so, or a screen reader
+      pronounces the whole page with English phonetics. */
+  lang?: string;
+  /** Announce a German alternate. Only the homepage has one: its copy lives in
+      content.ts with both languages, every subpage is English-only markup.
+      Claiming hreflang on those pointed Google at a URL that serves the same
+      English text, which is worse than declaring nothing. */
+  i18n?: boolean;
   noindex?: boolean;
 }
 
 // Defaults reproduce the previous hardcoded homepage values exactly.
 const {
-  title = 'Avocloud.net — Open-Source Discord Bots, Minecraft Plugins & Web Tools',
-  description = 'Avocloud.net — open-source developer group from Austria & Germany. We build Discord bots (Baxi), Minecraft plugins (AvoFilter), an open Craft Attack community server, EduGrade, QrGate, PWGEN, and more. Free, MIT-licensed.',
+  title = 'Avocloud.net | Software from Austria',
+  description = 'Avocloud.net develops software in Wels, Austria. Discord moderation (Baxi), event ticketing (QrGate), grade management (EduGrade) and web development.',
   canonical = 'https://avocloud.net/',
   schema: includeSchema = true,
+  jsonld,
   noindex = false,
-  intro = false,
+  i18n = false,
+  lang = 'en',
+  ogImage = 'https://avocloud.net/assets/images/logo.png',
+  ogImageAlt = 'Avocloud.net logo',
 } = Astro.props;
 
 const schema = {
@@ -31,36 +50,33 @@ const schema = {
       '@id': 'https://avocloud.net/#org',
       name: 'Avocloud.net',
       alternateName: 'Avocloud',
+      legalName,
       url: 'https://avocloud.net/',
       logo: 'https://avocloud.net/assets/images/logo.png',
       image: 'https://avocloud.net/assets/images/logo.png',
-      foundingDate: '2024',
+      foundingDate: String(company.founded),
       description:
-        'Open-source software development group from Austria and Germany. Builds Discord bots, Minecraft plugins, web utilities, and operates an open Craft Attack community Minecraft server.',
+        'Software developer from Wels, Austria. Develops and operates Discord moderation, event ticketing and grade management products, and builds websites and web applications.',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: company.street,
+        postalCode: company.postalCode,
+        addressLocality: company.city,
+        addressCountry: company.countryCode,
+      },
+      ...(company.uid ? { vatID: company.uid } : {}),
       areaServed: ['AT', 'DE', 'Worldwide'],
       knowsAbout: [
-        'Discord bot development', 'Minecraft plugin development', 'Open source software',
-        'Web development', 'Server hosting', 'AES-256 encryption',
+        'Software development', 'Discord bot development', 'Event ticketing',
+        'Web development', 'Data protection',
       ],
-      sameAs: ['https://github.com/AvoCloud-net', 'https://avocloud.net/discord/', 'https://avolink.net/'],
-      owns: [
-        {
-          '@type': 'WebSite',
-          '@id': 'https://avolink.net/#website',
-          url: 'https://avolink.net/',
-          name: 'AvoLink',
-          alternateName: ['AvoLink.net', 'Avo Link'],
-          description:
-            'Free link shortener and Linktree alternative by Avocloud.net. Create short branded URLs and a single profile page for all your social links.',
-          inLanguage: ['en', 'de'],
-          publisher: { '@id': 'https://avocloud.net/#org' },
-        },
-      ],
+      sameAs: ['https://avocloud.net/discord/', 'https://avolink.net/'],
       contactPoint: {
         '@type': 'ContactPoint',
-        contactType: 'support',
-        email: 'support@avocloud.net',
+        contactType: 'customer support',
+        email: company.supportEmail,
         url: 'https://avocloud.net/mail/',
+        availableLanguage: ['en', 'de'],
       },
     },
     {
@@ -83,18 +99,14 @@ const schema = {
     },
     {
       '@type': 'ItemList',
-      name: 'Avocloud.net projects',
+      name: 'Avocloud.net products',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Baxi', url: 'https://avocloud.net/baxi/', description: 'Verified Discord moderation bot with intelligent chat filter and global spammer database.' },
-        { '@type': 'ListItem', position: 2, name: 'PWGEN', url: 'https://avocloud.net/pwgen/', description: 'Secure, customizable password generator.' },
-        { '@type': 'ListItem', position: 3, name: 'SafeText', url: 'https://github.com/AvoCloud-net/SafeText', description: 'API server that scans text for offensive language. Powers Baxi and AvoFilter.' },
-        { '@type': 'ListItem', position: 4, name: 'SkyFire', url: 'https://avocloud.net/skyfire/', description: 'MicroServer hosting service for projects, websites and Minecraft servers.' },
-        { '@type': 'ListItem', position: 5, name: 'QrGate', url: 'https://avocloud.net/qrgate/', description: 'Open-source ticketing system with shop, PayPal, email delivery and QR check-in.' },
-        { '@type': 'ListItem', position: 6, name: 'Ember', url: 'https://github.com/rwolf2467/ember', description: 'Instagram-like social media platform, now a public archive.' },
-        { '@type': 'ListItem', position: 7, name: 'AvoFilter', url: 'https://modrinth.com/plugin/avofilter', description: 'Minecraft chat-filter plugin powered by SafeText.' },
-        { '@type': 'ListItem', position: 8, name: 'EduGrade', url: 'https://avocloud.net/edugrade/', description: 'Free, GDPR-compliant grade management for teachers with AES-256-GCM encryption.' },
-        { '@type': 'ListItem', position: 9, name: 'Craft Attack', url: 'https://avocloud.net/craftattack/', description: 'Open Craft Attack community Minecraft server — Season 2: The Ashes of Aerlon.' },
-        { '@type': 'ListItem', position: 10, name: 'AvoLink', url: 'https://avolink.net/', description: 'Free link shortener and Linktree alternative — create short branded URLs and a single profile page for all your social links. By Avocloud.net.' },
+        { '@type': 'ListItem', position: 2, name: 'QrGate', url: 'https://avocloud.net/qrgate/', description: 'Event ticketing with shop, PayPal, email delivery and QR check-in.' },
+        { '@type': 'ListItem', position: 3, name: 'EduGrade', url: 'https://avocloud.net/edugrade/', description: 'GDPR-compliant grade management for teachers with AES-256-GCM encryption.' },
+        { '@type': 'ListItem', position: 4, name: 'DiscordGate', url: 'https://modrinth.com/plugin/discordgate', description: 'Minecraft plugin that requires Discord account linking before players can join. Works with Baxi.' },
+        { '@type': 'ListItem', position: 5, name: 'AvoLink', url: 'https://avolink.net/', description: 'Link shortener and Linktree alternative.' },
+        { '@type': 'ListItem', position: 6, name: 'Craft Attack', url: 'https://avocloud.net/craftattack/', description: 'Community Minecraft server, Season 2: The Ashes of Aerlon.' },
       ],
     },
     {
@@ -104,10 +116,10 @@ const schema = {
     {
       '@type': 'FAQPage',
       mainEntity: [
-        { '@type': 'Question', name: 'What is Avocloud.net?', acceptedAnswer: { '@type': 'Answer', text: 'Avocloud.net is an open-source software development group from Austria and Germany, founded in 2024. We build Discord bots, Minecraft plugins, web utilities, and operate an open Craft Attack community Minecraft server. All our projects are MIT-licensed and freely available on GitHub.' } },
-        { '@type': 'Question', name: 'Are Avocloud projects free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. All our projects (Baxi, AvoFilter, EduGrade, QrGate, PWGEN, SafeText, the Craft Attack server, and more) are free to use. Source code is open source under the MIT license on GitHub.' } },
-        { '@type': 'Question', name: 'How can I contact Avocloud.net?', acceptedAnswer: { '@type': 'Answer', text: 'Join our Discord at avocloud.net/discord, email support@avocloud.net, or open issues on our GitHub at github.com/AvoCloud-net.' } },
-        { '@type': 'Question', name: 'What is the Baxi Discord bot?', acceptedAnswer: { '@type': 'Answer', text: 'Baxi is our verified Discord moderation bot with an intelligent chat filter, global spammer database, account-linking for the Craft Attack server, and many more features. Free and open source.' } },
+        { '@type': 'Question', name: 'What is Avocloud.net?', acceptedAnswer: { '@type': 'Answer', text: 'Avocloud.net develops and operates software from Wels, Austria: our own products (Baxi, QrGate, EduGrade) and websites and web applications.' } },
+        { '@type': 'Question', name: 'How can I contact Avocloud.net?', acceptedAnswer: { '@type': 'Answer', text: 'Email support@avocloud.net, use the contact page at avocloud.net/mail, or join our Discord at avocloud.net/discord. Our imprint is at avocloud.net/impressum.' } },
+        { '@type': 'Question', name: 'What is the Baxi Discord bot?', acceptedAnswer: { '@type': 'Answer', text: 'Baxi is our verified Discord moderation bot with an intelligent chat filter, a global spammer database, account linking for Minecraft servers and a web dashboard.' } },
+        { '@type': 'Question', name: 'What is QrGate?', acceptedAnswer: { '@type': 'Answer', text: 'QrGate is our event ticketing system: an online shop, PDF tickets with QR codes by email, box office sales and QR check-in at the door. It runs the ticketing for Helenenbühne Sattledt.' } },
       ],
     },
   ],
@@ -115,7 +127,7 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -126,52 +138,41 @@ const schema = {
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="Avocloud, Avocloud.net, open source, Discord bot, Minecraft plugin, Baxi, AvoFilter, EduGrade, QrGate, PWGEN, SafeText, SkyFire, Craft Attack, CraftAttack, AvoLink, open-source software, MIT license, Discord moderation, Minecraft server, ticketing system, password generator, Notenverwaltung, Softwareentwicklung Österreich, Open Source Deutschland"
+      content="Avocloud, Avocloud.net, Softwareentwicklung Österreich, Software Wels, Discord bot, Baxi, QrGate, EduGrade, DiscordGate, AvoLink, Ticketing, Eventticketing, Notenverwaltung, Webentwicklung, Hosting"
     />
-    <meta name="author" content="Avocloud.net" />
+    <meta name="author" content={legalName} />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
     <meta name="googlebot" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="en" href={canonical} />
-    <link rel="alternate" hreflang="de" href={`${canonical}${canonical.includes('?') ? '&' : '?'}lang=de`} />
-    <link rel="alternate" hreflang="x-default" href={canonical} />
+    {i18n && (
+      <>
+        <link rel="alternate" hreflang="en" href={canonical} />
+        <link rel="alternate" hreflang="de" href={`${canonical}${canonical.includes('?') ? '&' : '?'}lang=de`} />
+        <link rel="alternate" hreflang="x-default" href={canonical} />
+      </>
+    )}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://avocloud.net/assets/images/logo.png" />
-    <meta property="og:image:alt" content="Avocloud.net logo" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Avocloud.net" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:locale:alternate" content="de_DE" />
+    {i18n && <meta property="og:locale:alternate" content="de_DE" />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://avocloud.net/assets/images/logo.png" />
+    <meta name="twitter:image" content={ogImage} />
     <meta name="theme-color" content="#000000" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.avocloud.net" crossorigin />
     {includeSchema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+    {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
     <!-- Arm scroll-reveal hiding before first paint (no FOUC). Skipped when JS
          is off or the user prefers reduced motion → content stays visible. -->
-    <script is:inline define:vars={{ INTRO: intro }}>
+    <script is:inline>
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
         document.documentElement.classList.add('gsap-ready');
-        // Arm the load intro before first paint. Gated here (not in the
-        // component) so that with JS off or reduced motion the overlay is never
-        // displayed at all — nothing to remove, nothing to strand on.
-        //
-        // Runs on every load, not once per session: it is the brand's
-        // handshake.
-        //
-        // Opt-in per page, and it MUST stay that way. `html.intro` sets
-        // `overflow: hidden` and everything gated behind afterIntro() waits for
-        // the completion event — both of which only ever get undone by the
-        // <Intro> component. Arm it on a page that doesn't render <Intro> and
-        // that page is left permanently unscrollable with its entrance
-        // animations never firing.
-        if (INTRO) document.documentElement.classList.add('intro');
-
         /* Arriving half of the page transition. The outgoing page leaves a
            one-shot flag; consuming it here, before first paint, is what keeps
            the curtain from flashing the new page underneath.
@@ -180,10 +181,7 @@ const schema = {
            arrives from a bookmark, a search result or a fresh tab has no
            outgoing page to continue from, and covering their first view for
            half a second would be a loading screen we invented. Only a
-           navigation *from within the site* gets the curtain.
-
-           Skipped when the load intro is running — that already owns the
-           reveal, and two curtains for one navigation is one too many. */
+           navigation *from within the site* gets the curtain. */
         try {
           var pt = sessionStorage.getItem('avo:pt');
           sessionStorage.removeItem('avo:pt');
@@ -192,7 +190,7 @@ const schema = {
           // same-origin link, but those pages never consume the flag — without
           // an expiry it would sit there and make some later arrival play an
           // uncovering animation that no outgoing page ever started.
-          if (pt && Date.now() - Number(pt) < 3000 && !INTRO) {
+          if (pt && Date.now() - Number(pt) < 3000) {
             document.documentElement.classList.add('pt-in');
           }
         } catch (e) { /* storage blocked — just skip the effect */ }
@@ -204,6 +202,9 @@ const schema = {
     </script>
   </head>
   <body>
+    <!-- First focusable thing on every page: the nav is 6+ links deep and sits
+         in front of the content on every single one of them. -->
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="page-curtain" aria-hidden="true"></div>
     <slot />
 

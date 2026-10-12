@@ -107,24 +107,4 @@ export const PRIORITY = {
   late: 10,
 } as const;
 
-/* ---- Load-intro coordination ---------------------------------------------
-   The intro overlay covers the viewport for ~4.4s. Anything that animates "on
-   load" must wait for it, or it plays out behind a black curtain and the
-   visitor sees the finished state the moment the curtain lifts — the hero
-   entrance, the wordmark reveal and the stat counters all did exactly that.
-
-   `html.intro` is set by the inline head script and removed when the sequence
-   ends. No intro (no JS gate, reduced motion, or a page that doesn't mount it —
-   only the homepage does) → the callback runs immediately. */
-export const INTRO_DONE_EVENT = 'avo:intro-done';
-
-export function afterIntro(cb: () => void): () => void {
-  if (typeof document === 'undefined' || !document.documentElement.classList.contains('intro')) {
-    cb();
-    return () => {};
-  }
-  window.addEventListener(INTRO_DONE_EVENT, cb, { once: true });
-  return () => window.removeEventListener(INTRO_DONE_EVENT, cb);
-}
-
 export { gsap, ScrollTrigger, DrawSVGPlugin, SplitText, ScrambleTextPlugin, CustomEase, Observer, Flip, Draggable, InertiaPlugin, useGSAP };
