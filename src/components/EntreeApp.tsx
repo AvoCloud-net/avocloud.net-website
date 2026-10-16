@@ -11,7 +11,7 @@ import { HeroShell } from "./HeroShell";
 /* Nav + Hero + Footer as ONE React root — see BaxiApp.tsx for why: the
    Wordmark reveal only reliably fades out when it shares a gsap context
    with Shell, not as its own separate client:load island. */
-export default function QrgateApp({ children }: { children: ReactNode }) {
+export default function EntreeApp({ children }: { children: ReactNode }) {
   useSmoothScroll();
   const slot = useRef<HTMLElement>(null);
   useSlotMotion(slot);
@@ -24,7 +24,7 @@ export default function QrgateApp({ children }: { children: ReactNode }) {
       <main id="main" tabIndex={-1} ref={slot}>
         <HeroShell
           id="hero"
-          word="QRGATE"
+          word="ENTREE"
           coralFrom={2}
           round={new Set(["G"])}
           kicker="Event Ticketing"

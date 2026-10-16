@@ -4,7 +4,7 @@ import { gsap, ScrollTrigger, SplitText, useGSAP, EASE, DUR, STAG, STAG_MAX, STA
 /* ---------------------------------------------------------------------------
    useSlotMotion — gives the motion system to server-rendered slot content.
 
-   The subpages (fabi, baxi, craftattack, qrgate, regulations, pwgen) write
+   The subpages (fabi, baxi, craftattack, entree, regulations, pwgen) write
    their body as plain Astro markup and slot it into a React shell. React
    components can't reach into a slot, so `Reveal`, `Kicker` and the stage
    choreography never applied to any of it — everything below the hero on every

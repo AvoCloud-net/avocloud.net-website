@@ -116,7 +116,7 @@ export default function FabiApp({ children }: { children: ReactNode }) {
               <span className="chip">Student · Not seeking employment</span>
               <span className="chip">Baxi</span>
               <span className="chip">EduGrade</span>
-              <span className="chip">QrGate</span>
+              <span className="chip">Entree</span>
             </>
           }
         />

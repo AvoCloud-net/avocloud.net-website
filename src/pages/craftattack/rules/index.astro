@@ -1,138 +1,12 @@
 ---
+/* Craftattack rules. Its own page so "read the rules" is one link. One column,
+   read top to bottom. */
 import Layout from '@/layouts/Layout.astro';
-import Shell from '@/components/Shell.tsx';
-import CaPage from '@/components/CaPage.astro';
+import CommunityApp from '@/components/CommunityApp.tsx';
+import { copy, facts } from '@/data/community';
 
+const c = copy.de.rulesPage;
 const url = 'https://avocloud.net/craftattack/rules/';
-
-const rules = [
-  {
-    title: 'No Griefing',
-    lead: "Don't destroy, damage, or alter other players' builds, farms, Redstone, or claimed areas.",
-    points: [
-      'Applies to claims AND actively used unclaimed areas',
-      'Unclaimed pure wilderness may be modified normally',
-      'Accidental damage? Report immediately and it will be restored',
-    ],
-    punish:
-      'Minor (1–5 blocks): 1-day timeout + restoration · Moderate (6–20): 3-day timeout + restoration · Major (21+) / malicious: 7-day ban; repeat → permanent ban',
-  },
-  {
-    title: 'No Stealing',
-    lead: 'No access to chests, inventories, or protected areas without permission.',
-    points: [
-      'All containers: Chests, Shulkers, Barrels, Hoppers, Dispensers, Furnaces',
-      '"Borrowing" without permission = theft',
-      "Auto-Hopper pointed at others' containers = immediate violation",
-      'Graves are protected (see Rule 6)',
-    ],
-    punish: 'Low value: 2-day timeout + item return · High value / rare items: 7-day ban; repeat → permanent',
-  },
-  {
-    title: 'Respectful Conduct',
-    lead: 'No insults, discrimination, hate speech, harassment, threats, or doxxing — in-game and on Discord.',
-    points: [
-      'Zero tolerance: racism, sexism, homo-/transphobia, slurs',
-      'Repeated contact after "stop" = harassment',
-      'Trolling RP scenes = harassment',
-      '<strong>Provocation &amp; needling:</strong> Deliberately provoking players via comments, comparisons, or challenges (e.g. skill remarks, baiting into combat) counts as harassment when the targeted player visibly rejects it.',
-    ],
-    punish:
-      'Minor: 1h timeout + warning · Repeated: 1–3 day timeout · Severe (hate speech): 7-day ban min · Extreme (doxxing, threats): permanent + IP ban',
-  },
-  {
-    title: 'Claims & Clans',
-    lead: "Protect your builds with the claim system. Respect others' claims. Follow clan rules.",
-    points: [
-      'No overlapping claims. Default: keep some distance to neighboring claims. Directly adjacent claims only with explicit agreement of the affected claim holder.',
-      "Auto-unclaim only when upkeep can't be paid (insufficient balance on <code>/money</code>). No time-based inactivity unclaim.",
-      'Clan founding: leader responsible for members',
-      'Alliances and Wars require mutual consent',
-      "<strong>No sharing of foreign structure locations:</strong> Coordinates, waypoints, maps, screenshots, or any pointers to another player's build must NOT be shared without explicit permission of the owner. Applies to chat, Discord, voice, third-party tools, and minimap waypoint sharing.",
-      "<strong>No homes/waypoints on foreign locations:</strong> Setting a <code>/sethome</code>, waypoint, or any teleport marker on or near another player's clan base, claim, or home is forbidden without explicit permission of the owner.",
-    ],
-    punish:
-      'Claim/clan abuse or unauthorized location sharing → 3-day ban + dissolution; malicious sharing leading to grief → see Rule 1',
-  },
-  {
-    title: 'Consensual PvP',
-    lead: 'PvP requires <code>/pvp on</code> from both players. Spawn is always safe.',
-    points: [
-      'Default: <code>/pvp off</code> for all players',
-      '<code>/pvp on → off</code>: 24h cooldown',
-      'Newbie protection: 48h auto-off for new players',
-      'Spawn (500 block radius): always PvP-free',
-      'Combat Tag: 15 sec, no logout, teleport, or PvP toggle',
-      'Combat-Log = treated as death',
-      'Clan Wars: opt-in, 7-day auto-end; no base destruction, grave rules still apply',
-      "<strong>No walling-in players:</strong> Trapping a player in a location where they can't free themselves (e.g. inside a foreign claim where they have no block-break rights) is forbidden. Walling in for protection from mobs in the open world (where the player can break out) is allowed.",
-      '<strong>Protection for outmatched players:</strong> Attacking a clearly outmatched player (no or minimal gear, freshly joined, actively engaged in non-combat activities like enchanting/crafting/building) requires <strong>explicit verbal or written consent</strong> from that player beforehand — in addition to <code>/pvp on</code>. Technically allowed but morally unfair PvP is not OK.',
-    ],
-    punish:
-      'Unauthorized PvP / attacking outmatched players: 1h timeout; repeat → 3-day timeout · Traps / spawn camping: 3-day timeout · Status abuse: 1-day timeout; repeat → 7-day ban',
-  },
-  {
-    title: 'Absolute Grave Protection',
-    lead: 'Graves are untouchable for 15 minutes after death. No exceptions.',
-    points: [
-      'Grave = death chest at death spot; protection radius 3 blocks',
-      'Only the owner can open during the 15-minute window',
-      'After 15 min: items drop and are free for anyone',
-      'Applies in ALL contexts: PvP, Clan Wars, RP, "they deserved it"',
-      'No trapping (lava, cactus, pistons, mob spawners) or blocking access',
-    ],
-    punish:
-      'Accidental (reported immediately): warning + restoration · Intentional: 3-day ban min · Malicious (trapping): 7-day ban; repeat → permanent',
-  },
-  {
-    title: 'No Cheats or Unfair Mods',
-    lead: 'No hack clients, X-Ray, auto-farmers, entity radar, or coordinate tools.',
-    points: [
-      '<strong>Forbidden:</strong> Cheat clients (Wurst, Sigma, Impact), combat hacks (aimbot, reach, killaura), movement hacks (fly, speed, nofall), X-Ray + ore-highlight packs, entity radar, auto-farming without input, coordinate finders, chunk pre-gen tools',
-      '<strong>Minimaps allowed:</strong> Surface mapping, own position, own waypoints',
-      '<strong>Minimaps forbidden:</strong> Cave mode, radar, entity tracking',
-    ],
-    punish: '1st: 3-day ban + mod removal verification · 2nd: 14-day ban · 3rd / distributing cheats: permanent + IP ban',
-  },
-  {
-    title: 'No Lag Machines',
-    lead: 'Builds and farms must not degrade server performance.',
-    points: [
-      'Staff checks via <code>/tps</code> and profiling',
-      'Large Redstone farms are fine as long as TPS stays stable',
-      'Optimization chance is given before any penalty',
-    ],
-    punish:
-      'Minor: warning + 1h fix time · Persistent: 6h timeout + required fix · Crash risk: 3-day ban + staff removes the build',
-  },
-  {
-    title: 'Roleplay is Voluntary',
-    lead: 'RP is allowed, but nobody is forced. No coercion, no trolling of RP scenes.',
-    points: [
-      'Toggle with <code>/rp on/off</code>; active RP players show <code>[RP]</code> prefix',
-      'RP players may not pressure others to participate',
-      "Non-RP players don't disrupt active RP scenes",
-      'OOC mark: <code>((Text))</code> or <code>[OOC]</code>',
-      'OOC stop signal applies ALWAYS: <code>((stop))</code> or "OOC Stop" in voice chat',
-      'Sensitive topics (violence, death, trauma, discrimination) require explicit OOC consent',
-      'Character death / item loss only with mutual OOC agreement',
-      'RP never overrides server rules. RP violations are double-punished',
-    ],
-    punish: '1st: warning · 2nd: 1-day timeout · Ignoring OOC stop / RP griefing: 3–7 day ban',
-  },
-  {
-    title: 'Allowed & Forbidden Client Mods',
-    lead: 'Client mods that improve performance or visuals are welcome. Mods that give unfair advantages are not.',
-    points: [
-      '<strong>Allowed:</strong> Performance mods (Sodium, Lithium, Iris, OptiFine), shader packs, resource packs (non-X-Ray), inventory management (mouse tweaks), map mods (see below), chat mods, zoom mods (no increased reach)',
-      '<strong>Minimap – Allowed:</strong> Surface mapping, own position, own waypoints, death points',
-      '<strong>Minimap – Forbidden:</strong> Cave mode / underground mapping, entity radar, player tracking, structure finder, ore highlighting',
-      '<strong>Forbidden:</strong> Mods that reveal caves, ores, or structures through terrain; mods that auto-click, auto-farm, or automate gameplay without active input; any mod providing combat or movement advantages',
-      'Unsure about a mod? Ask staff before using it.',
-    ],
-    punish: '1st: warning + removal verification · 2nd: 3-day ban · Intentional abuse: same scale as Rule 7',
-  },
-];
 
 const jsonld = {
   '@context': 'https://schema.org',
@@ -141,115 +15,59 @@ const jsonld = {
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://avocloud.net/' },
-        { '@type': 'ListItem', position: 2, name: 'Craft Attack', item: 'https://avocloud.net/craftattack/' },
-        { '@type': 'ListItem', position: 3, name: 'Server Rules', item: url },
+        { '@type': 'ListItem', position: 2, name: facts.name ?? 'Community Server', item: 'https://avocloud.net/craftattack/' },
+        { '@type': 'ListItem', position: 3, name: c.label, item: url },
       ],
-    },
-    {
-      '@type': 'Article',
-      headline: 'Craft Attack Server Rules v3.0',
-      description:
-        'Official rules for the open Craft Attack community server operated by Avocloud.net, Season 2.',
-      image: 'https://avocloud.net/assets/images/craftattack/ca-s2-4.webp',
-      mainEntityOfPage: url,
-      author: { '@type': 'Organization', name: 'Avocloud.net', url: 'https://avocloud.net/' },
-      publisher: { '@id': 'https://avocloud.net/#org' },
     },
   ],
 };
 ---
-
 <Layout
-  title="Craft Attack Server Rules v3.0 | Avocloud.net"
-  description="Official rules for the open Craft Attack community server by Avocloud.net — all 10 rules, punishments, reporting workflow, monitoring and logging. Season 2: The Ashes of Aerlon."
+  title={c.meta.title}
+  description={c.meta.description}
   canonical={url}
+  lang="de"
   schema={false}
-  ogImage="https://avocloud.net/assets/images/craftattack/ca-s2-4.webp"
-  ogImageAlt="Craft Attack Season 2 — ancient columns in an overgrown plaza of Aerlon"
+  ogImage="https://avocloud.net/assets/images/craftattack/ca-og.jpg"
+  ogImageAlt={copy.de.meta.ogImageAlt}
+  themeColor="#f5b85c"
+  noindex={!facts.launched}
   jsonld={jsonld}
 >
-  <Shell client:load>
-    <CaPage current="/craftattack/rules/" title="Server Rules">
-      <div class="article">
-        <div class="section-label">CRAFT ATTACK · RULES v3.0</div>
-        <h1 class="headline">Server rules</h1>
+  <CommunityApp client:load hero={false}>
+    <section class="section mc-subpage">
+      <div class="wrap mc-narrow">
+        <a class="mc-back" href="/craftattack/">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+          {copy.de.back}
+        </a>
+        <div class="section-label">{c.label}</div>
+        <h1 class="headline">{c.headline}</h1>
+        <p class="ca-p">{c.intro}</p>
 
-        <p class="lede">
-          Official rules for the <strong>open Craft Attack community server</strong> operated by
-          Avocloud.net. These rules govern <strong>CraftAttack Season 2 — The Ashes of Aerlon</strong>
-          on <code>craftattack.avocloud.net</code>.
-        </p>
-
-        <div class="note">
-          <p>
-            <strong>Core principle:</strong> These rules exist so everyone has fun. When in doubt:
-            respect, fairness, common sense. Ask staff if unsure.
-          </p>
-        </div>
-
-        <h2>The 10 rules</h2>
-        <ol class="numbered">
-          {rules.map((r) => (
+        <ol class="mc-rules">
+          {c.items.map((r, i) => (
             <li>
-              <h3>{r.title}</h3>
-              <p set:html={r.lead}></p>
-              <ul>
-                {r.points.map((p) => <li set:html={p}></li>)}
-              </ul>
-              <span class="punish"><strong>Punishment:</strong> {r.punish}</span>
+              <span class="ca-rule-n">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{r.title}</h3>
+                <p set:html={r.body} />
+              </div>
             </li>
           ))}
         </ol>
 
-        <div class="note">
-          <p>
-            <strong>Advertising:</strong> External content (Discord servers, YouTube channels, other
-            Minecraft servers, shops) may not be promoted in chat, on signs, in books, or in player
-            names. Community-related content is usually fine, ask staff if unsure. Abuse: timeout up
-            to permanent ban.
-          </p>
+        <div class="card mc-rules-help">
+          <span class="mk tl"></span><span class="mk br"></span>
+          <h3>{c.help.title}</h3>
+          <p set:html={c.help.body} />
         </div>
+        <p class="ca-p mc-rules-note">{c.note}</p>
 
-        <h2>Reporting violations</h2>
-        <p>
-          Report via Discord ticket at
-          <a class="accent-link" href="/discord/">avocloud.net/discord ↗</a>. Required: screenshots
-          with coordinates/timestamps OR video. Response time: &lt;24h.
-        </p>
-        <p>
-          Instant perma-ban for: hate speech, doxxing, mass griefing, cheat distribution. Accidents
-          reported immediately may not count.
-        </p>
-        <p>
-          <strong>Appeals:</strong> 7-day window via Discord ticket. Reviewed by 2+ uninvolved staff.
-          Decision provided in writing.
-        </p>
-
-        <h2>Server monitoring &amp; logging</h2>
-        <p>
-          To ensure a safe and fair environment for all players, we run several monitoring and
-          logging systems:
-        </p>
-        <ul>
-          <li><strong>Chat Logging:</strong> All in-game chat messages are logged and forwarded to a staff-only Discord channel for moderation purposes.</li>
-          <li><strong>CoreProtect Logging:</strong> All block placements, destructions, item drops/pickups, and container access are logged. Used exclusively for grief investigations and rollbacks.</li>
-          <li><strong>Public AntiCheat Logging:</strong> All AntiCheat detections and resulting punishments are logged in a public Discord channel for full transparency.</li>
-        </ul>
-
-        <div class="note">
-          <p>
-            <strong>Privacy commitment:</strong> All logged data is used solely for server
-            moderation, performance optimization, and community protection. We do not share personal
-            gameplay data with third parties.
-          </p>
+        <div class="ca-actions">
+          <a class="btn primary" href="/craftattack/join/">{c.join}</a>
         </div>
-
-        <p>
-          <strong>Community first:</strong> These rules exist so everyone has fun. Education before
-          punishment. If you see a violation: don't retaliate, document it, report via Discord
-          ticket, trust the process.
-        </p>
       </div>
-    </CaPage>
-  </Shell>
+    </section>
+  </CommunityApp>
 </Layout>

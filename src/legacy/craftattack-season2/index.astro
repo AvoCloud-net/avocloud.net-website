@@ -1,0 +1,358 @@
+---
+/* Season 2 page (The Ashes of Aerlon), retired 13 Oct 2026 when the new
+     Craftattack server page took over /craftattack/. Kept outside src/pages so
+     it is not routed; it still builds against CraftAttackApp.tsx and
+     data/craftattack.ts if it is ever moved back. Safe to delete once archived. */
+import Layout from '@/layouts/Layout.astro';
+import CraftAttackApp from '@/components/CraftAttackApp.tsx';
+import { CaCurtain } from '@/components/CaCurtain.tsx';
+import { DitherRule } from '@/components/DitherRule.tsx';
+import { SideDither } from '@/components/SideDither.tsx';
+import { rules, newInS2, returning, faq, backups, shots } from '@/data/craftattack';
+
+const url = 'https://avocloud.net/craftattack/';
+/* One material for the whole page: the rust of the Craft Attack scene on the
+   homepage. Two quiet edge pieces, matching the homepage's rhythm. */
+const ember = { shape: 'sphere', color: '#8a3b22' } as const;
+const ash = { shape: 'ripple', color: '#7a4534' } as const;
+const ADDRESS = 'craftattack.avocloud.net';
+
+const steps = [
+  { title: 'Join the Avocloud Discord', body: 'Open <a href="/discord/">avocloud.net/discord</a> and join the server.' },
+  { title: `Connect to ${ADDRESS}`, body: 'Your first connection will not let you in. Instead the server shows a one-time link code. Copy it. Works on Java and Bedrock.' },
+  { title: 'Run /mc link in Discord', body: 'Use the Baxi bot command <code>/mc link</code> and paste the code from step 2. Baxi confirms once the link is registered.' },
+  { title: 'Reconnect', body: `Reconnect to ${ADDRESS}. You are whitelisted and inside. That's it.` },
+];
+
+const milestones = [
+  { date: '14 May 2026', time: '17:30', title: 'Season start', body: 'The Ashes of Aerlon opens.' },
+  { date: '22 May 2026', time: '17:30', title: 'Nether opens', body: 'The crimson wastes of Aerlon open up.' },
+  { date: '5 Jun 2026', time: '17:30', title: 'End opens', body: 'End cities and glowing ruins open up.' },
+];
+
+const biomes = [
+  ['Overgrown Ruins', 'Stone arches from an older era between dense trees.'],
+  ['Cliffs & Plains', 'Vast barren plains before towering cliff faces.'],
+  ['Ancient Plazas', 'Overgrown squares with old columns and forgotten architecture.'],
+  ['Forgotten Settlements', 'Abandoned villages behind weathered wooden gates.'],
+  ['Underground Chambers', 'Dark structures still standing in deep caves.'],
+  ['Floating Islands', 'Drifting landmasses with red-leafed forests above misty valleys.'],
+  ['Desert Pyramids', 'Ancient pyramids in the sands at sunset.'],
+  ['Nether & End', 'Crimson wastes, End cities and glowing ruins.'],
+];
+
+const faqText = (s: string) => s.replace(/<[^>]+>/g, '');
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://avocloud.net/' },
+        { '@type': 'ListItem', position: 2, name: 'Craft Attack', item: url },
+      ],
+    },
+    {
+      '@type': 'HowTo',
+      name: 'How to join the Avocloud Craft Attack community server',
+      description: 'Join the open Craft Attack Season 2 Minecraft server in four steps. No application form, no fee.',
+      step: steps.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, name: s.title, text: faqText(s.body) })),
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: faqText(f.a) },
+      })),
+    },
+  ],
+};
+---
+<Layout
+  title="Craft Attack Community Server, Open and Free | Avocloud.net"
+  description="Open Craft Attack community server: join Season 2 'The Ashes of Aerlon' on Minecraft. Java + Bedrock crossplay, clans, jobs, BlueMap. Free, no application form."
+  canonical={url}
+  schema={false}
+  ogImage="https://avocloud.net/assets/images/craftattack/ca-s2-9.webp"
+  ogImageAlt="Aerial view of Aerlon with floating towers, Craft Attack Season 2"
+  jsonld={jsonld}
+>
+  <CraftAttackApp client:load>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <SideDither client:visible side="right" tone={ember} variant="orb" top={42} />
+      <div class="wrap">
+        <div class="section-label">ABOUT</div>
+        <div class="grid cols-2 ca-about">
+          <div>
+            <h2 class="headline">An open Craft Attack.</h2>
+            <p class="ca-p">
+              Craft Attack is a community Minecraft survival format, made popular by German YouTubers and
+              streamers. This one is <strong>open</strong>: a public, free-to-join community server where
+              everyone can take part, not just invited creators.
+            </p>
+            <p class="ca-p">
+              Season 2, <em>The Ashes of Aerlon</em>, runs on a custom-generated fantasy world with Java and
+              Bedrock crossplay, clans, jobs, an economy, opt-in PvP, voice chat and a live BlueMap.
+            </p>
+            <div class="ca-address">
+              <span class="ca-address-l">SERVER ADDRESS</span>
+              <code class="ca-address-v">{ADDRESS}</code>
+              <button type="button" class="btn" data-copy={ADDRESS} aria-label="Copy server address">
+                <span data-copy-label>Copy</span>
+              </button>
+            </div>
+          </div>
+          <blockquote class="ca-quote">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <p>
+              „Aerlon was once a great kingdom, powerful, radiant, full of magic and life. What exactly
+              happened, nobody remembers. Only ash remained: overgrown ruins, silent forests, forgotten paths."
+            </p>
+            <p>
+              Now new travelers come to the land. Not as heroes or heirs, simply as the first to return.
+              Some seek treasure. Some seek a new beginning.
+            </p>
+            <footer>The land is open. What you make of it is up to you.</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- World: the first cinematic beat -->
+    <CaCurtain client:load id="world" className="ca-film" label="Aerlon world trailer">
+      <video autoplay muted loop playsinline preload="metadata" poster="/assets/images/craftattack/ca-s2-4.webp">
+        <source src="/craftattack/craftattack.webm" type="video/webm" />
+      </video>
+      <div class="ca-film-fade"></div>
+      <div class="wrap ca-film-copy ca-curtain-copy">
+        <div class="section-label">THE WORLD</div>
+        <h2 class="ca-film-title">Aerlon.</h2>
+        <p class="ca-p">
+          A procedurally generated fantasy world, fully pre-generated so there is no chunk-loading lag
+          from day one. One connected map, no resets during the season, and every block logged with CoreProtect.
+        </p>
+      </div>
+    </CaCurtain>
+
+    <section class="section" id="gallery">
+      <div class="wrap">
+        <div class="section-label">GALLERY</div>
+        <h2 class="headline">Across Overworld, Nether and End.</h2>
+        <p class="ca-p">Click a screenshot to enlarge it.</p>
+        <div class="gallery">
+          {shots.map((s) => (
+            <a href={`#shot-${s.n}`} aria-label={`Enlarge: ${s.cap}`}>
+              <img src={`/assets/images/craftattack/ca-s2-${s.n}.webp`} alt={s.alt} loading="lazy" width="440" height="320" />
+            </a>
+          ))}
+        </div>
+
+        <div class="grid cols-2 ca-biomes">
+          {biomes.map(([name, body]) => (
+            <div class="ca-biome"><strong>{name}</strong><span>{body}</span></div>
+          ))}
+        </div>
+
+        <p class="ca-p ca-map">
+          <strong>Live BlueMap.</strong> Explore the whole world from your browser, scout your next base and
+          see the map update as players shape it, without logging in.
+        </p>
+      </div>
+    </section>
+
+    <DitherRule client:visible />
+
+    <!-- Features -->
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="section-label">FEATURES</div>
+        <h2 class="headline">Season 2 keeps what worked and adds what you asked for.</h2>
+
+        <h3 class="ca-sub">New in Season 2</h3>
+        <div class="grid cols-3">
+          {newInS2.map((f) => (
+            <div class="card feature">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>{f.title}</h3>
+              <p set:html={f.body}></p>
+              <div class="chips">{f.tags.map((tag) => <span class="chip">{tag}</span>)}</div>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="ca-sub">Returning from Season 1</h3>
+        <div class="grid cols-3">
+          {returning.map((f) => (
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>{f.title}</h3>
+              <p set:html={f.body}></p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="section" id="timeline">
+      <SideDither client:visible side="left" tone={ash} variant="arc" top={55} />
+      <div class="wrap">
+        <div class="section-label">TIMELINE</div>
+        <h2 class="headline">Season 2 milestones.</h2>
+        <p class="ca-p">All times Europe/Vienna.</p>
+        <ol class="ca-timeline">
+          {milestones.map((m) => (
+            <li>
+              <span class="ca-tl-date">{m.date}<small>{m.time}</small></span>
+              <div>
+                <h3>{m.title}</h3>
+                <p>{m.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <DitherRule client:visible shape="simplex" />
+
+    <!-- Join -->
+    <section class="section" id="join">
+      <div class="wrap">
+        <div class="section-label">HOW TO JOIN</div>
+        <h2 class="headline">Four steps. No application.</h2>
+        <p class="ca-p">
+          Minecraft Java and Bedrock, free. You need a legitimate Minecraft account and a Discord account.
+        </p>
+        <ol class="grid cols-2 ca-steps">
+          {steps.map((s, i) => (
+            <li class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <span class="ca-step-n">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{s.title}</h3>
+              <p set:html={s.body}></p>
+            </li>
+          ))}
+        </ol>
+        <div class="ca-actions">
+          <a class="btn primary" href="/discord/">Join the Discord</a>
+          <a class="btn" href="https://cloud.avocloud.net/apps/collectives/p/oziR6xHsTfRzw6Y/CraftAttack-13-Community-4" target="_blank" rel="noopener">Bedrock &amp; mods docs ↗</a>
+        </div>
+
+        <h3 class="ca-sub">FAQ</h3>
+        <div class="ca-acc">
+          {faq.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p set:html={f.a}></p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <DitherRule client:visible />
+
+    <!-- Rules -->
+    <section class="section" id="rules">
+      <div class="wrap">
+        <div class="section-label">SERVER RULES · v3.0</div>
+        <h2 class="headline">Ten rules. Respect, fairness, common sense.</h2>
+        <p class="ca-p">
+          These rules exist so everyone has fun. When in doubt, ask staff. Education comes before punishment.
+        </p>
+        <div class="ca-acc ca-rules">
+          {rules.map((r, i) => (
+            <details>
+              <summary><span class="ca-rule-n">{String(i + 1).padStart(2, '0')}</span>{r.title}</summary>
+              <p class="ca-lead" set:html={r.lead}></p>
+              <ul>{r.points.map((p) => <li set:html={p}></li>)}</ul>
+              <p class="punish"><strong>Punishment:</strong> {r.punish}</p>
+            </details>
+          ))}
+        </div>
+
+        <div class="grid cols-3 ca-policy">
+          <div class="card">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3>Advertising</h3>
+            <p>External content (Discord servers, YouTube channels, other Minecraft servers, shops) may not be promoted in chat, on signs, in books or in player names. Community-related content is usually fine, ask staff if unsure. Abuse: timeout up to permanent ban.</p>
+          </div>
+          <div class="card">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3>Reporting</h3>
+            <p>Report via Discord ticket with screenshots (coordinates and timestamps) or a video. Response time under 24h. Instant perma-ban for hate speech, doxxing, mass griefing and cheat distribution. Appeals: 7-day window via ticket, reviewed by 2+ uninvolved staff, decision in writing.</p>
+          </div>
+          <div class="card">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3>Monitoring &amp; logging</h3>
+            <p>In-game chat is logged to a staff-only channel. CoreProtect logs blocks, drops and container access for grief investigations. AntiCheat detections and punishments are public in Discord. Data is used solely for moderation and never shared with third parties.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Archive -->
+    <section class="section" id="archive">
+      <div class="wrap">
+        <div class="section-label">SEASON 1 ARCHIVE</div>
+        <h2 class="headline">Season 1 is complete. Take it with you.</h2>
+        <p class="ca-p">Ready-to-run backups of the original server: world data, plugins, configs and scripts. Extract and launch.</p>
+        <div class="grid cols-2">
+          {backups.map((b) => (
+            <a class="card" href={b.href} download>
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3>{b.name}</h3>
+              <p>Complete server backup · {b.size}</p>
+              <span class="chip link">Download</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing scene: the second cinematic beat -->
+    <CaCurtain client:load className="ca-finale" label="Join Craft Attack" dither>
+      <span class="ca-finale-vignette" aria-hidden="true"></span>
+      <div class="wrap ca-curtain-copy">
+        <div class="section-label">SEE YOU IN AERLON</div>
+        <p class="ca-finale-addr">{ADDRESS}</p>
+        <p class="ca-finale-sub">Java + Bedrock · Free · No application form</p>
+        <div class="ca-actions">
+          <a class="btn primary" href="#join">How to Join</a>
+          <a class="btn" href="/discord/">Discord</a>
+        </div>
+      </div>
+    </CaCurtain>
+  </CraftAttackApp>
+
+  <!-- Lightbox targets live OUTSIDE the React shell: its slot is transformed by
+       useSlotMotion, and a transformed ancestor makes position:fixed resolve
+       against it instead of the viewport. -->
+  {shots.map((s) => (
+    <figure class="lightbox" id={`shot-${s.n}`}>
+      <a class="lb-close" href="#gallery" aria-label="Close">CLOSE ✕</a>
+      <div>
+        <img src={`/assets/images/craftattack/ca-s2-${s.n}.webp`} alt={s.alt} loading="lazy" />
+        <figcaption>{s.cap}</figcaption>
+      </div>
+    </figure>
+  ))}
+</Layout>
+
+<script>
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-copy]');
+    if (!btn) return;
+    const label = btn.querySelector('[data-copy-label]');
+    navigator.clipboard?.writeText(btn.dataset.copy ?? '').then(() => {
+      if (!label) return;
+      label.textContent = 'Copied';
+      setTimeout(() => (label.textContent = 'Copy'), 1600);
+    });
+  });
+</script>

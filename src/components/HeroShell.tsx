@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { ShaderBoundary } from './ShaderBoundary';
 import { useRef, useState, useEffect, Suspense, lazy } from 'react';
 import { Wordmark } from './Wordmark';
 import { gsap, useGSAP, SIGNATURE_TIMESCALE, EASE, DUR, STAG } from '@/lib/motion';
@@ -47,7 +48,7 @@ const Dithering = lazy(() =>
 /* ---------------------------------------------------------------------------
    HeroShell — the one hero used by the homepage and every product page.
 
-   Previously each of Site/Baxi/Fabi/Qrgate carried its own ~80-line copy of a
+   Previously each of Site/Baxi/Fabi/Entree carried its own ~80-line copy of a
    pasted shadcn "dithering CTA card": 48px radii, rounded-full pill CTAs,
    ring-4 focus rings, an opaque card background. All of that is explicitly
    retired by BRANDING.md §6/§11 (radii above 8px = the v1 rounded-card look)
@@ -61,7 +62,7 @@ const Dithering = lazy(() =>
 type Props = {
   id: string;
   /** mono `// KICKER` eyebrow — replaces the old ping-dot pill badge. */
-  kicker: ReactNode;
+  kicker?: ReactNode;
   claim: ReactNode;
   /** `.btn` / `.btn.primary` CTAs. */
   links: ReactNode;
@@ -75,10 +76,14 @@ type Props = {
   word?: string;
   coralFrom?: number;
   round?: Set<string>;
+  /** dither colour; pages with their own accent pass a darker step of it */
+  tone?: string;
+  /** a picture behind the hero instead of the dither (image URL) */
+  backdrop?: string;
 };
 
 export function HeroShell({
-  id, kicker, claim, links, stats, media, footnote, word, coralFrom, round,
+  id, kicker, claim, links, stats, media, footnote, word, coralFrom, round, tone = '#7a4534', backdrop,
 }: Props) {
   const [hovered, setHovered] = useState(false);
   const ref = useRef<HTMLElement>(null);
@@ -180,19 +185,28 @@ export function HeroShell({
           meant to be seen. colorFront stays a desaturated rust so it reads as
           texture and not as a coral field — see BRANDING.md §6. */}
       <div className="hero-zoom" aria-hidden="true">
-        <Suspense fallback={null}>
-          <div className="hero-shader">
-            <Dithering
-              colorBack="#00000000"
-              colorFront="#7a4534"
-              shape="warp"
-              type="4x4"
-              speed={onScreen ? (hovered ? 0.4 : 0.18) : 0}
-              className="size-full"
-              minPixelRatio={1}
-            />
-          </div>
-        </Suspense>
+        {backdrop ? (
+          <>
+            <img className="hero-backdrop" src={backdrop} alt="" />
+            <div className="hero-backdrop-shade" />
+          </>
+        ) : (
+        <ShaderBoundary>
+          <Suspense fallback={null}>
+            <div className="hero-shader">
+              <Dithering
+                colorBack="#00000000"
+                colorFront={tone}
+                shape="warp"
+                type="4x4"
+                speed={onScreen ? (hovered ? 0.4 : 0.18) : 0}
+                className="size-full"
+                minPixelRatio={1}
+              />
+            </div>
+          </Suspense>
+        </ShaderBoundary>
+        )}
       </div>
 
       {/* Plain elements — the entrance is the timeline above, so nothing here
@@ -201,7 +215,7 @@ export function HeroShell({
       <div className="hero-inner">
         {media && <div className="hero-media">{media}</div>}
 
-        <div className="section-label hero-kicker">{kicker}</div>
+        {kicker && <div className="section-label hero-kicker">{kicker}</div>}
 
         <Wordmark
           as="h1"

@@ -29,7 +29,6 @@ import { Stage } from "./stage";
 import { Ticker } from "./Ticker";
 import { Chips } from "./Chips";
 import { ProjectStack } from "./ProjectStack";
-import { useRecede } from "./curtain";
 import { registerSnap } from "@/lib/snap";
 import { Finale } from "./Finale";
 
@@ -110,6 +109,7 @@ export function Nav({
   toggle,
   base = "",
   i18n = false,
+  links,
 }: {
   active: string;
   t: (k: string) => string;
@@ -117,6 +117,8 @@ export function Nav({
   toggle: () => void;
   base?: string;
   i18n?: boolean;
+  /** in-page section links for a one-page subpage; default is the homepage's */
+  links?: { href: string; label: string }[];
 }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -210,10 +212,10 @@ export function Nav({
       </Magnetic>
 
       <div className={`nav-links${open ? " open" : ""}`}>
-        {navLinks.map((l) => (
+        {(links ?? navLinks).map((l) => (
           <a
             key={l.href}
-            href={`${base}${l.href}`}
+            href={links ? l.href : `${base}${l.href}`}
             className={active && `#${active}` === l.href ? "active" : undefined}
             onClick={() => setOpen(false)}
           >
@@ -393,7 +395,7 @@ function Hero({ t }: { t: (k: string) => string }) {
 /* ---- ABOUT -------------------------------------------------------------- */
 function About({ t }: { t: (k: string) => string }) {
   return (
-    <Stage id="about" recede dither={{ side: "right", variant: "orb", top: 38, tone: { shape: "sphere", color: "#c0654a" } }}>
+    <Stage id="about" noExit dither={{ side: "right", variant: "orb", top: 38, tone: { shape: "sphere", color: "#c0654a" } }}>
       <Kicker>{t("about.label")}</Kicker>
       {/* data-depth separates the two columns slightly as the section travels,
           so it reads with thickness instead of one flat plane sliding past */}
@@ -548,9 +550,6 @@ function Mission({ t }: { t: (k: string) => string }) {
     { scope: ref, dependencies: [reduce] },
   );
 
-  // steps back while the project stack slides over it
-  useRecede(ref);
-
   /* The statement is read, not revealed: it sits dimmed and lights up word by
      word as the band scrolls through, so the eye is pulled along the sentence
      at scroll speed. Words inside the `.mark` highlight light up as one unit —
@@ -603,7 +602,7 @@ function Mission({ t }: { t: (k: string) => string }) {
   );
 
   return (
-    <section className="mission recede" id="mission" ref={ref}>
+    <section className="mission" id="mission" ref={ref}>
       <svg
         className="giant-mark"
         viewBox="0 0 72 72"

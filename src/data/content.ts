@@ -44,14 +44,14 @@ export const messages: Record<Lang, Record<string, string>> = {
     'projects.facts': 'Facts',
     'baxi.desc': 'A verified Discord bot with an intelligent chat filter, a global spammer database, and a web dashboard.',
     'craftattack.desc':
-      'Our community Minecraft server. Season 2: The Ashes of Aerlon. Java and Bedrock crossplay, clans, jobs, BlueMap. Free to join, no application form.',
+      'Our community Minecraft server. Calm vanilla survival with Java and Bedrock crossplay, voice chat and a live map. Free to join, no application form.',
     'discordgate.desc': 'A Minecraft plugin that requires Discord account linking before players can join. Works with Baxi, Bedrock and Velocity.',
-    'qrgate.desc':
+    'entree.desc':
       'Event ticketing with a built-in shop, PayPal payment, automatic email delivery and QR code check-in.',
     'edugrade.desc':
       'A web app for teachers to manage classes, grades and attendance, with AES-256-GCM encryption and built-in analytics.',
     'helene.desc':
-      'Client project. Website and ticketing for the parish theater group in Sattledt, Austria. We built and maintain the site and run QrGate as their ticketing and shop system.',
+      'Client project. Website and ticketing for the parish theater group in Sattledt, Austria. We built and maintain the site and run Entree as their ticketing and shop system.',
     'avolink.desc':
       'A link shortener and Linktree alternative. Short, custom links and all your profiles in one place.',
     'collab.label': 'COLLABORATIONS',
@@ -113,14 +113,14 @@ export const messages: Record<Lang, Record<string, string>> = {
     'projects.facts': 'Fakten',
     'baxi.desc': 'Ein verifizierter Discord-Bot mit intelligentem Chat-Filter, globaler Spammer-Datenbank und Web-Dashboard.',
     'craftattack.desc':
-      'Unser Community-Minecraft-Server. Season 2: Die Asche von Aerlon. Java und Bedrock Crossplay, Clans, Jobs, BlueMap. Kostenlos beitreten, kein Bewerbungsformular.',
+      'Unser Community-Minecraft-Server. Entspanntes Vanilla-Survival mit Java und Bedrock Crossplay, Voice-Chat und Live-Karte. Kostenlos beitreten, kein Bewerbungsformular.',
     'discordgate.desc': 'Ein Minecraft-Plugin, das vor dem Beitritt eine Verknüpfung mit Discord verlangt. Funktioniert mit Baxi, Bedrock und Velocity.',
-    'qrgate.desc':
+    'entree.desc':
       'Ticketing für Veranstaltungen mit integriertem Shop, PayPal-Zahlung, automatischem E-Mail-Versand und QR-Code-Check-in.',
     'edugrade.desc':
       'Eine Web-App für Lehrkräfte zur Verwaltung von Klassen, Noten und Anwesenheit, AES-256-GCM-verschlüsselt und mit integrierter Analyse.',
     'helene.desc':
-      'Kundenprojekt. Website und Ticketing für die Pfarrtheatergruppe in Sattledt, Österreich. Wir haben die Seite erstellt, betreuen sie und betreiben QrGate als Ticketing- und Shop-System.',
+      'Kundenprojekt. Website und Ticketing für die Pfarrtheatergruppe in Sattledt, Österreich. Wir haben die Seite erstellt, betreuen sie und betreiben Entree als Ticketing- und Shop-System.',
     'avolink.desc':
       'Ein Link-Shortener und Linktree-Alternative. Kurze, individuelle Links und alle Profile an einem Ort.',
     'collab.label': 'KOOPERATIONEN',
@@ -151,12 +151,12 @@ export const seo: Record<Lang, { title: string; description: string }> = {
   en: {
     title: 'Avocloud.net | Software from Austria',
     description:
-      'Avocloud.net develops software in Wels, Austria. Discord moderation (Baxi), event ticketing (QrGate), grade management (EduGrade) and web development.',
+      'Avocloud.net develops software in Wels, Austria. Discord moderation (Baxi), event ticketing (Entree), grade management (EduGrade) and web development.',
   },
   de: {
     title: 'Avocloud.net | Software aus Österreich',
     description:
-      'Avocloud.net entwickelt Software in Wels, Österreich. Discord-Moderation (Baxi), Ticketing (QrGate), Notenverwaltung (EduGrade) und Webentwicklung.',
+      'Avocloud.net entwickelt Software in Wels, Österreich. Discord-Moderation (Baxi), Ticketing (Entree), Notenverwaltung (EduGrade) und Webentwicklung.',
   },
 };
 
@@ -197,11 +197,11 @@ export const projects: Project[] = [
     ],
   },
   {
-    num: '02', name: 'QrGate', icon: 'qr', descKey: 'qrgate.desc', ghost: 'QRGATE',
+    num: '02', name: 'Entree', icon: 'qr', descKey: 'entree.desc', ghost: 'ENTREE',
     tone: { shape: 'dots', color: '#2e6676' },
     chips: [
       { label: 'Events' }, { label: 'Ticketing' }, { label: 'QR check-in' },
-      { label: 'About ↗', href: '/qrgate/' },
+      { label: 'About ↗', href: '/entree/' },
     ],
   },
   {
@@ -235,15 +235,14 @@ export const projects: Project[] = [
       { label: 'Minecraft' }, { label: 'Survival' }, { label: 'Community' }, { label: 'Crossplay' },
       { label: 'Server ↗', href: '/craftattack/' },
       { label: 'Rules ↗', href: '/craftattack/rules/' },
-      { label: 'Aerlon ↗', href: '/craftattack/aerlon/' },
-      { label: 'Clans & Economy ↗', href: '/craftattack/clans/' },
+      { label: 'Join ↗', href: '/craftattack/join/' },
     ],
   },
 ];
 
 /* ---- Product scene details ------------------------------------------------
    What fills the right-hand spec panel on each fullscreen product scene. Every
-   line is taken from the product's own page (/baxi/, /qrgate/, /edugrade/,
+   line is taken from the product's own page (/baxi/, /entree/, /edugrade/,
    /craftattack/) or its listing — nothing here is a claim those pages don't
    already make. Keyed by the descKey prefix ('baxi.desc' → 'baxi'). */
 export type ProjectDetail = { features: string[]; facts: [string, string][] };
@@ -259,7 +258,7 @@ export const projectDetails: Record<Lang, Record<string, ProjectDetail>> = {
       ],
       facts: [['Platform', 'Discord'], ['Setup', 'Web dashboard'], ['Modules', '27']],
     },
-    qrgate: {
+    entree: {
       features: [
         'Online ticket shop, no customer account needed',
         'PDF ticket with a unique QR code, sent by email',
@@ -296,12 +295,12 @@ export const projectDetails: Record<Lang, Record<string, ProjectDetail>> = {
     },
     craftattack: {
       features: [
+        'Vanilla survival in a Terralith world',
         'Java and Bedrock crossplay',
-        'Clans, jobs and an economy',
-        'Live BlueMap, voice chat, opt-in PvP',
+        'Voice chat and a live BlueMap',
         'Free to join, no application form',
       ],
-      facts: [['Season', '2 · The Ashes of Aerlon'], ['Edition', 'Java + Bedrock'], ['Address', 'craftattack.avocloud.net']],
+      facts: [['Opens', '23 Oct 2026 (planned)'], ['Edition', 'Java + Bedrock'], ['Address', 'craftattack.avocloud.net']],
     },
   },
   de: {
@@ -314,7 +313,7 @@ export const projectDetails: Record<Lang, Record<string, ProjectDetail>> = {
       ],
       facts: [['Plattform', 'Discord'], ['Setup', 'Web-Dashboard'], ['Module', '27']],
     },
-    qrgate: {
+    entree: {
       features: [
         'Online-Ticketshop, ohne Kundenkonto',
         'PDF-Ticket mit eigenem QR-Code per E-Mail',
@@ -351,12 +350,12 @@ export const projectDetails: Record<Lang, Record<string, ProjectDetail>> = {
     },
     craftattack: {
       features: [
+        'Vanilla-Survival in einer Terralith-Welt',
         'Java und Bedrock Crossplay',
-        'Clans, Jobs und eine Wirtschaft',
-        'Live-BlueMap, Voice-Chat, PvP freiwillig',
+        'Voice-Chat und Live-BlueMap',
         'Kostenlos, kein Bewerbungsformular',
       ],
-      facts: [['Season', '2 · Die Asche von Aerlon'], ['Edition', 'Java + Bedrock'], ['Adresse', 'craftattack.avocloud.net']],
+      facts: [['Start', '23.10.2026 (geplant)'], ['Edition', 'Java + Bedrock'], ['Adresse', 'craftattack.avocloud.net']],
     },
   },
 };

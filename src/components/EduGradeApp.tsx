@@ -23,7 +23,7 @@ const DocsIcon = () => (
   </svg>
 );
 
-/* Nav + Hero + Footer as one React root — same shape as BaxiApp/QrgateApp,
+/* Nav + Hero + Footer as one React root — same shape as BaxiApp/EntreeApp,
    and for the same reason (the Wordmark reveal needs to share a gsap context
    with Shell). See BaxiApp.tsx.
 

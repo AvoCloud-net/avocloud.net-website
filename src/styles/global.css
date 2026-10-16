@@ -37,7 +37,7 @@
    `@/components/ui` and `@/lib/utils`, neither of which ever existed, and there
    were no Radix dependencies, so nothing could be generated into the project.
    The `@theme inline` bridge that sat here mapped 10 `--color-*` tokens for it
-   and no markup ever used one. Tailwind itself stays: PwGen and the QrGate page
+   and no markup ever used one. Tailwind itself stays: PwGen and the Entree page
    use its utilities.
 
    If shadcn is ever wanted, theme it with `brand/tokens/avocloud.base.css`
@@ -747,6 +747,16 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
     transition: padding var(--dur-enter) var(--ease), transform var(--dur-ui) var(--ease);
 }
 .site-nav.hidden { transform: translateY(-105%); }
+/* Over a hero photo (HeroShell `backdrop`) the nav's own blur and its short
+   dark gradient both stop at the nav's bottom edge, and on a picture that
+   edge reads as a stray dark stripe. At the top of such a page the nav is
+   bare; the darkening comes from the hero's shade instead, which fades out
+   much further down. Once scrolled the nav is its solid bar again. */
+body:has(.hero-backdrop) .site-nav:not(.scrolled) {
+    background: none;
+    -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+}
 
 /* Desktop: logo and actions are different widths, so auto margins put the
    links off-centre by half the difference. Equal outer columns centre them on
@@ -1001,6 +1011,16 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
         linear-gradient(to bottom, #000 62%, transparent 97%);
     -webkit-mask-composite: source-in;
             mask-composite: intersect;
+}
+
+.hero-backdrop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* Darkens the picture enough for the wordmark and the claim, and fades it
+   into the canvas at the bottom so the hero ends without a hard edge. */
+.hero-backdrop-shade {
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse 55% 40% at 50% 45%, rgba(0,0,0,0.42), rgba(0,0,0,0.12) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 12%, transparent 30%, transparent 60%, var(--bg) 100%);
 }
 
 .hero-inner {
@@ -1413,7 +1433,7 @@ h2.headline .thin { font-weight: 300; color: var(--muted-2); }
 .card p { color: var(--muted); font-size: var(--text-sm); margin-bottom: var(--space-4); }
 /* Layered ON the glass, not instead of it. This used the `background`
    shorthand, which replaced the glass gradient outright — six feature cards on
-   qrgate and baxi were flat while every other card was glass. Two
+   entree and baxi were flat while every other card was glass. Two
    background-image layers: the coral hint paints over the glass tint. */
 .card.feature {
     background-image:
@@ -2261,6 +2281,12 @@ html.gsap-ready .finale-meta {
     .span-2, .span-3 { grid-column: span 1; }
     .mission .giant-mark, .mission .foil { display: none; }
 }
+@media (max-width: 360px) {
+    /* Smallest phones (320px): at 1.2rem the logo alone was ~300px and pushed
+       the menu button off screen, on every page. */
+    .nav-logo { font-size: 0.9rem; gap: 0.4rem; }
+    .nav-logo svg { width: 22px; height: 22px; }
+}
 @media (max-width: 620px) {
     /* was a full-width column stack (3 tall bordered blocks) — ate a huge
        amount of vertical space for three short number+label pairs. Stay in
@@ -2278,27 +2304,11 @@ html.gsap-ready .finale-meta {
     *, *::before, *::after { animation: none !important; scroll-behavior: auto; transition-duration: 0.01ms !important; }
 }
 
-/* ---- Craft Attack article subpages ----------------------------------------
-   Migrated out of the standalone files under public/craftattack/, which
-   shipped their own
-   nav, their own inline styles and a <link> to assets/css/main.css — a file
-   that does not exist in this repo, so those pages were rendering on CDN
-   Tailwind alone. Everything below reuses the existing tokens; there is no
-   second palette here. */
-
-.crumbs {
-    font-family: var(--font-mono);
-    font-size: var(--text-2xs);
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    margin-bottom: var(--space-6);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-}
-.crumbs a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line); }
-.crumbs a:hover { color: var(--coral); border-bottom-color: var(--coral); }
-.crumbs [aria-current] { color: var(--fg); }
+/* ---- Craft Attack ---------------------------------------------------------
+   The single /craftattack/ page. Reuses the site's tokens and components
+   (.section, .card, .chip, .btn, .stat); only the pieces with no equivalent
+   live here. */
+html { scroll-padding-top: 5rem; }
 
 .ca-siblings {
     margin-top: 4rem;
@@ -2306,6 +2316,151 @@ html.gsap-ready .finale-meta {
     border-top: 1px solid var(--line);
 }
 .ca-siblings .section-label { margin-bottom: 0.9rem; }
+
+/* Quiet dither separator (DitherRule.tsx): a slim strip that fades out on all
+   sides, sitting in the gap between two sections rather than adding to it. */
+.dither-rule {
+    position: relative; z-index: 0; pointer-events: none;
+    height: clamp(90px, 14vh, 150px);
+    margin: calc(var(--space-section) * -0.45) 0;
+    overflow: hidden;
+    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 40%, transparent 100%);
+            mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 40%, transparent 100%);
+}
+.dither-rule-in { position: absolute; inset: 0 -6%; }
+
+.ca-p { color: var(--muted); max-width: 66ch; margin-bottom: var(--space-4); }
+.ca-p strong { color: var(--fg); font-weight: 600; }
+.ca-sub {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: var(--space-8, 3rem) 0 var(--space-4);
+}
+.ca-sub::before { content: "// "; color: var(--coral); }
+
+.ca-about { align-items: start; gap: clamp(1.5rem, 5vw, 4rem); }
+.ca-quote {
+    position: relative;
+    border: 1px solid var(--edge-flush);
+    border-left: 2px solid var(--coral);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6) var(--space-6);
+    background: var(--surface-recessed);
+}
+.ca-quote p { color: var(--muted-2); font-style: italic; line-height: 1.75; margin-bottom: var(--space-3); }
+.ca-quote footer { font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: 0.08em; color: var(--coral-soft); margin-top: var(--space-4); }
+.ca-quote > .mk { position: absolute; width: 8px; height: 8px; }
+.ca-quote > .mk.tl { top: 4px; left: 4px; border-top: 1px solid var(--coral); border-left: 1px solid var(--coral); }
+.ca-quote > .mk.br { bottom: 4px; right: 4px; border-bottom: 1px solid var(--coral); border-right: 1px solid var(--coral); }
+
+.ca-address {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;
+    margin-top: var(--space-6);
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    width: fit-content; max-width: 100%;
+}
+.ca-address-l { font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: 0.16em; color: var(--muted); }
+.ca-address-v { font-family: var(--font-mono); font-size: 0.95rem; color: var(--coral-soft); }
+
+/* The two cinematic beats (CaCurtain.tsx): a frame that opens to full bleed.
+   Black outside the frame is the canvas, so the inset reads as a window. */
+.ca-curtain { position: relative; z-index: 1; }
+.ca-curtain-frame { position: relative; overflow: hidden; }
+/* descendant, not child: Astro wraps slotted markup in <astro-slot> */
+.ca-curtain-media, .ca-curtain-frame video { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ca-curtain-copy { position: relative; z-index: 1; }
+
+.ca-film .ca-curtain-frame { min-height: 88vh; display: flex; align-items: flex-end; }
+.ca-film video { object-fit: cover; }
+.ca-film-fade {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 30%, rgba(0,0,0,0.55) 70%, var(--canvas, #000) 100%);
+}
+.ca-film-copy { position: relative; padding-bottom: clamp(3rem, 9vh, 6rem); }
+.ca-film-title {
+    font-family: var(--font-massive);
+    font-weight: 700;
+    font-size: clamp(3.5rem, 11vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin: 0.6rem 0 1.2rem;
+}
+.ca-film .ca-p { color: var(--muted-2); }
+
+.ca-finale .ca-curtain-frame { min-height: 92vh; display: grid; place-items: center; text-align: center; }
+.ca-curtain-dither { opacity: 0.9; }
+.ca-finale-vignette {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 60% 55% at 50% 50%, var(--canvas, #000) 30%, rgba(0,0,0,0.6) 62%, transparent 100%);
+}
+.ca-finale .wrap { position: relative; }
+.ca-finale .section-label { justify-content: center; }
+.ca-finale-addr {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 5.2vw, 4rem);
+    letter-spacing: -0.01em;
+    margin: 1.2rem 0 0.6rem;
+    word-break: break-word;
+}
+.ca-finale-sub { font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.ca-finale .ca-actions { justify-content: center; margin-top: 2rem; }
+
+.ca-biomes { margin-top: var(--space-6); gap: 0; border-top: 1px solid var(--line); }
+.ca-biome { display: flex; flex-direction: column; gap: 0.2rem; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+.ca-biome strong { font-family: var(--font-display); font-weight: 600; }
+.ca-biome span { color: var(--muted); font-size: var(--text-sm); }
+.ca-map { margin-top: var(--space-6); }
+
+.ca-timeline { list-style: none; padding: 0; margin-top: var(--space-6); border-top: 1px solid var(--line); }
+.ca-timeline li { display: grid; grid-template-columns: 11rem 1fr; gap: var(--space-5); padding: var(--space-5) 0; border-bottom: 1px solid var(--line); }
+.ca-tl-date { font-family: var(--font-mono); font-size: 0.85rem; color: var(--coral-soft); display: flex; flex-direction: column; gap: 0.2rem; }
+.ca-tl-date small { color: var(--muted); font-size: var(--text-2xs); letter-spacing: 0.1em; }
+.ca-timeline h3 { font-family: var(--font-display); font-weight: 600; font-size: var(--text-md); margin-bottom: 0.2rem; }
+.ca-timeline p { color: var(--muted); font-size: var(--text-sm); }
+
+.ca-steps { list-style: none; padding: 0; margin: var(--space-6) 0; }
+.ca-step-n { position: absolute; top: var(--space-4); right: var(--space-5); font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--coral); }
+.ca-steps code, .ca-acc code, .card p code, .mc-rules code { font-family: var(--font-mono); font-size: 0.85em; padding: 0.1em 0.35em; border: 1px solid var(--line); border-radius: 4px; color: var(--coral-soft); }
+.card p a { color: var(--fg); border-bottom: 1px solid var(--coral); }
+.ca-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: var(--space-5); }
+
+/* Accordion for the FAQ and the rules. Native <details>: works without JS. */
+.ca-acc { border-top: 1px solid var(--line); }
+.ca-acc details { border-bottom: 1px solid var(--line); }
+.ca-acc summary {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.05rem 0;
+    cursor: pointer; list-style: none;
+    font-family: var(--font-display); font-weight: 600; font-size: var(--text-md);
+}
+.ca-acc summary::-webkit-details-marker { display: none; }
+.ca-acc summary::after { content: "+"; margin-left: auto; font-family: var(--font-mono); color: var(--coral); }
+.ca-acc details[open] > summary::after { content: "–"; }
+.ca-acc summary:hover { color: var(--coral-soft); }
+.ca-rule-n { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 400; color: var(--coral); }
+.ca-acc details > p, .ca-acc details > ul { color: var(--muted); line-height: 1.75; max-width: 72ch; }
+.ca-acc details > p:last-child { padding-bottom: 1.2rem; }
+.ca-acc details > ul { list-style: disc; padding-left: 1.2rem; margin: 0.75rem 0; }
+.ca-acc li + li { margin-top: 0.35rem; }
+.ca-acc strong { color: var(--fg); font-weight: 600; }
+.ca-lead { color: var(--fg) !important; }
+.ca-acc .punish {
+    font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.7;
+    border-top: 1px solid var(--line-faint); padding-top: 0.6rem; margin-bottom: 1.2rem;
+}
+.ca-policy { margin-top: var(--space-8, 3rem); }
+
+
+@media (max-width: 860px) {
+    .ca-timeline li { grid-template-columns: 1fr; gap: var(--space-2); }
+    .ca-film .ca-curtain-frame { min-height: 70vh; }
+}
 
 /* Long-form body copy for these pages. `.prose` caps at 62ch, which is right
    for a column beside something else; these pages are a single column and the
@@ -2524,23 +2679,336 @@ html.gsap-ready .finale-meta {
 /* ---- Footer row -----------------------------------------------------------
    One line under the wordmark: copyright first, then the links. No border, no
    box — the wordmark above it is the whole statement, and a framed panel under
-   it was competing with that rather than closing it. Left-aligned inside the
-   page measure while the wordmark stays centred. */
+   it was competing with that rather than closing it. Centred under the
+   centred wordmark, on every page. */
 .footer-row {
     width: 100%;
     max-width: var(--maxw);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-5);
+    justify-content: center;
+    gap: var(--space-3) var(--space-5);
     font-family: var(--font-mono);
     font-size: var(--text-2xs);
     letter-spacing: 0.08em;
     color: var(--muted);
-    text-align: left;
+    text-align: center;
 }
 .footer-row a {
     color: var(--muted-2);
     /* no colour transition — §6.9 */
 }
 .footer-row a:hover { color: var(--coral); }
+
+/* ---- Craftattack community server (/craftattack/) --------------------------
+   Built from the Season 2 page's components (the .ca-* pieces, .card, .btn,
+   .stat), so only the differences live here. Its own accent gives the server
+   a warm look of its own: lantern honey instead of coral. Scoped
+   to <main> (and the lightboxes), so the nav logo and the footer wordmark
+   keep the brand coral. */
+.mc-theme {
+    --coral:      #f5b85c;
+    --coral-rgb:  245, 184, 92;
+    --coral-soft: #f9d18f;
+    --coral-dark: #b9822f;
+}
+.mc-theme :focus-visible { outline-color: var(--coral); }
+/* The edge dither pieces (SideDither) hang half off screen on purpose. On a
+   phone that overflow widens the layout viewport (447px on a 375px screen):
+   the fixed nav grows with it, the menu button lands off screen and the page
+   pans sideways. body's overflow-x:hidden does not stop that on mobile, so the
+   sections clip their own sides. `clip`, not `hidden`: no scroll container,
+   and the vertical axis stays visible. */
+.mc-theme .section { overflow-x: clip; }
+/* Player-facing voice. The AvoCloud pages talk like a terminal: mono labels,
+   `//` comments, [bracketed] chips, a claim that decodes itself. Players read
+   that as a developer's page, so inside .mc-theme the interface text uses the
+   body face and the code-isms go. Mono stays only for real code: the server
+   address and the Discord command. */
+.mc-theme .section-label,
+.mc-theme .ca-sub,
+.mc-theme .hero-claim,
+.mc-theme .btn,
+.mc-theme .chip,
+.mc-theme .stat .l,
+.mc-theme .ca-address-l,
+.mc-theme .mc-glance dt,
+.mc-theme .ca-finale-sub,
+.mc-theme .ca-step-n,
+.mc-theme .ca-rule-n { font-family: var(--font-display); }
+
+.mc-theme .section-label,
+.mc-theme .ca-sub { font-weight: 600; letter-spacing: 0.14em; color: var(--muted-2); }
+/* a small block of the accent instead of the `//` */
+.mc-theme .section-label::before,
+.mc-theme .ca-sub::before {
+    content: ""; display: inline-block; flex-shrink: 0;
+    width: 0.65em; height: 0.65em; margin-right: 0.15em;
+    background: var(--coral); border-radius: 2px;
+}
+.mc-theme .ca-sub::before { margin-right: 0.6em; vertical-align: 0.02em; }
+
+.mc-theme .hero-claim { letter-spacing: 0; color: var(--fg); font-size: clamp(1.05rem, 2.2vw, 1.3rem); line-height: 1.5; text-shadow: 0 1px 12px rgba(0,0,0,0.6); }
+.mc-theme .hero-kicker { color: var(--fg); }
+/* The hero picture is a sunset: on narrow screens the sun sits right behind
+   the title, so the type gets a soft dark halo and the overlay a bit more. */
+.mc-theme .hero-wordmark, .mc-theme .hero-kicker { filter: drop-shadow(0 2px 14px rgba(0,0,0,0.75)); }
+@media (max-width: 700px) {
+    .mc-theme .hero-backdrop-shade {
+        background:
+            radial-gradient(ellipse 80% 45% at 50% 42%, rgba(0,0,0,0.58), rgba(0,0,0,0.2) 100%),
+            linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 12%, transparent 30%, transparent 60%, var(--bg) 100%);
+    }
+}
+.mc-theme .btn { letter-spacing: 0.01em; font-weight: 600; }
+/* The two hero buttons share one size: equal columns, label centred. */
+.mc-theme .hero-links { display: grid; grid-template-columns: repeat(2, minmax(0, 13rem)); justify-content: center; }
+.mc-theme .hero-links .btn { width: 100%; justify-content: center; }
+/* side by side the label no longer fits on a phone: stacked, still one size */
+@media (max-width: 480px) { .mc-theme .hero-links { grid-template-columns: minmax(0, 17rem); } }
+.mc-theme .chip { border-radius: var(--radius); color: var(--fg); }
+.mc-theme .chip::before, .mc-theme .chip::after { content: none; }
+.mc-theme .stat .l { letter-spacing: 0.1em; }
+.mc-theme .ca-step-n, .mc-theme .ca-rule-n { font-weight: 700; font-size: 0.95rem; }
+.mc-theme .ca-finale-sub { letter-spacing: 0.08em; }
+
+/* Section divider: a hairline that fades in from both sides, three small
+   blocks at its centre (the same square as the section labels). Replaces the
+   dither strips (DitherRule) on this page: static, no WebGL. */
+.mc-divider {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 6px;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+.mc-divider::before, .mc-divider::after { content: ""; flex: 1; height: 1px; }
+.mc-divider::before { background: linear-gradient(to right, transparent, rgba(var(--coral-rgb), 0.4)); margin-right: 10px; }
+.mc-divider::after  { background: linear-gradient(to left, transparent, rgba(var(--coral-rgb), 0.4)); margin-left: 10px; }
+.mc-divider span { width: 6px; height: 6px; border-radius: 1px; background: rgba(var(--coral-rgb), 0.45); }
+.mc-divider span:nth-child(2) { width: 8px; height: 8px; background: var(--coral); }
+
+/* World facts: three short points side by side. */
+.mc-world-facts { gap: 0 var(--space-6); }
+.mc-world-facts .ca-biome { padding: 1.1rem 0; }
+
+/* CRAFTATTACK is eleven wide letters; the shared hero size bottoms out at
+   1.5rem, which overflows a 320px screen. Same size everywhere else. */
+.mc-theme .hero-wordmark { font-size: min(clamp(1.5rem, 5.2vw, 4.4rem), 6.4vw); }
+
+/* Visible placeholder for every open point. Deliberately off-palette (pink,
+   dashed) so it can never pass for finished design. */
+.todo {
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: #ffb3ee;
+    background: rgba(255, 79, 216, 0.10);
+    outline: 1px dashed rgba(255, 79, 216, 0.75);
+    outline-offset: 1px;
+    border-radius: 3px;
+    padding: 0.05em 0.4em;
+    -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+}
+.ca-address-v .todo { font-size: 0.85em; }
+.ca-address .btn:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+.ca-finale-addr .todo { font-size: 0.42em; vertical-align: middle; }
+
+/* At-a-glance box beside the about copy. */
+.mc-glance {
+    position: relative;
+    border: 1px solid var(--edge-flush);
+    border-left: 2px solid var(--coral);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5) var(--space-6);
+    background: var(--surface-recessed);
+}
+.mc-glance .ca-sub { margin-top: 0; }
+.mc-glance > .mk { position: absolute; width: 8px; height: 8px; }
+.mc-glance > .mk.tl { top: 4px; left: 4px; border-top: 1px solid var(--coral); border-left: 1px solid var(--coral); }
+.mc-glance > .mk.br { bottom: 4px; right: 4px; border-bottom: 1px solid var(--coral); border-right: 1px solid var(--coral); }
+.mc-glance dl > div {
+    display: grid; grid-template-columns: 6.5rem 1fr; gap: var(--space-4);
+    padding: 0.7rem 0;
+    border-top: 1px solid var(--line);
+}
+.mc-glance dt { font-family: var(--font-mono); font-size: var(--text-2xs); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding-top: 0.2em; }
+.mc-glance dd { color: var(--fg); }
+
+/* World beat: a screenshot instead of the trailer. */
+.mc-world img.ca-curtain-media { object-fit: cover; }
+/* German titles run long ("Eine ganze Welt zum Entdecken."): a size that
+   keeps them to two lines on a laptop. */
+.mc-theme .ca-film-title { font-size: clamp(2.4rem, 6.5vw, 5.5rem); line-height: 0.95; }
+
+/* The world facts sit right under the world scene; a full section gap on
+   top of the scene's own bottom padding left a hole there. */
+.mc-theme .mc-after-film { padding-top: var(--space-6); }
+
+/* Carousel (gallery). The track is a native horizontal scroll with snap
+   points, so swipe, trackpad and arrow keys work with no script; the page
+   script only drives the arrow buttons and the dots. */
+.mc-carousel { position: relative; margin-top: var(--space-4); }
+.mc-car-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    scrollbar-width: none;
+}
+.mc-car-track::-webkit-scrollbar { display: none; }
+.mc-car-track:focus-visible { outline-offset: 4px; }
+.mc-slide {
+    position: relative;
+    flex: 0 0 100%;
+    margin: 0;
+    aspect-ratio: 5 / 3;
+    scroll-snap-align: start;
+}
+.mc-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mc-slide figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 3rem var(--space-5) var(--space-4);
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    color: var(--fg);
+    font-weight: 600;
+}
+.mc-car-btn {
+    position: absolute; top: calc(50% - 1.75rem); transform: translateY(-50%);
+    width: 3rem; height: 3rem;
+    display: grid; place-items: center;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: var(--radius);
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    color: var(--fg);
+    cursor: pointer;
+}
+.mc-car-btn.prev { left: var(--space-4); }
+.mc-car-btn.next { right: var(--space-4); }
+.mc-car-btn:hover { border-color: var(--coral); color: var(--coral); }
+.mc-car-btn:disabled { opacity: 0.3; pointer-events: none; }
+.mc-car-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mc-car-bar { display: flex; align-items: center; justify-content: center; gap: var(--space-4); margin-top: var(--space-4); }
+.mc-car-dots { display: flex; justify-content: center; gap: 0.5rem; }
+.mc-car-pause {
+    width: 2rem; height: 2rem; padding: 0;
+    display: grid; place-items: center;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: none;
+    color: var(--muted-2);
+    cursor: pointer;
+}
+.mc-car-pause:hover { border-color: var(--coral); color: var(--fg); }
+.mc-car-pause svg { width: 14px; height: 14px; fill: currentColor; }
+.mc-car-pause[aria-pressed="true"] .i-pause,
+.mc-car-pause[aria-pressed="false"] .i-play { display: none; }
+.mc-car-dots button {
+    width: 0.6rem; height: 0.6rem; padding: 0;
+    border: 0; border-radius: 2px;
+    background: var(--line-strong);
+    cursor: pointer;
+    /* bigger hit area than the visible square */
+    outline-offset: 4px;
+    box-shadow: 0 0 0 0.5rem transparent;
+}
+.mc-car-dots button[aria-current="true"] { background: var(--coral); width: 1.6rem; }
+@media (max-width: 760px) {
+    .mc-carousel { margin-left: calc(var(--gutter) * -1); margin-right: calc(var(--gutter) * -1); }
+    .mc-car-track { border-radius: 0; border-left: 0; border-right: 0; }
+    .mc-slide { aspect-ratio: 4 / 3; }
+    .mc-car-btn { width: 2.5rem; height: 2.5rem; }
+    .mc-car-btn.prev { left: 0.5rem; }
+    .mc-car-btn.next { right: 0.5rem; }
+}
+
+/* "Ready to play?": two big link cards to the join guide and the rules. */
+.mc-start { margin-top: var(--space-6); }
+.mc-start-card { display: flex; flex-direction: column; color: inherit; text-decoration: none; padding: var(--space-6); }
+.mc-start-card h3 { font-size: var(--text-lg); }
+.mc-start-card p { font-size: var(--text-md); }
+.mc-start-cta { margin-top: auto; display: inline-flex; align-items: center; gap: 0.5rem; color: var(--coral); font-weight: 600; }
+.mc-start-cta svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform var(--dur-micro) var(--ease); }
+.mc-start-card:hover { border-color: var(--coral); }
+.mc-start-card:hover .mc-start-cta svg { transform: translateX(4px); }
+
+/* Join and rules subpages: no hero, so the first section clears the nav. */
+.mc-back {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-bottom: var(--space-6);
+    padding: 0.5rem 0.85rem 0.5rem 0.65rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--muted-2);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    text-decoration: none;
+}
+.mc-back svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform var(--dur-micro) var(--ease); }
+.mc-back:hover { color: var(--fg); border-color: var(--coral); }
+.mc-back:hover svg { transform: translateX(-3px); }
+.mc-back + .section-label { display: flex; }
+.mc-theme .mc-subpage { padding-top: calc(var(--space-section) + 4rem); }
+.mc-subpage h1.headline { margin-bottom: var(--space-4); }
+.mc-narrow { max-width: 52rem; }
+
+/* Join guide: one column per edition, numbered steps. */
+.mc-editions { margin-top: var(--space-8, 3rem); gap: var(--space-6); align-items: start; }
+.mc-edition {
+    border: 1px solid var(--edge-flush);
+    border-top: 2px solid var(--coral);
+    border-radius: var(--radius-lg);
+    background: var(--surface-recessed);
+    padding: var(--space-6);
+}
+.mc-edition h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.8rem; margin-bottom: var(--space-4); }
+.mc-edition h2 small { font-size: var(--text-sm); font-weight: 400; color: var(--muted); }
+.mc-steps { list-style: none; padding: 0; margin: 0; }
+.mc-steps li { display: grid; grid-template-columns: 2rem 1fr; gap: var(--space-3); padding: var(--space-4) 0; border-top: 1px solid var(--line); }
+.mc-steps .ca-step-n {
+    position: static;
+    width: 1.7rem; height: 1.7rem;
+    display: grid; place-items: center;
+    border-radius: var(--radius);
+    background: rgba(var(--coral-rgb), 0.15);
+    color: var(--coral);
+    font-size: 0.85rem;
+}
+.mc-steps h3 { font-family: var(--font-display); font-weight: 600; font-size: var(--text-md); margin-bottom: 0.25rem; }
+.mc-steps p { color: var(--muted); font-size: var(--text-sm); line-height: 1.7; }
+.mc-steps p strong { color: var(--fg); font-weight: 600; }
+.mc-steps code, .mc-rules-help code { font-family: var(--font-mono); font-size: 0.85em; padding: 0.1em 0.35em; border: 1px solid var(--line); border-radius: 4px; color: var(--coral-soft); white-space: nowrap; }
+.mc-steps a, .mc-join-extra p a:not(.mc-channel) { color: var(--fg); border-bottom: 1px solid var(--coral); }
+.mc-join-extra { margin-top: var(--space-6); }
+
+/* Rules: one column, read top to bottom. */
+.mc-rules { list-style: none; padding: 0; margin-top: var(--space-6); border-top: 1px solid var(--line); }
+.mc-rules li { display: grid; grid-template-columns: 2.6rem 1fr; gap: var(--space-3); padding: var(--space-5) 0; border-bottom: 1px solid var(--line); }
+.mc-rules .ca-rule-n { padding-top: 0.25em; }
+.mc-rules h3 { font-family: var(--font-display); font-weight: 600; font-size: var(--text-md); margin-bottom: 0.25rem; }
+.mc-rules p { color: var(--muted); }
+.mc-rules-help { margin-top: var(--space-6); height: auto; }
+/* Channel links: the code frame is the link; it lights up instead of an underline. */
+.mc-channel { border: 0 !important; white-space: nowrap; }
+.mc-channel:hover code, .mc-channel:focus-visible code { border-color: var(--coral); color: var(--fg); }
+.mc-rules-note { margin-top: var(--space-5); font-size: var(--text-sm); }
+
+/* Closing scene: the full screen height. */
+.mc-theme .ca-finale .ca-curtain-frame { min-height: 100vh; min-height: 100svh; }
+.mc-finale-start { margin-top: 0.6rem; text-transform: none; letter-spacing: 0.06em; }
+
+@media (max-width: 600px) {
+    .mc-edition { padding: var(--space-5); }
+}
+
+@media (max-width: 860px) {
+    .mc-glance dl > div { grid-template-columns: 5.5rem 1fr; }
+}

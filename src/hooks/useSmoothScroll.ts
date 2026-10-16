@@ -44,13 +44,24 @@ const CROSS_TILE = 200;
  *  querySelector throws on a fragment that isn't a valid selector (`#2024`),
  *  which is a perfectly legal thing for a URL to contain. */
 function hashTarget(): HTMLElement | null {
-  const hash = window.location.hash;
+  return scrollTarget(window.location.hash);
+}
+
+/** A fragment's element, but only if it is a place on the page. A fixed
+ *  element (the CSS-only :target lightboxes on /craftattack/) is an overlay:
+ *  scrolling "to" it only drifts the page, and intercepting the click with
+ *  pushState means :target never changes, so the overlay never opens. Those
+ *  links are left to the browser's own hash navigation. */
+function scrollTarget(hash: string): HTMLElement | null {
   if (hash.length < 2) return null;
+  let el: HTMLElement | null;
   try {
-    return document.querySelector<HTMLElement>(hash);
+    el = document.querySelector<HTMLElement>(hash);
   } catch {
     return null;
   }
+  if (!el || getComputedStyle(el).position === 'fixed') return null;
+  return el;
 }
 
 /* Lenis inertia scrolling, wired to GSAP ScrollTrigger.
@@ -262,8 +273,7 @@ export function useSmoothScroll() {
       const a = (e.target as HTMLElement).closest?.('a[href^="#"]') as HTMLAnchorElement | null;
       if (!a) return;
       const hash = a.getAttribute('href') || '';
-      if (hash.length < 2) return;
-      const el = document.querySelector(hash);
+      const el = scrollTarget(hash);
       if (el) {
         e.preventDefault();
         lenis.scrollTo(el as HTMLElement, { offset: anchorOffset() });

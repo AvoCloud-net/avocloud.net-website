@@ -1,157 +1,301 @@
 ---
+/* Craftattack, the open community server. Replaced the Season 2 page on
+   13 Oct 2026 (that one is kept in src/legacy/craftattack-season2/). How to
+   join and the rules live on their own pages (join/, rules/) so they can be
+   linked on their own, e.g. from Discord. */
 import Layout from '@/layouts/Layout.astro';
-import CraftAttackApp from '@/components/CraftAttackApp.tsx';
+import CommunityApp from '@/components/CommunityApp.tsx';
+import { CaCurtain } from '@/components/CaCurtain.tsx';
+import { SideDither } from '@/components/SideDither.tsx';
+import { copy, facts, shots, todo } from '@/data/community';
 
-const links = [
-  { href: '/craftattack/aerlon/', label: 'Aerlon — The Custom World', desc: 'Lore, biomes, BlueMap, 15-image gallery of Aerlon.' },
-  { href: '/craftattack/features/', label: 'Features', desc: 'Season 2 systems plus all returning features. Crossplay, voice chat, BlueMap.' },
-  { href: '/craftattack/clans/', label: 'Clans, Jobs & Economy', desc: 'Clan system, coin economy, jobs, Homestead claims, opt-in PvP.' },
-  { href: '/craftattack/rules/', label: 'Server Rules v3.0', desc: 'All 10 rules, punishments, reporting workflow, server monitoring & logging.' },
-  { href: '/craftattack/join/', label: 'How to Join', desc: '3-step join guide, FAQ, Season 1 server backups archive.' },
-];
+const c = copy.de;
+const url = 'https://avocloud.net/craftattack/';
+const ACCENT = '#f5b85c';
+/* The page's two materials: honey (lantern light) and moss. Darker steps of
+   the accent, so the dither reads as texture, never as a colour field. */
+const honey = { shape: 'warp', color: '#7a5a2a' } as const;
+const mossOrb = { shape: 'sphere', color: '#55652f' } as const;
+
+const addressHtml = facts.address ?? todo('server address');
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
+/* No placeholder text in structured data: FAQ entries that still carry a TODO
+   are left out until they have a real answer. */
+const faqLd = c.faq.items.filter((f) => !f.a.includes('class="todo"'));
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://avocloud.net/' },
+        { '@type': 'ListItem', position: 2, name: facts.name ?? 'Community Server', item: url },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqLd.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: plain(f.a) },
+      })),
+    },
+  ],
+};
+
+const arrow = '<path d="M5 12h14M13 6l6 6-6 6"/>';
 ---
 <Layout
-  title="Craft Attack Community Server — Open, Free | Avocloud.net"
-  description="Open Craft Attack community server — join the public CraftAttack Season 2 Minecraft server &quot;The Ashes of Aerlon&quot;. Java + Bedrock crossplay, clans, jobs, BlueMap. Free, no application form."
-  canonical="https://avocloud.net/craftattack/"
+  title={c.meta.title}
+  description={c.meta.description}
+  canonical={url}
+  lang="de"
   schema={false}
+  ogImage="https://avocloud.net/assets/images/craftattack/ca-og.jpg"
+  ogImageAlt={c.meta.ogImageAlt}
+  themeColor={ACCENT}
+  noindex={!facts.launched}
+  jsonld={jsonld}
 >
-  <CraftAttackApp client:load>
+  <CommunityApp client:load>
 
-      <section class="section" id="what-is">
-        <div class="wrap">
-          <div class="section-label">WHAT IS CRAFT ATTACK?</div>
-          <h2 class="headline">What is Craft Attack?</h2>
-          <p style="color: var(--muted); margin-bottom: 1rem; max-width: 70ch;">
-            Craft Attack is a community Minecraft survival format originally popularized by German YouTubers and streamers. The Avocloud.net Craft Attack server is an <strong style="color: var(--fg);">open Craft Attack community</strong> — a public, free-to-join CraftAttack project where everyone can participate, not just invited content creators.
-          </p>
-          <p style="color: var(--muted); max-width: 70ch;">
-            Season 2 — <em>The Ashes of Aerlon</em> — runs on a custom-generated fantasy world with Java &amp; Bedrock crossplay, clans, jobs, an economy, opt-in PvP, voice chat, and a live BlueMap. Server address: <strong style="color: var(--fg);">craftattack.avocloud.net</strong>.
-          </p>
-        </div>
-      </section>
-
-      <section class="section" id="timeline">
-        <div class="wrap">
-          <div class="section-label">TIMELINE</div>
-          <h2 class="headline">Season Timeline</h2>
-          <p style="color: var(--muted); margin-bottom: 2rem;">
-            Key dates for Season 2 – The Ashes of Aerlon. All times Europe/Vienna.
-          </p>
-          <div class="grid cols-3">
-            <div class="card" data-countdown="2026-05-14T17:30:00+02:00">
-              <span class="mk tl"></span><span class="mk br"></span>
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                Season Start
-              </h3>
-              <p style="margin-bottom: 0.5rem;">14. Mai 2026 · 17:30</p>
-              <div class="countdown-display" aria-live="polite">
-                <div class="countdown-unit"><span class="countdown-value" data-days>—</span><span class="countdown-label">Tage</span></div>
-                <div class="countdown-unit"><span class="countdown-value" data-hours>—</span><span class="countdown-label">Std</span></div>
-                <div class="countdown-unit"><span class="countdown-value" data-minutes>—</span><span class="countdown-label">Min</span></div>
-                <div class="countdown-unit"><span class="countdown-value" data-seconds>—</span><span class="countdown-label">Sek</span></div>
-              </div>
-            </div>
-            <div class="card" data-countdown="2026-05-22T17:30:00+02:00">
-              <span class="mk tl"></span><span class="mk br"></span>
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                Nether opens
-              </h3>
-              <p style="margin-bottom: 0.5rem;">22. Mai 2026 · 17:30</p>
-              <div class="countdown-display" aria-live="polite">
-                <div class="countdown-unit"><span class="countdown-value" data-days>—</span><span class="countdown-label">Tage</span></div>
-                <div class="countdown-unit"><span class="countdown-value" data-hours>—</span><span class="countdown-label">Std</span></div>
-                <div class="countdown-unit"><span class="countdown-value" data-minutes>—</span><span class="countdown-label">Min</span></div>
-                <div class="countdown-unit"><span class="countdown-value" data-seconds>—</span><span class="countdown-label">Sek</span></div>
-              </div>
-            </div>
-            <div class="card" data-countdown="2026-06-05T17:30:00+02:00">
-              <span class="mk tl"></span><span class="mk br"></span>
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                End opens
-              </h3>
-              <p style="margin-bottom: 0.5rem;">5. Juni 2026 · 17:30</p>
-              <div class="countdown-display" aria-live="polite">
-                <div class="countdown-unit"><span class="countdown-value" data-days>—</span><span class="countdown-label">Tage</span></div>
-                <div class="countdown-unit"><span class="countdown-value" data-hours>—</span><span class="countdown-label">Std</span></div>
-                <div class="countdown-unit"><span class="countdown-value" data-minutes>—</span><span class="countdown-label">Min</span></div>
-                <div class="countdown-unit"><span class="countdown-value" data-seconds>—</span><span class="countdown-label">Sek</span></div>
-              </div>
-            </div>
+    <!-- About -->
+    <section class="section" id="about">
+      <SideDither client:visible side="right" tone={mossOrb} variant="orb" top={42} />
+      <div class="wrap">
+        <div class="section-label">{c.about.label}</div>
+        <div class="grid cols-2 ca-about">
+          <div>
+            <h2 class="headline">{c.about.headline}</h2>
+            {c.about.body.map((p) => <p class="ca-p" set:html={p} />)}
+          </div>
+          <div class="mc-glance">
+            <span class="mk tl"></span><span class="mk br"></span>
+            <h3 class="ca-sub">{c.about.glanceLabel}</h3>
+            <dl>
+              {c.about.glance.map((g) => (
+                <div><dt>{g.title}</dt><dd set:html={g.body} /></div>
+              ))}
+            </dl>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section" id="explore">
-        <div class="wrap">
-          <div class="section-label">EXPLORE THE SERVER</div>
-          <h2 class="headline">Explore the Craft Attack Community Server</h2>
-          <p style="color: var(--muted); margin-bottom: 2rem;">Everything about Season 2 is split across focused pages. Pick a topic.</p>
-          <div class="grid cols-2">
-            {links.map((l) => (
-              <a class="card" href={l.href}>
-                <span class="mk tl"></span><span class="mk br"></span>
-                <h3>{l.label}</h3>
-                <p>{l.desc}</p>
-              </a>
+    <!-- World: the first cinematic beat. A still for now; a <video> (see the
+         Season 2 page) drops into the same slot once there is footage. -->
+    <CaCurtain client:load id="world" className="ca-film mc-world" label={c.world.label}>
+      <img class="ca-curtain-media" src="/assets/images/craftattack/ca-world-4.webp" alt="" width="2000" height="1196" />
+      <div class="ca-film-fade"></div>
+      <div class="wrap ca-film-copy ca-curtain-copy">
+        <div class="section-label">{c.world.label}</div>
+        <h2 class="ca-film-title">{c.world.title}</h2>
+        <p class="ca-p">{c.world.body}</p>
+      </div>
+    </CaCurtain>
+
+    <section class="section mc-after-film" id="gallery">
+      <div class="wrap">
+        <div class="grid cols-3 ca-biomes mc-world-facts">
+          {c.world.rows.map((r) => (
+            <div class="ca-biome"><strong>{r.title}</strong><span set:html={r.body} /></div>
+          ))}
+        </div>
+
+        <h3 class="ca-sub">{c.gallery.label}</h3>
+        <!-- Carousel: a native scroll-snap track (swipe, trackpad and arrow
+             keys work without JS); the script below only adds the buttons and
+             dots. Phones load the 720px thumbnails, larger screens the full shot. -->
+        <div class="mc-carousel" data-carousel data-pause-label={c.gallery.pause} data-play-label={c.gallery.play}>
+          <div class="mc-car-track" tabindex="0" role="region" aria-label={c.gallery.label}>
+            {shots.map((s, i) => (
+              <figure class="mc-slide" aria-label={`${c.gallery.slide} ${i + 1} / ${shots.length}`}>
+                <img
+                  src={`/assets/images/craftattack/ca-world-${s.n}.webp`}
+                  srcset={`/assets/images/craftattack/ca-world-${s.n}-thumb.webp 720w, /assets/images/craftattack/ca-world-${s.n}.webp 2000w`}
+                  sizes="(max-width: 760px) 100vw, 1200px"
+                  alt={s.alt}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  width="2000"
+                  height="1196"
+                />
+                <figcaption>{s.cap}</figcaption>
+              </figure>
             ))}
           </div>
-          <div class="chips" style="margin-top: 2rem;">
-            {links.map((l) => (
-              <a class="chip link" href={l.href}>{l.label} ↗</a>
-            ))}
+          <button type="button" class="mc-car-btn prev" data-dir="-1" aria-label={c.gallery.prev}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
+          </button>
+          <button type="button" class="mc-car-btn next" data-dir="1" aria-label={c.gallery.next}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6" /></svg>
+          </button>
+          <div class="mc-car-bar">
+            <button type="button" class="mc-car-pause" aria-pressed="false" aria-label={c.gallery.pause}>
+              <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1" /><rect x="13.5" y="5" width="3.5" height="14" rx="1" /></svg>
+              <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" /></svg>
+            </button>
+            <div class="mc-car-dots">
+              {shots.map((_, i) => (
+                <button type="button" data-to={i} aria-label={`${c.gallery.slide} ${i + 1}`} aria-current={i === 0 ? 'true' : undefined}></button>
+              ))}
+            </div>
           </div>
         </div>
-      </section>
-  </CraftAttackApp>
+      </div>
+    </section>
+
+    <div class="mc-divider" aria-hidden="true"><span></span><span></span><span></span></div>
+
+    <!-- Features -->
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="section-label">{c.features.label}</div>
+        <h2 class="headline">{c.features.headline}</h2>
+        <div class="grid cols-3 mc-features">
+          {c.features.cards.map((f) => (
+            <div class="card">
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={f.icon} />{f.title}</h3>
+              <p set:html={f.body}></p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <div class="mc-divider" aria-hidden="true"><span></span><span></span><span></span></div>
+
+    <!-- Get started: the way to the join guide and the rules. id="join" keeps
+         old /craftattack/#join links landing somewhere sensible. -->
+    <section class="section" id="join">
+      <div class="wrap">
+        <div class="section-label">{c.start.label}</div>
+        <h2 class="headline">{c.start.headline}</h2>
+        <div class="grid cols-2 mc-start" id="rules">
+          {c.start.cards.map((s) => (
+            <a class="card mc-start-card" href={s.href}>
+              <span class="mk tl"></span><span class="mk br"></span>
+              <h3><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={s.icon} />{s.title}</h3>
+              <p>{s.body}</p>
+              <span class="mc-start-cta">{s.cta}<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} /></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="section-label">{c.faq.label}</div>
+        <h2 class="headline">{c.faq.headline}</h2>
+        <div class="ca-acc">
+          {c.faq.items.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p set:html={f.a}></p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing scene: the second cinematic beat -->
+    <CaCurtain client:load className="ca-finale" label={c.finale.label} dither tone={honey}>
+      <span class="ca-finale-vignette" aria-hidden="true"></span>
+      <div class="wrap ca-curtain-copy">
+        <div class="section-label">{c.finale.label}</div>
+        <p class="ca-finale-addr" set:html={addressHtml} />
+        <p class="ca-finale-sub">{c.finale.sub}</p>
+        <p class="ca-finale-sub mc-finale-start" set:html={c.finale.start} />
+        <div class="ca-actions">
+          <a class="btn primary" href="/craftattack/join/">{c.finale.join}</a>
+          <a class="btn" href={facts.discord}>{c.finale.discord}</a>
+        </div>
+      </div>
+    </CaCurtain>
+  </CommunityApp>
 </Layout>
 
-<style>
-  /* Countdown cards reuse .card, just add live values */
-  #timeline .countdown-display { display: flex; align-items: baseline; justify-content: center; flex-wrap: nowrap; gap: 0.9rem; font-variant-numeric: tabular-nums; padding: 0.75rem 0 0.25rem; }
-  #timeline .countdown-unit { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; min-width: 0; }
-  #timeline .countdown-value { font-family: var(--font-mono); font-size: 1.75rem; font-weight: 700; line-height: 1; color: var(--coral-soft); letter-spacing: 0.02em; }
-  #timeline .countdown-label { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.5; margin-top: 0.45rem; }
-  #timeline .countdown-open { display: flex; align-items: center; justify-content: center; padding: 1.25rem 0 0.5rem; font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem; color: #22c55e; letter-spacing: 0.08em; text-transform: uppercase; }
-  #timeline .countdown-open::before { content: '> '; opacity: 0.55; margin-right: 0.25rem; }
-</style>
-
 <script>
-  (function () {
-    function tick() {
-      var now = Date.now();
-      document.querySelectorAll('[data-countdown]').forEach(function (card) {
-        var target = new Date(card.getAttribute('data-countdown')).getTime();
-        var diff = target - now;
-        var display = card.querySelector('.countdown-display');
-        if (diff <= 0) {
-          if (display) {
-            var open = document.createElement('div');
-            open.className = 'countdown-open';
-            open.textContent = 'Now Open';
-            display.replaceWith(open);
-          }
-          return;
-        }
-        var s = Math.floor(diff / 1000);
-        var d = Math.floor(s / 86400); s -= d * 86400;
-        var h = Math.floor(s / 3600); s -= h * 3600;
-        var m = Math.floor(s / 60); s -= m * 60;
-        var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
-        var dEl = card.querySelector('[data-days]');
-        var hEl = card.querySelector('[data-hours]');
-        var mEl = card.querySelector('[data-minutes]');
-        var sEl = card.querySelector('[data-seconds]');
-        if (dEl) dEl.textContent = String(d);
-        if (hEl) hEl.textContent = pad(h);
-        if (mEl) mEl.textContent = pad(m);
-        if (sEl) sEl.textContent = pad(s);
-      });
-    }
-    tick();
-    setInterval(tick, 1000);
-  })();
+  /* Carousel controls. The track scrolls natively (scroll-snap); this only
+     moves it one slide per button press and keeps the dots and the disabled
+     state of the arrows in step with wherever the track actually is.
+
+     Autoplay: one slide every DELAY ms, wrapping to the first after the last.
+     It holds while the pointer is over the carousel, while it has keyboard
+     focus, while it is off screen and while the tab is hidden, and every
+     manual move restarts the wait. A pause button stops it for good (moving
+     content needs one, WCAG 2.2.2), and with reduced motion it never starts
+     on its own. */
+  const DELAY = 5000;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('.mc-car-track')!;
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-to]')];
+    const prev = root.querySelector<HTMLButtonElement>('.prev')!;
+    const next = root.querySelector<HTMLButtonElement>('.next')!;
+    const pauseBtn = root.querySelector<HTMLButtonElement>('.mc-car-pause')!;
+    const count = dots.length;
+    const index = () => Math.round(track.scrollLeft / track.clientWidth);
+    let current = 0;
+
+    let timer = 0;
+    let paused = reduceMotion;
+    let hovering = false;
+    let focused = false;
+    let visible = false;
+    const running = () => !paused && !hovering && !focused && visible && !document.hidden;
+    const schedule = () => {
+      clearTimeout(timer);
+      if (running()) timer = window.setTimeout(() => go(current + 1 >= count ? 0 : current + 1), DELAY);
+    };
+    const setPaused = (p: boolean) => {
+      paused = p;
+      pauseBtn.setAttribute('aria-pressed', String(p));
+      pauseBtn.setAttribute('aria-label', (p ? root.dataset.playLabel : root.dataset.pauseLabel) ?? '');
+      schedule();
+    };
+
+    const sync = (i = index()) => {
+      current = i;
+      dots.forEach((d, j) => (j === i ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+      prev.disabled = i <= 0;
+      next.disabled = i >= count - 1;
+      // any move, by script or by swipe, restarts the wait
+      schedule();
+    };
+    // the dots and arrows jump to the target at once rather than trailing the
+    // smooth scroll; the scroll listener then keeps them right for swipes
+    const go = (i: number) => {
+      const to = Math.max(0, Math.min(count - 1, i));
+      track.scrollTo({ left: to * track.clientWidth, behavior: 'smooth' });
+      sync(to);
+    };
+
+    // from `current`, not the scroll position: a second press while the
+    // first is still sliding moves on from where the first was headed
+    prev.addEventListener('click', () => go(current - 1));
+    next.addEventListener('click', () => go(current + 1));
+    dots.forEach((d) => d.addEventListener('click', () => go(Number(d.dataset.to))));
+    // cheap enough to run on every scroll event; no rAF, which a background
+    // tab never fires, leaving the arrows stuck in their old state
+    track.addEventListener('scroll', () => sync(), { passive: true });
+
+    pauseBtn.addEventListener('click', () => setPaused(!paused));
+    root.addEventListener('pointerenter', () => { hovering = true; schedule(); });
+    root.addEventListener('pointerleave', () => { hovering = false; schedule(); });
+    root.addEventListener('focusin', () => { focused = true; schedule(); });
+    root.addEventListener('focusout', (e) => {
+      if (root.contains(e.relatedTarget as Node | null)) return;
+      focused = false;
+      schedule();
+    });
+    document.addEventListener('visibilitychange', schedule);
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; schedule(); }, { threshold: 0.5 }).observe(root);
+
+    setPaused(paused);
+    sync();
+  });
 </script>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, Suspense, lazy } from 'react';
+import { ShaderBoundary } from './ShaderBoundary';
 import type { ProjectTone } from '@/data/content';
 
 const Dithering = lazy(() =>
@@ -46,19 +47,21 @@ export function SideDither({
   return (
     <div className={`side-dither ${side} ${variant}`} style={{ top: `${top}%` }} ref={ref} aria-hidden="true">
       {on && (
-        <Suspense fallback={null}>
-          <Dithering
-            colorBack="#00000000"
-            colorFront={tone.color}
-            shape={tone.shape}
-            type="4x4"
-            speed={0.15}
-            size={variant === 'plate' ? 3 : 2}
-            scale={variant === 'plate' ? 1.1 : 0.9}
-            className="size-full"
-            minPixelRatio={1}
-          />
-        </Suspense>
+        <ShaderBoundary>
+          <Suspense fallback={null}>
+            <Dithering
+              colorBack="#00000000"
+              colorFront={tone.color}
+              shape={tone.shape}
+              type="4x4"
+              speed={0.15}
+              size={variant === 'plate' ? 3 : 2}
+              scale={variant === 'plate' ? 1.1 : 0.9}
+              className="size-full"
+              minPixelRatio={1}
+            />
+          </Suspense>
+        </ShaderBoundary>
       )}
       {variant === 'plate' && (
         <>
